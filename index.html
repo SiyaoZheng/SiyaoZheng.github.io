@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siyao Zheng | Political Scientist</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ivory: #FAF8F5;
+            --cream: #F5F2ED;
+            --navy: #1a2744;
+            --navy-light: #2d3d5c;
+            --accent: #8B4513;
+            --accent-light: #A0522D;
+            --text: #2c2c2c;
+            --text-light: #5a5a5a;
+            --border: #e0ddd8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background: var(--ivory);
+            color: var(--text);
+            line-height: 1.7;
+            font-weight: 400;
+            position: relative;
+        }
+
+        /* Subtle grain texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            z-index: 9999;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(250, 248, 245, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--navy);
+            letter-spacing: 0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--navy);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            padding: 8rem 4rem 4rem;
+            gap: 4rem;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-content {
+            animation: fadeInUp 1s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4.5rem;
+            font-weight: 400;
+            line-height: 1.1;
+            color: var(--navy);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero h1 span {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            max-width: 500px;
+            line-height: 1.8;
+        }
+
+        .hero-affiliation {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .affiliation-logo {
+            width: 50px;
+            height: 50px;
+            background: var(--navy);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .affiliation-text {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .affiliation-text strong {
+            display: block;
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .hero-image {
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .hero-image img {
+            display: block;
+            width: 100%;
+            max-width: 380px;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 25px 50px -12px rgba(26, 39, 68, 0.15);
+            filter: grayscale(10%);
+            transition: all 0.5s ease;
+        }
+
+        .hero-image:hover img {
+            filter: grayscale(0%);
+            box-shadow: 0 30px 60px -15px rgba(26, 39, 68, 0.2);
+        }
+
+        /* Section Styling */
+        section {
+            padding: 6rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+        }
+
+        .section-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: var(--navy);
+        }
+
+        /* Research Section */
+        #research {
+            background: var(--cream);
+            max-width: 100%;
+            padding: 6rem 4rem;
+        }
+
+        #research .content-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .research-card {
+            background: var(--ivory);
+            padding: 2.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .research-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 0;
+            background: var(--accent);
+            transition: height 0.4s ease;
+        }
+
+        .research-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(26, 39, 68, 0.08);
+        }
+
+        .research-card:hover::before {
+            height: 100%;
+        }
+
+        .research-icon {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .research-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+
+        .research-card p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* Publications Section */
+        .publications-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .publication-item {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 2rem;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.3s ease;
+        }
+
+        .publication-item:hover {
+            background: linear-gradient(90deg, var(--cream) 0%, transparent 100%);
+            padding-left: 1rem;
+            margin-left: -1rem;
+        }
+
+        .pub-year {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        .pub-content h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .pub-authors {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 0.3rem;
+        }
+
+        .pub-authors strong {
+            color: var(--text);
+        }
+
+        .pub-venue {
+            font-size: 0.9rem;
+            font-style: italic;
+            color: var(--text-light);
+        }
+
+        .pub-tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.3rem 0.8rem;
+            background: var(--navy);
+            color: white;
+            margin-top: 0.8rem;
+        }
+
+        /* Teaching Section */
+        #teaching {
+            background: var(--navy);
+            max-width: 100%;
+            padding: 6rem 4rem;
+            color: white;
+        }
+
+        #teaching .content-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        #teaching .section-header {
+            border-bottom-color: rgba(255,255,255,0.2);
+        }
+
+        #teaching .section-number {
+            color: var(--accent-light);
+        }
+
+        #teaching .section-title {
+            color: white;
+        }
+
+        .teaching-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .course-card {
+            padding: 2.5rem;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.03);
+            transition: all 0.4s ease;
+        }
+
+        .course-card:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .course-level {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-light);
+            margin-bottom: 1rem;
+        }
+
+        .course-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .course-card p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.7;
+        }
+
+        /* CV Section */
+        .cv-timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .cv-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: var(--border);
+        }
+
+        .cv-item {
+            position: relative;
+            padding-bottom: 3rem;
+        }
+
+        .cv-item::before {
+            content: '';
+            position: absolute;
+            left: -3rem;
+            top: 0.5rem;
+            width: 9px;
+            height: 9px;
+            background: var(--ivory);
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+        }
+
+        .cv-date {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .cv-item h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--navy);
+            margin-bottom: 0.3rem;
+        }
+
+        .cv-item p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Contact Section */
+        #contact {
+            background: var(--cream);
+            max-width: 100%;
+            padding: 6rem 4rem;
+        }
+
+        #contact .content-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-info h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 400;
+            color: var(--navy);
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+
+        .contact-info h2 span {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--navy);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .contact-text {
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+
+        .contact-text strong {
+            display: block;
+            color: var(--text);
+            margin-bottom: 0.2rem;
+        }
+
+        .contact-text a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-text a:hover {
+            color: var(--navy);
+        }
+
+        .contact-map {
+            background: var(--navy);
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .map-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent-light);
+            margin-bottom: 1rem;
+        }
+
+        .map-address {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: white;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem 4rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive - Tablet */
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 8rem 2rem 4rem;
+                gap: 3rem;
+            }
+
+            .hero-content {
+                order: 2;
+            }
+
+            .hero-image {
+                order: 1;
+                display: flex;
+                justify-content: center;
+            }
+
+            .hero-image img {
+                max-width: 280px;
+            }
+
+            .hero-subtitle {
+                margin: 0 auto 2rem;
+            }
+
+            .hero-affiliation {
+                justify-content: center;
+            }
+
+            .teaching-grid {
+                grid-template-columns: 1fr;
+            }
+
+            #contact .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                padding: 1rem 2rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .nav-links a {
+                font-size: 0.75rem;
+            }
+
+            section {
+                padding: 4rem 2rem;
+            }
+
+            #research, #teaching, #contact {
+                padding: 4rem 2rem;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .contact-info h2 {
+                font-size: 2.2rem;
+            }
+
+            .map-address {
+                font-size: 1.4rem;
+            }
+        }
+
+        /* Responsive - Mobile */
+        @media (max-width: 600px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-name {
+                font-size: 1.2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 7rem 1.5rem 3rem;
+                min-height: auto;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-label {
+                font-size: 0.65rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .hero-image img {
+                max-width: 220px;
+            }
+
+            .hero-affiliation {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .affiliation-text {
+                text-align: center;
+            }
+
+            section {
+                padding: 3rem 1.5rem;
+            }
+
+            #teaching, #contact {
+                padding: 3rem 1.5rem;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .publication-item {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .pub-content h4 {
+                font-size: 1.1rem;
+            }
+
+            .course-card {
+                padding: 1.5rem;
+            }
+
+            .course-card h3 {
+                font-size: 1.3rem;
+            }
+
+            .cv-timeline {
+                padding-left: 2rem;
+            }
+
+            .cv-item::before {
+                left: -2rem;
+            }
+
+            .cv-item h4 {
+                font-size: 1.2rem;
+            }
+
+            .contact-info h2 {
+                font-size: 1.8rem;
+            }
+
+            .contact-map {
+                padding: 2rem;
+            }
+
+            .map-address {
+                font-size: 1.2rem;
+            }
+
+            footer {
+                padding: 1.5rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Responsive - Small Mobile */
+        @media (max-width: 380px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-image img {
+                max-width: 180px;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .pub-content h4 {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-name">Siyao Zheng</div>
+        <div class="nav-links">
+            <a href="#publications">Publications</a>
+            <a href="#teaching">Teaching</a>
+            <a href="#cv">CV</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-label">Chinese Politics & Computational Social Science</div>
+            <h1>Siyao <span>Zheng</span></h1>
+            <p class="hero-subtitle">
+                My research focuses on <strong>AI for Social Science</strong> and <strong>Digital Politics</strong>.
+            </p>
+            <div class="hero-affiliation">
+                <div class="affiliation-logo">SJTU</div>
+                <div class="affiliation-text">
+                    <strong>Assistant Professor</strong>
+                    School of International and Public Affairs<br>
+                    Shanghai Jiao Tong University
+                </div>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="images/profile.jpg" alt="Siyao Zheng">
+        </div>
+    </section>
+
+    <section id="publications">
+        <div class="section-header">
+            <span class="section-number">01</span>
+            <h2 class="section-title">Selected Publications</h2>
+        </div>
+        <div class="publications-list">
+            <div class="publication-item fade-in">
+                <div class="pub-year">2023</div>
+                <div class="pub-content">
+                    <h4>The Informational Theory of State Governance: Perspectives from Information Politics</h4>
+                    <p class="pub-authors">Tiangang Meng & <strong>Siyao Zheng</strong></p>
+                    <p class="pub-venue">CASS Journal of Political Science (政治学研究)</p>
+                </div>
+            </div>
+            <div class="publication-item fade-in">
+                <div class="pub-year">2022</div>
+                <div class="pub-content">
+                    <h4>Government Information Disclosure and Governance Effectiveness in Public Crisis: A Survey Experiment</h4>
+                    <p class="pub-authors"><strong>Siyao Zheng</strong> & Tiangang Meng</p>
+                    <p class="pub-venue">Public Administration and Policy Review (公共管理与政策评论)</p>
+                </div>
+            </div>
+            <div class="publication-item fade-in">
+                <div class="pub-year">2021</div>
+                <div class="pub-content">
+                    <h4>Information Politics of Environmental Governance: How Central Environmental Inspection Drives Public Participation</h4>
+                    <p class="pub-authors"><strong>Siyao Zheng</strong> & Tiangang Meng</p>
+                    <p class="pub-venue">Comparative Economic & Social Systems (经济社会体制比较)</p>
+                </div>
+            </div>
+            <div class="publication-item fade-in">
+                <div class="pub-year">2020</div>
+                <div class="pub-content">
+                    <h4>The Paradox of Responsiveness and Social Protest in China</h4>
+                    <p class="pub-authors"><strong>Siyao Zheng</strong> & Tiangang Meng</p>
+                    <p class="pub-venue">Journal of Contemporary China</p>
+                </div>
+            </div>
+            <div class="publication-item fade-in">
+                <div class="pub-year">2017</div>
+                <div class="pub-content">
+                    <h4>Information, Communication, and Influence: Government New Media in Internet Governance</h4>
+                    <p class="pub-authors">Tiangang Meng & <strong>Siyao Zheng</strong></p>
+                    <p class="pub-venue">Journal of Public Administration (公共行政评论)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="teaching">
+        <div class="content-wrapper">
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <h2 class="section-title">Teaching</h2>
+            </div>
+            <div class="teaching-grid">
+                <div class="course-card fade-in">
+                    <div class="course-level">Undergraduate</div>
+                    <h3>Multivariate Statistical Analysis</h3>
+                    <p>Foundation course covering regression, factor analysis, and causal inference methods for social science research.</p>
+                </div>
+                <div class="course-card fade-in">
+                    <div class="course-level">Undergraduate</div>
+                    <h3>Social Computing in the AI Era</h3>
+                    <p>Exploring how artificial intelligence and computational methods transform social science research and practice.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cv">
+        <div class="section-header">
+            <span class="section-number">03</span>
+            <h2 class="section-title">Education & Career</h2>
+        </div>
+        <div class="cv-timeline">
+            <div class="cv-item fade-in">
+                <div class="cv-date">2024 – Present</div>
+                <h4>Assistant Professor</h4>
+                <p>Shanghai Jiao Tong University, School of International and Public Affairs</p>
+            </div>
+            <div class="cv-item fade-in">
+                <div class="cv-date">2020 – 2024</div>
+                <h4>Ph.D. in Political Science</h4>
+                <p>Tsinghua University, Department of Political Science</p>
+            </div>
+            <div class="cv-item fade-in">
+                <div class="cv-date">2022 – 2023</div>
+                <h4>Visiting Doctoral Student</h4>
+                <p>Harvard University, Department of Government</p>
+            </div>
+            <div class="cv-item fade-in">
+                <div class="cv-date">2017 – 2020</div>
+                <h4>Master of Public Administration</h4>
+                <p>Tsinghua University, School of Public Policy and Management</p>
+            </div>
+            <div class="cv-item fade-in">
+                <div class="cv-date">2013 – 2017</div>
+                <h4>Bachelor of Laws</h4>
+                <p>Peking University, School of Government</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="content-wrapper">
+            <div class="contact-info">
+                <h2>Let's <span>Connect</span></h2>
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <div class="contact-icon">✉</div>
+                        <div class="contact-text">
+                            <strong>Email</strong>
+                            <a href="mailto:zhengsy24@sjtu.edu.cn">zhengsy24@sjtu.edu.cn</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">◎</div>
+                        <div class="contact-text">
+                            <strong>Profiles</strong>
+                            <a href="https://scholar.google.com/citations?user=5HvIF_kAAAAJ&hl=en" target="_blank">Google Scholar</a> · <a href="https://github.com/SiyaoZheng/" target="_blank">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-map">
+                <div class="map-label">Office Address</div>
+                <div class="map-address">
+                    Room 113, Bao Zhaolong Library<br>
+                    Shanghai Jiao Tong University (Xuhui Campus)<br>
+                    1954 Huashan Road, Xuhui District<br>
+                    Shanghai 200030, China
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Siyao Zheng. Crafted with attention to detail.</p>
+    </footer>
+
+    <script>
+        // Scroll-triggered animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
