@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Variable Coding | Social Cleavages Project</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ivory: #FAF8F5;
+  --cream: #F5F2ED;
+  --navy: #1a2744;
+  --navy-light: #2d3d5c;
+  --accent: #8B4513;
+  --accent-light: #A0522D;
+  --text: #2c2c2c;
+  --text-light: #5a5a5a;
+  --border: #e0ddd8;
+  --success: #2d6a4f;
+  --success-bg: #d8f3dc;
+  --dim-F1: #4361ee;
+  --dim-F2: #e07a5f;
+  --dim-F3: #81b29a;
+  --dim-regime_support: #9b2226;
+  --dim-nationalism: #ca6702;
+  --dim-satisfaction: #6a994e;
+  --dim-covariate: #7b7b7b;
+  --dim-none: #adb5bd;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--ivory);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100dvh;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1, h2, h3, .serif {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+/* ── Setup Screen ─────────────────────────── */
+
+.screen { display: none; }
+.screen.active { display: flex; flex-direction: column; min-height: 100dvh; }
+
+#setup-screen {
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  gap: 1.5rem;
+}
+
+#setup-screen h1 {
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: var(--navy);
+  text-align: center;
+}
+
+#setup-screen .subtitle {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  text-align: center;
+  max-width: 340px;
+}
+
+.setup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 360px;
+}
+
+.setup-form label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+.setup-form input,
+.setup-form select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 1rem;
+  background: #fff;
+  color: var(--text);
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.setup-form select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%235a5a5a' d='M1.41 0L6 4.58 10.59 0 12 1.41l-6 6-6-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--navy);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--navy-light); }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.btn-secondary {
+  background: var(--cream);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover { background: var(--border); }
+
+.btn-accent {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-accent:hover { background: var(--accent-light); }
+
+.btn-dim {
+  background: var(--cream);
+  color: var(--text);
+  border: 2px solid var(--border);
+  font-weight: 600;
+  min-height: 48px;
+  min-width: 64px;
+  font-size: 0.85rem;
+}
+.btn-dim.selected {
+  color: #fff;
+  border-color: transparent;
+}
+
+.btn-none {
+  background: var(--dim-none);
+  color: #fff;
+  border: 2px solid var(--dim-none);
+  min-height: 48px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* ── Coding Screen ────────────────────────── */
+
+#coding-screen {
+  padding: 0;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250, 248, 245, 0.97);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  padding: 0.6rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+.topbar-left .survey-badge {
+  font-weight: 600;
+  color: var(--navy);
+  font-size: 0.85rem;
+}
+
+.topbar-right {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.topbar-btn {
+  padding: 0.35rem 0.6rem;
+  font-size: 0.75rem;
+  border-radius: 4px;
+}
+
+.progress-bar {
+  height: 3px;
+  background: var(--border);
+  width: 100%;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+
+.coding-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Variable card */
+.var-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+}
+
+.var-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.5rem;
+}
+
+.var-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.var-lang {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-light);
+  background: var(--cream);
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+}
+
+.var-label {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+  color: var(--text);
+}
+
+.val-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.val-item {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.val-code {
+  font-weight: 600;
+  color: var(--accent);
+  min-width: 1.8rem;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.val-label {
+  color: var(--text-light);
+}
+
+/* Dimension buttons */
+.dim-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.dim-grid .btn-none {
+  grid-column: 1 / -1;
+}
+
+/* Concept selection */
+.concept-panel {
+  display: none;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.concept-panel.visible { display: flex; }
+
+.concept-search {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  background: #fff;
+  width: 100%;
+}
+
+.concept-list {
+  max-height: 45vh;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+}
+
+.concept-item {
+  padding: 0.7rem 0.8rem;
+  border-bottom: 1px solid var(--cream);
+  cursor: pointer;
+  transition: background 0.15s;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+.concept-item:last-child { border-bottom: none; }
+.concept-item:hover { background: var(--cream); }
+.concept-item.selected { background: var(--success-bg); }
+
+.concept-radio {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.concept-item.selected .concept-radio {
+  border-color: var(--success);
+}
+.concept-item.selected .concept-radio::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--success);
+}
+
+.concept-id {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--navy);
+  word-break: break-all;
+}
+
+.concept-anchor {
+  font-size: 0.78rem;
+  color: var(--text-light);
+  line-height: 1.3;
+}
+
+/* Bottom actions */
+.action-bar {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem 0;
+}
+
+.action-bar .btn { flex: 1; }
+
+/* ── Stats Screen ─────────────────────────── */
+
+#stats-screen {
+  padding: 1rem;
+}
+
+.stats-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  max-width: 600px;
+  margin: 0 auto 1.5rem;
+}
+
+.stat-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.stat-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.stat-label {
+  font-size: 0.78rem;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.dim-stats {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.dim-stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--cream);
+}
+
+.dim-stat-label { font-weight: 500; }
+.dim-stat-count { font-weight: 600; color: var(--navy); }
+
+/* ── Loading ──────────────────────────────── */
+
+#loading-screen {
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border);
+  border-top-color: var(--navy);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Already-coded indicator ──────────────── */
+.coded-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+/* ── Responsive ───────────────────────────── */
+
+@media (min-width: 640px) {
+  .coding-body { padding: 1.5rem 2rem; }
+  .dim-grid { grid-template-columns: repeat(4, 1fr); gap: 0.6rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ Loading Screen ═══ -->
+<div id="loading-screen" class="screen active">
+  <div class="spinner"></div>
+  <p style="color:var(--text-light); font-size:0.9rem;">Loading data…</p>
+</div>
+
+<!-- ═══ Setup Screen ═══ -->
+<div id="setup-screen" class="screen">
+  <h1 class="serif">Variable Coding</h1>
+  <p class="subtitle">Independently classify survey variables into conceptual dimensions.</p>
+
+  <div class="setup-form">
+    <div>
+      <label for="ra-name">Your Name (RA ID)</label>
+      <input type="text" id="ra-name" placeholder="e.g., Alice" autocomplete="off">
+    </div>
+    <div>
+      <label for="survey-select">Survey to Code</label>
+      <select id="survey-select">
+        <option value="">Select a survey…</option>
+      </select>
+    </div>
+    <div id="resume-info" style="display:none; font-size:0.85rem; color:var(--success); padding:0.5rem; background:var(--success-bg); border-radius:6px;">
+    </div>
+    <button class="btn btn-primary" id="start-btn" disabled>Start Coding</button>
+  </div>
+</div>
+
+<!-- ═══ Coding Screen ═══ -->
+<div id="coding-screen" class="screen">
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="survey-badge" id="tb-survey"></span>
+      <span id="tb-progress"></span>
+    </div>
+    <div class="topbar-right">
+      <button class="btn btn-secondary topbar-btn" id="btn-stats">Stats</button>
+      <button class="btn btn-secondary topbar-btn" id="btn-export">Export</button>
+      <button class="btn btn-secondary topbar-btn" id="btn-change-survey">Switch</button>
+    </div>
+  </div>
+  <div class="progress-bar"><div class="progress-bar-fill" id="progress-fill"></div></div>
+
+  <div class="coding-body">
+    <!-- Variable Card -->
+    <div class="var-card">
+      <div class="var-header">
+        <span class="var-name" id="var-name"></span>
+        <span class="var-lang" id="var-lang"></span>
+      </div>
+      <div class="var-label" id="var-label"></div>
+      <ul class="val-list" id="val-list"></ul>
+    </div>
+
+    <!-- Previously coded indicator -->
+    <div id="coded-indicator" style="display:none;"></div>
+
+    <!-- Dimension Selection -->
+    <div class="dim-grid" id="dim-grid"></div>
+
+    <!-- Concept Selection (appears after dimension tap) -->
+    <div class="concept-panel" id="concept-panel">
+      <input type="text" class="concept-search" id="concept-search"
+             placeholder="Search concepts…" autocomplete="off">
+      <div class="concept-list" id="concept-list"></div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-bar">
+      <button class="btn btn-secondary" id="btn-prev">&#8592; Back</button>
+      <button class="btn btn-primary" id="btn-confirm" disabled>Confirm</button>
+      <button class="btn btn-secondary" id="btn-skip">Skip &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Stats Screen ═══ -->
+<div id="stats-screen" class="screen">
+  <div class="stats-header">
+    <h2 class="serif" style="font-size:1.4rem;">Progress</h2>
+    <button class="btn btn-secondary topbar-btn" id="btn-back-coding">Back</button>
+  </div>
+  <div class="stats-grid" id="stats-grid"></div>
+  <div class="dim-stats" id="dim-stats"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// RA Blind Coding App — Vanilla JS, localStorage persistence
+// ═══════════════════════════════════════════════════════════════════
+
+const DIM_COLORS = {
+  F1: 'var(--dim-F1)',
+  F2: 'var(--dim-F2)',
+  F3: 'var(--dim-F3)',
+  regime_support: 'var(--dim-regime_support)',
+  nationalism: 'var(--dim-nationalism)',
+  satisfaction: 'var(--dim-satisfaction)',
+  covariate: 'var(--dim-covariate)',
+};
+
+const DIM_SHORT = {
+  F1: 'F1',
+  F2: 'F2',
+  F3: 'F3',
+  regime_support: 'RS',
+  nationalism: 'NAT',
+  satisfaction: 'SAT',
+  covariate: 'COV',
+};
+
+// ── State ──────────────────────────────────
+let allVariables = [];      // full dataset
+let concepts = null;        // dimension→concept hierarchy
+let surveyVars = [];        // variables for current survey
+let currentIdx = 0;         // index in surveyVars
+let raName = '';
+let currentSurvey = '';
+let selectedDim = null;
+let selectedConcept = null;
+let answers = {};           // { varId: { dimension, concept, timestamp } }
+
+// ── Storage Keys ───────────────────────────
+function storageKey(ra, survey) {
+  return `coding_${ra}_${survey}`;
+}
+function posKey(ra, survey) {
+  return `coding_pos_${ra}_${survey}`;
+}
+
+function saveAnswers() {
+  localStorage.setItem(storageKey(raName, currentSurvey), JSON.stringify(answers));
+  localStorage.setItem(posKey(raName, currentSurvey), String(currentIdx));
+}
+
+function loadAnswers(ra, survey) {
+  const raw = localStorage.getItem(storageKey(ra, survey));
+  return raw ? JSON.parse(raw) : {};
+}
+
+function loadPos(ra, survey) {
+  const raw = localStorage.getItem(posKey(ra, survey));
+  return raw ? parseInt(raw, 10) : 0;
+}
+
+// ── Screen Management ──────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ── Data Loading ───────────────────────────
+async function loadData() {
+  try {
+    const [varsRes, conRes] = await Promise.all([
+      fetch('variables.json'),
+      fetch('concepts.json')
+    ]);
+    if (!varsRes.ok || !conRes.ok) throw new Error('Failed to load data files');
+    allVariables = await varsRes.json();
+    concepts = await conRes.json();
+    initSetup();
+  } catch (e) {
+    document.getElementById('loading-screen').innerHTML =
+      `<p style="color:#c0392b; padding:2rem; text-align:center;">
+        Error loading data: ${e.message}<br>
+        <small>Ensure variables.json and concepts.json are in the same directory.</small>
+      </p>`;
+  }
+}
+
+// ── Setup Screen ───────────────────────────
+function initSetup() {
+  // Build survey list
+  const surveys = [...new Set(allVariables.map(v => v.survey))].sort();
+  const sel = document.getElementById('survey-select');
+  surveys.forEach(s => {
+    const count = allVariables.filter(v => v.survey === s).length;
+    const opt = document.createElement('option');
+    opt.value = s;
+    opt.textContent = `${s} (${count} vars)`;
+    sel.appendChild(opt);
+  });
+
+  // Restore RA name
+  const savedRA = localStorage.getItem('coding_ra_name');
+  if (savedRA) document.getElementById('ra-name').value = savedRA;
+
+  // Enable/disable start button
+  const raInput = document.getElementById('ra-name');
+  const check = () => {
+    const ok = raInput.value.trim() && sel.value;
+    document.getElementById('start-btn').disabled = !ok;
+    updateResumeInfo();
+  };
+  raInput.addEventListener('input', check);
+  sel.addEventListener('change', check);
+  check();
+
+  document.getElementById('start-btn').addEventListener('click', startCoding);
+  showScreen('setup-screen');
+}
+
+function updateResumeInfo() {
+  const ra = document.getElementById('ra-name').value.trim();
+  const survey = document.getElementById('survey-select').value;
+  const info = document.getElementById('resume-info');
+  if (!ra || !survey) { info.style.display = 'none'; return; }
+
+  const saved = loadAnswers(ra, survey);
+  const count = Object.keys(saved).length;
+  if (count > 0) {
+    const pos = loadPos(ra, survey);
+    info.textContent = `Resuming: ${count} already coded, position ${pos + 1}`;
+    info.style.display = 'block';
+  } else {
+    info.style.display = 'none';
+  }
+}
+
+// ── Start Coding ───────────────────────────
+function startCoding() {
+  raName = document.getElementById('ra-name').value.trim();
+  currentSurvey = document.getElementById('survey-select').value;
+  localStorage.setItem('coding_ra_name', raName);
+
+  surveyVars = allVariables.filter(v => v.survey === currentSurvey);
+  answers = loadAnswers(raName, currentSurvey);
+  currentIdx = loadPos(raName, currentSurvey);
+
+  // Clamp index
+  if (currentIdx >= surveyVars.length) currentIdx = surveyVars.length - 1;
+  if (currentIdx < 0) currentIdx = 0;
+
+  buildDimButtons();
+  showScreen('coding-screen');
+  renderVariable();
+}
+
+// ── Dimension Buttons ──────────────────────
+function buildDimButtons() {
+  const grid = document.getElementById('dim-grid');
+  grid.innerHTML = '';
+
+  concepts.dimensions.forEach(dim => {
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-dim';
+    btn.dataset.dim = dim.id;
+    btn.textContent = DIM_SHORT[dim.id] || dim.id;
+    btn.title = dim.label;
+    btn.style.setProperty('--bg', DIM_COLORS[dim.id] || '#666');
+    btn.addEventListener('click', () => selectDimension(dim.id));
+    grid.appendChild(btn);
+  });
+
+  // "Not relevant" button
+  const noneBtn = document.createElement('button');
+  noneBtn.className = 'btn btn-none';
+  noneBtn.textContent = 'Not Relevant';
+  noneBtn.addEventListener('click', () => selectNone());
+  grid.appendChild(noneBtn);
+}
+
+// ── Render Variable ────────────────────────
+function renderVariable() {
+  if (!surveyVars.length) return;
+  const v = surveyVars[currentIdx];
+
+  // Top bar
+  document.getElementById('tb-survey').textContent = currentSurvey;
+  const coded = Object.keys(answers).length;
+  document.getElementById('tb-progress').textContent =
+    `${currentIdx + 1}/${surveyVars.length} · ${coded} coded`;
+
+  // Progress bar
+  const pct = (coded / surveyVars.length) * 100;
+  document.getElementById('progress-fill').style.width = pct + '%';
+
+  // Variable card
+  document.getElementById('var-name').textContent = v.var;
+  document.getElementById('var-lang').textContent = v.lang || '';
+  document.getElementById('var-label').textContent = v.label || '(no label)';
+
+  const valList = document.getElementById('val-list');
+  valList.innerHTML = '';
+  if (v.values && typeof v.values === 'object') {
+    // Sort keys numerically
+    const keys = Object.keys(v.values).sort((a, b) => {
+      const na = parseFloat(a), nb = parseFloat(b);
+      if (!isNaN(na) && !isNaN(nb)) return na - nb;
+      return a.localeCompare(b);
+    });
+    keys.forEach(k => {
+      const li = document.createElement('li');
+      li.className = 'val-item';
+      li.innerHTML = `<span class="val-code">${escHtml(k)}</span>
+                      <span class="val-label">= ${escHtml(v.values[k])}</span>`;
+      valList.appendChild(li);
+    });
+  }
+
+  // Check if already coded
+  const existing = answers[v.id];
+  const indicator = document.getElementById('coded-indicator');
+  if (existing) {
+    const dimLabel = existing.dimension === 'none' ? 'Not Relevant'
+      : (DIM_SHORT[existing.dimension] || existing.dimension);
+    const conLabel = existing.concept && existing.concept !== 'none'
+      ? ` → ${existing.concept}` : '';
+    indicator.innerHTML = `<span class="coded-badge">Previously coded: ${escHtml(dimLabel)}${escHtml(conLabel)}</span>`;
+    indicator.style.display = 'block';
+  } else {
+    indicator.style.display = 'none';
+  }
+
+  // Reset selection state
+  resetSelection();
+
+  // If already coded, pre-select
+  if (existing) {
+    if (existing.dimension === 'none') {
+      selectNone(true);
+    } else {
+      selectDimension(existing.dimension, true);
+      if (existing.concept) {
+        selectedConcept = existing.concept;
+        highlightConcept();
+        document.getElementById('btn-confirm').disabled = false;
+      }
+    }
+  }
+
+  // Back button state
+  document.getElementById('btn-prev').disabled = currentIdx === 0;
+}
+
+function resetSelection() {
+  selectedDim = null;
+  selectedConcept = null;
+  document.querySelectorAll('.btn-dim').forEach(b => {
+    b.classList.remove('selected');
+    b.style.background = '';
+    b.style.color = '';
+    b.style.borderColor = '';
+  });
+  document.querySelectorAll('.btn-none').forEach(b => {
+    b.style.opacity = '';
+  });
+  document.getElementById('concept-panel').classList.remove('visible');
+  document.getElementById('concept-search').value = '';
+  document.getElementById('btn-confirm').disabled = true;
+}
+
+// ── Dimension Selection ────────────────────
+function selectDimension(dimId, silent) {
+  resetSelection();
+  selectedDim = dimId;
+
+  // Highlight button
+  document.querySelectorAll('.btn-dim').forEach(b => {
+    if (b.dataset.dim === dimId) {
+      b.classList.add('selected');
+      b.style.background = DIM_COLORS[dimId] || '#666';
+      b.style.color = '#fff';
+      b.style.borderColor = 'transparent';
+    }
+  });
+
+  // Show concept list
+  const dim = concepts.dimensions.find(d => d.id === dimId);
+  if (dim) {
+    renderConceptList(dim.concepts);
+    document.getElementById('concept-panel').classList.add('visible');
+  }
+
+  // Confirm not yet enabled until concept chosen
+  document.getElementById('btn-confirm').disabled = true;
+}
+
+function selectNone(silent) {
+  resetSelection();
+  selectedDim = 'none';
+  selectedConcept = 'none';
+  document.querySelectorAll('.btn-none').forEach(b => {
+    b.style.opacity = '0.8';
+    b.style.outline = '3px solid var(--dim-none)';
+    b.style.outlineOffset = '-1px';
+  });
+  document.getElementById('btn-confirm').disabled = false;
+}
+
+// ── Concept List ───────────────────────────
+function renderConceptList(conceptArr, filter) {
+  const list = document.getElementById('concept-list');
+  list.innerHTML = '';
+  const q = (filter || '').toLowerCase().trim();
+
+  conceptArr.forEach(c => {
+    // Safety: label may be array (take first) or string
+    const label = Array.isArray(c.label) ? (c.label[0] || '') : (c.label || '');
+    const matchId = c.id.toLowerCase().includes(q);
+    const matchLabel = label.toLowerCase().includes(q);
+    if (q && !matchId && !matchLabel) return;
+
+    const div = document.createElement('div');
+    div.className = 'concept-item' + (selectedConcept === c.id ? ' selected' : '');
+    div.innerHTML = `
+      <div class="concept-radio"></div>
+      <div>
+        <div class="concept-id">${escHtml(c.id)}</div>
+        <div class="concept-anchor">${escHtml(label)}</div>
+      </div>`;
+    div.addEventListener('click', () => {
+      selectedConcept = c.id;
+      highlightConcept();
+      document.getElementById('btn-confirm').disabled = false;
+    });
+    list.appendChild(div);
+  });
+}
+
+function highlightConcept() {
+  document.querySelectorAll('.concept-item').forEach(el => {
+    const id = el.querySelector('.concept-id').textContent;
+    el.classList.toggle('selected', id === selectedConcept);
+  });
+}
+
+// ── Concept Search ─────────────────────────
+document.getElementById('concept-search').addEventListener('input', function() {
+  if (!selectedDim || selectedDim === 'none') return;
+  const dim = concepts.dimensions.find(d => d.id === selectedDim);
+  if (dim) renderConceptList(dim.concepts, this.value);
+});
+
+// ── Confirm ────────────────────────────────
+document.getElementById('btn-confirm').addEventListener('click', () => {
+  if (!selectedDim) return;
+  const v = surveyVars[currentIdx];
+  answers[v.id] = {
+    dimension: selectedDim,
+    concept: selectedConcept || 'none',
+    timestamp: new Date().toISOString()
+  };
+  saveAnswers();
+
+  // Advance
+  if (currentIdx < surveyVars.length - 1) {
+    currentIdx++;
+    saveAnswers();
+    renderVariable();
+    window.scrollTo(0, 0);
+  } else {
+    // All done
+    renderVariable(); // update counts
+    alert(`All ${surveyVars.length} variables in ${currentSurvey} have been reviewed!`);
+  }
+});
+
+// ── Skip ───────────────────────────────────
+document.getElementById('btn-skip').addEventListener('click', () => {
+  if (currentIdx < surveyVars.length - 1) {
+    currentIdx++;
+    saveAnswers();
+    renderVariable();
+    window.scrollTo(0, 0);
+  }
+});
+
+// ── Back ───────────────────────────────────
+document.getElementById('btn-prev').addEventListener('click', () => {
+  if (currentIdx > 0) {
+    currentIdx--;
+    saveAnswers();
+    renderVariable();
+    window.scrollTo(0, 0);
+  }
+});
+
+// ── Stats ──────────────────────────────────
+document.getElementById('btn-stats').addEventListener('click', showStats);
+document.getElementById('btn-back-coding').addEventListener('click', () => {
+  showScreen('coding-screen');
+});
+
+function showStats() {
+  const total = surveyVars.length;
+  const coded = Object.keys(answers).length;
+  const pct = total > 0 ? Math.round((coded / total) * 100) : 0;
+
+  // Count by dimension
+  const dimCounts = {};
+  concepts.dimensions.forEach(d => { dimCounts[d.id] = 0; });
+  dimCounts['none'] = 0;
+  Object.values(answers).forEach(a => {
+    if (dimCounts[a.dimension] !== undefined) dimCounts[a.dimension]++;
+    else dimCounts[a.dimension] = 1;
+  });
+
+  const grid = document.getElementById('stats-grid');
+  grid.innerHTML = `
+    <div class="stat-card">
+      <div class="stat-number">${coded}</div>
+      <div class="stat-label">Coded</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">${total - coded}</div>
+      <div class="stat-label">Remaining</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">${pct}%</div>
+      <div class="stat-label">Complete</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">${currentIdx + 1}</div>
+      <div class="stat-label">Current Position</div>
+    </div>`;
+
+  const dimDiv = document.getElementById('dim-stats');
+  dimDiv.innerHTML = '<h3 class="serif" style="margin-bottom:0.5rem; font-size:1.1rem;">By Dimension</h3>';
+  concepts.dimensions.forEach(d => {
+    dimDiv.innerHTML += `<div class="dim-stat-row">
+      <span class="dim-stat-label" style="color:${DIM_COLORS[d.id] || '#666'}">${d.label}</span>
+      <span class="dim-stat-count">${dimCounts[d.id] || 0}</span>
+    </div>`;
+  });
+  dimDiv.innerHTML += `<div class="dim-stat-row">
+    <span class="dim-stat-label" style="color:var(--dim-none)">Not Relevant</span>
+    <span class="dim-stat-count">${dimCounts['none'] || 0}</span>
+  </div>`;
+
+  showScreen('stats-screen');
+}
+
+// ── Export CSV ──────────────────────────────
+document.getElementById('btn-export').addEventListener('click', exportCSV);
+
+function exportCSV() {
+  const rows = [['ra_id', 'survey_id', 'var_name', 'dimension', 'concept', 'timestamp']];
+
+  surveyVars.forEach(v => {
+    const a = answers[v.id];
+    if (a) {
+      rows.push([
+        raName,
+        v.survey,
+        v.var,
+        a.dimension,
+        a.concept,
+        a.timestamp
+      ]);
+    }
+  });
+
+  const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `coding_${raName}_${currentSurvey}_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ── Switch Survey ──────────────────────────
+document.getElementById('btn-change-survey').addEventListener('click', () => {
+  showScreen('setup-screen');
+});
+
+// ── Utilities ──────────────────────────────
+function escHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// ── Boot ───────────────────────────────────
+loadData();
+</script>
+</body>
+</html>
