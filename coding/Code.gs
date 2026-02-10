@@ -6,8 +6,8 @@
 // URL: https://script.google.com/macros/s/AKfycbyaNy_KfdXPbu827r5g-EZRIVdK8DvVtjgIRFv5jySRsTS-_HP1fH2Ffd4tEgR9y82LQw/exec
 // ═══════════════════════════════════════════════════════════════════
 
-var CHUNK_SIZE = 30;   // events per property chunk
-var MAX_CHUNKS = 50;   // ~1500 events max before circular overwrite
+var CHUNK_SIZE = 20;   // events per property chunk (kept under 9KB limit)
+var MAX_CHUNKS = 50;   // ~1000 events max before circular overwrite
 
 function doGet(e) {
   var p = (e && e.parameter) ? e.parameter : {};
@@ -64,7 +64,7 @@ function fetchData(p) {
     var props = PropertiesService.getScriptProperties();
     var meta = JSON.parse(props.getProperty('_meta') || '{"chunk":0,"idx":0,"total":0}');
     var events = [];
-    for (var i = 0; i <= Math.min(meta.chunk, MAX_CHUNKS - 1); i++) {
+    for (var i = 0; i < MAX_CHUNKS; i++) {
       var chunk = JSON.parse(props.getProperty('e_' + i) || '[]');
       for (var j = 0; j < chunk.length; j++) {
         var r = chunk[j];
@@ -102,7 +102,7 @@ function clearData(p) {
 // ── JSONP wrapper ──
 function wrap(cb, data) {
   var json = JSON.stringify(data);
-  if (cb) {
+  if (cb && /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(cb)) {
     return ContentService.createTextOutput(cb + '(' + json + ')')
       .setMimeType(ContentService.MimeType.JAVASCRIPT);
   }
