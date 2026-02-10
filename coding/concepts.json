@@ -6,1187 +6,403 @@
       "concepts": [
         {
           "id": "party_gov_can_manage",
-          "label": "PARTY/GOVT CAN MANAGE COUNTRY",
-          "values": {
-            "1": "STRONGLY DISAGREE",
-            "2": "DISAGREE",
-            "3": "AGREE",
-            "4": "STRONGLY AGREE",
-            "8": "DON'T KNOW",
-            "9": "NO ANSWER"
-          }
+          "label": "PARTY/GOVT CAN MANAGE COUNTRY"
         },
         {
           "id": "democracy_requires_struggle",
-          "label": "DEMOCRACY REQUIRES PEOPLE'S STRUGGLE",
-          "values": {
-            "1": "STRONGLY DISAGREE",
-            "2": "DISAGREE",
-            "3": "AGREE",
-            "4": "STRONGLY AGREE",
-            "8": "DON'T KNOW",
-            "9": "NO ANSWER"
-          }
+          "label": "DEMOCRACY REQUIRES PEOPLE'S STRUGGLE"
         },
         {
           "id": "fear_criticizing_gov",
-          "label": "FEAR REPORT FOR CRITICIZING GOVT",
-          "values": {
-            "1": "COMPLETELY UNCONCERNED",
-            "2": "NOT CONCERNED",
-            "3": "CONCERNED",
-            "4": "VERY CONCERNED",
-            "8": "DON'T KNOW",
-            "9": "NO ANSWER"
-          }
+          "label": "FEAR REPORT FOR CRITICIZING GOVT"
         },
         {
           "id": "want_democracy",
-          "label": "To what extent would you want our country to be democratic now?",
-          "values": {
-            "1": "Complete dictatorship",
-            "10": "Complete democracy"
-          }
+          "label": "To what extent would you want our country to be democratic now?"
         },
         {
           "id": "moral_leaders_decide_all",
-          "label": "If we have political leaders who are morally upright, we can let them decide everything",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree"
-          }
+          "label": "If we have political leaders who are morally upright, we can let them decide everything"
         },
         {
           "id": "expert_decide_everything",
-          "label": "We should get rid of parliament and elections and have the experts decide everything",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree"
-          }
+          "label": "We should get rid of parliament and elections and have the experts decide everything"
         },
         {
           "id": "military_rule",
-          "label": "The military should come in to govern the country",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree"
-          }
+          "label": "The military should come in to govern the country"
         },
         {
           "id": "majority_leader_implement",
-          "label": "As long as a political leader enjoys majority support, he should implement his own agenda and disregard the view of the",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree"
-          }
+          "label": "As long as a political leader enjoys majority support, he should implement his own agenda and disregard the view of the"
         },
         {
           "id": "nation_run_by_powerful_few",
-          "label": "The nation is run by a powerful few and ordinary citizens cannot do much about it",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree"
-          }
+          "label": "The nation is run by a powerful few and ordinary citizens cannot do much about it"
         },
         {
           "id": "democracy_vs_economy",
-          "label": "choose between democracy and economic development?",
-          "values": {
-            "1": "Economic development is definitely more important",
-            "2": "Economic development is somewhat more important",
-            "3": "Democracy is somewhat more important",
-            "4": "Democracy is definitely more important",
-            "5": "They are both equally importment"
-          }
+          "label": "choose between democracy and economic development?"
         },
         {
           "id": "leaders_like_family_head",
-          "label": "Government leaders are like the head of a family; we should all follow their decisions",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree"
-          }
+          "label": "Government leaders are like the head of a family; we should all follow their decisions"
         },
         {
           "id": "gov_control_ideas",
-          "label": "The government should decide whether certain ideas should be allowed to be discussed in society",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree"
-          }
+          "label": "The government should decide whether certain ideas should be allowed to be discussed in society"
         },
         {
           "id": "democracy_means_rule_us",
-          "label": "民主就是政府要为民做主",
-          "values": {
-            "1": "同意",
-            "2": "不同意",
-            "3": "不知道"
-          }
+          "label": "民主就是政府要为民做主"
         },
         {
           "id": "democracy_elected_representatives",
-          "label": "如果老百姓有权选举自己的代表去讨论国家和地方的大事，也算是民主",
-          "values": {
-            "1": "同意",
-            "2": "不同意",
-            "3": "不知道"
-          }
+          "label": "如果老百姓有权选举自己的代表去讨论国家和地方的大事，也算是民主"
         },
         {
           "id": "democracy_direct_power",
-          "label": "只有老百姓对国家和地方的大事都有直接的发言权或决定权，才算是民主",
-          "values": {
-            "1": "同意",
-            "2": "不同意",
-            "3": "不知道"
-          }
+          "label": "只有老百姓对国家和地方的大事都有直接的发言权或决定权，才算是民主"
         },
         {
           "id": "democracy_people_change_law",
-          "label": "Democracy: People can change the laws in referendums.",
-          "values": {
-            "1": "Not an essential characteristic of democracy",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "6": "6",
-            "7": "7",
-            "8": "8",
-            "9": "9",
-            "10": "An essential characteristic of democracy"
-          }
+          "label": "Democracy: People can change the laws in referendums."
         },
         {
           "id": "democracy_women_same_rights",
-          "label": "Democracy: Women have the same rights as men.",
-          "values": {
-            "1": "Not an essential characteristic of democracy",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "6": "6",
-            "7": "7",
-            "8": "8",
-            "9": "9",
-            "10": "An essential characteristic of democracy"
-          }
+          "label": "Democracy: Women have the same rights as men."
         },
         {
           "id": "democracy_tax_rich",
-          "label": "Democracy: Governments tax the rich and subsidize the poor.",
-          "values": {
-            "1": "Not an essential characteristic of democracy",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "6": "6",
-            "7": "7",
-            "8": "8",
-            "9": "9",
-            "10": "An essential characteristic of democracy"
-          }
+          "label": "Democracy: Governments tax the rich and subsidize the poor."
         },
         {
           "id": "democracy_unemployment_aid",
-          "label": "Democracy: People receive state aid for unemployment.",
-          "values": {
-            "1": "Not an essential characteristic of democracy",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "6": "6",
-            "7": "7",
-            "8": "8",
-            "9": "9",
-            "10": "An essential characteristic of democracy"
-          }
+          "label": "Democracy: People receive state aid for unemployment."
         },
         {
           "id": "democracy_free_elections",
-          "label": "Democracy: People choose their leaders in free elections.",
-          "values": {
-            "1": "Not an essential characteristic of democracy",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "6": "6",
-            "7": "7",
-            "8": "8",
-            "9": "9",
-            "10": "An essential characteristic of democracy"
-          }
+          "label": "Democracy: People choose their leaders in free elections."
         },
         {
           "id": "democracy_economy_prosperity",
-          "label": "Democracy: The economy is prospering.",
-          "values": {
-            "1": "Not an essential characteristic of democracy",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "6": "6",
-            "7": "7",
-            "8": "8",
-            "9": "9",
-            "10": "An essential characteristic of democracy"
-          }
+          "label": "Democracy: The economy is prospering."
         },
         {
           "id": "democracy_punish_criminals",
-          "label": "Democracy: Criminals are severely punished.",
-          "values": {
-            "1": "Not an essential characteristic of democracy",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "6": "6",
-            "7": "7",
-            "8": "8",
-            "9": "9",
-            "10": "An essential characteristic of democracy"
-          }
+          "label": "Democracy: Criminals are severely punished."
         },
         {
           "id": "freedom_association",
-          "label": "People can join any organization the like without fear",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree",
-            "7": "Do not understand the question",
-            "8": "Can't choose",
-            "9": "Decline to answer"
-          }
+          "label": "People can join any organization the like without fear"
         },
         {
           "id": "freedom_speech",
-          "label": "People are free to speak what they think without fear",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree",
-            "7": "Do not understand the question",
-            "8": "Can't choose",
-            "9": "Decline to answer"
-          }
+          "label": "People are free to speak what they think without fear"
         },
         {
           "id": "gov_withhold_info",
-          "label": "How often do government officials withhold important information from the public view?",
-          "values": {
-            "1": "Always",
-            "2": "Most of the time",
-            "3": "Occasionally",
-            "4": "Rarely",
-            "7": "Do not understand the question",
-            "8": "Can't choose",
-            "9": "Decline to answer"
-          }
+          "label": "How often do government officials withhold important information from the public view?"
         },
         {
           "id": "gov_responsiveness",
-          "label": "How well do you think the government responds to what people want",
-          "values": {
-            "1": "Very responsive",
-            "2": "Largely responsive",
-            "3": "Not very responsive",
-            "4": "Not responsive at all",
-            "7": "Do not understand the question",
-            "8": "Can't choose",
-            "9": "Decline to answer"
-          }
+          "label": "How well do you think the government responds to what people want"
         },
         {
           "id": "public_decision",
-          "label": "我们国家最重要的决策应该由普通群众来做，而不是让政府官员来做",
-          "values": {
-            "1": "非常同意",
-            "2": "同意",
-            "3": "不同意",
-            "4": "非常不同意",
-            "7": "不懂题意",
-            "8": "不知道",
-            "9": "不回答"
-          }
+          "label": "我们国家最重要的决策应该由普通群众来做，而不是让政府官员来做"
         },
         {
           "id": "officials_follow_public",
-          "label": "政府官员在做决策的时候应该完全顺从普通群众的意愿",
-          "values": {
-            "1": "非常同意",
-            "2": "同意",
-            "3": "不同意",
-            "4": "非常不同意",
-            "7": "不懂题意",
-            "8": "不知道",
-            "9": "不回答"
-          }
+          "label": "政府官员在做决策的时候应该完全顺从普通群众的意愿"
         },
         {
           "id": "strong_leader",
-          "label": "Political system: Having a strong leader",
-          "values": {
-            "1": "Very good",
-            "2": "Fairly good",
-            "3": "Bad",
-            "4": "Very bad"
-          }
+          "label": "Political system: Having a strong leader"
         },
         {
           "id": "election_choice",
-          "label": "q111.  how often do you think our elections offer the voters a real choice betwe",
-          "values": {
-            "1": "always",
-            "2": "most of the time",
-            "3": "sometimes",
-            "4": "rarely",
-            "7": "don't understand the question",
-            "8": "can't choose",
-            "9": "decline to answer"
-          }
+          "label": "q111.  how often do you think our elections offer the voters a real choice betwe"
         },
         {
           "id": "election_gov_attention",
-          "label": "q115. how much do you feel that having elections makes the government pay attent",
-          "values": {
-            "1": "a good deal",
-            "2": "quite a lot",
-            "3": "not much",
-            "4": "not at all",
-            "7": "don't understand the question",
-            "8": "can't choose",
-            "9": "decline to answer"
-          }
+          "label": "q115. how much do you feel that having elections makes the government pay attent"
         },
         {
           "id": "worry_gov_surveillance",
-          "label": "[4我担心政府查看我在网上的行为] 以下描述是否符合您的情况？",
-          "values": {
-            "1": "非常不符合",
-            "2": "不符合",
-            "3": "无所谓符合不符合",
-            "4": "符合",
-            "5": "非常符合"
-          }
+          "label": "[4我担心政府查看我在网上的行为] 以下描述是否符合您的情况？"
         },
         {
           "id": "protest_leads_to_instability",
-          "label": "Public demonstrations can easily turn into social disturbances and impact social",
-          "values": {
-            "1": "agree strongly",
-            "2": "agree",
-            "3": "neither agree nor disagree",
-            "4": "disagree",
-            "5": "disagree strongly",
-            "8": "dont know",
-            "9": "refuse to answer"
-          }
+          "label": "Public demonstrations can easily turn into social disturbances and impact social"
         },
         {
           "id": "demonstrations_should_be_forbidden",
-          "label": "Public demonstrations should be forbidden",
-          "values": {
-            "1": "agree strongly",
-            "2": "agree",
-            "3": "neither agree nor disagree",
-            "4": "disagree",
-            "5": "disagree strongly",
-            "8": "dont know",
-            "9": "refuse to answer"
-          }
+          "label": "Public demonstrations should be forbidden"
         },
         {
           "id": "multiparty_leads_chaos",
-          "label": "If a country has multiple parties, it can lead to political chaos",
-          "values": {
-            "1": "agree strongly",
-            "2": "agree",
-            "3": "neither agree nor disagree",
-            "4": "disagree",
-            "5": "disagree strongly",
-            "8": "dont know",
-            "9": "refuse to answer"
-          }
+          "label": "If a country has multiple parties, it can lead to political chaos"
         },
         {
           "id": "multiparty_unsuitable",
-          "label": "西方的多党制不适合中国国情",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "不太同意",
-            "4": "非常不同意",
-            "8": "不知道",
-            "9": "未回答"
-          }
+          "label": "西方的多党制不适合中国国情"
         },
         {
           "id": "gov_court_consistent",
-          "label": "[ur-e4710]政府与法院在案件上态度一致",
-          "values": {
-            "1": "非常不同意",
-            "2": "不同意",
-            "3": "同意",
-            "4": "非常同意",
-            "5": "[不回答]"
-          }
+          "label": "[ur-e4710]政府与法院在案件上态度一致"
         },
         {
           "id": "law_needs_gov_support",
-          "label": "[ur-e4712]只有政府支持法律才能运转",
-          "values": {
-            "1": "非常不同意",
-            "2": "不同意",
-            "3": "同意",
-            "4": "非常同意",
-            "5": "[不回答]"
-          }
+          "label": "[ur-e4712]只有政府支持法律才能运转"
         },
         {
           "id": "law_enforcement_follow_gov",
-          "label": "[ur-e4736]执法时应以政府决策为依据",
-          "values": {
-            "1": "非常不同意",
-            "2": "不同意",
-            "3": "同意",
-            "4": "非常同意",
-            "5": "[不回答]"
-          }
+          "label": "[ur-e4736]执法时应以政府决策为依据"
         },
         {
           "id": "law_irrelevant_if_not_criminal",
-          "label": "[ur-e4737]只要不违法犯罪法律与我无关",
-          "values": {
-            "1": "非常不同意",
-            "2": "不同意",
-            "3": "同意",
-            "4": "非常同意",
-            "5": "[不回答]"
-          }
+          "label": "[ur-e4737]只要不违法犯罪法律与我无关"
         },
         {
           "id": "right_appeal_local_policy",
-          "label": "[ur-e4735]对本地政策有意见有权向上级申述",
-          "values": {
-            "1": "非常不同意",
-            "2": "不同意",
-            "3": "同意",
-            "4": "非常同意",
-            "5": "[不回答]"
-          }
+          "label": "[ur-e4735]对本地政策有意见有权向上级申述"
         },
         {
           "id": "no_right_evaluate_gov",
-          "label": "像我这样的人，无权评价政府行为",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "中立",
-            "4": "不太同意",
-            "5": "非常不同意",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "像我这样的人，无权评价政府行为"
         },
         {
           "id": "national_security_problem",
-          "label": "How serious  these problems are : national security and defense",
-          "values": {
-            "0": "no a problem at all",
-            "10": "extremely serious problem",
-            "88": "don't know"
-          }
+          "label": "How serious  these problems are : national security and defense"
         },
         {
           "id": "social_stability_problem",
-          "label": "How serious  these problems are : social stablility",
-          "values": {
-            "0": "no a problem at all",
-            "10": "extremely serious problem",
-            "88": "don't know"
-          }
+          "label": "How serious  these problems are : social stablility"
         },
         {
           "id": "civil_liberties_problem",
-          "label": "How serious  these problems are : civil liberties and political democracy",
-          "values": {
-            "0": "no a problem at all",
-            "10": "extremely serious problem",
-            "88": "don't know"
-          }
+          "label": "How serious  these problems are : civil liberties and political democracy"
         },
         {
           "id": "free_speech_problem",
-          "label": "How serious  these problems are : freedom of speach",
-          "values": {
-            "0": "no a problem at all",
-            "10": "extremely serious problem",
-            "88": "don't know"
-          }
+          "label": "How serious  these problems are : freedom of speach"
         },
         {
           "id": "corruption_problem",
-          "label": "How serious  these problems are : corruption",
-          "values": {
-            "0": "no a problem at all",
-            "10": "extremely serious problem",
-            "88": "don't know"
-          }
+          "label": "How serious  these problems are : corruption"
         },
         {
           "id": "press_freedom_problem",
-          "label": "How serious  these problems are : freedom of press",
-          "values": {
-            "0": "no a problem at all",
-            "10": "extremely serious problem",
-            "88": "don't know"
-          }
+          "label": "How serious  these problems are : freedom of press"
         },
         {
           "id": "need_strong_government",
-          "label": "We need a strong government to handle today's complex economic problems",
-          "values": {
-            "1": "agree strongly",
-            "2": "agree",
-            "3": "neither agree nor disagree",
-            "4": "disagree",
-            "5": "disagree strongly",
-            "8": "dont know",
-            "9": "refuse to answer"
-          }
+          "label": "We need a strong government to handle today's complex economic problems"
         },
         {
           "id": "should_have_consensus",
-          "label": "我们每个人都应该努力与大家的想法保持一致，以免造成社会混乱",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "不太同意",
-            "4": "非常不同意",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "我们每个人都应该努力与大家的想法保持一致，以免造成社会混乱"
         },
         {
           "id": "citizen_effort",
-          "label": "q102. most citizens in our country don't make much effort to influence governmen",
-          "values": {
-            "1": "strongly agree",
-            "2": "somewhat agree",
-            "3": "somewhat disagree",
-            "4": "strongly disagree",
-            "7": "don't understand the question",
-            "8": "can't choose",
-            "9": "decline to answer"
-          }
+          "label": "q102. most citizens in our country don't make much effort to influence governmen"
         },
         {
           "id": "gov_not_interfere_criticism",
-          "label": "如果有人在公共场所发布批评政府的言论，政府不应该干涉，你同意吗",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意"
-          }
+          "label": "如果有人在公共场所发布批评政府的言论，政府不应该干涉，你同意吗"
         },
         {
           "id": "gov_leader_obedience",
-          "label": "是否同意“政府领导人就像一家之长，应该服从他们的决定”？",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "不太同意",
-            "4": "非常不同意",
-            "8": "不知道",
-            "9": "无回答"
-          }
+          "label": "是否同意“政府领导人就像一家之长，应该服从他们的决定”？"
         },
         {
           "id": "oppose_restricting_gov_power",
-          "label": "OPPOSE RESTRICTING GOVT'S POWER",
-          "values": {
-            "1": "STRONGLY DISAGREE",
-            "2": "DISAGREE",
-            "3": "AGREE",
-            "4": "STRONGLY AGREE",
-            "8": "DON'T KNOW",
-            "9": "NO ANSWER"
-          }
+          "label": "OPPOSE RESTRICTING GOVT'S POWER"
         },
         {
           "id": "democratic_system",
-          "label": "Political system: Having a democratic political system",
-          "values": {
-            "1": "Very good",
-            "2": "Fairly good",
-            "3": "Fairly bad",
-            "4": "Very bad"
-          }
+          "label": "Political system: Having a democratic political system"
         },
         {
           "id": "leader_accomplish_at_all_cost",
-          "label": "The most important thing for a political leader is to accomplish his goals even if he has to ignore the established proc",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree"
-          }
+          "label": "The most important thing for a political leader is to accomplish his goals even if he has to ignore the established proc"
         },
         {
           "id": "democracy_religious_authority",
-          "label": "Democracy: Religious authorities interpret the laws.",
-          "values": {
-            "1": "Not an essential characteristic of democracy",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "6": "6",
-            "7": "7",
-            "8": "8",
-            "9": "9",
-            "10": "An essential characteristic of democracy"
-          }
+          "label": "Democracy: Religious authorities interpret the laws."
         },
         {
           "id": "democracy_civil_rights",
-          "label": "Democracy: Civil rights protect people’s liberty against oppression.",
-          "values": {
-            "1": "Not an essential characteristic of democracy",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "6": "6",
-            "7": "7",
-            "8": "8",
-            "9": "9",
-            "10": "An essential characteristic of democracy"
-          }
+          "label": "Democracy: Civil rights protect people’s liberty against oppression."
         },
         {
           "id": "democracy_army_takeover",
-          "label": "Democracy: The army takes over when government is incompetent.",
-          "values": {
-            "1": "Not an essential characteristic of democracy",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "6": "6",
-            "7": "7",
-            "8": "8",
-            "9": "9",
-            "10": "An essential characteristic of democracy"
-          }
+          "label": "Democracy: The army takes over when government is incompetent."
         },
         {
           "id": "treat_critics_negatively",
-          "label": "How do you treat them",
-          "values": {
-            "0": "Not applicable: due to skip pattern (1 in B10b)",
-            "1": "Openly confront them",
-            "2": "Report them to authorities",
-            "3": "Ignore them",
-            "8": "don't know",
-            "9": "no answer"
-          }
+          "label": "How do you treat them"
         },
         {
           "id": "politician_quarrels_harmful",
-          "label": "Open quarrels (criticisms) among politicians are harmful to society.",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree",
-            "7": "Do not understand the question",
-            "8": "Can't choose",
-            "9": "Decline to answer"
-          }
+          "label": "Open quarrels (criticisms) among politicians are harmful to society."
         },
         {
           "id": "political_conflict_good",
-          "label": "Conflict among political groups is not a bad thing for our country. (NEW)",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree",
-            "7": "Do not understand the question",
-            "8": "Can't choose",
-            "9": "Decline to answer"
-          }
+          "label": "Conflict among political groups is not a bad thing for our country. (NEW)"
         },
         {
           "id": "gradual_reform",
-          "label": "Political reform should be introduced little-by-little instead of all-at-once. (NEW)",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree",
-            "7": "Do not understand the question",
-            "8": "Can't choose",
-            "9": "Decline to answer"
-          }
+          "label": "Political reform should be introduced little-by-little instead of all-at-once. (NEW)"
         },
         {
           "id": "people_cant_hold_gov_responsible",
-          "label": "Between elections, the people have no way of holding the government responsible for its actions",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree",
-            "7": "Do not understand the question",
-            "8": "Can't choose",
-            "9": "Decline to answer"
-          }
+          "label": "Between elections, the people have no way of holding the government responsible for its actions"
         },
         {
           "id": "gov_above_law",
-          "label": "When the government breaks the laws, there is nothing the legal system can do",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree",
-            "7": "Do not understand the question",
-            "8": "Can't choose",
-            "9": "Decline to answer"
-          }
+          "label": "When the government breaks the laws, there is nothing the legal system can do"
         },
         {
           "id": "judge_admin_relation",
-          "label": "以下说法多大程度上和现实相符-法官会考虑作为被告的行政机关和法院的关系",
-          "values": {
-            "1": "完全不符合",
-            "2": "比较不符合",
-            "3": "一般",
-            "4": "比较符合",
-            "5": "完全符合"
-          }
+          "label": "以下说法多大程度上和现实相符-法官会考虑作为被告的行政机关和法院的关系"
         },
         {
           "id": "democracy_level",
-          "label": "中国目前的民主程度是？(如果1代表完全不民主，10代表完全民主，在程度上，数字越小越",
-          "values": {
-            "97": "不懂题意",
-            "99": "不回答"
-          }
+          "label": "中国目前的民主程度是？(如果1代表完全不民主，10代表完全民主，在程度上，数字越小越"
         },
         {
           "id": "defense_policy",
-          "label": "国防和对外政策（1表示状况非常差，10表示状况非常好，在程度上，数字越小表示状况越%XB2",
-          "values": {
-            "99": "不回答"
-          }
+          "label": "国防和对外政策（1表示状况非常差，10表示状况非常好，在程度上，数字越小表示状况越%XB2"
         },
         {
           "id": "npc_supervision",
-          "label": "在您看来，我国的人大有多大能力来监督政府领导人？",
-          "values": {
-            "1": "很有能力",
-            "2": "有能力",
-            "3": "没有能力",
-            "4": "完全没有能力",
-            "8": "不知道",
-            "9": "不回答"
-          }
+          "label": "在您看来，我国的人大有多大能力来监督政府领导人？"
         },
         {
           "id": "election_influence",
-          "label": "在您看来，我国的选举有多大的可能让政府官员关注群众的意见和要求？",
-          "values": {
-            "1": "非常有可能",
-            "2": "有可能",
-            "3": "没有多少可能",
-            "4": "完全没有可能",
-            "8": "不知道",
-            "9": "不回答"
-          }
+          "label": "在您看来，我国的选举有多大的可能让政府官员关注群众的意见和要求？"
         },
         {
           "id": "gov_legislature_constraint",
-          "label": "如果政府经常受到立法机构的制约，那么就很难办好大事情",
-          "values": {
-            "1": "非常同意",
-            "2": "同意",
-            "3": "不同意",
-            "4": "非常不同意",
-            "7": "不懂题意",
-            "8": "不知道",
-            "9": "不回答"
-          }
+          "label": "如果政府经常受到立法机构的制约，那么就很难办好大事情"
         },
         {
           "id": "one_party_rule",
-          "label": "应该只允许由一个政党执政",
-          "values": {
-            "1": "非常同意",
-            "2": "同意",
-            "3": "不同意",
-            "4": "非常不同意",
-            "7": "不懂题意",
-            "8": "不知道",
-            "9": "不回答"
-          }
+          "label": "应该只允许由一个政党执政"
         },
         {
           "id": "capable_as_official",
-          "label": "如果让我当政府干部，我也完全能胜任",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意"
-          }
+          "label": "如果让我当政府干部，我也完全能胜任"
         },
         {
           "id": "capable_participate_politics",
-          "label": "我认为我完全有能力参与政治",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "中立",
-            "4": "不太同意",
-            "5": "非常不同意",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "我认为我完全有能力参与政治"
         },
         {
           "id": "capable_political_participation",
-          "label": "我觉得自己有能力参与政治",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意"
-          }
+          "label": "我觉得自己有能力参与政治"
         },
         {
           "id": "citizen_loyalty",
-          "label": "q137. a citizen should always remain loyal only to his country, no matter how im",
-          "values": {
-            "1": "strongly agree",
-            "2": "somewhat agree",
-            "3": "somewhat disagree",
-            "4": "strongly disagree",
-            "7": "don't understand the question",
-            "8": "can't choose",
-            "9": "decline to answer"
-          }
+          "label": "q137. a citizen should always remain loyal only to his country, no matter how im"
         },
         {
           "id": "country_is_democratic",
-          "label": "In your opinion how much of a democracy is [country]?",
-          "values": {
-            "1": "A full democracy",
-            "2": "A democracy, but with minor problems",
-            "3": "A democracy, with major problems",
-            "4": "Not a democracy",
-            "7": "don't understand question",
-            "8": "can't choose",
-            "9": "decline to answer"
-          }
+          "label": "In your opinion how much of a democracy is [country]?"
         },
         {
           "id": "court_follow_gov",
-          "label": "法院在审判重大案件时，应该接受当地政府的意见。",
-          "values": {
-            "1": "非常同意",
-            "2": "同意",
-            "3": "不同意",
-            "4": "非常不同意",
-            "7": "不懂题意",
-            "8": "不知道",
-            "9": "不回答"
-          }
+          "label": "法院在审判重大案件时，应该接受当地政府的意见。"
         },
         {
           "id": "democracy_people_obey_rulers",
-          "label": "Democracy: People obey their rulers",
-          "values": {
-            "0": "It is against democracy (spontaneous)",
-            "1": "Not an essential characteristic of democracy",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "6": "6",
-            "7": "7",
-            "8": "8",
-            "9": "9",
-            "10": "An essential characteristic of democracy"
-          }
+          "label": "Democracy: People obey their rulers"
         },
         {
           "id": "democracy_satisfied",
-          "label": "On the whole, how satisfied or dissatisfied are you with the way democracy works in [country]?",
-          "values": {
-            "1": "Not at all satisfied",
-            "2": "Not very satisfied",
-            "3": "Fairly satisfied",
-            "4": "Very satisfied",
-            "8": "Can't choose",
-            "9": "Decline to answer"
-          }
+          "label": "On the whole, how satisfied or dissatisfied are you with the way democracy works in [country]?"
         },
         {
           "id": "democracy_suitable",
-          "label": "Do you think democracy is suitable for our country?",
-          "values": {
-            "1": "Completely unsuitable",
-            "10": "Completely suitable"
-          }
+          "label": "Do you think democracy is suitable for our country?"
         },
         {
           "id": "diff_political_views",
-          "label": "我觉得我对政治的看法常与别人不同",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意"
-          }
+          "label": "我觉得我对政治的看法常与别人不同"
         },
         {
           "id": "economic_stability_over_democracy",
-          "label": "[ur-e4732]经济能稳定发展就不必提高民主",
-          "values": {
-            "1": "非常不同意",
-            "2": "不同意",
-            "3": "同意",
-            "4": "非常同意",
-            "5": "[不回答]"
-          }
+          "label": "[ur-e4732]经济能稳定发展就不必提高民主"
         },
         {
           "id": "endure_govt_infringement",
-          "label": "如果政府侵占了我个人利益，我只能忍了",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意"
-          }
+          "label": "如果政府侵占了我个人利益，我只能忍了"
         },
         {
           "id": "expert_have_a_say",
-          "label": "[ur-e4734]只有专业人士在决策中才有发言权",
-          "values": {
-            "1": "非常不同意",
-            "2": "不同意",
-            "3": "同意",
-            "4": "非常同意",
-            "5": "[不回答]"
-          }
+          "label": "[ur-e4734]只有专业人士在决策中才有发言权"
         },
         {
           "id": "gov_ignore_law",
-          "label": "当国家面临困难时，政府为了处理这个困难的情况可以不必理会法律。",
-          "values": {
-            "1": "非常同意",
-            "2": "同意",
-            "3": "不同意",
-            "4": "非常不同意",
-            "7": "不懂题意",
-            "8": "不知道",
-            "9": "不回答"
-          }
+          "label": "当国家面临困难时，政府为了处理这个困难的情况可以不必理会法律。"
         },
         {
           "id": "no_confidence_discuss_govt",
-          "label": "当和别人讨论政府的工作或做法时，我对自己没有信心",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意"
-          }
+          "label": "当和别人讨论政府的工作或做法时，我对自己没有信心"
         },
         {
           "id": "no_influence_on_govt",
-          "label": "像我们这样的人，对政府的决定没有任何影响",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意"
-          }
+          "label": "像我们这样的人，对政府的决定没有任何影响"
         },
         {
           "id": "people_influence_govt",
-          "label": "PEOPLE HAVE WAYS INFLUENCE GOVT",
-          "values": {
-            "1": "STRONGLY DISAGREE",
-            "2": "DISAGREE",
-            "3": "AGREE",
-            "4": "STRONGLY AGREE",
-            "8": "DON'T KNOW",
-            "9": "NO ANSWER"
-          }
+          "label": "PEOPLE HAVE WAYS INFLUENCE GOVT"
         },
         {
           "id": "people_obey_govt",
-          "label": "老百姓应该服从政府",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意"
-          }
+          "label": "老百姓应该服从政府"
         },
         {
           "id": "political_connections_importance",
-          "label": "f1g. 有政治关系有多重要",
-          "values": {
-            "1": "非常重要",
-            "2": "比较重要",
-            "3": "一般重要",
-            "4": "不太重要",
-            "5": "根本不重要",
-            "6": "无法选择"
-          }
+          "label": "f1g. 有政治关系有多重要"
         },
         {
           "id": "political_voice",
-          "label": "您在多大程度上同意下面这个说法：像我这样的人对政府要做的事情没有发言权。",
-          "values": {
-            "1": "非常同意",
-            "2": "同意",
-            "3": "说不上同意不同意",
-            "4": "不同意",
-            "5": "非常不同意",
-            "8": "无法选择"
-          }
+          "label": "您在多大程度上同意下面这个说法：像我这样的人对政府要做的事情没有发言权。"
         },
         {
           "id": "politicians_self_interest",
-          "label": "大多数政治家都是在为私利玩弄政治",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意",
-            "8": "无法选择"
-          }
+          "label": "大多数政治家都是在为私利玩弄政治"
         },
         {
           "id": "politics_too_complex",
-          "label": "[ur-e4731]政治太复杂我这样的人不懂",
-          "values": {
-            "1": "非常不同意",
-            "2": "不同意",
-            "3": "同意",
-            "4": "非常同意",
-            "5": "[不回答]"
-          }
+          "label": "[ur-e4731]政治太复杂我这样的人不懂"
         },
         {
           "id": "politics_too_complicated",
-          "label": "政治太复杂，不是像我这样的人可以理解的",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "中立",
-            "4": "不太同意",
-            "5": "非常不同意",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "政治太复杂，不是像我这样的人可以理解的"
         },
         {
           "id": "suggestions_adopted",
-          "label": "我向政府机构提出建议时，会被有关部门采纳",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意"
-          }
+          "label": "我向政府机构提出建议时，会被有关部门采纳"
         },
         {
           "id": "suggestions_reach_leaders",
-          "label": "我对于政府部门的建议/意见可以让领导知道",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意"
-          }
+          "label": "我对于政府部门的建议/意见可以让领导知道"
         },
         {
           "id": "tax_policy_public_opinion",
-          "label": "政府制定税收政策必须征求老百姓的意见",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意"
-          }
+          "label": "政府制定税收政策必须征求老百姓的意见"
         },
         {
           "id": "taxpayer_rights",
-          "label": "只要纳了税，就有权利讨论政府怎么花钱",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意"
-          }
+          "label": "只要纳了税，就有权利讨论政府怎么花钱"
         },
         {
           "id": "worry_internet_surveillance",
-          "label": "[5我担心公司查看我在网上的行为] 以下描述是否符合您的情况？",
-          "values": {
-            "1": "非常不符合",
-            "2": "不符合",
-            "3": "无所谓符合不符合",
-            "4": "符合",
-            "5": "非常符合"
-          }
+          "label": "[5我担心公司查看我在网上的行为] 以下描述是否符合您的情况？"
         }
       ]
     },
@@ -1196,365 +412,119 @@
       "concepts": [
         {
           "id": "market_competition_harmful",
-          "label": "Competition between firms and individuals is harmful to social stability.",
-          "values": {
-            "1": "agree strongly",
-            "2": "agree",
-            "3": "neither agree nor disagree",
-            "4": "disagree",
-            "5": "disagree strongly",
-            "8": "dont know",
-            "9": "refuse to answer"
-          }
+          "label": "Competition between firms and individuals is harmful to social stability."
         },
         {
           "id": "elderly_care_responsibility",
-          "label": "您认为有子女的老人的养老主要应该由谁负责",
-          "values": {
-            "1": "主要有政府负责",
-            "2": "主要有子女负责",
-            "3": "主要有老人自己负责",
-            "4": "政府/子女/老人责任均摊"
-          }
+          "label": "您认为有子女的老人的养老主要应该由谁负责"
         },
         {
           "id": "gov_responsibility",
-          "label": "Government responsibility",
-          "values": {
-            "1": "People should take more responsibility",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "6": "6",
-            "7": "7",
-            "8": "8",
-            "9": "9",
-            "10": "The government should take more responsibility"
-          }
+          "label": "Government responsibility"
         },
         {
           "id": "gov_responsibility_crime",
-          "label": "在解决犯罪的问题时，政府应该负多大责任？",
-          "values": {
-            "1": "完全由个人负责",
-            "2": "主要由个人负责",
-            "3": "政府和个人分担",
-            "4": "主要由政府负责",
-            "5": "完全由政府负责",
-            "8": "不知道",
-            "9": "无回答"
-          }
+          "label": "在解决犯罪的问题时，政府应该负多大责任？"
         },
         {
           "id": "gov_responsibility_edu",
-          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？义务教育",
-          "values": {
-            "1": "完全由个人负责",
-            "2": "主要由个人负责",
-            "3": "政府和个人分担",
-            "4": "主要由政府负责",
-            "5": "完全由政府负责",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？义务教育"
         },
         {
           "id": "gov_responsibility_elderly",
-          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？养老",
-          "values": {
-            "1": "完全由个人负责",
-            "2": "主要由个人负责",
-            "3": "政府和个人分担",
-            "4": "主要由政府负责",
-            "5": "完全由政府负责",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？养老"
         },
         {
           "id": "gov_responsibility_env",
-          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？环境保护",
-          "values": {
-            "1": "完全由个人负责",
-            "2": "主要由个人负责",
-            "3": "政府和个人分担",
-            "4": "主要由政府负责",
-            "5": "完全由政府负责",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？环境保护"
         },
         {
           "id": "gov_responsibility_food_safety",
-          "label": "在解决食品安全的问题时，政府应该负多大责任？",
-          "values": {
-            "1": "完全由个人负责",
-            "2": "主要由个人负责",
-            "3": "政府和个人分担",
-            "4": "主要由政府负责",
-            "5": "完全由政府负责",
-            "8": "不知道",
-            "9": "无回答"
-          }
+          "label": "在解决食品安全的问题时，政府应该负多大责任？"
         },
         {
           "id": "gov_responsibility_healthcare",
-          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？医疗保障",
-          "values": {
-            "1": "完全由个人负责",
-            "2": "主要由个人负责",
-            "3": "政府和个人分担",
-            "4": "主要由政府负责",
-            "5": "完全由政府负责",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？医疗保障"
         },
         {
           "id": "gov_responsibility_housing",
-          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？住房",
-          "values": {
-            "1": "完全由个人负责",
-            "2": "主要由个人负责",
-            "3": "政府和个人分担",
-            "4": "主要由政府负责",
-            "5": "完全由政府负责",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？住房"
         },
         {
           "id": "gov_responsibility_if_elderly",
-          "label": "f16c.总体来说，您认为政府是否应该或有责任提供下列福利呢？ - 为老人提供生活保障",
-          "values": {
-            "1": "绝对应该/绝对有责任",
-            "2": "可能应该/可能有责任",
-            "3": "可能不应该/可能没有责任",
-            "4": "绝对不应该/绝对没有责任",
-            "5": "无法选择"
-          }
+          "label": "f16c.总体来说，您认为政府是否应该或有责任提供下列福利呢？ - 为老人提供生活保障"
         },
         {
           "id": "gov_responsibility_if_healthcare",
-          "label": "f16b.总体来说，您认为政府是否应该或有责任提供下列福利呢？ - 人人有医疗保险",
-          "values": {
-            "1": "绝对应该/绝对有责任",
-            "2": "可能应该/可能有责任",
-            "3": "可能不应该/可能没有责任",
-            "4": "绝对不应该/绝对没有责任",
-            "5": "无法选择"
-          }
+          "label": "f16b.总体来说，您认为政府是否应该或有责任提供下列福利呢？ - 人人有医疗保险"
         },
         {
           "id": "gov_responsibility_if_jobs",
-          "label": "f16a.总体来说，您认为政府是否应该或有责任提供下列福利呢？ - 人人有工作机会",
-          "values": {
-            "1": "绝对应该/绝对有责任",
-            "2": "可能应该/可能有责任",
-            "3": "可能不应该/可能没有责任",
-            "4": "绝对不应该/绝对没有责任",
-            "5": "无法选择"
-          }
+          "label": "f16a.总体来说，您认为政府是否应该或有责任提供下列福利呢？ - 人人有工作机会"
         },
         {
           "id": "gov_responsibility_jobs",
-          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？就业",
-          "values": {
-            "1": "完全由个人负责",
-            "2": "主要由个人负责",
-            "3": "政府和个人分担",
-            "4": "主要由政府负责",
-            "5": "完全由政府负责",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？就业"
         },
         {
           "id": "gov_responsibility_medical",
-          "label": "在解决下列问题上，政府应该承担多大的责任？医疗保障",
-          "values": {
-            "1": "完全由政府负责",
-            "2": "主要由政府负责",
-            "3": "政府和个人分担",
-            "4": "主要由个人负责",
-            "5": "完全由个人负责",
-            "8": "不知道",
-            "9": "未回答"
-          }
+          "label": "在解决下列问题上，政府应该承担多大的责任？医疗保障"
         },
         {
           "id": "gov_responsibility_poverty",
-          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？贫困",
-          "values": {
-            "1": "完全由个人负责",
-            "2": "主要由个人负责",
-            "3": "政府和个人分担",
-            "4": "主要由政府负责",
-            "5": "完全由政府负责",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？贫困"
         },
         {
           "id": "gov_responsibility_security",
-          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？社会治安",
-          "values": {
-            "1": "完全由个人负责",
-            "2": "主要由个人负责",
-            "3": "政府和个人分担",
-            "4": "主要由政府负责",
-            "5": "完全由政府负责",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？社会治安"
         },
         {
           "id": "gov_responsibility_terrorism",
-          "label": "在解决恐怖主义的问题时，政府应该负多大责任？",
-          "values": {
-            "1": "完全由个人负责",
-            "2": "主要由个人负责",
-            "3": "政府和个人分担",
-            "4": "主要由政府负责",
-            "5": "完全由政府负责",
-            "8": "不知道",
-            "9": "无回答"
-          }
+          "label": "在解决恐怖主义的问题时，政府应该负多大责任？"
         },
         {
           "id": "gov_responsibility_to_narrow_gap",
-          "label": "f6b. 缩小高收入者和低收入者之间的收入差距，是政府的责任",
-          "values": {
-            "1": "非常同意",
-            "2": "同意",
-            "3": "不同意也不反对",
-            "4": "不同意",
-            "5": "非常不同意",
-            "6": "无法选择"
-          }
+          "label": "f6b. 缩小高收入者和低收入者之间的收入差距，是政府的责任"
         },
         {
           "id": "gov_responsibility_transport",
-          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？交通",
-          "values": {
-            "1": "完全由个人负责",
-            "2": "主要由个人负责",
-            "3": "政府和个人分担",
-            "4": "主要由政府负责",
-            "5": "完全由政府负责",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？交通"
         },
         {
           "id": "gov_beyond_basic_healthcare",
-          "label": "您同不同意以下说法-政府应当只提供基本的医疗卫生保健服务",
-          "values": {
-            "1": "非常同意",
-            "2": "同意",
-            "3": "说不上同意不同意",
-            "4": "不同意",
-            "5": "非常不同意",
-            "8": "无法选择"
-          }
+          "label": "您同不同意以下说法-政府应当只提供基本的医疗卫生保健服务"
         },
         {
           "id": "gov_education_investment",
-          "label": "f15c.您认为政府在教育方面的投入应该是增加还是减少呢？",
-          "values": {
-            "1": "增加很多",
-            "2": "增加一点",
-            "3": "保持现状",
-            "4": "减少一些",
-            "5": "减少很多",
-            "6": "无法选择"
-          }
+          "label": "f15c.您认为政府在教育方面的投入应该是增加还是减少呢？"
         },
         {
           "id": "gov_ensure_min_living",
-          "label": "对于以下说法，您的态度怎样：政府应该保证每个人至少能维持最低标准的生活。",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "中立",
-            "4": "不太同意",
-            "5": "非常不同意",
-            "8": "不知道",
-            "9": "未回答"
-          }
+          "label": "对于以下说法，您的态度怎样：政府应该保证每个人至少能维持最低标准的生活。"
         },
         {
           "id": "gov_limit_income",
-          "label": "对于以下说法，您的态度怎样：政府应该规定个人收入的最高限额。",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "中立",
-            "4": "不太同意",
-            "5": "非常不同意",
-            "8": "不知道",
-            "9": "未回答"
-          }
+          "label": "对于以下说法，您的态度怎样：政府应该规定个人收入的最高限额。"
         },
         {
           "id": "gov_medical_investment",
-          "label": "f15a.您认为政府在医疗卫生方面的投入应该是增加还是减少呢？",
-          "values": {
-            "1": "增加很多",
-            "2": "增加一点",
-            "3": "保持现状",
-            "4": "减少一些",
-            "5": "减少很多",
-            "6": "无法选择"
-          }
+          "label": "f15a.您认为政府在医疗卫生方面的投入应该是增加还是减少呢？"
         },
         {
           "id": "gov_policy_poverty_cause",
-          "label": "[ur-e4708]政府政策不妥是贫穷的原因",
-          "values": {
-            "1": "非常不同意",
-            "2": "不同意",
-            "3": "同意",
-            "4": "非常同意",
-            "5": "[不回答]"
-          }
+          "label": "[ur-e4708]政府政策不妥是贫穷的原因"
         },
         {
           "id": "gov_prevent_wealth_gap",
-          "label": "In order to preserve social justice, the government should prevent the gap between rich and poor from growing any larger.",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree",
-            "7": "Do not understand the question",
-            "8": "Can't choose",
-            "9": "Decline to answer"
-          }
+          "label": "In order to preserve social justice, the government should prevent the gap between rich and poor from growing any larger."
         },
         {
           "id": "gov_reduce_welfare",
-          "label": "f6d. 政府应该减少穷人福利的开销",
-          "values": {
-            "1": "非常同意",
-            "2": "同意",
-            "3": "不同意也不反对",
-            "4": "不同意",
-            "5": "非常不同意",
-            "6": "无法选择"
-          }
+          "label": "f6d. 政府应该减少穷人福利的开销"
         },
         {
           "id": "gov_regulate_private_business",
-          "label": "[ur-e4709]政府应加大对私营业主管理",
-          "values": {
-            "1": "非常不同意",
-            "2": "不同意",
-            "3": "同意",
-            "4": "非常同意",
-            "5": "[不回答]"
-          }
+          "label": "[ur-e4709]政府应加大对私营业主管理"
         },
         {
           "id": "gov_should_provide_disability",
@@ -1574,991 +544,335 @@
         },
         {
           "id": "gov_should_provide_jobs",
-          "label": "对于以下说法，您的态度怎样：政府应该为每一个愿意工作的人提供工作机会。",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "中立",
-            "4": "不太同意",
-            "5": "非常不同意",
-            "8": "不知道",
-            "9": "未回答"
-          }
+          "label": "对于以下说法，您的态度怎样：政府应该为每一个愿意工作的人提供工作机会。"
         },
         {
           "id": "gov_support_unemployed",
-          "label": "f6c. 政府应该为失业者制定一个像样的生活标准",
-          "values": {
-            "1": "非常同意",
-            "2": "同意",
-            "3": "不同意也不反对",
-            "4": "不同意",
-            "5": "非常不同意",
-            "6": "无法选择"
-          }
+          "label": "f6c. 政府应该为失业者制定一个像样的生活标准"
         },
         {
           "id": "inequality_threatens_stability",
-          "label": "国内目前的贫富差别对社会安定有威胁",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "不太同意",
-            "4": "非常不同意",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "国内目前的贫富差别对社会安定有威胁"
         },
         {
           "id": "inequality_vs_freedom",
-          "label": "q127. if you had to choose between reducing economic inequality and protecting p",
-          "values": {
-            "1": "reducing economic inequality is definitely more important",
-            "2": "reducing economic inequality is somewhat more important",
-            "3": "protecting political freedom is somewhat more important",
-            "4": "protecting political freedom is definitely more important",
-            "5": "they are both equally important",
-            "7": "do not understand the question",
-            "8": "can't choose",
-            "9": "decline to answer"
-          }
+          "label": "q127. if you had to choose between reducing economic inequality and protecting p"
         },
         {
           "id": "peasant_same_treat",
-          "label": "进城农民工应该享受与城市居民相同的待遇",
-          "values": {
-            "1": "同意",
-            "2": "不同意",
-            "3": "不知道"
-          }
+          "label": "进城农民工应该享受与城市居民相同的待遇"
         },
         {
           "id": "raise_worker_peasant_salary",
-          "label": "应该尽量创造条件提高工人和农民的收入",
-          "values": {
-            "1": "同意",
-            "2": "不同意",
-            "3": "不知道"
-          }
+          "label": "应该尽量创造条件提高工人和农民的收入"
         },
         {
           "id": "should_limit_import",
-          "label": "gl1a. 为了保护我国经济，应该限制外国产品的进口",
-          "values": {
-            "1": "非常同意",
-            "2": "同意",
-            "3": "有点同意",
-            "4": "无所谓同不同意",
-            "5": "有点不同意",
-            "6": "不同意",
-            "7": "非常不同意"
-          }
+          "label": "gl1a. 为了保护我国经济，应该限制外国产品的进口"
         },
         {
           "id": "should_tax_rich",
-          "label": "应该从有钱人那里征收更多的税来帮助穷人",
-          "values": {
-            "1": "同意",
-            "2": "不同意",
-            "3": "不知道"
-          }
+          "label": "应该从有钱人那里征收更多的税来帮助穷人"
         },
         {
           "id": "social_equality_issue",
-          "label": "我国下列各方面是否存在问题：社会平等",
-          "values": {
-            "0": "根本不存在问题",
-            "10": "问题非常严重",
-            "88": "不知道",
-            "99": "没回答"
-          }
+          "label": "我国下列各方面是否存在问题：社会平等"
         },
         {
           "id": "state_ownership",
-          "label": "The government should maintain ownership of major state-owned enterprises",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree"
-          }
+          "label": "The government should maintain ownership of major state-owned enterprises"
         },
         {
           "id": "tax_rich_proper",
-          "label": "f7b. 总的来说，您认为如今我国对高收入者征税的情况是",
-          "values": {
-            "1": "实在太高了",
-            "2": "太高了",
-            "3": "合适",
-            "4": "太低了",
-            "5": "实在太低了",
-            "6": "无法选择"
-          }
+          "label": "f7b. 总的来说，您认为如今我国对高收入者征税的情况是"
         },
         {
           "id": "gov_help_underlayer_equality",
-          "label": "For the equality,the government should give added help to the underlayers in the",
-          "values": {
-            "1": "agree strongly",
-            "2": "agree",
-            "3": "neither agree nor disagree",
-            "4": "disagree",
-            "5": "disagree strongly",
-            "8": "dont know",
-            "9": "refuse to answer"
-          }
+          "label": "For the equality,the government should give added help to the underlayers in the"
         },
         {
           "id": "follow_intl_human_rights",
-          "label": "China should deal with its human rights problems according to international huma",
-          "values": {
-            "1": "agree strongly",
-            "2": "agree",
-            "3": "neither agree nor disagree",
-            "4": "disagree",
-            "5": "disagree strongly",
-            "8": "dont know",
-            "9": "no answer"
-          }
+          "label": "China should deal with its human rights problems according to international huma"
         },
         {
           "id": "business_profit_benefits_all",
-          "label": "请您对这些说法表示自己的态度：生意人赚钱最终会对所有人都有好处。",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "中立",
-            "4": "不太同意",
-            "5": "非常不同意",
-            "8": "不知道",
-            "9": "未回答"
-          }
+          "label": "请您对这些说法表示自己的态度：生意人赚钱最终会对所有人都有好处。"
         },
         {
           "id": "equal_distribution_fair",
-          "label": "下面是一组关于财富和收入的说法，您是否同意：按人平均分配财富和收入是最公平的方法",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "中立",
-            "4": "不太同意",
-            "5": "非常不同意",
-            "8": "不知道",
-            "9": "未回答"
-          }
+          "label": "下面是一组关于财富和收入的说法，您是否同意：按人平均分配财富和收入是最公平的方法"
         },
         {
           "id": "equal_opportunity_rich_poor_ok",
-          "label": "下面是一组关于财富和收入的说法，您是否同意：只要机会均等，就算有穷有富也是公平的",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "中立",
-            "4": "不太同意",
-            "5": "非常不同意",
-            "8": "不知道",
-            "9": "未回答"
-          }
+          "label": "下面是一组关于财富和收入的说法，您是否同意：只要机会均等，就算有穷有富也是公平的"
         },
         {
           "id": "farmer_urban_equal_job_rights",
-          "label": "请就下面的每一个看法，表示您的态度：农民和城里人应该有平等的就业权利。",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "中立",
-            "4": "不太同意",
-            "5": "非常不同意",
-            "8": "不知道",
-            "9": "未回答"
-          }
+          "label": "请就下面的每一个看法，表示您的态度：农民和城里人应该有平等的就业权利。"
         },
         {
           "id": "wealth_gap_inevitable",
-          "label": "您在多大程度上同意下面的观点_贫富差距加大是我国繁荣富强所不可避免的",
-          "values": {
-            "1": "极不同意",
-            "2": "不太同意",
-            "3": "一般",
-            "4": "基本同意",
-            "5": "非常同意",
-            "8": "不知道",
-            "9": "无回答"
-          }
+          "label": "您在多大程度上同意下面的观点_贫富差距加大是我国繁荣富强所不可避免的"
         },
         {
           "id": "inequality_benefits_powerful",
-          "label": "请您对这些说法表示自己的态度：社会中一直存在不平等是因为这种不平等对有钱有势的人",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "中立",
-            "4": "不太同意",
-            "5": "非常不同意",
-            "8": "不知道",
-            "9": "未回答"
-          }
+          "label": "请您对这些说法表示自己的态度：社会中一直存在不平等是因为这种不平等对有钱有势的人"
         },
         {
           "id": "large_income_diff_incentive",
-          "label": "请您对这些说法表示自己的态度：只有在收入差别足够大的情况下，才能激发起个人的努力",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "中立",
-            "4": "不太同意",
-            "5": "非常不同意",
-            "8": "不知道",
-            "9": "未回答"
-          }
+          "label": "请您对这些说法表示自己的态度：只有在收入差别足够大的情况下，才能激发起个人的努力"
         },
         {
           "id": "large_income_gap_prosperity",
-          "label": "下面是一组关于财富和收入的说法，您是否同意：为了国家的繁荣，收入差距必须要大。",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "中立",
-            "4": "不太同意",
-            "5": "非常不同意",
-            "8": "不知道",
-            "9": "未回答"
-          }
+          "label": "下面是一组关于财富和收入的说法，您是否同意：为了国家的繁荣，收入差距必须要大。"
         },
         {
           "id": "more_reward_more_responsibility",
-          "label": "请您对这些说法表示自己的态度：除非有更多的回报，否则人们不会愿意在工作中承担更多",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "中立",
-            "4": "不太同意",
-            "5": "非常不同意",
-            "8": "不知道",
-            "9": "未回答"
-          }
+          "label": "请您对这些说法表示自己的态度：除非有更多的回报，否则人们不会愿意在工作中承担更多"
         },
         {
           "id": "poor_right_demand_help_rich",
-          "label": "下面是一组关于财富和收入的说法，您是否同意：穷人有权利要求富人的帮助。",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "中立",
-            "4": "不太同意",
-            "5": "非常不同意",
-            "8": "不知道",
-            "9": "未回答"
-          }
+          "label": "下面是一组关于财富和收入的说法，您是否同意：穷人有权利要求富人的帮助。"
         },
         {
           "id": "redistribute_rich_to_poor",
-          "label": "下面是一组关于财富和收入的说法，您是否同意：为了满足每个人的需求，哪怕削富济贫也",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "中立",
-            "4": "不太同意",
-            "5": "非常不同意",
-            "8": "不知道",
-            "9": "未回答"
-          }
+          "label": "下面是一组关于财富和收入的说法，您是否同意：为了满足每个人的需求，哪怕削富济贫也"
         },
         {
           "id": "rich_no_obligation_help_poor",
-          "label": "下面是一组关于财富和收入的说法，您是否同意：富人没有义务在经济上帮助穷人。",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "中立",
-            "4": "不太同意",
-            "5": "非常不同意",
-            "8": "不知道",
-            "9": "未回答"
-          }
+          "label": "下面是一组关于财富和收入的说法，您是否同意：富人没有义务在经济上帮助穷人。"
         },
         {
           "id": "right_accumulate_wealth",
-          "label": "下面是一组关于财富和收入的说法，您是否同意：即使社会上会出现贫富不均，人们也有权",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "中立",
-            "4": "不太同意",
-            "5": "非常不同意",
-            "8": "不知道",
-            "9": "未回答"
-          }
+          "label": "下面是一组关于财富和收入的说法，您是否同意：即使社会上会出现贫富不均，人们也有权"
         },
         {
           "id": "urban_standard_due_contribution",
-          "label": "请就下面的每一个看法，表示您的态度：城市居民的生活水平较高是由于他们对国家发展作",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "中立",
-            "4": "不太同意",
-            "5": "非常不同意",
-            "8": "不知道",
-            "9": "未回答"
-          }
+          "label": "请就下面的每一个看法，表示您的态度：城市居民的生活水平较高是由于他们对国家发展作"
         },
         {
           "id": "urban_more_benefit_than_deserve",
-          "label": "请就下面的每一个看法，表示您的态度：城市的人在经济改革中获得的好处比他们应得的更",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "中立",
-            "4": "不太同意",
-            "5": "非常不同意",
-            "8": "不知道",
-            "9": "未回答"
-          }
+          "label": "请就下面的每一个看法，表示您的态度：城市的人在经济改革中获得的好处比他们应得的更"
         },
         {
           "id": "wealth_gap_violates_socialism",
-          "label": "请就下面的每一个看法，表示您的态度：我们社会中明显存在的贫富差别违背了社会主义的",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "中立",
-            "4": "不太同意",
-            "5": "非常不同意",
-            "8": "不知道",
-            "9": "未回答"
-          }
+          "label": "请就下面的每一个看法，表示您的态度：我们社会中明显存在的贫富差别违背了社会主义的"
         },
         {
           "id": "income_tax_progressive",
-          "label": "关于个人所得税，同样比例缴税与高收入高税率，您的态度",
-          "values": {
-            "1": "所有人按照同等税率缴税",
-            "7": "高收入者比低收入者按更高税率缴税",
-            "8": "不知道",
-            "9": "无回答"
-          }
+          "label": "关于个人所得税，同样比例缴税与高收入高税率，您的态度"
         },
         {
           "id": "wage_gap_corp_employee",
-          "label": "大型企业与员工之间的薪酬差距，您的态度",
-          "values": {
-            "1": "大企业应该缩小员工薪酬差距",
-            "7": "大企业没有责任缩小员工薪酬差距",
-            "8": "不知道",
-            "9": "无回答"
-          }
+          "label": "大型企业与员工之间的薪酬差距，您的态度"
         },
         {
           "id": "current_income_gap_size",
-          "label": "您认为目前国内人们收入上的差距是太大了、有些大、正合适、有些小，还是太小了?",
-          "values": {
-            "1": "太大",
-            "2": "有些大",
-            "3": "正合适",
-            "4": "有些小",
-            "5": "̫С",
-            "8": "不知道",
-            "9": "未回答"
-          }
+          "label": "您认为目前国内人们收入上的差距是太大了、有些大、正合适、有些小，还是太小了?"
         },
         {
           "id": "fair_migrant_no_school_access",
-          "label": "不让本市外来流动人口轻易获得在城市的入学机会是公正的",
-          "values": {
-            "1": "非常不同意",
-            "2": "比较同意",
-            "3": "不太同意",
-            "4": "非常不同意",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "不让本市外来流动人口轻易获得在城市的入学机会是公正的"
         },
         {
           "id": "fair_migrant_no_welfare",
-          "label": "It is fair that rural migrants are not allowed to obtain welfare benefits.",
-          "values": {
-            "1": "agree strongly",
-            "2": "agree",
-            "3": "neither agree nor disagree",
-            "4": "disagree",
-            "5": "disagree strongly",
-            "8": "dont know",
-            "9": "refuse to answer"
-          }
+          "label": "It is fair that rural migrants are not allowed to obtain welfare benefits."
         },
         {
           "id": "fairness_small_living_diff",
-          "label": "[2 为了社会公平，人们的物质生活水平差异应该很小。] 您在多大程度上同意下面的观点？",
-          "values": {
-            "1": "非常同意",
-            "2": "同意",
-            "3": "说不上同意不同意",
-            "4": "不同意",
-            "5": "非常不同意",
-            "8": "无法选择"
-          }
+          "label": "[2 为了社会公平，人们的物质生活水平差异应该很小。] 您在多大程度上同意下面的观点？"
         },
         {
           "id": "income_inequality_important",
-          "label": "INCOME INEQUALITY",
-          "values": {
-            "1": "NOT IMPORTANT",
-            "2": "NOT TOO IMPORTANT",
-            "3": "RELATIVELY  IMPORTANT",
-            "4": "VERY IMPORTANT",
-            "8": "DON'T KNOW"
-          }
+          "label": "INCOME INEQUALITY"
         },
         {
           "id": "limit_individual_income",
-          "label": "LIMIT INDIVIDUAL INCOME",
-          "values": {
-            "0": "SHOULD NOT RESTRICT",
-            "1": "SHOULD RESTRICT",
-            "8": "DON'T KNOW",
-            "9": "NO ANSWER"
-          }
+          "label": "LIMIT INDIVIDUAL INCOME"
         },
         {
           "id": "private_vs_state_ownership",
-          "label": "Private vs state ownership of business",
-          "values": {
-            "1": "Private ownership of business should be increased",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "6": "6",
-            "7": "7",
-            "8": "8",
-            "9": "9",
-            "10": "Government ownership of business should be increased"
-          }
+          "label": "Private vs state ownership of business"
         },
         {
           "id": "rich_better_education_fair",
-          "label": "比起低收入的人,高收入的人能为他们的子女提供更好的教育,您觉得这公平吗",
-          "values": {
-            "1": "非常公平",
-            "2": "比较公平",
-            "3": "说不上公平不公平",
-            "4": "比较不公平",
-            "5": "非常不公平",
-            "8": "无法选择"
-          }
+          "label": "比起低收入的人,高收入的人能为他们的子女提供更好的教育,您觉得这公平吗"
         },
         {
           "id": "rich_better_healthcare_fair",
-          "label": "比起低收入的人,高收入的人能偶负担得起更好的医疗保健,您觉得这公平吗",
-          "values": {
-            "1": "非常公平",
-            "2": "比较公平",
-            "3": "说不上公平不公平",
-            "4": "比较不公平",
-            "5": "非常不公平",
-            "8": "无法选择"
-          }
+          "label": "比起低收入的人,高收入的人能偶负担得起更好的医疗保健,您觉得这公平吗"
         },
         {
           "id": "social_inequality",
-          "label": "Social inequality",
-          "values": {
-            "0": "not exist any problem",
-            "10": "very serious problem",
-            "88": "dont know",
-            "99": "refuse to answer"
-          }
+          "label": "Social inequality"
         },
         {
           "id": "conflict_boss_worker",
-          "label": "[ur-e6]冲突:工厂老板与工人间",
-          "values": {
-            "1": "非常严重",
-            "2": "比较严重",
-            "3": "不太严重",
-            "4": "没有冲突",
-            "5": "[难以选择]"
-          }
+          "label": "[ur-e6]冲突:工厂老板与工人间"
         },
         {
           "id": "conflict_cadre_mass",
-          "label": "[ur-e6]冲突:干部与群众间",
-          "values": {
-            "1": "非常严重",
-            "2": "比较严重",
-            "3": "不太严重",
-            "4": "没有冲突",
-            "5": "[难以选择]"
-          }
+          "label": "[ur-e6]冲突:干部与群众间"
         },
         {
           "id": "conflict_manage_worker",
-          "label": "f9c. 管理层和工人之间",
-          "values": {
-            "1": "非常严重",
-            "2": "严重",
-            "3": "不是很严重",
-            "4": "根本没有冲突",
-            "5": "无法选择"
-          }
+          "label": "f9c. 管理层和工人之间"
         },
         {
           "id": "conflict_manager_staff",
-          "label": "[ur-e6]冲突:管理者与一般工作人员",
-          "values": {
-            "1": "非常严重",
-            "2": "比较严重",
-            "3": "不太严重",
-            "4": "没有冲突",
-            "5": "[难以选择]"
-          }
+          "label": "[ur-e6]冲突:管理者与一般工作人员"
         },
         {
           "id": "conflict_rich_poor",
-          "label": "[ur-e6]冲突:穷人与富人间",
-          "values": {
-            "1": "非常严重",
-            "2": "比较严重",
-            "3": "不太严重",
-            "4": "没有冲突",
-            "5": "[难以选择]"
-          }
+          "label": "[ur-e6]冲突:穷人与富人间"
         },
         {
           "id": "conflict_upper_lower",
-          "label": "[ur-e6]冲突:社会上下层间",
-          "values": {
-            "1": "非常严重",
-            "2": "比较严重",
-            "3": "不太严重",
-            "4": "没有冲突",
-            "5": "[难以选择]"
-          }
+          "label": "[ur-e6]冲突:社会上下层间"
         },
         {
           "id": "conflict_worker_whtecollar",
-          "label": "[ur-e6]冲突:工人与白领间",
-          "values": {
-            "1": "非常严重",
-            "2": "比较严重",
-            "3": "不太严重",
-            "4": "没有冲突",
-            "5": "[难以选择]"
-          }
+          "label": "[ur-e6]冲突:工人与白领间"
         },
         {
           "id": "conflict_working_middle_class",
-          "label": "f9b. 工人阶级和中产阶级之间",
-          "values": {
-            "1": "非常严重",
-            "2": "严重",
-            "3": "不是很严重",
-            "4": "根本没有冲突",
-            "5": "无法选择"
-          }
+          "label": "f9b. 工人阶级和中产阶级之间"
         },
         {
           "id": "current_income_fair",
-          "label": "考虑到您的教育背景、工作能力、资历等各方面因素，您认为自己目前的收入是否公平",
-          "values": {
-            "1": "不公平",
-            "2": "不太公平",
-            "3": "一般",
-            "4": "比较公平",
-            "5": "公平"
-          }
+          "label": "考虑到您的教育背景、工作能力、资历等各方面因素，您认为自己目前的收入是否公平"
         },
         {
           "id": "current_inequality_fair",
-          "label": "现在有的人挣的钱多，有的人挣的少，但这是公平的",
-          "values": {
-            "1": "同意",
-            "2": "不同意",
-            "3": "不知道"
-          }
+          "label": "现在有的人挣的钱多，有的人挣的少，但这是公平的"
         },
         {
           "id": "current_inequality",
-          "label": "f6a. 我国的收入差距太大了",
-          "values": {
-            "1": "非常同意",
-            "2": "同意",
-            "3": "不同意也不反对",
-            "4": "不同意",
-            "5": "非常不同意",
-            "6": "无法选择"
-          }
+          "label": "f6a. 我国的收入差距太大了"
         },
         {
           "id": "democracy_state_make_incomes_equal",
-          "label": "Democracy: The state makes people's incomes equal",
-          "values": {
-            "0": "It is against democracy (spontaneous)",
-            "1": "Not an essential characteristic of democracy",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "6": "6",
-            "7": "7",
-            "8": "8",
-            "9": "9",
-            "10": "An essential characteristic of democracy"
-          }
+          "label": "Democracy: The state makes people's incomes equal"
         },
         {
           "id": "economic_development_harmful",
-          "label": "Rapid economic development is harmful to social stability",
-          "values": {
-            "1": "agree strongly",
-            "2": "agree",
-            "3": "neither agree nor disagree",
-            "4": "disagree",
-            "5": "disagree strongly",
-            "8": "dont know",
-            "9": "refuse to answer"
-          }
+          "label": "Rapid economic development is harmful to social stability"
         },
         {
           "id": "effort_smart_opportunity",
-          "label": "只要孩子够努力、够聪明，都能有同样的升学机会",
-          "values": {
-            "1": "同意",
-            "2": "不同意",
-            "3": "不知道"
-          }
+          "label": "只要孩子够努力、够聪明，都能有同样的升学机会"
         },
         {
           "id": "equality_treatment",
-          "label": "q104. rich and poor people are treated equally by the government.",
-          "values": {
-            "1": "strongly agree",
-            "2": "somewhat agree",
-            "3": "somewhat disagree",
-            "4": "strongly disagree",
-            "7": "don't understand the question",
-            "8": "can't choose",
-            "9": "decline to answer"
-          }
+          "label": "q104. rich and poor people are treated equally by the government."
         },
         {
           "id": "equally_treatment",
-          "label": "下面我谈几个观点，请您就每个观点表示您的意见。人人都可得到政府的公平对待",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "不太同意",
-            "4": "非常不同意",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "下面我谈几个观点，请您就每个观点表示您的意见。人人都可得到政府的公平对待"
         },
         {
           "id": "fair_occupation_respect_diff",
-          "label": "It is fair that some occupations receive more respect from society than do other",
-          "values": {
-            "1": "agree strongly",
-            "2": "agree",
-            "3": "neither agree nor disagree",
-            "4": "disagree",
-            "5": "disagree strongly",
-            "8": "dont know",
-            "9": "refuse to answer"
-          }
+          "label": "It is fair that some occupations receive more respect from society than do other"
         },
         {
           "id": "fair_power_privilege",
-          "label": "It is fair that those who hold power enjoy a certain degree of privileged treatm",
-          "values": {
-            "1": "agree strongly",
-            "2": "agree",
-            "3": "neither agree nor disagree",
-            "4": "disagree",
-            "5": "disagree strongly",
-            "8": "dont know",
-            "9": "refuse to answer"
-          }
+          "label": "It is fair that those who hold power enjoy a certain degree of privileged treatm"
         },
         {
           "id": "family_income_fair_effort",
-          "label": "把您和您家人之前所有的努力都考虑在内，您认为您家目前的收入相对你们的付出是非常公",
-          "values": {
-            "1": "非常公平",
-            "2": "公平",
-            "3": "不公平",
-            "4": "非常不公平",
-            "7": "不懂题意",
-            "8": "不知道",
-            "9": "不回答"
-          }
+          "label": "把您和您家人之前所有的努力都考虑在内，您认为您家目前的收入相对你们的付出是非常公"
         },
         {
           "id": "gov_responsibility_disability_x",
-          "label": "政府给X提供残疾补助",
-          "values": {
-            "1": "绝对应该",
-            "2": "可能应该",
-            "3": "可能不应该",
-            "4": "绝对不应该",
-            "8": "不知道"
-          }
+          "label": "政府给X提供残疾补助"
         },
         {
           "id": "gov_responsibility_economy",
-          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？经济发展",
-          "values": {
-            "1": "完全由个人负责",
-            "2": "主要由个人负责",
-            "3": "政府和个人分担",
-            "4": "主要由政府负责",
-            "5": "完全由政府负责",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？经济发展"
         },
         {
           "id": "gov_responsibility_education_x",
-          "label": "如果X负担不起,政府就应该为他受教育提供资助",
-          "values": {
-            "1": "绝对应该",
-            "2": "可能应该",
-            "3": "可能不应该",
-            "4": "绝对不应该",
-            "8": "不知道"
-          }
+          "label": "如果X负担不起,政府就应该为他受教育提供资助"
         },
         {
           "id": "gov_responsibility_healthcare_x",
-          "label": "政府给X提供医疗卫生服务",
-          "values": {
-            "1": "绝对应该",
-            "2": "可能应该",
-            "3": "可能不应该",
-            "4": "绝对不应该",
-            "8": "不知道"
-          }
+          "label": "政府给X提供医疗卫生服务"
         },
         {
           "id": "gov_responsibility_housing_x",
-          "label": "如果X买不起房子,政府就应该给他提供住房",
-          "values": {
-            "1": "绝对应该",
-            "2": "可能应该",
-            "3": "可能不应该",
-            "4": "绝对不应该",
-            "8": "不知道"
-          }
+          "label": "如果X买不起房子,政府就应该给他提供住房"
         },
         {
           "id": "gov_responsibility_jobs_x",
-          "label": "如果X想工作,政府就应该给X提供工作",
-          "values": {
-            "1": "绝对应该",
-            "2": "可能应该",
-            "3": "可能不应该",
-            "4": "绝对不应该",
-            "8": "不知道"
-          }
+          "label": "如果X想工作,政府就应该给X提供工作"
         },
         {
           "id": "govt_crime_investment",
-          "label": "f15b.您认为政府在打击犯罪方面的投入应该是增加还是减少呢？",
-          "values": {
-            "1": "增加很多",
-            "2": "增加一点",
-            "3": "保持现状",
-            "4": "减少一些",
-            "5": "减少很多",
-            "6": "无法选择"
-          }
+          "label": "f15b.您认为政府在打击犯罪方面的投入应该是增加还是减少呢？"
         },
         {
           "id": "govt_defense_investment",
-          "label": "f15d.您认为政府在国防方面的投入应该是增加还是减少呢？",
-          "values": {
-            "1": "增加很多",
-            "2": "增加一点",
-            "3": "保持现状",
-            "4": "减少一些",
-            "5": "减少很多",
-            "6": "无法选择"
-          }
+          "label": "f15d.您认为政府在国防方面的投入应该是增加还是减少呢？"
         },
         {
           "id": "govt_no_resp_inequality",
-          "label": "政府在道义上没有责任区减少或缓和社会不平等",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意"
-          }
+          "label": "政府在道义上没有责任区减少或缓和社会不平等"
         },
         {
           "id": "govt_reduce_inequality",
-          "label": "缩小贫富差距是政府的责任",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意",
-            "8": "无法选择"
-          }
+          "label": "缩小贫富差距是政府的责任"
         },
         {
           "id": "income_equality",
-          "label": "Income equality",
-          "values": {
-            "1": "Incomes should be made more equal",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "6": "6",
-            "7": "7",
-            "8": "8",
-            "9": "9",
-            "10": "We need larger income differences as incentives"
-          }
+          "label": "Income equality"
         },
         {
           "id": "income_reasonable",
-          "label": "[ur-e2]您目前的收入是否合理",
-          "values": {
-            "1": "非常合理",
-            "2": "合理",
-            "3": "不合理",
-            "4": "非常不合理",
-            "5": "[不适用]"
-          }
+          "label": "[ur-e2]您目前的收入是否合理"
         },
         {
           "id": "inequality_cause_innate_ability",
-          "label": "社会不平等主要是个人天生的能力造成的",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意"
-          }
+          "label": "社会不平等主要是个人天生的能力造成的"
         },
         {
           "id": "inequality_cause_powerful_control",
-          "label": "社会不平等主要是由一小部分掌权者的控制、操纵造成的",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意"
-          }
+          "label": "社会不平等主要是由一小部分掌权者的控制、操纵造成的"
         },
         {
           "id": "living_standard_fair_effort",
-          "label": "您认为您目前的生活水平和您的努力比起来公不公平",
-          "values": {
-            "1": "完全不公平",
-            "2": "比较不公平",
-            "3": "说不上公平也不能说不公平",
-            "4": "比较公平",
-            "5": "完全公平"
-          }
+          "label": "您认为您目前的生活水平和您的努力比起来公不公平"
         },
         {
           "id": "opportunity_change_vs_parents",
-          "label": "与您父母那一代相比，您觉得您这一代提高自己生活水平或社会地位的机会是增加了还是减",
-          "values": {
-            "1": "机会增加了非常多",
-            "2": "机会有增加一些",
-            "3": "机会有减少一些",
-            "4": "机会减少了非常多",
-            "5": "差不多",
-            "7": "不懂题意",
-            "8": "不知道",
-            "9": "不回答"
-          }
+          "label": "与您父母那一代相比，您觉得您这一代提高自己生活水平或社会地位的机会是增加了还是减"
         },
         {
           "id": "society_fair_overall",
-          "label": "总的来说,您认为当今的社会公不公平",
-          "values": {
-            "1": "完全不公平",
-            "2": "比较不公平",
-            "3": "说不上公平也不能说不公平",
-            "4": "比较公平",
-            "5": "完全公平"
-          }
+          "label": "总的来说,您认为当今的社会公不公平"
         },
         {
           "id": "some_easy_money",
-          "label": "现在总是有些人能够很容易地挣到钱",
-          "values": {
-            "1": "同意",
-            "2": "不同意",
-            "3": "不知道"
-          }
+          "label": "现在总是有些人能够很容易地挣到钱"
         },
         {
           "id": "wealth_accumulation",
-          "label": "Wealth accumulation",
-          "values": {
-            "1": "People can only get rich at the expense of others",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "6": "6",
-            "7": "7",
-            "8": "8",
-            "9": "9",
-            "10": "Wealth can grow so there´s enough for everyone"
-          }
+          "label": "Wealth accumulation"
         },
         {
           "id": "wealth_gap_incentive",
-          "label": "[ur-e4713]贫富差距利于人们工作积极性",
-          "values": {
-            "1": "非常不同意",
-            "2": "不同意",
-            "3": "同意",
-            "4": "非常同意",
-            "5": "[不回答]"
-          }
+          "label": "[ur-e4713]贫富差距利于人们工作积极性"
         },
         {
           "id": "wealth_gap_serious",
-          "label": "社会财富分配不公,贫富悬殊过大",
-          "values": {
-            "1": "非常不严重",
-            "2": "比较不严重",
-            "3": "一般",
-            "4": "比较严重",
-            "5": "非常严重"
-          }
+          "label": "社会财富分配不公,贫富悬殊过大"
         },
         {
           "id": "wealthy_more_say",
-          "label": "[ur-e4733]经济条件好的人有更大发言权",
-          "values": {
-            "1": "非常不同意",
-            "2": "不同意",
-            "3": "同意",
-            "4": "非常同意",
-            "5": "[不回答]"
-          }
+          "label": "[ur-e4733]经济条件好的人有更大发言权"
         },
         {
           "id": "woker_predecessor_same_rich",
-          "label": "在我们这个社会，工人和农民的后代与其他人的后代一样，有同样多的机会成为有钱",
-          "values": {
-            "1": "同意",
-            "2": "不同意",
-            "3": "不知道"
-          }
+          "label": "在我们这个社会，工人和农民的后代与其他人的后代一样，有同样多的机会成为有钱"
         }
       ]
     },
@@ -2568,355 +882,131 @@
       "concepts": [
         {
           "id": "men_jobs_priority",
-          "label": "Jobs scarce: Men should have more right to a job than women",
-          "values": {
-            "1": "Agree",
-            "2": "Disagree",
-            "3": "Neither"
-          }
+          "label": "Jobs scarce: Men should have more right to a job than women"
         },
         {
           "id": "women_need_children",
-          "label": "A woman has to have children to be fulfilled",
-          "values": {
-            "0": "Not necessary",
-            "1": "Needs children"
-          }
+          "label": "A woman has to have children to be fulfilled"
         },
         {
           "id": "single_mother_attitude",
-          "label": "Woman as a single parent",
-          "values": {
-            "0": "Disapprove",
-            "1": "Approve",
-            "2": "Depends"
-          }
+          "label": "Woman as a single parent"
         },
         {
           "id": "dual_earner_attitude",
-          "label": "Husband and wife should both contribute to income",
-          "values": {
-            "1": "Agree strongly",
-            "2": "Agree",
-            "3": "Disagree",
-            "4": "Strongly disagree"
-          }
+          "label": "Husband and wife should both contribute to income"
         },
         {
           "id": "children_obedience",
-          "label": "Even if parents' demands are unreasonable, children still should do what they ask?",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree"
-          }
+          "label": "Even if parents' demands are unreasonable, children still should do what they ask?"
         },
         {
           "id": "wife_obey_mother_in_law",
-          "label": "When a mother-in-law and a daughter-in-law come into conflict, even if the mother-in-law is in the wrong, the husband sh",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree"
-          }
+          "label": "When a mother-in-law and a daughter-in-law come into conflict, even if the mother-in-law is in the wrong, the husband sh"
         },
         {
           "id": "son_preference",
-          "label": "SON BETTER THAN DAUGHTER",
-          "values": {
-            "1": "STRONGLY DISAGREE",
-            "2": "DISAGREE",
-            "3": "AGREE",
-            "4": "STRONGLY AGREE",
-            "8": "DON'T KNOW",
-            "9": "NO ANSWER"
-          }
+          "label": "SON BETTER THAN DAUGHTER"
         },
         {
           "id": "education_boys_priority",
-          "label": "University is more important for a boy than for a girl",
-          "values": {
-            "1": "Agree strongly",
-            "2": "Agree",
-            "3": "Disagree",
-            "4": "Strongly disagree"
-          }
+          "label": "University is more important for a boy than for a girl"
         },
         {
           "id": "wife_earning_more",
-          "label": "Problem if women have more income than husband",
-          "values": {
-            "1": "Agree strongly",
-            "2": "Agree",
-            "3": "Disagree",
-            "4": "Strongly disagree"
-          }
+          "label": "Problem if women have more income than husband"
         },
         {
           "id": "attitude_cohabitation",
-          "label": "e15a.同意程度 - “未婚同居”是个人行为，他人不应该指责",
-          "values": {
-            "1": "完全不同意",
-            "2": "不太同意",
-            "3": "无所谓",
-            "4": "较同意",
-            "5": "完全同意"
-          }
+          "label": "e15a.同意程度 - “未婚同居”是个人行为，他人不应该指责"
         },
         {
           "id": "attitude_homosexuality",
-          "label": "e15b.同意程度 - “同性恋”是个人行为，他人不应该指责",
-          "values": {
-            "1": "完全不同意",
-            "2": "不太同意",
-            "3": "无所谓",
-            "4": "较同意",
-            "5": "完全同意"
-          }
+          "label": "e15b.同意程度 - “同性恋”是个人行为，他人不应该指责"
         },
         {
           "id": "attitude_pornography",
-          "label": "e15c.同意程度 - “私下观看色情书刊/音像作品”是个人行为，他人不应该指责",
-          "values": {
-            "1": "完全不同意",
-            "2": "不太同意",
-            "3": "无所谓",
-            "4": "较同意",
-            "5": "完全同意"
-          }
+          "label": "e15c.同意程度 - “私下观看色情书刊/音像作品”是个人行为，他人不应该指责"
         },
         {
           "id": "attitude_prostitution",
-          "label": "e15d.同意程度 - “嫖妓”是个人行为，他人不应该指责",
-          "values": {
-            "1": "完全不同意",
-            "2": "不太同意",
-            "3": "无所谓",
-            "4": "较同意",
-            "5": "完全同意"
-          }
+          "label": "e15d.同意程度 - “嫖妓”是个人行为，他人不应该指责"
         },
         {
           "id": "attitude_superstition",
-          "label": "e15e.同意程度 - “参与迷信活动”是个人行为，他人不应该指责",
-          "values": {
-            "1": "完全不同意",
-            "2": "不太同意",
-            "3": "无所谓",
-            "4": "较同意",
-            "5": "完全同意"
-          }
+          "label": "e15e.同意程度 - “参与迷信活动”是个人行为，他人不应该指责"
         },
         {
           "id": "attitude_suicide",
-          "label": "e15f.同意程度 - “自杀”是个人行为，他人不应该指责",
-          "values": {
-            "1": "完全不同意",
-            "2": "不太同意",
-            "3": "无所谓",
-            "4": "较同意",
-            "5": "完全同意"
-          }
+          "label": "e15f.同意程度 - “自杀”是个人行为，他人不应该指责"
         },
         {
           "id": "gender_role_traditional",
-          "label": "您是否同意下说法-男人以事业为重，女人以家庭为重",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意"
-          }
+          "label": "您是否同意下说法-男人以事业为重，女人以家庭为重"
         },
         {
           "id": "gender_ability_bias",
-          "label": "您是否同意下说法-男性能力天生比女性强",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意"
-          }
+          "label": "您是否同意下说法-男性能力天生比女性强"
         },
         {
           "id": "marriage_vs_career",
-          "label": "您是否同意下说法-干得好不如嫁得好",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意"
-          }
+          "label": "您是否同意下说法-干得好不如嫁得好"
         },
         {
           "id": "gender_discrimination_layoff",
-          "label": "您是否同意下说法-在经济不景气时，应该先解雇女性员工",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意"
-          }
+          "label": "您是否同意下说法-在经济不景气时，应该先解雇女性员工"
         },
         {
           "id": "equal_housework",
-          "label": "您是否同意下说法-夫妻应该均等分摊家务",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意"
-          }
+          "label": "您是否同意下说法-夫妻应该均等分摊家务"
         },
         {
           "id": "gender_role_wife_support",
-          "label": "gd1a. 妻子帮助丈夫的事业比追求自己的事业还要重要",
-          "values": {
-            "1": "非常同意",
-            "2": "同意",
-            "3": "有点同意",
-            "4": "无所谓同不同意",
-            "5": "有点不同意",
-            "6": "不同意",
-            "7": "非常不同意"
-          }
+          "label": "gd1a. 妻子帮助丈夫的事业比追求自己的事业还要重要"
         },
         {
           "id": "father_authority",
-          "label": "gd1b. 在任何情况下，父亲在家中的权威都应该受到尊重",
-          "values": {
-            "1": "非常同意",
-            "2": "同意",
-            "3": "有点同意",
-            "4": "无所谓同不同意",
-            "5": "有点不同意",
-            "6": "不同意",
-            "7": "非常不同意"
-          }
+          "label": "gd1b. 在任何情况下，父亲在家中的权威都应该受到尊重"
         },
         {
           "id": "women_political_rights",
-          "label": "妇女不应该享有和男性一样的参与政治的权利。",
-          "values": {
-            "1": "非常同意",
-            "2": "同意",
-            "3": "不同意",
-            "4": "非常不同意",
-            "7": "不懂题意",
-            "8": "不知道",
-            "9": "不回答"
-          }
+          "label": "妇女不应该享有和男性一样的参与政治的权利。"
         },
         {
           "id": "women_less_politics",
-          "label": "q139. women should not be involved in politics as much as men.",
-          "values": {
-            "1": "strongly agree",
-            "2": "somewhat agree",
-            "3": "somewhat disagree",
-            "4": "strongly disagree",
-            "7": "don't understand the question",
-            "8": "can't choose",
-            "9": "decline to answer"
-          }
+          "label": "q139. women should not be involved in politics as much as men."
         },
         {
           "id": "fertility_personal_decision",
-          "label": "生多少孩子是个人的事，政府不应该干涉。您同意吗？",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意"
-          }
+          "label": "生多少孩子是个人的事，政府不应该干涉。您同意吗？"
         },
         {
           "id": "free_live_work_choice",
-          "label": "在哪里工作和生活是个人的自由，政府不应该干涉。您同意吗？",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意"
-          }
+          "label": "在哪里工作和生活是个人的自由，政府不应该干涉。您同意吗？"
         },
         {
           "id": "family_over_individual",
-          "label": "For the sake of the family, the individual should put his personal interests second?",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree"
-          }
+          "label": "For the sake of the family, the individual should put his personal interests second?"
         },
         {
           "id": "student_teacher_authority",
-          "label": "Being a student, one should not question the authority of their teacher.",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree",
-            "7": "Do not understand the question",
-            "8": "Can't choose",
-            "9": "Decline to answer"
-          }
+          "label": "Being a student, one should not question the authority of their teacher."
         },
         {
           "id": "elder_authority_disputes",
-          "label": "If there is a quarrel, we should ask an elder to resolve the dispute?",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree"
-          }
+          "label": "If there is a quarrel, we should ask an elder to resolve the dispute?"
         },
         {
           "id": "obey_parents_unreasonable",
-          "label": "下面我谈几个观点，请您就每一个观点表示您的意见。父母的要求即使不合理子女也应照着",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "不太同意",
-            "4": "非常不同意",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "下面我谈几个观点，请您就每一个观点表示您的意见。父母的要求即使不合理子女也应照着"
         },
         {
           "id": "elder_mediate_disputes",
-          "label": "下面我谈几个观点，请您就每一个观点表示您的意见。如果发生争执应请年长的人主持公道",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "不太同意",
-            "4": "非常不同意",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "下面我谈几个观点，请您就每一个观点表示您的意见。如果发生争执应请年长的人主持公道"
         },
         {
           "id": "wife_yield_mother_in_law",
-          "label": "下面我谈几个观点，请您就每一个观点表示您的意见。即使婆婆不对儿子也该劝媳妇让步",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "不太同意",
-            "4": "非常不同意",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "下面我谈几个观点，请您就每一个观点表示您的意见。即使婆婆不对儿子也该劝媳妇让步"
         },
         {
           "id": "obey_gov_leaders_family_head",
@@ -2924,95 +1014,35 @@
         },
         {
           "id": "fate_determines_outcomes",
-          "label": "q61. wealth and poverty, success and failure are all determined by fate.",
-          "values": {
-            "1": "strongly agree",
-            "2": "somewhat agree",
-            "3": "somewhat disagree",
-            "4": "strongly disagree",
-            "7": "don't understand the question",
-            "8": "can't choose",
-            "9": "decline to answer"
-          }
+          "label": "q61. wealth and poverty, success and failure are all determined by fate."
         },
         {
           "id": "sacrifice_present_for_future",
-          "label": "We should give up gains in the present for the possibility of larger gains in the future",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree",
-            "7": "Do not understand the question",
-            "8": "Can't choose",
-            "9": "Decline to answer"
-          }
+          "label": "We should give up gains in the present for the possibility of larger gains in the future"
         },
         {
           "id": "men_better_leaders",
-          "label": "请就下面的每一个看法，表示您的态度：男性比女性更适合担任领导职位",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "中立",
-            "4": "不太同意",
-            "5": "非常不同意",
-            "8": "不知道",
-            "9": "未回答"
-          }
+          "label": "请就下面的每一个看法，表示您的态度：男性比女性更适合担任领导职位"
         },
         {
           "id": "men_better_executives",
-          "label": "Men make better business executives than women do",
-          "values": {
-            "1": "Agree strongly",
-            "2": "Agree",
-            "3": "Disagree",
-            "4": "Strongly disagree"
-          }
+          "label": "Men make better business executives than women do"
         },
         {
           "id": "men_under_female_boss",
-          "label": "A man will lose face if he works under a female supervisor?",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree"
-          }
+          "label": "A man will lose face if he works under a female supervisor?"
         },
         {
           "id": "too_many_groups_disrupt_harmony",
-          "label": "Harmony of the community will be disrupted if people organize lots of groups",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree"
-          }
+          "label": "Harmony of the community will be disrupted if people organize lots of groups"
         },
         {
           "id": "different_thinking_causes_chaos",
-          "label": "If people have too many different ways of thinking, society will be chaotic",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree"
-          }
+          "label": "If people have too many different ways of thinking, society will be chaotic"
         },
         {
           "id": "gov_not_interfere_private_life",
-          "label": "The government should not interfere in an individual's private life",
-          "values": {
-            "1": "agree strongly",
-            "2": "agree",
-            "3": "neither agree nor disagree",
-            "4": "disagree",
-            "5": "disagree strongly",
-            "8": "dont know",
-            "9": "no answer"
-          }
+          "label": "The government should not interfere in an individual's private life"
         },
         {
           "id": "competition_harmful",
@@ -3020,135 +1050,51 @@
         },
         {
           "id": "equal_job_promo_men_women",
-          "label": "In all lines of work, men and women should have the same employment and promotio",
-          "values": {
-            "1": "agree strongly",
-            "2": "agree",
-            "3": "neither agree nor disagree",
-            "4": "disagree",
-            "5": "disagree strongly",
-            "8": "dont know",
-            "9": "refuse to answer"
-          }
+          "label": "In all lines of work, men and women should have the same employment and promotio"
         },
         {
           "id": "no_shame_receiving_assistance",
-          "label": "X应该为受到政府补助而感到丢脸",
-          "values": {
-            "1": "绝对应该",
-            "2": "可能应该",
-            "3": "可能不应该",
-            "4": "绝对不应该",
-            "8": "不知道"
-          }
+          "label": "X应该为受到政府补助而感到丢脸"
         },
         {
           "id": "no_shame_receiving_assistance_family",
-          "label": "如果X受到政府补助,他家人应该感到丢脸",
-          "values": {
-            "1": "绝对应该",
-            "2": "可能应该",
-            "3": "可能不应该",
-            "4": "绝对不应该",
-            "8": "不知道"
-          }
+          "label": "如果X受到政府补助,他家人应该感到丢脸"
         },
         {
           "id": "premarital_sex_attitude",
-          "label": "您认为婚前性行为对不对",
-          "values": {
-            "1": "总是不对的",
-            "2": "大多数情况下是不对的",
-            "3": "说不上对与不对",
-            "4": "有时是对的",
-            "5": "完全是对的"
-          }
+          "label": "您认为婚前性行为对不对"
         },
         {
           "id": "extramarital_sex_attitude",
-          "label": "您认为婚外性行为对不对",
-          "values": {
-            "1": "总是不对的",
-            "2": "大多数情况下是不对的",
-            "3": "说不上对与不对",
-            "4": "有时是对的",
-            "5": "完全是对的"
-          }
+          "label": "您认为婚外性行为对不对"
         },
         {
           "id": "competition_good_or_harmful",
-          "label": "Competition good or harmful",
-          "values": {
-            "1": "Competition is good",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "6": "6",
-            "7": "7",
-            "8": "8",
-            "9": "9",
-            "10": "Competition is harmful"
-          }
+          "label": "Competition good or harmful"
         },
         {
           "id": "fatalism",
-          "label": "SUCCESS DETERMINED BY FATE",
-          "values": {
-            "1": "STRONGLY DISAGREE",
-            "2": "DISAGREE",
-            "3": "AGREE",
-            "4": "STRONGLY AGREE",
-            "8": "DON'T KNOW",
-            "9": "NO ANSWER"
-          }
+          "label": "SUCCESS DETERMINED BY FATE"
         },
         {
           "id": "general_trust_or_withcare",
-          "label": "您觉得大多数人都是可以信任的吗？还是与人交往小心为妙？",
-          "values": {
-            "1": "多数人是可以信任的",
-            "2": "与人交往小心为妙",
-            "3": "看情况",
-            "8": "不知道",
-            "9": "不回答"
-          }
+          "label": "您觉得大多数人都是可以信任的吗？还是与人交往小心为妙？"
         },
         {
           "id": "general_trust",
-          "label": "most people can be trusted??",
-          "values": {
-            "1": "One can't be too careful in dealing with them",
-            "2": "Most people can be trusted",
-            "3": "Both"
-          }
+          "label": "most people can be trusted??"
         },
         {
           "id": "marriage_outdated",
-          "label": "Marriage is an out-dated institution",
-          "values": {
-            "0": "Disagree",
-            "1": "Agree"
-          }
+          "label": "Marriage is an out-dated institution"
         },
         {
           "id": "men_better_politicians",
-          "label": "Men make better political leaders than women do",
-          "values": {
-            "1": "Agree strongly",
-            "2": "Agree",
-            "3": "Disagree",
-            "4": "Strongly disagree"
-          }
+          "label": "Men make better political leaders than women do"
         },
         {
           "id": "postmaterialism",
-          "label": "Post-Materialist index 4-item",
-          "values": {
-            "1": "Materialist",
-            "2": "Mixed",
-            "3": "Postmaterialist"
-          }
+          "label": "Post-Materialist index 4-item"
         }
       ]
     },
@@ -3158,164 +1104,59 @@
       "concepts": [
         {
           "id": "support_gov_right_or_wrong",
-          "label": "请问您在多大程度上同意下面的观点：任何人都应该支持自己的政府，即使它做的不对",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "中立",
-            "4": "不太同意",
-            "5": "非常不同意",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "请问您在多大程度上同意下面的观点：任何人都应该支持自己的政府，即使它做的不对"
         },
         {
           "id": "obey_gov",
-          "label": "[ur-e4711]服从政府不会错",
-          "values": {
-            "1": "非常不同意",
-            "2": "不同意",
-            "3": "同意",
-            "4": "非常同意",
-            "5": "[不回答]"
-          }
+          "label": "[ur-e4711]服从政府不会错"
         },
         {
           "id": "one_party_suitable",
-          "label": "A system with just one main party is most suitable to China's current circumstan",
-          "values": {
-            "1": "agree strongly",
-            "2": "agree",
-            "3": "neither agree nor disagree",
-            "4": "disagree",
-            "5": "disagree strongly",
-            "8": "dont know",
-            "9": "refuse to answer"
-          }
+          "label": "A system with just one main party is most suitable to China's current circumstan"
         },
         {
           "id": "accept_ccp_critics",
-          "label": "Do you accept the people who criticize CCP",
-          "values": {
-            "1": "yes",
-            "5": "no",
-            "8": "don't know",
-            "9": "no answer"
-          }
+          "label": "Do you accept the people who criticize CCP"
         },
         {
           "id": "centers_decisions_correct",
-          "label": "CENTER'S DECISIONS CORRECT",
-          "values": {
-            "1": "STRONGLY DISAGREE",
-            "2": "DISAGREE",
-            "3": "AGREE",
-            "4": "STRONGLY AGREE",
-            "8": "DON'T KNOW",
-            "9": "NO ANSWER"
-          }
+          "label": "CENTER'S DECISIONS CORRECT"
         },
         {
           "id": "current_system_is_best",
-          "label": "Our form of government is still the best for us",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree"
-          }
+          "label": "Our form of government is still the best for us"
         },
         {
           "id": "current_system_suitable",
-          "label": "是否同意“我国目前的政治制度是最适合中国国情的”？",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "不太同意",
-            "4": "非常不同意",
-            "8": "不知道",
-            "9": "无回答"
-          }
+          "label": "是否同意“我国目前的政治制度是最适合中国国情的”？"
         },
         {
           "id": "i_am_well_represented_by_gov",
-          "label": "下面我谈几个观点，请您就每个观点表示您的意见。我国政府是代表我的利益的",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "不太同意",
-            "4": "非常不同意",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "下面我谈几个观点，请您就每个观点表示您的意见。我国政府是代表我的利益的"
         },
         {
           "id": "prefer_own_system",
-          "label": "与其他国家的政治制度相比，我宁愿在我国的政治制度下生活",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "不太同意",
-            "4": "非常不同意",
-            "8": "不知道",
-            "9": "无回答"
-          }
+          "label": "与其他国家的政治制度相比，我宁愿在我国的政治制度下生活"
         },
         {
           "id": "proud_of_system",
-          "label": "整体而言，我以我们的政治制度为荣",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "不太同意",
-            "4": "非常不同意",
-            "8": "不知道",
-            "9": "无回答"
-          }
+          "label": "整体而言，我以我们的政治制度为荣"
         },
         {
           "id": "satisfied_central_gov",
-          "label": "Satisfied or unsatisfied: central government",
-          "values": {
-            "0": "don't satisfy at all",
-            "10": "satisfy very much",
-            "88": "dont know",
-            "99": "refuse to answer"
-          }
+          "label": "Satisfied or unsatisfied: central government"
         },
         {
           "id": "satisfied_gov_policies",
-          "label": "Satisfied with government policies",
-          "values": {
-            "1": "agree strongly",
-            "2": "agree",
-            "3": "neither agree nor disagree",
-            "4": "disagree",
-            "5": "disagree strongly",
-            "8": "don't know",
-            "9": "no answer"
-          }
+          "label": "Satisfied with government policies"
         },
         {
           "id": "satisfied_official_ethics",
-          "label": "您对下列群体的伦理道德状况的满意度如何-政府官员",
-          "values": {
-            "1": "非常不满意",
-            "2": "比较不满意",
-            "3": "一般",
-            "4": "比较满意",
-            "5": "非常满意"
-          }
+          "label": "您对下列群体的伦理道德状况的满意度如何-政府官员"
         },
         {
           "id": "support_ccp",
-          "label": "对党中央的支持程度",
-          "values": {
-            "0": "非常不支持",
-            "10": "非常支持",
-            "88": "不知道",
-            "99": "无回答"
-          }
+          "label": "对党中央的支持程度"
         },
         {
           "id": "trust_ccp",
@@ -3323,610 +1164,211 @@
         },
         {
           "id": "trust_central",
-          "label": "Confidence: The Government",
-          "values": {
-            "1": "A great deal",
-            "2": "Quite a lot",
-            "3": "Not very much",
-            "4": "None at all"
-          }
+          "label": "Confidence: The Government"
         },
         {
           "id": "trust_civil_service",
-          "label": "Confidence: The Civil Services",
-          "values": {
-            "1": "A great deal",
-            "2": "Quite a lot",
-            "3": "Not very much",
-            "4": "None at all"
-          }
+          "label": "Confidence: The Civil Services"
         },
         {
           "id": "trust_gov_officials",
-          "label": "You can generally trust the people who run our government to do what is right",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree"
-          }
+          "label": "You can generally trust the people who run our government to do what is right"
         },
         {
           "id": "trust_city",
-          "label": "对各级政府的信任程度。市政府",
-          "values": {
-            "1": "非常信任",
-            "2": "比较信任",
-            "3": "不太信任",
-            "4": "非常不信任",
-            "8": "不知道",
-            "9": "未回答"
-          }
+          "label": "对各级政府的信任程度。市政府"
         },
         {
           "id": "trust_political_parties",
-          "label": "How much trust do you have in political parties?",
-          "values": {
-            "0": "Not sure",
-            "1": "None at all",
-            "2": "Not very much trust",
-            "3": "Quite a lot of trust",
-            "4": "A great deal of trust"
-          }
+          "label": "How much trust do you have in political parties?"
         },
         {
           "id": "political_system_adjustment",
-          "label": "和其他国家相比，我们国家的政治制度是否需要有所调整？",
-          "values": {
-            "1": "运作很好，没有必要调整",
-            "2": "需要较小幅度的调整",
-            "3": "需要较大幅度的调整",
-            "4": "整体性的调整",
-            "7": "不懂题意",
-            "8": "不知道",
-            "9": "不回答"
-          }
+          "label": "和其他国家相比，我们国家的政治制度是否需要有所调整？"
         },
         {
           "id": "support_system_despite_flaws",
-          "label": "即使我们的政治制度有这样那样的问题，人民也应当支持",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "不太同意",
-            "4": "非常不同意",
-            "8": "不知道",
-            "9": "无回答"
-          }
+          "label": "即使我们的政治制度有这样那样的问题，人民也应当支持"
         },
         {
           "id": "support_country_even_if_wrong",
-          "label": "People should support their country even if the country is in the wrong",
-          "values": {
-            "1": "agree strongly",
-            "2": "agree",
-            "3": "neither agree nor disagree",
-            "4": "disagree",
-            "5": "disagree strongly",
-            "8": "don't know",
-            "9": "no answer"
-          }
+          "label": "People should support their country even if the country is in the wrong"
         },
         {
           "id": "system_can_solve_problems",
-          "label": "从长远来看，我们的政治制度能解决我国面临的主要问题",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "不太同意",
-            "4": "非常不同意",
-            "8": "不知道",
-            "9": "无回答"
-          }
+          "label": "从长远来看，我们的政治制度能解决我国面临的主要问题"
         },
         {
           "id": "support_gov_decisions",
-          "label": "People should always support the decisions of their government even if they disagree with them.",
-          "values": {
-            "1": "Strongly agree",
-            "2": "Somewhat agree",
-            "3": "Somewhat disagree",
-            "4": "Strongly disagree",
-            "7": "Do not understand the question",
-            "8": "Can't choose",
-            "9": "Decline to answer"
-          }
+          "label": "People should always support the decisions of their government even if they disagree with them."
         },
         {
           "id": "political_system_best",
-          "label": "OUR POLITICAL SYSTEM IS BEST",
-          "values": {
-            "1": "STRONGLY DISAGREE",
-            "2": "DISAGREE",
-            "3": "AGREE",
-            "4": "STRONGLY AGREE",
-            "8": "DON'T KNOW",
-            "9": "NO ANSWER"
-          }
+          "label": "OUR POLITICAL SYSTEM IS BEST"
         },
         {
           "id": "trust_obey_gov",
-          "label": "TRUST AND OBEY GOVERNMENT",
-          "values": {
-            "1": "STRONGLY DISAGREE",
-            "2": "DISAGREE",
-            "3": "AGREE",
-            "4": "STRONGLY AGREE",
-            "8": "DON'T KNOW",
-            "9": "NO ANSWER"
-          }
+          "label": "TRUST AND OBEY GOVERNMENT"
         },
         {
           "id": "unconditionally_support_gov",
-          "label": "UNCONDITIONALLY SUPPORT GOVT",
-          "values": {
-            "1": "STRONGLY DISAGREE",
-            "2": "DISAGREE",
-            "3": "AGREE",
-            "4": "STRONGLY AGREE",
-            "8": "DON'T KNOW",
-            "9": "NO ANSWER"
-          }
+          "label": "UNCONDITIONALLY SUPPORT GOVT"
         },
         {
           "id": "gov_system_fits_conditions",
-          "label": "GOVERNMENT SYSTEM FITS CONDITIONS",
-          "values": {
-            "1": "STRONGLY DISAGREE",
-            "2": "DISAGREE",
-            "3": "AGREE",
-            "4": "STRONGLY AGREE",
-            "8": "DON'T KNOW",
-            "9": "NO ANSWER"
-          }
+          "label": "GOVERNMENT SYSTEM FITS CONDITIONS"
         },
         {
           "id": "support_gov_even_wrong",
-          "label": "我们想知道您对下面各种说法的意见。任何人都应该支持自己的政府即使它做的不对",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "不太同意",
-            "4": "非常不同意",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "我们想知道您对下面各种说法的意见。任何人都应该支持自己的政府即使它做的不对"
         },
         {
           "id": "courts_uphold_justice",
-          "label": "您在多大程度上同意下列观点。我国法院/检察院维护司法公正",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "不太同意",
-            "4": "非常不同意",
-            "8": "不知道",
-            "9": "未回答"
-          }
+          "label": "您在多大程度上同意下列观点。我国法院/检察院维护司法公正"
         },
         {
           "id": "defend_own_system",
-          "label": "Our country should defend our way of life instead of becoming more and more like other countries",
-          "values": {
-            "1": "Strongly disagree",
-            "2": "Somewhat disagree",
-            "3": "Somewhat agree",
-            "4": "Strongly agree"
-          }
+          "label": "Our country should defend our way of life instead of becoming more and more like other countries"
         },
         {
           "id": "fit_scale",
-          "label": "1表示完全不适合，10表示完全适合。在程度上，数字越小表示越不适合，数字越大表示越%XCA",
-          "values": {
-            "99": "不回答"
-          }
+          "label": "1表示完全不适合，10表示完全适合。在程度上，数字越小表示越不适合，数字越大表示越%XCA"
         },
         {
           "id": "gov_decisions_correct",
-          "label": "我们可以相信，政府领导人所做的决定总是正确的。",
-          "values": {
-            "1": "非常同意",
-            "2": "同意",
-            "3": "不同意",
-            "4": "非常不同意",
-            "7": "不懂题意",
-            "8": "不知道",
-            "9": "不回答"
-          }
+          "label": "我们可以相信，政府领导人所做的决定总是正确的。"
         },
         {
           "id": "gov_honesty",
-          "label": "是否同意“总体而言，政府官员通常讲实话”这一观点",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "不太同意",
-            "4": "非常不同意",
-            "8": "不知道",
-            "9": "无回答"
-          }
+          "label": "是否同意“总体而言，政府官员通常讲实话”这一观点"
         },
         {
           "id": "gov_not_care_me",
-          "label": "政府官员不太在乎像我这样的人有何想法",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "中立",
-            "4": "不太同意",
-            "5": "非常不同意",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "政府官员不太在乎像我这样的人有何想法"
         },
         {
           "id": "gov_treats_equally",
-          "label": "政府对穷人和富人一视同仁。",
-          "values": {
-            "1": "非常同意",
-            "2": "同意",
-            "3": "不同意",
-            "4": "非常不同意",
-            "7": "不懂题意",
-            "8": "不知道",
-            "9": "不回答"
-          }
+          "label": "政府对穷人和富人一视同仁。"
         },
         {
           "id": "govt_considers_opinions",
-          "label": "您认为政府在制定政策时有多重视人民的意见",
-          "values": {
-            "1": "十分重视",
-            "2": "比较重视",
-            "3": "不太重视",
-            "4": "根本不重视",
-            "8": "不知道",
-            "9": "拒绝回答"
-          }
+          "label": "您认为政府在制定政策时有多重视人民的意见"
         },
         {
           "id": "govt_officials_truthful",
-          "label": "下面我谈几个观点，请您就每个观点表示您的意见。政府官员通常讲实话",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "不太同意",
-            "4": "非常不同意",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "下面我谈几个观点，请您就每个观点表示您的意见。政府官员通常讲实话"
         },
         {
           "id": "i_am_well_represented_by_party",
-          "label": "是否同意“中国共产党是代表我的利益的”这一观点",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "不太同意",
-            "4": "非常不同意",
-            "8": "不知道",
-            "9": "无回答"
-          }
+          "label": "是否同意“中国共产党是代表我的利益的”这一观点"
         },
         {
           "id": "judge_honesty",
-          "label": "您如何评价各类党政公职人员的清廉程度-法官",
-          "values": {
-            "1": "普遍非常腐败",
-            "2": "多数比较腐败",
-            "3": "差不多一半廉洁",
-            "4": "多数比较廉洁",
-            "5": "普遍非常廉洁"
-          }
+          "label": "您如何评价各类党政公职人员的清廉程度-法官"
         },
         {
           "id": "judicial_powerless",
-          "label": "当政府违法时，司法机关也无能为力。",
-          "values": {
-            "1": "非常同意",
-            "2": "同意",
-            "3": "不同意",
-            "4": "非常不同意",
-            "7": "不懂题意",
-            "8": "不知道",
-            "9": "不回答"
-          }
+          "label": "当政府违法时，司法机关也无能为力。"
         },
         {
           "id": "local_cadre_honesty",
-          "label": "您如何评价各类党政公职人员的清廉程度-本地国家干部",
-          "values": {
-            "1": "普遍非常腐败",
-            "2": "多数比较腐败",
-            "3": "差不多一半廉洁",
-            "4": "多数比较廉洁",
-            "5": "普遍非常廉洁"
-          }
+          "label": "您如何评价各类党政公职人员的清廉程度-本地国家干部"
         },
         {
           "id": "municipal_trust",
-          "label": "对市政府的信任程度",
-          "values": {
-            "0": "非常不信任",
-            "10": "非常信任",
-            "88": "不知道",
-            "99": "无回答"
-          }
+          "label": "对市政府的信任程度"
         },
         {
           "id": "npc_represents_people",
-          "label": "您在多大程度上同意下列观点。全国人民代表大会代表绝大多数人民的利益",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "不太同意",
-            "4": "非常不同意",
-            "8": "不知道",
-            "9": "未回答"
-          }
+          "label": "您在多大程度上同意下列观点。全国人民代表大会代表绝大多数人民的利益"
         },
         {
           "id": "officials_abuse_power",
-          "label": "在您看来，我国政府官员是不是经常违法或滥用权力？",
-          "values": {
-            "1": "从不这样",
-            "2": "偶尔这样",
-            "3": "大多数情况下是这样",
-            "4": "总是这样",
-            "8": "不知道",
-            "9": "不回答"
-          }
+          "label": "在您看来，我国政府官员是不是经常违法或滥用权力？"
         },
         {
           "id": "officials_dont_care",
-          "label": "政府官员不太在乎想我这样的人在想什么",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意"
-          }
+          "label": "政府官员不太在乎想我这样的人在想什么"
         },
         {
           "id": "officials_serve_people",
-          "label": "政府官员的工作就是为老百姓服务",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意"
-          }
+          "label": "政府官员的工作就是为老百姓服务"
         },
         {
           "id": "officials_value_public_opinion",
-          "label": "政府官员会重视我们对政府的态度和看法",
-          "values": {
-            "1": "完全不同意",
-            "2": "比较不同意",
-            "3": "无所谓同意不同意",
-            "4": "比较同意",
-            "5": "完全同意"
-          }
+          "label": "政府官员会重视我们对政府的态度和看法"
         },
         {
           "id": "overall_cadre_honesty",
-          "label": "您如何评价各类党政公职人员的清廉程度-对各类党政公职人员的总体评价",
-          "values": {
-            "1": "普遍非常腐败",
-            "2": "多数比较腐败",
-            "3": "差不多一半廉洁",
-            "4": "多数比较廉洁",
-            "5": "普遍非常廉洁"
-          }
+          "label": "您如何评价各类党政公职人员的清廉程度-对各类党政公职人员的总体评价"
         },
         {
           "id": "police_honesty",
-          "label": "您如何评价各类党政公职人员的清廉程度-警察",
-          "values": {
-            "1": "普遍非常腐败",
-            "2": "多数比较腐败",
-            "3": "差不多一半廉洁",
-            "4": "多数比较廉洁",
-            "5": "普遍非常廉洁"
-          }
+          "label": "您如何评价各类党政公职人员的清廉程度-警察"
         },
         {
           "id": "prosecutor_honesty",
-          "label": "您如何评价各类党政公职人员的清廉程度-检察官",
-          "values": {
-            "1": "普遍非常腐败",
-            "2": "多数比较腐败",
-            "3": "差不多一半廉洁",
-            "4": "多数比较廉洁",
-            "5": "普遍非常廉洁"
-          }
+          "label": "您如何评价各类党政公职人员的清廉程度-检察官"
         },
         {
           "id": "satisfied_local_govt",
-          "label": "Satisfied or unsatisfied: local government",
-          "values": {
-            "0": "don't satisfy at all",
-            "10": "satisfy very much",
-            "88": "dont know",
-            "99": "refuse to answer"
-          }
+          "label": "Satisfied or unsatisfied: local government"
         },
         {
           "id": "trust_company",
-          "label": "Confidence: Major Companies",
-          "values": {
-            "1": "A great deal",
-            "2": "Quite a lot",
-            "3": "Not very much",
-            "4": "None at all"
-          }
+          "label": "Confidence: Major Companies"
         },
         {
           "id": "trust_corruption_info",
-          "label": "[ur-e391]政府信任度:腐败信息",
-          "values": {
-            "1": "最不信任",
-            "2": "不太信任",
-            "3": "一般",
-            "4": "较信任",
-            "5": "最信任",
-            "8": "不知道",
-            "9": "据答"
-          }
+          "label": "[ur-e391]政府信任度:腐败信息"
         },
         {
           "id": "trust_earthquake_forecast",
-          "label": "[ur-e391]政府信任度:地震预报",
-          "values": {
-            "1": "最不信任",
-            "2": "不太信任",
-            "3": "一般",
-            "4": "较信任",
-            "5": "最信任",
-            "8": "不知道",
-            "9": "据答"
-          }
+          "label": "[ur-e391]政府信任度:地震预报"
         },
         {
           "id": "trust_graduate_employment_info",
-          "label": "[ur-e391]政府信任度:大学生就业",
-          "values": {
-            "1": "最不信任",
-            "2": "不太信任",
-            "3": "一般",
-            "4": "较信任",
-            "5": "最信任",
-            "8": "不知道",
-            "9": "据答"
-          }
+          "label": "[ur-e391]政府信任度:大学生就业"
         },
         {
           "id": "trust_housing_price_info",
-          "label": "[ur-e391]政府信任度:房价信息",
-          "values": {
-            "1": "最不信任",
-            "2": "不太信任",
-            "3": "一般",
-            "4": "较信任",
-            "5": "最信任",
-            "8": "不知道",
-            "9": "据答"
-          }
+          "label": "[ur-e391]政府信任度:房价信息"
         },
         {
           "id": "trust_local",
-          "label": "信任程度——本地政府（农村指乡政府）",
-          "values": {
-            "1": "完全不可信",
-            "2": "比较不可信",
-            "3": "居于可信与不可信之间",
-            "4": "比较可信",
-            "5": "完全可信"
-          }
+          "label": "信任程度——本地政府（农村指乡政府）"
         },
         {
           "id": "trust_military",
-          "label": "How much trust do you have in the military?",
-          "values": {
-            "0": "Not sure",
-            "1": "None at all",
-            "2": "Not very much trust",
-            "3": "Quite a lot of trust",
-            "4": "A great deal of trust"
-          }
+          "label": "How much trust do you have in the military?"
         },
         {
           "id": "trust_mine_accident_info",
-          "label": "[ur-e391]政府信任度:矿难伤亡",
-          "values": {
-            "1": "最不信任",
-            "2": "不太信任",
-            "3": "一般",
-            "4": "较信任",
-            "5": "最信任",
-            "8": "不知道",
-            "9": "据答"
-          }
+          "label": "[ur-e391]政府信任度:矿难伤亡"
         },
         {
           "id": "trust_ngo",
-          "label": "信任程度——民间组织",
-          "values": {
-            "1": "完全不可信",
-            "2": "比较不可信",
-            "3": "居于可信与不可信之间",
-            "4": "比较可信",
-            "5": "完全可信"
-          }
+          "label": "信任程度——民间组织"
         },
         {
           "id": "trust_police",
-          "label": "您对下面这些人的信任程度-警官",
-          "values": {
-            "1": "非常信任",
-            "2": "比较信任",
-            "3": "不太信任",
-            "4": "完全不信任"
-          }
+          "label": "您对下面这些人的信任程度-警官"
         },
         {
           "id": "trust_provincial_govt",
-          "label": "Do you trust them: provincial government official",
-          "values": {
-            "1": "very much",
-            "2": "somewhat trust them",
-            "3": "don't trust them very much",
-            "4": "don't trust them at all",
-            "7": "not applicable",
-            "8": "don't know",
-            "9": "no answer"
-          }
+          "label": "Do you trust them: provincial government official"
         },
         {
           "id": "trust_public_security_info",
-          "label": "[ur-e391]政府信任度:治安形势",
-          "values": {
-            "1": "最不信任",
-            "2": "不太信任",
-            "3": "一般",
-            "4": "较信任",
-            "5": "最信任",
-            "8": "不知道",
-            "9": "据答"
-          }
+          "label": "[ur-e391]政府信任度:治安形势"
         },
         {
           "id": "trust_stock_market_info",
-          "label": "[ur-e391]政府信任度:股市信息",
-          "values": {
-            "1": "最不信任",
-            "2": "不太信任",
-            "3": "一般",
-            "4": "较信任",
-            "5": "最信任",
-            "8": "不知道",
-            "9": "据答"
-          }
+          "label": "[ur-e391]政府信任度:股市信息"
         },
         {
           "id": "trust_wealth_gap_info",
-          "label": "[ur-e391]政府信任度:贫富差距",
-          "values": {
-            "1": "最不信任",
-            "2": "不太信任",
-            "3": "一般",
-            "4": "较信任",
-            "5": "最信任",
-            "8": "不知道",
-            "9": "据答"
-          }
+          "label": "[ur-e391]政府信任度:贫富差距"
         }
       ]
     },
@@ -3936,203 +1378,67 @@
       "concepts": [
         {
           "id": "china_better_than_most",
-          "label": "China is a better country than most other countries",
-          "values": {
-            "1": "agree strongly",
-            "2": "agree",
-            "3": "neither agree nor disagree",
-            "4": "disagree",
-            "5": "disagree strongly",
-            "8": "don't know",
-            "9": "no answer"
-          }
+          "label": "China is a better country than most other countries"
         },
         {
           "id": "criticism_china_is_personal",
-          "label": "我们想知道您对下面各种说法的意见。别人批评中国时我感觉他们也批评我自己",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "不太同意",
-            "4": "非常不同意",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "我们想知道您对下面各种说法的意见。别人批评中国时我感觉他们也批评我自己"
         },
         {
           "id": "prefer_chinese_citizenship",
-          "label": "I would rather be a citizen of China than of any other country",
-          "values": {
-            "1": "agree strongly",
-            "2": "agree",
-            "3": "neither agree nor disagree",
-            "4": "disagree",
-            "5": "disagree strongly",
-            "8": "don't know",
-            "9": "no answer"
-          }
+          "label": "I would rather be a citizen of China than of any other country"
         },
         {
           "id": "culture_superior",
-          "label": "我们的文化优于其他文化",
-          "values": {
-            "1": "非常同意",
-            "2": "比较同意",
-            "3": "不太同意",
-            "4": "非常不同意",
-            "8": "不知道",
-            "9": "未回答"
-          }
+          "label": "我们的文化优于其他文化"
         },
         {
           "id": "foreign_culture_harmful",
-          "label": "gl1c. 增加与外国电影、音乐或书籍的接触，对我们自己的文化是有害的",
-          "values": {
-            "1": "非常同意",
-            "2": "同意",
-            "3": "有点同意",
-            "4": "无所谓同不同意",
-            "5": "有点不同意",
-            "6": "不同意",
-            "7": "非常不同意"
-          }
+          "label": "gl1c. 增加与外国电影、音乐或书籍的接触，对我们自己的文化是有害的"
         },
         {
           "id": "unpatriotic_is_serious",
-          "label": "不爱国",
-          "values": {
-            "1": "非常不严重",
-            "2": "比较不严重",
-            "3": "一般",
-            "4": "比较严重",
-            "5": "非常严重"
-          }
+          "label": "不爱国"
         },
         {
           "id": "sports_success_makes_proud",
-          "label": "My country does well in international sportsmakes me proud to be Chinese",
-          "values": {
-            "1": "agree strongly",
-            "2": "agree",
-            "3": "neither agree nor disagree",
-            "4": "disagree",
-            "5": "disagree strongly",
-            "8": "don't know",
-            "9": "no answer"
-          }
+          "label": "My country does well in international sportsmakes me proud to be Chinese"
         },
         {
           "id": "sacrifice_for_country",
-          "label": "One should sacrifice self-interest for the benefit of the country",
-          "values": {
-            "1": "agree strongly",
-            "2": "agree",
-            "3": "neither agree nor disagree",
-            "4": "disagree",
-            "5": "disagree strongly",
-            "8": "dont know",
-            "9": "no answer"
-          }
+          "label": "One should sacrifice self-interest for the benefit of the country"
         },
         {
           "id": "customs_needed_to_be_chinese",
-          "label": "It is impossible for people who do not share China's customs and traditions to b",
-          "values": {
-            "1": "agree strongly",
-            "2": "agree",
-            "3": "neither agree nor disagree",
-            "4": "disagree",
-            "5": "disagree strongly",
-            "8": "dont know",
-            "9": "no answer"
-          }
+          "label": "It is impossible for people who do not share China's customs and traditions to b"
         },
         {
           "id": "prefer_chinese_media",
-          "label": "China's television should give preference to Chinese films and programs",
-          "values": {
-            "1": "agree strongly",
-            "2": "agree",
-            "3": "neither agree nor disagree",
-            "4": "disagree",
-            "5": "disagree strongly",
-            "8": "dont know",
-            "9": "no answer"
-          }
+          "label": "China's television should give preference to Chinese films and programs"
         },
         {
           "id": "country_dignity_important",
-          "label": "If a country does not have dignity, its citizens will be looked down upon",
-          "values": {
-            "1": "agree strongly",
-            "2": "agree",
-            "3": "neither agree nor disagree",
-            "4": "disagree",
-            "5": "disagree strongly",
-            "8": "dont know",
-            "9": "no answer"
-          }
+          "label": "If a country does not have dignity, its citizens will be looked down upon"
         },
         {
           "id": "not_ashamed_of_china",
-          "label": "Some things about China today  make me feel ashamed of China",
-          "values": {
-            "1": "agree strongly",
-            "2": "agree",
-            "3": "neither agree nor disagree",
-            "4": "disagree",
-            "5": "disagree strongly",
-            "8": "don't know",
-            "9": "no answer"
-          }
+          "label": "Some things about China today  make me feel ashamed of China"
         },
         {
           "id": "others_should_be_like_chinese",
-          "label": "The world would be a better  if people from other countries were more like the C",
-          "values": {
-            "1": "agree strongly",
-            "2": "agree",
-            "3": "neither agree nor disagree",
-            "4": "disagree",
-            "5": "disagree strongly",
-            "8": "don't know",
-            "9": "no answer"
-          }
+          "label": "The world would be a better  if people from other countries were more like the C"
         },
         {
           "id": "national_interest_first",
-          "label": "gl1b. 即使会导致与其它国家的冲突，都应该以自己国家的利益为主",
-          "values": {
-            "1": "非常同意",
-            "2": "同意",
-            "3": "有点同意",
-            "4": "无所谓同不同意",
-            "5": "有点不同意",
-            "6": "不同意",
-            "7": "非常不同意"
-          }
+          "label": "gl1b. 即使会导致与其它国家的冲突，都应该以自己国家的利益为主"
         },
         {
           "id": "national_attachment",
-          "label": "ge1b. 你的国家",
-          "values": {
-            "1": "很有感情",
-            "2": "有感情",
-            "3": "有点感情",
-            "4": "完全没有感情"
-          }
+          "label": "ge1b. 你的国家"
         },
         {
           "id": "proud_citizen",
-          "label": "How proud are you to be a citizen of [Country]",
-          "values": {
-            "1": "Very proud",
-            "2": "Somewhat proud",
-            "3": "Not very proud",
-            "4": "Not proud at all",
-            "8": "Can＊t choose",
-            "9": "Decline to answer"
-          }
+          "label": "How proud are you to be a citizen of [Country]"
         }
       ]
     },
@@ -4142,227 +1448,83 @@
       "concepts": [
         {
           "id": "satisfaction_national_security",
-          "label": "f17d.您对政府在下列工作方面的表现是否满意呢？ - 捍卫国家安全",
-          "values": {
-            "1": "非常满意",
-            "2": "满意",
-            "3": "一般",
-            "4": "不满意",
-            "5": "非常不满意",
-            "6": "无法选择"
-          }
+          "label": "f17d.您对政府在下列工作方面的表现是否满意呢？ - 捍卫国家安全"
         },
         {
           "id": "satisfaction_fair_law",
-          "label": "f17f.您对政府在下列工作方面的表现是否满意呢？ - 公平执法",
-          "values": {
-            "1": "非常满意",
-            "2": "满意",
-            "3": "一般",
-            "4": "不满意",
-            "5": "非常不满意",
-            "6": "无法选择"
-          }
+          "label": "f17f.您对政府在下列工作方面的表现是否满意呢？ - 公平执法"
         },
         {
           "id": "satisfaction_help_poor",
-          "label": "f17i.您对政府在下列工作方面的表现是否满意呢？ - 帮助穷人，维护社会公平",
-          "values": {
-            "1": "非常满意",
-            "2": "满意",
-            "3": "一般",
-            "4": "不满意",
-            "5": "非常不满意",
-            "6": "无法选择"
-          }
+          "label": "f17i.您对政府在下列工作方面的表现是否满意呢？ - 帮助穷人，维护社会公平"
         },
         {
           "id": "satisfaction_environment",
-          "label": "f17h.您对政府在下列工作方面的表现是否满意呢？ - 环境保护",
-          "values": {
-            "1": "非常满意",
-            "2": "满意",
-            "3": "一般",
-            "4": "不满意",
-            "5": "非常不满意",
-            "6": "无法选择"
-          }
+          "label": "f17h.您对政府在下列工作方面的表现是否满意呢？ - 环境保护"
         },
         {
           "id": "satisfaction_education",
-          "label": "f17c.您对政府在下列工作方面的表现是否满意呢？ - 提供优质的基础教育",
-          "values": {
-            "1": "非常满意",
-            "2": "满意",
-            "3": "一般",
-            "4": "不满意",
-            "5": "非常不满意",
-            "6": "无法选择"
-          }
+          "label": "f17c.您对政府在下列工作方面的表现是否满意呢？ - 提供优质的基础教育"
         },
         {
           "id": "satisfaction_healthcare",
-          "label": "f17a.您对政府在下列工作方面的表现是否满意呢？ - 为患者提供医疗服务",
-          "values": {
-            "1": "非常满意",
-            "2": "满意",
-            "3": "一般",
-            "4": "不满意",
-            "5": "非常不满意",
-            "6": "无法选择"
-          }
+          "label": "f17a.您对政府在下列工作方面的表现是否满意呢？ - 为患者提供医疗服务"
         },
         {
           "id": "satisfaction_elderly_welfare",
-          "label": "f17b.您对政府在下列工作方面的表现是否满意呢？ - 为老人提供适当的生活保障",
-          "values": {
-            "1": "非常满意",
-            "2": "满意",
-            "3": "一般",
-            "4": "不满意",
-            "5": "非常不满意",
-            "6": "无法选择"
-          }
+          "label": "f17b.您对政府在下列工作方面的表现是否满意呢？ - 为老人提供适当的生活保障"
         },
         {
           "id": "satisfaction_gov_fairness",
-          "label": "f17g.您对政府在下列工作方面的表现是否满意呢？ - 政府部门秉公办事",
-          "values": {
-            "1": "非常满意",
-            "2": "满意",
-            "3": "一般",
-            "4": "不满意",
-            "5": "非常不满意",
-            "6": "无法选择"
-          }
+          "label": "f17g.您对政府在下列工作方面的表现是否满意呢？ - 政府部门秉公办事"
         },
         {
           "id": "satisfaction_crime_fighting",
-          "label": "f17e.您对政府在下列工作方面的表现是否满意呢？ - 打击犯罪",
-          "values": {
-            "1": "非常满意",
-            "2": "满意",
-            "3": "一般",
-            "4": "不满意",
-            "5": "非常不满意",
-            "6": "无法选择"
-          }
+          "label": "f17e.您对政府在下列工作方面的表现是否满意呢？ - 打击犯罪"
         },
         {
           "id": "satisfaction_infrastructure",
-          "label": "您对我国政府下列各项工作的满意程度如何：基础设施建设",
-          "values": {
-            "1": "非常满意",
-            "2": "比较满意",
-            "3": "不太满意",
-            "4": "非常不满意",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "您对我国政府下列各项工作的满意程度如何：基础设施建设"
         },
         {
           "id": "satisfaction_social_security",
-          "label": "您对我国政府下列各项工作的满意程度如何：社会保障",
-          "values": {
-            "1": "非常满意",
-            "2": "比较满意",
-            "3": "不太满意",
-            "4": "非常不满意",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "您对我国政府下列各项工作的满意程度如何：社会保障"
         },
         {
           "id": "satisfaction_public_safety",
-          "label": "您对我国政府下列各项工作的满意程度如何：社会治安",
-          "values": {
-            "1": "非常满意",
-            "2": "比较满意",
-            "3": "不太满意",
-            "4": "非常不满意",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "您对我国政府下列各项工作的满意程度如何：社会治安"
         },
         {
           "id": "satisfaction_public_health",
-          "label": "您对我国政府下列各项工作的满意程度如何：公共卫生",
-          "values": {
-            "1": "非常满意",
-            "2": "比较满意",
-            "3": "不太满意",
-            "4": "非常不满意",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "您对我国政府下列各项工作的满意程度如何：公共卫生"
         },
         {
           "id": "central_govt_satisfaction",
-          "label": "总的来说，您对中央政府和本市政府的满意程度如何？0代表非常不满意，10代表非常满意%XA1",
-          "values": {
-            "88": "不知道",
-            "99": "没回答"
-          }
+          "label": "总的来说，您对中央政府和本市政府的满意程度如何？0代表非常不满意，10代表非常满意%XA1"
         },
         {
           "id": "city_govt_satisfaction",
-          "label": "总的来说，您对中央政府和本市政府的满意程度如何？0代表非常不满意，10代表非常满意%XA1",
-          "values": {
-            "88": "不知道",
-            "99": "没回答"
-          }
+          "label": "总的来说，您对中央政府和本市政府的满意程度如何？0代表非常不满意，10代表非常满意%XA1"
         },
         {
           "id": "local_economy_status",
-          "label": "您认为本地现在的经济状况如何",
-          "values": {
-            "1": "很好",
-            "2": "较好",
-            "3": "一般",
-            "4": "不太好",
-            "5": "不好",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "您认为本地现在的经济状况如何"
         },
         {
           "id": "national_economy_status",
-          "label": "您认为全国现在的经济状况",
-          "values": {
-            "1": "很好",
-            "2": "较好",
-            "3": "一般",
-            "4": "不太好",
-            "5": "不好",
-            "8": "不知道",
-            "9": "没回答"
-          }
+          "label": "您认为全国现在的经济状况"
         },
         {
           "id": "satisfaction_central_gov",
-          "label": "总的来说对中央政府的满意程度",
-          "values": {
-            "0": "非常不满意",
-            "10": "非常满意",
-            "88": "不知道",
-            "99": "无回答"
-          }
+          "label": "总的来说对中央政府的满意程度"
         },
         {
           "id": "satisfaction_city_gov",
-          "label": "总的来说，您对中央政府和本市政府的满意程度如何？0代表非常不满意，10代表非常满意%XA1",
-          "values": {
-            "88": "不知道",
-            "99": "没回答"
-          }
+          "label": "总的来说，您对中央政府和本市政府的满意程度如何？0代表非常不满意，10代表非常满意%XA1"
         },
         {
           "id": "satisfaction_gov",
-          "label": "总的来说，您对中央政府和本市政府的满意程度如何？0代表非常不满意，10代表非常满意%XA1",
-          "values": {
-            "88": "不知道",
-            "99": "没回答"
-          }
+          "label": "总的来说，您对中央政府和本市政府的满意程度如何？0代表非常不满意，10代表非常满意%XA1"
         }
       ]
     }

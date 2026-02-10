@@ -407,17 +407,6 @@ h1, h2, h3, .serif {
   line-height: 1.3;
 }
 
-.concept-values {
-  font-size: 0.7rem;
-  color: var(--text-light);
-  line-height: 1.4;
-  margin-top: 0.2rem;
-  opacity: 0.75;
-}
-.concept-values .cv-code {
-  font-weight: 600;
-  color: var(--accent);
-}
 
 /* Bottom actions */
 .action-bar {
@@ -1202,29 +1191,9 @@ function renderConceptList(conceptArr, filter) {
   conceptArr.forEach(c => {
     // Safety: label may be array (take first) or string
     const label = Array.isArray(c.label) ? (c.label[0] || '') : (c.label || '');
-    // Build values string for search
-    let valStr = '';
-    if (c.values && typeof c.values === 'object') {
-      valStr = Object.values(c.values).join(' ').toLowerCase();
-    }
     const matchId = c.id.toLowerCase().includes(q);
     const matchLabel = label.toLowerCase().includes(q);
-    const matchVal = q && valStr.includes(q);
-    if (q && !matchId && !matchLabel && !matchVal) return;
-
-    // Format value labels as compact line
-    let valHtml = '';
-    if (c.values && typeof c.values === 'object') {
-      const keys = Object.keys(c.values).sort((a, b) => {
-        const na = parseFloat(a), nb = parseFloat(b);
-        if (!isNaN(na) && !isNaN(nb)) return na - nb;
-        return a.localeCompare(b);
-      });
-      const parts = keys.map(k =>
-        `<span class="cv-code">${escHtml(k)}</span>=${escHtml(c.values[k])}`
-      );
-      valHtml = `<div class="concept-values">${parts.join('  ')}</div>`;
-    }
+    if (q && !matchId && !matchLabel) return;
 
     const div = document.createElement('div');
     div.className = 'concept-item' + (selectedConcept === c.id ? ' selected' : '');
@@ -1233,7 +1202,6 @@ function renderConceptList(conceptArr, filter) {
       <div>
         <div class="concept-id">${escHtml(c.id)}</div>
         <div class="concept-anchor">${escHtml(label)}</div>
-        ${valHtml}
       </div>`;
     div.addEventListener('click', () => {
       selectedConcept = c.id;
