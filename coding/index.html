@@ -523,6 +523,12 @@ h1, h2, h3, .serif {
         <option value="">Select a survey…</option>
       </select>
     </div>
+    <div>
+      <label>Import Previous Results (optional)</label>
+      <input type="file" id="csv-upload" accept=".csv" multiple
+             style="width:100%; padding:0.5rem 0; font-size:0.9rem;">
+      <div id="import-info" style="display:none; font-size:0.85rem; color:var(--navy); padding:0.5rem; background:var(--cream); border-radius:6px; margin-top:0.3rem;"></div>
+    </div>
     <div id="resume-info" style="display:none; font-size:0.85rem; color:var(--success); padding:0.5rem; background:var(--success-bg); border-radius:6px;">
     </div>
     <button class="btn btn-primary" id="start-btn" disabled>Start Coding</button>
@@ -644,6 +650,117 @@ function loadPos(ra, survey) {
   return raw ? parseInt(raw, 10) : 0;
 }
 
+// ── CSV Import ────────────────────────────
+// Parses exported CSVs and merges into localStorage per (ra, survey).
+let pendingImports = {};  // { "ra__survey": { varId: {dimension, concept, timestamp} } }
+
+function parseCSVLine(line) {
+  const fields = [];
+  let current = '';
+  let inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (inQuotes) {
+      if (ch === '"' && line[i + 1] === '"') { current += '"'; i++; }
+      else if (ch === '"') { inQuotes = false; }
+      else { current += ch; }
+    } else {
+      if (ch === '"') { inQuotes = true; }
+      else if (ch === ',') { fields.push(current.trim()); current = ''; }
+      else { current += ch; }
+    }
+  }
+  fields.push(current.trim());
+  return fields;
+}
+
+function importCSVText(text) {
+  const lines = text.split(/\r?\n/).filter(l => l.trim());
+  if (lines.length < 2) return 0;
+
+  // Detect header
+  const header = parseCSVLine(lines[0]).map(h => h.toLowerCase().replace(/['"]/g, ''));
+  const iRA = header.indexOf('ra_id');
+  const iSurvey = header.indexOf('survey_id');
+  const iVar = header.indexOf('var_name');
+  const iDim = header.indexOf('dimension');
+  const iConcept = header.indexOf('concept');
+  const iTime = header.indexOf('timestamp');
+
+  if (iSurvey < 0 || iVar < 0 || iDim < 0) return 0;
+
+  let count = 0;
+  for (let i = 1; i < lines.length; i++) {
+    const f = parseCSVLine(lines[i]);
+    const ra = iRA >= 0 ? f[iRA] : '';
+    const survey = f[iSurvey];
+    const varName = f[iVar];
+    const dim = f[iDim];
+    const concept = iConcept >= 0 ? f[iConcept] : 'none';
+    const ts = iTime >= 0 ? f[iTime] : new Date().toISOString();
+
+    if (!survey || !varName || !dim) continue;
+
+    const key = `${survey}__${varName}`;
+    const storeKey = `${ra}__${survey}`;
+
+    if (!pendingImports[storeKey]) pendingImports[storeKey] = {};
+    pendingImports[storeKey][key] = { dimension: dim, concept: concept || 'none', timestamp: ts };
+    count++;
+  }
+  return count;
+}
+
+function commitImports(ra, survey) {
+  // Merge all pending imports that match this (ra, survey) or (any ra, survey) into localStorage
+  let merged = loadAnswers(ra, survey);
+  let added = 0;
+  for (const storeKey in pendingImports) {
+    const [importRA, importSurvey] = storeKey.split('__');
+    if (importSurvey !== survey) continue;
+    const entries = pendingImports[storeKey];
+    for (const varId in entries) {
+      if (!merged[varId]) added++;
+      merged[varId] = entries[varId];
+    }
+  }
+  if (added > 0) {
+    localStorage.setItem(storageKey(ra, survey), JSON.stringify(merged));
+  }
+  return added;
+}
+
+function handleCSVUpload(files) {
+  pendingImports = {};
+  const info = document.getElementById('import-info');
+  let totalRows = 0;
+  let filesRead = 0;
+
+  Array.from(files).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      totalRows += importCSVText(e.target.result);
+      filesRead++;
+      if (filesRead === files.length) {
+        if (totalRows > 0) {
+          const surveys = new Set();
+          for (const k in pendingImports) {
+            const s = k.split('__')[1];
+            if (s) surveys.add(s);
+          }
+          info.textContent = `Loaded ${totalRows} records from ${files.length} file(s) across ${surveys.size} survey(s)`;
+          info.style.display = 'block';
+        } else {
+          info.textContent = 'No valid records found in CSV file(s)';
+          info.style.display = 'block';
+        }
+        updateResumeInfo();
+      }
+    };
+    reader.readAsText(file);
+  });
+}
+
 // ── Screen Management ──────────────────────
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -698,6 +815,10 @@ function initSetup() {
   sel.addEventListener('change', check);
   check();
 
+  document.getElementById('csv-upload').addEventListener('change', function() {
+    if (this.files.length > 0) handleCSVUpload(this.files);
+  });
+
   document.getElementById('start-btn').addEventListener('click', startCoding);
   showScreen('setup-screen');
 }
@@ -708,11 +829,20 @@ function updateResumeInfo() {
   const info = document.getElementById('resume-info');
   if (!ra || !survey) { info.style.display = 'none'; return; }
 
+  // Count from localStorage + pending imports
   const saved = loadAnswers(ra, survey);
-  const count = Object.keys(saved).length;
+  let count = Object.keys(saved).length;
+  for (const storeKey in pendingImports) {
+    const importSurvey = storeKey.split('__')[1];
+    if (importSurvey === survey) {
+      for (const varId in pendingImports[storeKey]) {
+        if (!saved[varId]) count++;
+      }
+    }
+  }
   if (count > 0) {
     const pos = loadPos(ra, survey);
-    info.textContent = `Resuming: ${count} already coded, position ${pos + 1}`;
+    info.textContent = `Resuming: ${count} already coded` + (pos > 0 ? `, position ${pos + 1}` : '');
     info.style.display = 'block';
   } else {
     info.style.display = 'none';
@@ -724,6 +854,9 @@ function startCoding() {
   raName = document.getElementById('ra-name').value.trim();
   currentSurvey = document.getElementById('survey-select').value;
   localStorage.setItem('coding_ra_name', raName);
+
+  // Merge any uploaded CSV data into localStorage first
+  const imported = commitImports(raName, currentSurvey);
 
   surveyVars = allVariables.filter(v => v.survey === currentSurvey);
   answers = loadAnswers(raName, currentSurvey);
