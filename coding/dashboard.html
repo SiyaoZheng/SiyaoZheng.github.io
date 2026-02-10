@@ -135,7 +135,9 @@ tr:hover td { background: #faf9f7; }
 // ═══════════════════════════════════════════════════════════════════
 
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbyaNy_KfdXPbu827r5g-EZRIVdK8DvVtjgIRFv5jySRsTS-_HP1fH2Ffd4tEgR9y82LQw/exec';
-const PASSWORD = 'cleavages2026';
+const TOKEN = 'cleavages2026';
+// Auto-login via URL token: dashboard.html?token=cleavages2026
+const urlToken = new URLSearchParams(window.location.search).get('token');
 
 const DIM_COLORS = {
   F1: '#4361ee', F2: '#e07a5f', F3: '#81b29a',
@@ -155,9 +157,16 @@ let allEvents = [];
 document.getElementById('pw-btn').addEventListener('click', tryLogin);
 document.getElementById('pw-input').addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
 
+// Auto-login if token is in URL
+if (urlToken === TOKEN) {
+  document.getElementById('login').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  fetchData();
+}
+
 function tryLogin() {
   const pw = document.getElementById('pw-input').value;
-  if (pw === PASSWORD) {
+  if (pw === TOKEN) {
     document.getElementById('login').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
     fetchData();
@@ -213,7 +222,7 @@ function fetchData() {
     renderAll();
   };
 
-  script.src = GAS_URL + '?action=fetch_data&pw=' + encodeURIComponent(PASSWORD) + '&cb=' + cbName;
+  script.src = GAS_URL + '?action=fetch_data&pw=' + encodeURIComponent(TOKEN) + '&cb=' + cbName;
   script.onerror = function() {
     cleanup();
     document.getElementById('overview-stats').innerHTML =
