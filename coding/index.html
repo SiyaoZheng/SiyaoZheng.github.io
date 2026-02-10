@@ -218,14 +218,32 @@ h1, h2, h3, .serif {
 }
 
 .progress-bar {
-  height: 3px;
-  background: var(--border);
+  height: 22px;
+  background: var(--cream);
   width: 100%;
+  position: relative;
+  border-bottom: 1px solid var(--border);
 }
 .progress-bar-fill {
   height: 100%;
-  background: var(--accent);
+  background: linear-gradient(90deg, var(--success) 0%, #52b788 100%);
   transition: width 0.3s ease;
+  min-width: 0;
+}
+.progress-bar-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.03em;
+  pointer-events: none;
 }
 
 .coding-body {
@@ -548,7 +566,10 @@ h1, h2, h3, .serif {
       <button class="btn btn-secondary topbar-btn" id="btn-change-survey">Switch</button>
     </div>
   </div>
-  <div class="progress-bar"><div class="progress-bar-fill" id="progress-fill"></div></div>
+  <div class="progress-bar">
+    <div class="progress-bar-fill" id="progress-fill"></div>
+    <div class="progress-bar-text" id="progress-text"></div>
+  </div>
 
   <div class="coding-body">
     <!-- Variable Card -->
@@ -907,8 +928,10 @@ function renderVariable() {
     `${currentIdx + 1}/${surveyVars.length} · ${coded} coded`;
 
   // Progress bar
-  const pct = (coded / surveyVars.length) * 100;
+  const pct = surveyVars.length > 0 ? (coded / surveyVars.length) * 100 : 0;
   document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-text').textContent =
+    `${coded} / ${surveyVars.length} coded (${Math.round(pct)}%)`;
 
   // Variable card
   document.getElementById('var-name').textContent = v.var;
