@@ -106,11 +106,12 @@ tr:hover td { background: #faf9f7; }
   <div class="top-bar">
     <div>
       <h1>Coding Progress</h1>
-      <p class="subtitle">Last refreshed: <span id="last-refresh">-</span> &middot; <span id="event-count">0</span> events</p>
+      <p class="subtitle">Last refreshed: <span id="last-refresh">-</span> &middot; <span id="event-count">0</span> events <span id="archive-note" style="color:var(--success);"></span></p>
     </div>
     <div class="top-actions">
       <button class="btn" onclick="fetchData()">Refresh</button>
       <button class="btn" onclick="downloadCSV()">Export CSV</button>
+      <button class="btn btn-danger" onclick="confirmClearArchive()">Clear Archive</button>
     </div>
   </div>
   <div id="alerts"></div>
@@ -129,6 +130,73 @@ const ALL_DIMS = ['F1','F2','F3','regime_support','nationalism','satisfaction','
 
 let allEvents = [];
 
+// ── IndexedDB Archive ──
+// Server buffer is small (~1500 events). This local archive accumulates
+// all historical events so nothing is lost when the server buffer wraps.
+const DB_NAME = '_codingArchive';
+const STORE_NAME = 'events';
+
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, 1);
+    req.onupgradeneeded = e => {
+      if (!e.target.result.objectStoreNames.contains(STORE_NAME))
+        e.target.result.createObjectStore(STORE_NAME, { keyPath: '_key' });
+    };
+    req.onsuccess = e => resolve(e.target.result);
+    req.onerror = e => reject(e.target.error);
+  });
+}
+
+function evtKey(e) {
+  return [e.server_ts, e.ra, e.event_type, e.var_id, e.session_id].join('|');
+}
+
+async function archiveAndLoad(serverEvents) {
+  const db = await openDB();
+  const existingKeys = await new Promise(r => {
+    const req = db.transaction(STORE_NAME, 'readonly').objectStore(STORE_NAME).getAllKeys();
+    req.onsuccess = () => r(new Set(req.result));
+    req.onerror = () => r(new Set());
+  });
+  let newCount = 0;
+  if (serverEvents.length > 0) {
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    const store = tx.objectStore(STORE_NAME);
+    serverEvents.forEach(e => {
+      const k = evtKey(e);
+      if (!existingKeys.has(k)) { store.put(Object.assign({ _key: k }, e)); newCount++; }
+    });
+    await new Promise(r => { tx.oncomplete = r; });
+  }
+  const all = await new Promise(r => {
+    const req = db.transaction(STORE_NAME, 'readonly').objectStore(STORE_NAME).getAll();
+    req.onsuccess = () => r(req.result);
+    req.onerror = () => r([]);
+  });
+  db.close();
+  all.forEach(e => delete e._key);
+  return { events: all, newCount };
+}
+
+async function clearArchiveDB() {
+  const db = await openDB();
+  const tx = db.transaction(STORE_NAME, 'readwrite');
+  tx.objectStore(STORE_NAME).clear();
+  await new Promise(r => { tx.oncomplete = r; });
+  db.close();
+}
+
+function confirmClearArchive() {
+  if (!confirm('Clear all locally archived events?\nServer data is not affected. You can re-fetch after clearing.')) return;
+  clearArchiveDB().then(() => {
+    allEvents = [];
+    render();
+    document.getElementById('event-count').textContent = '0';
+    document.getElementById('archive-note').textContent = '(archive cleared)';
+  });
+}
+
 // ── Auth ──
 document.getElementById('pw-btn').addEventListener('click', tryLogin);
 document.getElementById('pw-input').addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
@@ -141,24 +209,49 @@ function tryLogin() {
   } else { document.getElementById('pw-error').style.display = 'block'; }
 }
 
-// ── Fetch ──
+// ── Fetch (with local archive) ──
 function fetchData() {
   document.getElementById('ra-list').innerHTML = '<div class="loading">Loading...</div>';
+  document.getElementById('archive-note').textContent = '';
   const cbName = '_cb' + Date.now();
   const script = document.createElement('script');
-  const timer = setTimeout(() => { cleanup(); document.getElementById('ra-list').innerHTML = '<div class="loading" style="color:var(--warn);">Timed out.</div>'; }, 15000);
+  const timer = setTimeout(() => { cleanup(); loadFromArchive('Server timed out.'); }, 15000);
   function cleanup() { clearTimeout(timer); delete window[cbName]; if (script.parentNode) script.parentNode.removeChild(script); }
   window[cbName] = function(data) {
     cleanup();
     if (data.error) { document.getElementById('ra-list').innerHTML = '<div class="loading" style="color:var(--warn);">Error: ' + data.error + '</div>'; return; }
-    allEvents = data.events || [];
-    document.getElementById('last-refresh').textContent = new Date().toLocaleString();
-    document.getElementById('event-count').textContent = allEvents.length;
-    render();
+    archiveAndLoad(data.events || []).then(result => {
+      allEvents = result.events;
+      document.getElementById('last-refresh').textContent = new Date().toLocaleString();
+      document.getElementById('event-count').textContent = allEvents.length;
+      document.getElementById('archive-note').textContent = result.newCount > 0 ? '(+' + result.newCount + ' new)' : '';
+      render();
+    }).catch(() => {
+      allEvents = data.events || [];
+      document.getElementById('last-refresh').textContent = new Date().toLocaleString();
+      document.getElementById('event-count').textContent = allEvents.length;
+      render();
+    });
   };
   script.src = GAS_URL + '?action=fetch_data&pw=' + encodeURIComponent(TOKEN) + '&cb=' + cbName;
-  script.onerror = function() { cleanup(); document.getElementById('ra-list').innerHTML = '<div class="loading" style="color:var(--warn);">Failed to load.</div>'; };
+  script.onerror = function() { cleanup(); loadFromArchive('Server unavailable.'); };
   document.head.appendChild(script);
+}
+
+function loadFromArchive(reason) {
+  archiveAndLoad([]).then(result => {
+    allEvents = result.events;
+    if (allEvents.length > 0) {
+      document.getElementById('last-refresh').textContent = reason + ' Showing archived data.';
+      document.getElementById('event-count').textContent = allEvents.length;
+      document.getElementById('archive-note').textContent = '(from local archive)';
+      render();
+    } else {
+      document.getElementById('ra-list').innerHTML = '<div class="loading" style="color:var(--warn);">' + reason + ' No archived data.</div>';
+    }
+  }).catch(() => {
+    document.getElementById('ra-list').innerHTML = '<div class="loading" style="color:var(--warn);">Failed to load.</div>';
+  });
 }
 
 // ── Main render ──
