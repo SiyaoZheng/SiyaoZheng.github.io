@@ -515,6 +515,112 @@ h1, h2, h3, .serif {
   .coding-body { padding: 1.5rem 2rem; }
   .dim-grid { grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
 }
+
+/* ── Warm greeting ──────────────────────── */
+.greeting-area {
+  text-align: center;
+  padding: 0.3rem 0 0.2rem;
+  color: var(--text-light);
+}
+.greeting-date {
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+}
+.greeting-term {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--accent);
+  margin: 0.15rem 0;
+}
+.greeting-msg {
+  font-size: 0.82rem;
+  color: var(--text-light);
+}
+
+.topbar-time {
+  font-size: 0.73rem;
+  color: var(--text-light);
+  white-space: nowrap;
+}
+
+/* ── Keyboard shortcuts ─────────────────── */
+.shortcut-hints {
+  text-align: center;
+  font-size: 0.7rem;
+  color: var(--text-light);
+  padding: 0.2rem 0 0;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+.shortcut-hints:hover { opacity: 1; }
+.shortcut-hints kbd {
+  display: inline-block;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0 0.25rem;
+  font-family: inherit;
+  font-size: 0.68rem;
+  min-width: 1.1em;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ── Milestone toast ────────────────────── */
+.milestone-toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.85);
+  background: #fff;
+  border: 2px solid var(--success);
+  border-radius: 14px;
+  padding: 1.8rem 2.5rem;
+  text-align: center;
+  z-index: 1000;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+  opacity: 0;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+.milestone-toast.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+.milestone-toast .toast-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.8rem;
+  font-weight: 600;
+  color: var(--success);
+  line-height: 1;
+}
+.milestone-toast .toast-msg {
+  font-size: 0.95rem;
+  color: var(--text);
+  margin-top: 0.4rem;
+}
+.milestone-toast .toast-sub {
+  font-size: 0.78rem;
+  color: var(--text-light);
+  margin-top: 0.2rem;
+}
+
+/* ── Save reminder ──────────────────────── */
+.save-reminder {
+  background: #fff8e1;
+  color: #7b6b2e;
+  border: 1px solid #ffe082;
+  border-radius: 6px;
+  padding: 0.45rem 0.8rem;
+  font-size: 0.78rem;
+  text-align: center;
+  animation: fadeInReminder 0.3s ease;
+}
+@keyframes fadeInReminder {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 </style>
 </head>
 <body>
@@ -527,6 +633,11 @@ h1, h2, h3, .serif {
 
 <!-- ═══ Setup Screen ═══ -->
 <div id="setup-screen" class="screen">
+  <div class="greeting-area">
+    <div class="greeting-date" id="greeting-date"></div>
+    <div class="greeting-term" id="greeting-term"></div>
+    <div class="greeting-msg" id="greeting-msg"></div>
+  </div>
   <h1 class="serif">Variable Coding</h1>
   <p class="subtitle">Independently classify survey variables into conceptual dimensions.</p>
 
@@ -559,9 +670,9 @@ h1, h2, h3, .serif {
     <div class="topbar-left">
       <span class="survey-badge" id="tb-survey"></span>
       <span id="tb-progress"></span>
+      <span class="topbar-time" id="topbar-time"></span>
     </div>
     <div class="topbar-right">
-      <button class="btn btn-secondary topbar-btn" id="btn-stats">Stats</button>
       <button class="btn btn-secondary topbar-btn" id="btn-export">Export</button>
       <button class="btn btn-secondary topbar-btn" id="btn-change-survey">Switch</button>
     </div>
@@ -601,7 +712,29 @@ h1, h2, h3, .serif {
       <button class="btn btn-primary" id="btn-confirm" disabled>Confirm</button>
       <button class="btn btn-secondary" id="btn-skip">Skip &#8594;</button>
     </div>
+
+    <!-- Keyboard shortcuts hint -->
+    <div class="shortcut-hints">
+      <kbd>1</kbd>-<kbd>6</kbd> 选维度 &middot; <kbd>N</kbd> 不相关 &middot;
+      <kbd>Enter</kbd> 确认 &middot; <kbd>&larr;</kbd><kbd>&rarr;</kbd> 翻页
+    </div>
+
+    <!-- Inline dimension stats -->
+    <div id="inline-stats" style="margin-top:0.5rem; font-size:0.72rem; color:var(--text-light); text-align:center; line-height:1.6;"></div>
+
+    <!-- Save reminder (shown periodically) -->
+    <div id="save-reminder" style="display:none;"></div>
+
+    <!-- Caring message in coding view -->
+    <div id="coding-greeting" style="text-align:center; font-size:0.78rem; color:var(--text-light); padding:0.3rem 0 0; opacity:0.7;"></div>
   </div>
+</div>
+
+<!-- Milestone toast (dynamically shown) -->
+<div class="milestone-toast" id="milestone-toast">
+  <div class="toast-number" id="toast-number"></div>
+  <div class="toast-msg" id="toast-msg"></div>
+  <div class="toast-sub" id="toast-sub"></div>
 </div>
 
 <!-- ═══ Stats Screen ═══ -->
@@ -989,6 +1122,10 @@ function renderVariable() {
 
   // Back button state
   document.getElementById('btn-prev').disabled = currentIdx === 0;
+
+  // Update inline stats & clock
+  updateInlineStats();
+  updateGreetings();
 }
 
 function resetSelection() {
@@ -1099,6 +1236,11 @@ document.getElementById('btn-confirm').addEventListener('click', () => {
   };
   saveAnswers();
 
+  const coded = Object.keys(answers).length;
+  checkMilestone(coded);
+  checkSaveReminder(coded);
+  updateInlineStats();
+
   // Advance
   if (currentIdx < surveyVars.length - 1) {
     currentIdx++;
@@ -1107,8 +1249,8 @@ document.getElementById('btn-confirm').addEventListener('click', () => {
     window.scrollTo(0, 0);
   } else {
     // All done
-    renderVariable(); // update counts
-    alert(`All ${surveyVars.length} variables in ${currentSurvey} have been reviewed!`);
+    renderVariable();
+    alert(`${currentSurvey} 的全部 ${surveyVars.length} 个变量已完成编码！\n\n请立刻点击 Export 按钮下载 CSV 保存结果，避免工作量损失。`);
   }
 });
 
@@ -1133,7 +1275,6 @@ document.getElementById('btn-prev').addEventListener('click', () => {
 });
 
 // ── Stats ──────────────────────────────────
-document.getElementById('btn-stats').addEventListener('click', showStats);
 document.getElementById('btn-back-coding').addEventListener('click', () => {
   showScreen('coding-screen');
 });
@@ -1229,7 +1370,169 @@ function escHtml(str) {
   return div.innerHTML;
 }
 
+// ── Solar Terms (24 节气) ────────────────
+function getSolarTerm(date) {
+  const terms = [
+    { name: '小寒', m: 1, d: 5 },  { name: '大寒', m: 1, d: 20 },
+    { name: '立春', m: 2, d: 4 },  { name: '雨水', m: 2, d: 19 },
+    { name: '惊蛰', m: 3, d: 5 },  { name: '春分', m: 3, d: 20 },
+    { name: '清明', m: 4, d: 4 },  { name: '谷雨', m: 4, d: 20 },
+    { name: '立夏', m: 5, d: 5 },  { name: '小满', m: 5, d: 21 },
+    { name: '芒种', m: 6, d: 5 },  { name: '夏至', m: 6, d: 21 },
+    { name: '小暑', m: 7, d: 7 },  { name: '大暑', m: 7, d: 22 },
+    { name: '立秋', m: 8, d: 7 },  { name: '处暑', m: 8, d: 23 },
+    { name: '白露', m: 9, d: 7 },  { name: '秋分', m: 9, d: 23 },
+    { name: '寒露', m: 10, d: 8 }, { name: '霜降', m: 10, d: 23 },
+    { name: '立冬', m: 11, d: 7 }, { name: '小雪', m: 11, d: 22 },
+    { name: '大雪', m: 12, d: 7 }, { name: '冬至', m: 12, d: 22 },
+  ];
+  const mo = date.getMonth() + 1, dy = date.getDate();
+  let cur = terms[terms.length - 1];
+  for (let i = terms.length - 1; i >= 0; i--) {
+    if (mo > terms[i].m || (mo === terms[i].m && dy >= terms[i].d)) {
+      cur = terms[i]; break;
+    }
+  }
+  return cur.name;
+}
+
+function getGreeting(hour) {
+  if (hour >= 23 || hour < 5)  return '夜深了，注意休息';
+  if (hour < 9)  return '早上好';
+  if (hour < 11) return '上午好';
+  if (hour < 13) return '中午好，记得吃饭';
+  if (hour < 14) return '午后时光，稍事休息';
+  if (hour < 17) return '下午好';
+  if (hour < 19) return '傍晚了，辛苦啦';
+  return '晚上好，早点休息';
+}
+
+function formatDateCN(date) {
+  const y = date.getFullYear();
+  const m = date.getMonth() + 1;
+  const d = date.getDate();
+  const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+  return `${y}年${m}月${d}日 星期${weekdays[date.getDay()]}`;
+}
+
+function updateGreetings() {
+  const now = new Date();
+  const hour = now.getHours();
+
+  // Setup screen greeting
+  const dateEl = document.getElementById('greeting-date');
+  const termEl = document.getElementById('greeting-term');
+  const msgEl = document.getElementById('greeting-msg');
+  if (dateEl) dateEl.textContent = formatDateCN(now);
+  if (termEl) termEl.textContent = getSolarTerm(now);
+  if (msgEl) msgEl.textContent = getGreeting(hour);
+
+  // Topbar time
+  const timeEl = document.getElementById('topbar-time');
+  if (timeEl) {
+    const hh = String(hour).padStart(2, '0');
+    const mm = String(now.getMinutes()).padStart(2, '0');
+    timeEl.textContent = `${hh}:${mm}`;
+  }
+
+  // Coding view caring message
+  const codingGreet = document.getElementById('coding-greeting');
+  if (codingGreet) codingGreet.textContent = getGreeting(hour);
+}
+
+// ── Inline Stats ──────────────────────────
+function updateInlineStats() {
+  const el = document.getElementById('inline-stats');
+  if (!el || !concepts) return;
+  const dimCounts = {};
+  concepts.dimensions.forEach(d => { dimCounts[d.id] = 0; });
+  dimCounts['none'] = 0;
+  Object.values(answers).forEach(a => {
+    if (dimCounts[a.dimension] !== undefined) dimCounts[a.dimension]++;
+    else dimCounts[a.dimension] = 1;
+  });
+  const parts = concepts.dimensions.map(d => {
+    const short = DIM_SHORT[d.id] || d.id;
+    const color = DIM_COLORS[d.id] || '#666';
+    return `<span style="color:${color}">${short}</span>&nbsp;${dimCounts[d.id]}`;
+  });
+  parts.push(`<span style="color:var(--dim-none)">N/A</span>&nbsp;${dimCounts['none']}`);
+  el.innerHTML = parts.join(' &middot; ');
+}
+
+// ── Milestone Celebration ─────────────────
+const MILESTONE_MESSAGES = [
+  { n: 10, msg: '好的开始！', sub: '已经编码了 10 个变量' },
+  { n: 25, msg: '加油！', sub: '已完成 25 个' },
+  { n: 50, msg: '太棒了！', sub: '半百大关！' },
+  { n: 100, msg: '了不起！', sub: '三位数了！' },
+  { n: 150, msg: '厉害！', sub: '150 个变量' },
+  { n: 200, msg: '惊人的毅力！', sub: '200 个！' },
+  { n: 250, msg: '超级厉害！', sub: '250 个变量' },
+  { n: 300, msg: '即将完成！', sub: '300 个！冲刺！' },
+  { n: 500, msg: '不可思议！', sub: '500 个变量！' },
+  { n: 750, msg: '传奇！', sub: '750 个！' },
+  { n: 1000, msg: '千变量大师！', sub: '这是一个里程碑！' },
+];
+
+function checkMilestone(count) {
+  const ms = MILESTONE_MESSAGES.find(m => m.n === count);
+  if (!ms) return;
+  const toast = document.getElementById('milestone-toast');
+  document.getElementById('toast-number').textContent = ms.n;
+  document.getElementById('toast-msg').textContent = ms.msg;
+  document.getElementById('toast-sub').textContent = ms.sub;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2200);
+}
+
+// ── Save Reminder ─────────────────────────
+let lastRemindCount = 0;
+function checkSaveReminder(count) {
+  if (count > 0 && count % 30 === 0 && count !== lastRemindCount) {
+    lastRemindCount = count;
+    const el = document.getElementById('save-reminder');
+    if (!el) return;
+    el.className = 'save-reminder';
+    el.textContent = '建议定期导出 CSV 保存，避免工作量损失';
+    el.style.display = 'block';
+    setTimeout(() => { el.style.display = 'none'; }, 5000);
+  }
+}
+
+// ── Keyboard Shortcuts ────────────────────
+document.addEventListener('keydown', function(e) {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') return;
+  if (!document.getElementById('coding-screen').classList.contains('active')) return;
+
+  const key = e.key;
+
+  // 1-6: select dimension
+  if (key >= '1' && key <= '6') {
+    const dims = concepts.dimensions;
+    const idx = parseInt(key) - 1;
+    if (idx < dims.length) { selectDimension(dims[idx].id); e.preventDefault(); }
+    return;
+  }
+  // N or 0: not relevant
+  if (key === 'n' || key === 'N' || key === '0') { selectNone(); e.preventDefault(); return; }
+  // Enter: confirm
+  if (key === 'Enter') {
+    const btn = document.getElementById('btn-confirm');
+    if (!btn.disabled) { btn.click(); e.preventDefault(); }
+    return;
+  }
+  // ArrowLeft: previous
+  if (key === 'ArrowLeft' || key === '[') { document.getElementById('btn-prev').click(); e.preventDefault(); return; }
+  // ArrowRight: skip/next
+  if (key === 'ArrowRight' || key === ']') { document.getElementById('btn-skip').click(); e.preventDefault(); return; }
+});
+
+// ── Clock Interval ────────────────────────
+setInterval(updateGreetings, 60000);
+
 // ── Boot ───────────────────────────────────
+updateGreetings();
 loadData();
 </script>
 </body>
