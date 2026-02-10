@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RA Monitoring Dashboard</title>
+<title>Coding Progress</title>
 <style>
 :root {
   --ivory: #FAF8F5; --cream: #F5F2ED; --navy: #1a2744; --navy-light: #2d3d5c;
@@ -94,8 +94,8 @@ tr:hover td { background: #faf9f7; }
 <body>
 
 <div id="login" class="login-box">
-  <h1 style="font-size:1.3rem; color:var(--navy);">RA Monitor</h1>
-  <p style="color:var(--text-light); font-size:0.85rem;">PI access only</p>
+  <h1 style="font-size:1.3rem; color:var(--navy);">Coding Progress</h1>
+  <p style="color:var(--text-light); font-size:0.85rem;">Team overview</p>
   <input type="password" id="pw-input" placeholder="Password" autofocus>
   <br>
   <button id="pw-btn">Enter</button>
@@ -105,7 +105,7 @@ tr:hover td { background: #faf9f7; }
 <div id="dashboard" class="container">
   <div class="top-bar">
     <div>
-      <h1>RA Monitor</h1>
+      <h1>Coding Progress</h1>
       <p class="subtitle">Last refreshed: <span id="last-refresh">-</span> &middot; <span id="event-count">0</span> events</p>
     </div>
     <div class="top-actions">
@@ -203,15 +203,15 @@ function renderAlerts(ras, confirms) {
     const lastTs = raConf.reduce((m, e) => { const t = e.server_ts || ''; return t > m ? t : m; }, '');
     if (lastTs) {
       const daysSince = (now - new Date(lastTs).getTime()) / 86400000;
-      if (daysSince > 3) alerts.push({ level: 'warn', msg: '<strong>' + esc(ra) + '</strong> has been inactive for ' + Math.floor(daysSince) + ' days.' });
-      else if (daysSince > 1) alerts.push({ level: 'caution', msg: '<strong>' + esc(ra) + '</strong> last active ' + Math.floor(daysSince) + ' day(s) ago.' });
+      if (daysSince > 3) alerts.push({ level: 'warn', msg: '<strong>' + esc(ra) + '</strong> hasn\'t submitted in ' + Math.floor(daysSince) + ' days — might need a check-in.' });
+      else if (daysSince > 1) alerts.push({ level: 'caution', msg: '<strong>' + esc(ra) + '</strong> last submitted ' + Math.floor(daysSince) + ' day(s) ago.' });
     }
-    // Speed alert: median < 2s suggests rushing
+    // Speed alert: median < 2s is unusually fast
     const times = raConf.map(e => parseInt(e.view_ms) || 0).filter(t => t > 0 && t < 600000);
     if (times.length >= 10) {
       times.sort((a, b) => a - b);
       const median = times[Math.floor(times.length / 2)];
-      if (median < 2000) alerts.push({ level: 'warn', msg: '<strong>' + esc(ra) + '</strong> median coding time is ' + fmtMs(median) + ' — may be rushing.' });
+      if (median < 2000) alerts.push({ level: 'caution', msg: '<strong>' + esc(ra) + '</strong> averaging ' + fmtMs(median) + ' per item — faster than usual.' });
     }
   });
 
@@ -251,12 +251,12 @@ function buildRASection(ra, raConf, raAll, allRAs, sharedItems) {
   // Badges
   const badges = [];
   const daysSince = lastTs ? (Date.now() - new Date(lastTs).getTime()) / 86400000 : 999;
-  if (daysSince > 3) badges.push('<span class="badge badge-red">Inactive ' + Math.floor(daysSince) + 'd</span>');
-  else if (daysSince > 1) badges.push('<span class="badge badge-yellow">Last ' + Math.floor(daysSince) + 'd ago</span>');
+  if (daysSince > 3) badges.push('<span class="badge badge-red">No activity ' + Math.floor(daysSince) + 'd</span>');
+  else if (daysSince > 1) badges.push('<span class="badge badge-yellow">' + Math.floor(daysSince) + 'd ago</span>');
   else badges.push('<span class="badge badge-green">Active</span>');
 
-  if (medianTime > 0 && medianTime < 2000) badges.push('<span class="badge badge-red">Rushing?</span>');
-  if (agreePct !== null && agreePct < 60) badges.push('<span class="badge badge-red">Low agreement ' + agreePct + '%</span>');
+  if (medianTime > 0 && medianTime < 2000) badges.push('<span class="badge badge-yellow">Fast pace</span>');
+  if (agreePct !== null && agreePct < 60) badges.push('<span class="badge badge-red">Agreement ' + agreePct + '%</span>');
   else if (agreePct !== null && agreePct < 75) badges.push('<span class="badge badge-yellow">Agreement ' + agreePct + '%</span>');
   else if (agreePct !== null) badges.push('<span class="badge badge-green">Agreement ' + agreePct + '%</span>');
 
@@ -454,8 +454,8 @@ function buildRADetail(ra, raConf, raAll, allRAs, sharedItems, times) {
       }
     }
     if (disagreed.length > 0) {
-      html += '<div class="section-title">Flagged Items <span class="badge badge-red">' + disagreed.length + '</span></div>';
-      html += '<p class="note">Items where this RA disagrees with ALL other coders. Consider discussing with RA.</p>';
+      html += '<div class="section-title">Items to Review <span class="badge badge-yellow">' + disagreed.length + '</span></div>';
+      html += '<p class="note">Items where this coder\'s choice differs from all other coders. May be worth a conversation.</p>';
       html += '<table><tr><th>Variable</th><th>' + esc(ra) + '</th><th>Peers say</th></tr>';
       disagreed.slice(0, 30).forEach(d => {
         const peerDim = d.peerCodes[0];
