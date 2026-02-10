@@ -874,18 +874,27 @@ function posKey(ra, survey) {
 }
 
 function saveAnswers() {
-  localStorage.setItem(storageKey(raName, currentSurvey), JSON.stringify(answers));
-  localStorage.setItem(posKey(raName, currentSurvey), String(currentIdx));
+  try {
+    localStorage.setItem(storageKey(raName, currentSurvey), JSON.stringify(answers));
+    localStorage.setItem(posKey(raName, currentSurvey), String(currentIdx));
+  } catch (e) {
+    alert('localStorage 存储空间已满，请立刻导出 CSV 保存当前结果！\n\n导出后可清除浏览器数据释放空间。');
+  }
 }
 
 function loadAnswers(ra, survey) {
-  const raw = localStorage.getItem(storageKey(ra, survey));
-  return raw ? JSON.parse(raw) : {};
+  try {
+    const raw = localStorage.getItem(storageKey(ra, survey));
+    return raw ? JSON.parse(raw) : {};
+  } catch (e) {
+    return {};
+  }
 }
 
 function loadPos(ra, survey) {
   const raw = localStorage.getItem(posKey(ra, survey));
-  return raw ? parseInt(raw, 10) : 0;
+  const pos = raw ? parseInt(raw, 10) : 0;
+  return isNaN(pos) ? 0 : pos;
 }
 
 // ── CSV Import ────────────────────────────
@@ -1097,6 +1106,10 @@ function startCoding() {
   const imported = commitImports(raName, currentSurvey);
 
   surveyVars = allVariables.filter(v => v.survey === currentSurvey);
+  if (surveyVars.length === 0) {
+    alert(`Survey "${currentSurvey}" has no variables.`);
+    return;
+  }
   answers = loadAnswers(raName, currentSurvey);
   currentIdx = loadPos(raName, currentSurvey);
 
@@ -1180,6 +1193,14 @@ function showDimTooltip(btn, info) {
 function hideDimTooltip() {
   document.getElementById('dim-tooltip').classList.remove('visible');
 }
+
+// Dismiss tooltip on tap elsewhere (mobile)
+document.addEventListener('touchstart', function(e) {
+  const tooltip = document.getElementById('dim-tooltip');
+  if (tooltip.classList.contains('visible') && !tooltip.contains(e.target)) {
+    hideDimTooltip();
+  }
+}, { passive: true });
 
 // ── Render Variable ────────────────────────
 function renderVariable() {
@@ -1483,7 +1504,7 @@ function exportCSV() {
   });
 
   const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
