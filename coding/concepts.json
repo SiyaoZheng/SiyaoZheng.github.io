@@ -2,10 +2,10 @@
   "dimensions": [
     {
       "id": "F1",
-      "label": "Political Ideology (F1)",
+      "label": "Political Ideology",
       "concepts": [
         {
-          "id": "party_govt_can_manage_binary",
+          "id": "party_gov_can_manage_binary",
           "label": "PARTY/GOVT CAN MANAGE COUNTRY"
         },
         {
@@ -13,7 +13,7 @@
           "label": "DEMOCRACY REQUIRES PEOPLE'S STRUGGLE"
         },
         {
-          "id": "fear_criticizing_govt_binary",
+          "id": "fear_criticizing_gov_binary",
           "label": "FEAR REPORT FOR CRITICIZING GOVT"
         },
         {
@@ -45,12 +45,8 @@
           "label": "choose between democracy and economic development?"
         },
         {
-          "id": "trust_gov_officials_binary",
-          "label": "You can generally trust the people who run our government to do what is right"
-        },
-        {
           "id": "leaders_like_family_head_binary",
-          "label": "Government leaders are like the head of a family"
+          "label": "Government leaders are like the head of a family; we should all follow their decisions"
         },
         {
           "id": "gov_control_ideas_binary",
@@ -97,10 +93,6 @@
           "label": "Democracy: Criminals are severely punished."
         },
         {
-          "id": "support_gov_right_or_wrong_binary",
-          "label": "请问您在多大程度上同意下面的观点：任何人都应该支持自己的政府，即使它做的不对"
-        },
-        {
           "id": "freedom_association_binary",
           "label": "People can join any organization the like without fear"
         },
@@ -125,31 +117,15 @@
           "label": "政府官员在做决策的时候应该完全顺从普通群众的意愿"
         },
         {
-          "id": "courts_uphold_justice_binary",
-          "label": "根据您与政府机构或官员互动的经验您在多大程度上同意_我国法院/检察院维护了司法公正"
-        },
-        {
-          "id": "govt_considers_opinions_binary",
-          "label": "根据您与政府机构或官员互动的经验您在多大程度上同意_我国政府官员很关注公众意见和"
-        },
-        {
-          "id": "gov_treats_equally_binary",
-          "label": "政府对穷人和富人一视同仁。"
-        },
-        {
-          "id": "gov_decisions_correct_binary",
-          "label": "我们可以相信，政府领导人所做的决定总是正确的。"
-        },
-        {
           "id": "strong_leader_binary",
-          "label": "应该让一个强有力的领导人来决策，不需要人大和选举"
+          "label": "Political system: Having a strong leader"
         },
         {
           "id": "election_choice_binary",
           "label": "q111.  how often do you think our elections offer the voters a real choice betwe"
         },
         {
-          "id": "election_govt_attention_binary",
+          "id": "election_gov_attention_binary",
           "label": "q115. how much do you feel that having elections makes the government pay attent"
         },
         {
@@ -169,23 +145,19 @@
           "label": "If a country has multiple parties, it can lead to political chaos"
         },
         {
-          "id": "one_party_suitable_binary",
-          "label": "A system with just one main party is most suitable to China's current circumstan"
-        },
-        {
           "id": "multiparty_unsuitable_binary",
-          "label": "对于下列说法您多大程度同意_西方的多党制不适合中国国情"
+          "label": "西方的多党制不适合中国国情"
         },
         {
-          "id": "govt_court_consistent_binary",
+          "id": "gov_court_consistent_binary",
           "label": "[ur-e4710]政府与法院在案件上态度一致"
         },
         {
-          "id": "law_needs_govt_support_binary",
+          "id": "law_needs_gov_support_binary",
           "label": "[ur-e4712]只有政府支持法律才能运转"
         },
         {
-          "id": "law_enforcement_follow_govt_binary",
+          "id": "law_enforcement_follow_gov_binary",
           "label": "[ur-e4736]执法时应以政府决策为依据"
         },
         {
@@ -193,15 +165,11 @@
           "label": "[ur-e4737]只要不违法犯罪法律与我无关"
         },
         {
-          "id": "obey_govt_binary",
-          "label": "[ur-e4711]服从政府不会错"
-        },
-        {
           "id": "right_appeal_local_policy_binary",
           "label": "[ur-e4735]对本地政策有意见有权向上级申述"
         },
         {
-          "id": "no_right_evaluate_govt_binary",
+          "id": "no_right_evaluate_gov_binary",
           "label": "像我这样的人，无权评价政府行为"
         },
         {
@@ -233,10 +201,6 @@
           "label": "We need a strong government to handle today's complex economic problems"
         },
         {
-          "id": "govt_officials_truthful_binary",
-          "label": "下面我谈几个观点，请您就每个观点表示您的意见。政府官员通常讲实话"
-        },
-        {
           "id": "should_have_consensus_binary",
           "label": "我们每个人都应该努力与大家的想法保持一致，以免造成社会混乱"
         },
@@ -253,7 +217,7 @@
           "label": "是否同意“政府领导人就像一家之长，应该服从他们的决定”？"
         },
         {
-          "id": "oppose_restricting_govt_power_binary",
+          "id": "oppose_restricting_gov_power_binary",
           "label": "OPPOSE RESTRICTING GOVT'S POWER"
         },
         {
@@ -293,15 +257,7 @@
           "label": "Political reform should be introduced little-by-little instead of all-at-once. (NEW)"
         },
         {
-          "id": "democracy_satisfied_binary",
-          "label": "On the whole, how satisfied or dissatisfied are you with the way democracy works in [country]?"
-        },
-        {
-          "id": "country_is_democratic_binary",
-          "label": "In your opinion how much of a democracy is [country]?"
-        },
-        {
-          "id": "people_cant_hold_govt_responsible_binary",
+          "id": "people_cant_hold_gov_responsible_binary",
           "label": "Between elections, the people have no way of holding the government responsible for its actions"
         },
         {
@@ -313,24 +269,12 @@
           "label": "以下说法多大程度上和现实相符-法官会考虑作为被告的行政机关和法院的关系"
         },
         {
-          "id": "fit_scale_binary",
-          "label": "1表示完全不适合，10表示完全适合。在程度上，数字越小表示越不适合，数字越大表示越%XCA"
-        },
-        {
           "id": "democracy_level_binary",
           "label": "中国目前的民主程度是？(如果1代表完全不民主，10代表完全民主，在程度上，数字越小越"
         },
         {
           "id": "defense_policy_binary",
           "label": "国防和对外政策（1表示状况非常差，10表示状况非常好，在程度上，数字越小表示状况越%XB2"
-        },
-        {
-          "id": "judicial_powerless_binary",
-          "label": "当政府违法时，司法机关也无能为力。"
-        },
-        {
-          "id": "officials_abuse_power_binary",
-          "label": "在您看来，我国政府官员是不是经常违法或滥用权力？"
         },
         {
           "id": "npc_supervision_binary",
@@ -341,45 +285,133 @@
           "label": "在您看来，我国的选举有多大的可能让政府官员关注群众的意见和要求？"
         },
         {
-          "id": "court_follow_gov_binary",
-          "label": "法院在审判重大案件时，应该接受当地政府的意见。"
-        },
-        {
           "id": "gov_legislature_constraint_binary",
           "label": "如果政府经常受到立法机构的制约，那么就很难办好大事情"
-        },
-        {
-          "id": "gov_ignore_law_binary",
-          "label": "当国家面临困难时，政府为了处理这个困难的情况可以不必理会法律。"
         },
         {
           "id": "one_party_rule_binary",
           "label": "应该只允许由一个政党执政"
         },
         {
-          "id": "follow_intl_human_rights_binary",
-          "label": "China should deal with its human rights problems according to international huma"
+          "id": "capable_as_official_binary",
+          "label": "如果让我当政府干部，我也完全能胜任"
         },
         {
-          "id": "democracy_suitable_binary",
-          "label": "democracy suitable"
+          "id": "capable_participate_politics_binary",
+          "label": "我认为我完全有能力参与政治"
         },
         {
-          "id": "democracy_state_make_incomes_equal_binary",
-          "label": "democracy state make incomes equal"
+          "id": "capable_political_participation_binary",
+          "label": "我觉得自己有能力参与政治"
+        },
+        {
+          "id": "citizen_loyalty_binary",
+          "label": "q137. a citizen should always remain loyal only to his country, no matter how im"
+        },
+        {
+          "id": "country_is_democratic_binary",
+          "label": "In your opinion how much of a democracy is [country]?"
+        },
+        {
+          "id": "court_follow_gov_binary",
+          "label": "法院在审判重大案件时，应该接受当地政府的意见。"
         },
         {
           "id": "democracy_people_obey_rulers_binary",
-          "label": "democracy people obey rulers"
+          "label": "Democracy: People obey their rulers"
+        },
+        {
+          "id": "democracy_satisfied_binary",
+          "label": "On the whole, how satisfied or dissatisfied are you with the way democracy works in [country]?"
+        },
+        {
+          "id": "democracy_suitable_binary",
+          "label": "Do you think democracy is suitable for our country?"
+        },
+        {
+          "id": "diff_political_views_binary",
+          "label": "我觉得我对政治的看法常与别人不同"
+        },
+        {
+          "id": "economic_stability_over_democracy_binary",
+          "label": "[ur-e4732]经济能稳定发展就不必提高民主"
+        },
+        {
+          "id": "endure_govt_infringement_binary",
+          "label": "如果政府侵占了我个人利益，我只能忍了"
+        },
+        {
+          "id": "expert_have_a_say_binary",
+          "label": "[ur-e4734]只有专业人士在决策中才有发言权"
+        },
+        {
+          "id": "gov_ignore_law_binary",
+          "label": "当国家面临困难时，政府为了处理这个困难的情况可以不必理会法律。"
+        },
+        {
+          "id": "no_confidence_discuss_govt_binary",
+          "label": "当和别人讨论政府的工作或做法时，我对自己没有信心"
+        },
+        {
+          "id": "no_influence_on_govt_binary",
+          "label": "像我们这样的人，对政府的决定没有任何影响"
+        },
+        {
+          "id": "people_influence_govt_binary",
+          "label": "PEOPLE HAVE WAYS INFLUENCE GOVT"
+        },
+        {
+          "id": "people_obey_govt_binary",
+          "label": "老百姓应该服从政府"
+        },
+        {
+          "id": "political_connections_importance_binary",
+          "label": "f1g. 有政治关系有多重要"
+        },
+        {
+          "id": "political_voice_binary",
+          "label": "您在多大程度上同意下面这个说法：像我这样的人对政府要做的事情没有发言权。"
+        },
+        {
+          "id": "politicians_self_interest_binary",
+          "label": "大多数政治家都是在为私利玩弄政治"
+        },
+        {
+          "id": "politics_too_complex_binary",
+          "label": "[ur-e4731]政治太复杂我这样的人不懂"
+        },
+        {
+          "id": "politics_too_complicated_binary",
+          "label": "政治太复杂，不是像我这样的人可以理解的"
+        },
+        {
+          "id": "suggestions_adopted_binary",
+          "label": "我向政府机构提出建议时，会被有关部门采纳"
+        },
+        {
+          "id": "suggestions_reach_leaders_binary",
+          "label": "我对于政府部门的建议/意见可以让领导知道"
+        },
+        {
+          "id": "tax_policy_public_opinion_binary",
+          "label": "政府制定税收政策必须征求老百姓的意见"
+        },
+        {
+          "id": "taxpayer_rights_binary",
+          "label": "只要纳了税，就有权利讨论政府怎么花钱"
+        },
+        {
+          "id": "worry_internet_surveillance_binary",
+          "label": "[5我担心公司查看我在网上的行为] 以下描述是否符合您的情况？"
         }
       ]
     },
     {
       "id": "F2",
-      "label": "Economic Ideology (F2)",
+      "label": "Economic Ideology",
       "concepts": [
         {
-          "id": "agree_competition_harmful_binary",
+          "id": "market_competition_harmful_binary",
           "label": "Competition between firms and individuals is harmful to social stability."
         },
         {
@@ -396,15 +428,15 @@
         },
         {
           "id": "gov_responsibility_edu_binary",
-          "label": "您认为在解决下列问题上，政府和个人应该承担多大的责任_义务教育"
+          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？义务教育"
         },
         {
           "id": "gov_responsibility_elderly_binary",
-          "label": "您认为在解决下列问题上，政府和个人应该承担多大的责任_养老保障"
+          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？养老"
         },
         {
           "id": "gov_responsibility_env_binary",
-          "label": "您认为在解决下列问题上，政府和个人应该承担多大的责任_环境保护"
+          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？环境保护"
         },
         {
           "id": "gov_responsibility_food_safety_binary",
@@ -412,11 +444,11 @@
         },
         {
           "id": "gov_responsibility_healthcare_binary",
-          "label": "您认为在解决下列问题上，政府和个人应该承担多大的责任_医疗服务"
+          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？医疗保障"
         },
         {
           "id": "gov_responsibility_housing_binary",
-          "label": "您认为在解决下列问题上，政府和个人应该承担多大的责任_住房"
+          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？住房"
         },
         {
           "id": "gov_responsibility_if_elderly_binary",
@@ -432,11 +464,11 @@
         },
         {
           "id": "gov_responsibility_jobs_binary",
-          "label": "您认为在解决下列问题上，政府和个人应该承担多大的责任_就业"
+          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？就业"
         },
         {
           "id": "gov_responsibility_medical_binary",
-          "label": "您认为在解决下列问题上，政府和个人应该承担多大的责任_医疗保险"
+          "label": "在解决下列问题上，政府应该承担多大的责任？医疗保障"
         },
         {
           "id": "gov_responsibility_poverty_binary",
@@ -444,7 +476,7 @@
         },
         {
           "id": "gov_responsibility_security_binary",
-          "label": "您认为在解决下列问题上，政府和个人应该承担多大的责任_社会治安"
+          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？社会治安"
         },
         {
           "id": "gov_responsibility_terrorism_binary",
@@ -456,66 +488,66 @@
         },
         {
           "id": "gov_responsibility_transport_binary",
-          "label": "您认为在解决下列问题上，政府和个人应该承担多大的责任_公共交通"
+          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？交通"
         },
         {
-          "id": "govt_beyond_basic_healthcare_binary",
+          "id": "gov_beyond_basic_healthcare_binary",
           "label": "您同不同意以下说法-政府应当只提供基本的医疗卫生保健服务"
         },
         {
-          "id": "govt_education_investment_binary",
+          "id": "gov_education_investment_binary",
           "label": "f15c.您认为政府在教育方面的投入应该是增加还是减少呢？"
         },
         {
-          "id": "govt_ensure_min_living_binary",
+          "id": "gov_ensure_min_living_binary",
           "label": "对于以下说法，您的态度怎样：政府应该保证每个人至少能维持最低标准的生活。"
         },
         {
-          "id": "govt_limit_income_binary",
+          "id": "gov_limit_income_binary",
           "label": "对于以下说法，您的态度怎样：政府应该规定个人收入的最高限额。"
         },
         {
-          "id": "govt_medical_investment_binary",
+          "id": "gov_medical_investment_binary",
           "label": "f15a.您认为政府在医疗卫生方面的投入应该是增加还是减少呢？"
         },
         {
-          "id": "govt_policy_poverty_cause_binary",
+          "id": "gov_policy_poverty_cause_binary",
           "label": "[ur-e4708]政府政策不妥是贫穷的原因"
         },
         {
-          "id": "govt_prevent_wealth_gap_binary",
+          "id": "gov_prevent_wealth_gap_binary",
           "label": "In order to preserve social justice, the government should prevent the gap between rich and poor from growing any larger."
         },
         {
-          "id": "govt_reduce_welfare_binary",
+          "id": "gov_reduce_welfare_binary",
           "label": "f6d. 政府应该减少穷人福利的开销"
         },
         {
-          "id": "govt_regulate_private_business_binary",
+          "id": "gov_regulate_private_business_binary",
           "label": "[ur-e4709]政府应加大对私营业主管理"
         },
         {
-          "id": "govt_should_provide_disability_binary",
-          "label": "govt should provide disability"
+          "id": "gov_should_provide_disability_binary",
+          "label": "Gov Should Provide Disability"
         },
         {
-          "id": "govt_should_provide_education_binary",
-          "label": "govt should provide education"
+          "id": "gov_should_provide_education_binary",
+          "label": "Gov Should Provide Education"
         },
         {
-          "id": "govt_should_provide_healthcare_binary",
-          "label": "govt should provide healthcare"
+          "id": "gov_should_provide_healthcare_binary",
+          "label": "Gov Should Provide Healthcare"
         },
         {
-          "id": "govt_should_provide_housing_binary",
-          "label": "govt should provide housing"
+          "id": "gov_should_provide_housing_binary",
+          "label": "Gov Should Provide Housing"
         },
         {
-          "id": "govt_should_provide_jobs_binary",
+          "id": "gov_should_provide_jobs_binary",
           "label": "对于以下说法，您的态度怎样：政府应该为每一个愿意工作的人提供工作机会。"
         },
         {
-          "id": "govt_support_unemployed_binary",
+          "id": "gov_support_unemployed_binary",
           "label": "f6c. 政府应该为失业者制定一个像样的生活标准"
         },
         {
@@ -531,7 +563,7 @@
           "label": "进城农民工应该享受与城市居民相同的待遇"
         },
         {
-          "id": "raise_woker_peasant_salary_binary",
+          "id": "raise_worker_peasant_salary_binary",
           "label": "应该尽量创造条件提高工人和农民的收入"
         },
         {
@@ -559,75 +591,79 @@
           "label": "For the equality,the government should give added help to the underlayers in the"
         },
         {
-          "id": "agree_business_profit_benefits_all_binary",
+          "id": "follow_intl_human_rights_binary",
+          "label": "China should deal with its human rights problems according to international huma"
+        },
+        {
+          "id": "business_profit_benefits_all_binary",
           "label": "请您对这些说法表示自己的态度：生意人赚钱最终会对所有人都有好处。"
         },
         {
-          "id": "agree_equal_distribution_fair_binary",
+          "id": "equal_distribution_fair_binary",
           "label": "下面是一组关于财富和收入的说法，您是否同意：按人平均分配财富和收入是最公平的方法"
         },
         {
-          "id": "agree_equal_opportunity_rich_poor_ok_binary",
+          "id": "equal_opportunity_rich_poor_ok_binary",
           "label": "下面是一组关于财富和收入的说法，您是否同意：只要机会均等，就算有穷有富也是公平的"
         },
         {
-          "id": "agree_farmer_urban_equal_job_rights_binary",
+          "id": "farmer_urban_equal_job_rights_binary",
           "label": "请就下面的每一个看法，表示您的态度：农民和城里人应该有平等的就业权利。"
         },
         {
-          "id": "agree_increasing_gap_inevitable_prosperity_binary",
+          "id": "wealth_gap_inevitable_binary",
           "label": "您在多大程度上同意下面的观点_贫富差距加大是我国繁荣富强所不可避免的"
         },
         {
-          "id": "agree_inequality_benefits_powerful_binary",
-          "label": "您在多大程度上同意下面的观点_社会中一直存在不平等是因为这种不平等对有钱有势的人"
+          "id": "inequality_benefits_powerful_binary",
+          "label": "请您对这些说法表示自己的态度：社会中一直存在不平等是因为这种不平等对有钱有势的人"
         },
         {
-          "id": "agree_large_income_diff_incentive_binary",
+          "id": "large_income_diff_incentive_binary",
           "label": "请您对这些说法表示自己的态度：只有在收入差别足够大的情况下，才能激发起个人的努力"
         },
         {
-          "id": "agree_large_income_gap_prosperity_binary",
+          "id": "large_income_gap_prosperity_binary",
           "label": "下面是一组关于财富和收入的说法，您是否同意：为了国家的繁荣，收入差距必须要大。"
         },
         {
-          "id": "agree_more_reward_more_responsibility_binary",
+          "id": "more_reward_more_responsibility_binary",
           "label": "请您对这些说法表示自己的态度：除非有更多的回报，否则人们不会愿意在工作中承担更多"
         },
         {
-          "id": "agree_poor_right_demand_help_rich_binary",
+          "id": "poor_right_demand_help_rich_binary",
           "label": "下面是一组关于财富和收入的说法，您是否同意：穷人有权利要求富人的帮助。"
         },
         {
-          "id": "agree_redistribute_rich_to_poor_needs_binary",
+          "id": "redistribute_rich_to_poor_binary",
           "label": "下面是一组关于财富和收入的说法，您是否同意：为了满足每个人的需求，哪怕削富济贫也"
         },
         {
-          "id": "agree_rich_no_obligation_help_poor_binary",
+          "id": "rich_no_obligation_help_poor_binary",
           "label": "下面是一组关于财富和收入的说法，您是否同意：富人没有义务在经济上帮助穷人。"
         },
         {
-          "id": "agree_right_accumulate_wealth_binary",
+          "id": "right_accumulate_wealth_binary",
           "label": "下面是一组关于财富和收入的说法，您是否同意：即使社会上会出现贫富不均，人们也有权"
         },
         {
-          "id": "agree_urban_high_standard_due_contribution_binary",
+          "id": "urban_standard_due_contribution_binary",
           "label": "请就下面的每一个看法，表示您的态度：城市居民的生活水平较高是由于他们对国家发展作"
         },
         {
-          "id": "agree_urban_more_benefit_than_deserve_binary",
+          "id": "urban_more_benefit_than_deserve_binary",
           "label": "请就下面的每一个看法，表示您的态度：城市的人在经济改革中获得的好处比他们应得的更"
         },
         {
-          "id": "agree_wealth_gap_violates_socialism_binary",
+          "id": "wealth_gap_violates_socialism_binary",
           "label": "请就下面的每一个看法，表示您的态度：我们社会中明显存在的贫富差别违背了社会主义的"
         },
         {
-          "id": "attitude_income_tax_flat_vs_progressive_binary",
+          "id": "income_tax_progressive_binary",
           "label": "关于个人所得税，同样比例缴税与高收入高税率，您的态度"
         },
         {
-          "id": "attitude_wage_gap_corp_employee_binary",
+          "id": "wage_gap_corp_employee_binary",
           "label": "大型企业与员工之间的薪酬差距，您的态度"
         },
         {
@@ -671,58 +707,182 @@
           "label": "Social inequality"
         },
         {
-          "id": "attitude_cohabitation_binary",
-          "label": "e15a.同意程度 - “未婚同居”是个人行为，他人不应该指责"
+          "id": "conflict_boss_worker_binary",
+          "label": "[ur-e6]冲突:工厂老板与工人间"
         },
         {
-          "id": "attitude_homosexuality_binary",
-          "label": "e15b.同意程度 - “同性恋”是个人行为，他人不应该指责"
+          "id": "conflict_cadre_mass_binary",
+          "label": "[ur-e6]冲突:干部与群众间"
         },
         {
-          "id": "attitude_pornography_binary",
-          "label": "e15c.同意程度 - “私下观看色情书刊/音像作品”是个人行为，他人不应该指责"
+          "id": "conflict_manage_worker_binary",
+          "label": "f9c. 管理层和工人之间"
         },
         {
-          "id": "attitude_prostitution_binary",
-          "label": "e15d.同意程度 - “嫖妓”是个人行为，他人不应该指责"
+          "id": "conflict_manager_staff_binary",
+          "label": "[ur-e6]冲突:管理者与一般工作人员"
         },
         {
-          "id": "attitude_superstition_binary",
-          "label": "e15e.同意程度 - “参与迷信活动”是个人行为，他人不应该指责"
+          "id": "conflict_rich_poor_binary",
+          "label": "[ur-e6]冲突:穷人与富人间"
         },
         {
-          "id": "attitude_suicide_binary",
-          "label": "e15f.同意程度 - “自杀”是个人行为，他人不应该指责"
+          "id": "conflict_upper_lower_binary",
+          "label": "[ur-e6]冲突:社会上下层间"
         },
         {
-          "id": "agree_obey_parents_unreasonable_binary",
-          "label": "下面我谈几个观点，请您就每一个观点表示您的意见。父母的要求即使不合理子女也应照着"
+          "id": "conflict_worker_whtecollar_binary",
+          "label": "[ur-e6]冲突:工人与白领间"
         },
         {
-          "id": "agree_elder_mediate_disputes_binary",
-          "label": "下面我谈几个观点，请您就每一个观点表示您的意见。如果发生争执应请年长的人主持公道"
+          "id": "conflict_working_middle_class_binary",
+          "label": "f9b. 工人阶级和中产阶级之间"
         },
         {
-          "id": "agree_wife_yield_mother_in_law_binary",
-          "label": "下面我谈几个观点，请您就每一个观点表示您的意见。即使婆婆不对儿子也该劝媳妇让步"
+          "id": "current_income_fair_binary",
+          "label": "考虑到您的教育背景、工作能力、资历等各方面因素，您认为自己目前的收入是否公平"
         },
         {
-          "id": "agree_obey_gov_leaders_family_head_binary",
-          "label": "agree obey gov leaders family head"
+          "id": "current_inequality_fair_binary",
+          "label": "现在有的人挣的钱多，有的人挣的少，但这是公平的"
         },
         {
-          "id": "govt_not_interfere_private_life_binary",
-          "label": "The government should not interfere in an individual's private life"
+          "id": "current_inequality_binary",
+          "label": "f6a. 我国的收入差距太大了"
+        },
+        {
+          "id": "democracy_state_make_incomes_equal_binary",
+          "label": "Democracy: The state makes people's incomes equal"
+        },
+        {
+          "id": "economic_development_harmful_binary",
+          "label": "Rapid economic development is harmful to social stability"
+        },
+        {
+          "id": "effort_smart_opportunity_binary",
+          "label": "只要孩子够努力、够聪明，都能有同样的升学机会"
+        },
+        {
+          "id": "equality_treatment_binary",
+          "label": "q104. rich and poor people are treated equally by the government."
+        },
+        {
+          "id": "equally_treatment_binary",
+          "label": "下面我谈几个观点，请您就每个观点表示您的意见。人人都可得到政府的公平对待"
+        },
+        {
+          "id": "fair_occupation_respect_diff_binary",
+          "label": "It is fair that some occupations receive more respect from society than do other"
+        },
+        {
+          "id": "fair_power_privilege_binary",
+          "label": "It is fair that those who hold power enjoy a certain degree of privileged treatm"
+        },
+        {
+          "id": "family_income_fair_effort_binary",
+          "label": "把您和您家人之前所有的努力都考虑在内，您认为您家目前的收入相对你们的付出是非常公"
+        },
+        {
+          "id": "gov_responsibility_disability_x_binary",
+          "label": "政府给X提供残疾补助"
+        },
+        {
+          "id": "gov_responsibility_economy_binary",
+          "label": "您认为在解决下列问题上，政府、个人各应该负起多大的责任？经济发展"
+        },
+        {
+          "id": "gov_responsibility_education_x_binary",
+          "label": "如果X负担不起,政府就应该为他受教育提供资助"
+        },
+        {
+          "id": "gov_responsibility_healthcare_x_binary",
+          "label": "政府给X提供医疗卫生服务"
+        },
+        {
+          "id": "gov_responsibility_housing_x_binary",
+          "label": "如果X买不起房子,政府就应该给他提供住房"
+        },
+        {
+          "id": "gov_responsibility_jobs_x_binary",
+          "label": "如果X想工作,政府就应该给X提供工作"
+        },
+        {
+          "id": "govt_crime_investment_binary",
+          "label": "f15b.您认为政府在打击犯罪方面的投入应该是增加还是减少呢？"
+        },
+        {
+          "id": "govt_defense_investment_binary",
+          "label": "f15d.您认为政府在国防方面的投入应该是增加还是减少呢？"
+        },
+        {
+          "id": "govt_no_resp_inequality_binary",
+          "label": "政府在道义上没有责任区减少或缓和社会不平等"
+        },
+        {
+          "id": "govt_reduce_inequality_binary",
+          "label": "缩小贫富差距是政府的责任"
+        },
+        {
+          "id": "income_equality_binary",
+          "label": "Income equality"
+        },
+        {
+          "id": "income_reasonable_binary",
+          "label": "[ur-e2]您目前的收入是否合理"
+        },
+        {
+          "id": "inequality_cause_innate_ability_binary",
+          "label": "社会不平等主要是个人天生的能力造成的"
+        },
+        {
+          "id": "inequality_cause_powerful_control_binary",
+          "label": "社会不平等主要是由一小部分掌权者的控制、操纵造成的"
+        },
+        {
+          "id": "living_standard_fair_effort_binary",
+          "label": "您认为您目前的生活水平和您的努力比起来公不公平"
+        },
+        {
+          "id": "opportunity_change_vs_parents_binary",
+          "label": "与您父母那一代相比，您觉得您这一代提高自己生活水平或社会地位的机会是增加了还是减"
+        },
+        {
+          "id": "society_fair_overall_binary",
+          "label": "总的来说,您认为当今的社会公不公平"
+        },
+        {
+          "id": "some_easy_money_binary",
+          "label": "现在总是有些人能够很容易地挣到钱"
+        },
+        {
+          "id": "wealth_accumulation_binary",
+          "label": "Wealth accumulation"
+        },
+        {
+          "id": "wealth_gap_incentive_binary",
+          "label": "[ur-e4713]贫富差距利于人们工作积极性"
+        },
+        {
+          "id": "wealth_gap_serious_binary",
+          "label": "社会财富分配不公,贫富悬殊过大"
+        },
+        {
+          "id": "wealthy_more_say_binary",
+          "label": "[ur-e4733]经济条件好的人有更大发言权"
+        },
+        {
+          "id": "woker_predecessor_same_rich_binary",
+          "label": "在我们这个社会，工人和农民的后代与其他人的后代一样，有同样多的机会成为有钱"
         }
       ]
     },
     {
       "id": "F3",
-      "label": "Social Values (F3)",
+      "label": "Social/Cultural Ideology",
       "concepts": [
         {
           "id": "men_jobs_priority_binary",
-          "label": "When there are few employment opportunities, men should work outside while women"
+          "label": "Jobs scarce: Men should have more right to a job than women"
         },
         {
           "id": "women_need_children_binary",
@@ -755,6 +915,30 @@
         {
           "id": "wife_earning_more_binary",
           "label": "Problem if women have more income than husband"
+        },
+        {
+          "id": "attitude_cohabitation_binary",
+          "label": "e15a.同意程度 - “未婚同居”是个人行为，他人不应该指责"
+        },
+        {
+          "id": "attitude_homosexuality_binary",
+          "label": "e15b.同意程度 - “同性恋”是个人行为，他人不应该指责"
+        },
+        {
+          "id": "attitude_pornography_binary",
+          "label": "e15c.同意程度 - “私下观看色情书刊/音像作品”是个人行为，他人不应该指责"
+        },
+        {
+          "id": "attitude_prostitution_binary",
+          "label": "e15d.同意程度 - “嫖妓”是个人行为，他人不应该指责"
+        },
+        {
+          "id": "attitude_superstition_binary",
+          "label": "e15e.同意程度 - “参与迷信活动”是个人行为，他人不应该指责"
+        },
+        {
+          "id": "attitude_suicide_binary",
+          "label": "e15f.同意程度 - “自杀”是个人行为，他人不应该指责"
         },
         {
           "id": "gender_role_traditional_binary",
@@ -813,6 +997,22 @@
           "label": "If there is a quarrel, we should ask an elder to resolve the dispute?"
         },
         {
+          "id": "obey_parents_unreasonable_binary",
+          "label": "下面我谈几个观点，请您就每一个观点表示您的意见。父母的要求即使不合理子女也应照着"
+        },
+        {
+          "id": "elder_mediate_disputes_binary",
+          "label": "下面我谈几个观点，请您就每一个观点表示您的意见。如果发生争执应请年长的人主持公道"
+        },
+        {
+          "id": "wife_yield_mother_in_law_binary",
+          "label": "下面我谈几个观点，请您就每一个观点表示您的意见。即使婆婆不对儿子也该劝媳妇让步"
+        },
+        {
+          "id": "obey_gov_leaders_family_head_binary",
+          "label": "Obey Gov Leaders Family Head"
+        },
+        {
           "id": "fate_determines_outcomes_binary",
           "label": "q61. wealth and poverty, success and failure are all determined by fate."
         },
@@ -841,8 +1041,12 @@
           "label": "If people have too many different ways of thinking, society will be chaotic"
         },
         {
+          "id": "gov_not_interfere_private_life_binary",
+          "label": "The government should not interfere in an individual's private life"
+        },
+        {
           "id": "competition_harmful_binary",
-          "label": "competition harmful"
+          "label": "Competition Harmful"
         },
         {
           "id": "equal_job_promo_men_women_binary",
@@ -863,6 +1067,34 @@
         {
           "id": "extramarital_sex_attitude_binary",
           "label": "您认为婚外性行为对不对"
+        },
+        {
+          "id": "competition_good_or_harmful_binary",
+          "label": "Competition good or harmful"
+        },
+        {
+          "id": "fatalism_binary",
+          "label": "SUCCESS DETERMINED BY FATE"
+        },
+        {
+          "id": "general_trust_or_withcare_binary",
+          "label": "您觉得大多数人都是可以信任的吗？还是与人交往小心为妙？"
+        },
+        {
+          "id": "general_trust_binary",
+          "label": "most people can be trusted??"
+        },
+        {
+          "id": "marriage_outdated_binary",
+          "label": "Marriage is an out-dated institution"
+        },
+        {
+          "id": "men_better_politicians_binary",
+          "label": "Men make better political leaders than women do"
+        },
+        {
+          "id": "postmaterialism_binary",
+          "label": "Post-Materialist index 4-item"
         }
       ]
     },
@@ -870,6 +1102,18 @@
       "id": "regime_support",
       "label": "Regime Support",
       "concepts": [
+        {
+          "id": "support_gov_right_or_wrong_binary",
+          "label": "请问您在多大程度上同意下面的观点：任何人都应该支持自己的政府，即使它做的不对"
+        },
+        {
+          "id": "obey_gov_binary",
+          "label": "[ur-e4711]服从政府不会错"
+        },
+        {
+          "id": "one_party_suitable_binary",
+          "label": "A system with just one main party is most suitable to China's current circumstan"
+        },
         {
           "id": "accept_ccp_critics_binary",
           "label": "Do you accept the people who criticize CCP"
@@ -884,26 +1128,26 @@
         },
         {
           "id": "current_system_suitable_binary",
-          "label": "您在多大程度上同意_我国目前的政治制度是最适合中国国情的"
+          "label": "是否同意“我国目前的政治制度是最适合中国国情的”？"
         },
         {
           "id": "i_am_well_represented_by_gov_binary",
-          "label": "根据您与政府机构或官员互动的经验您在多大程度上同意_人民政府代表了我的利益"
+          "label": "下面我谈几个观点，请您就每个观点表示您的意见。我国政府是代表我的利益的"
         },
         {
           "id": "prefer_own_system_binary",
-          "label": "与其他国家的政治制度相比，我宁愿在我国的政治制度下生活。"
+          "label": "与其他国家的政治制度相比，我宁愿在我国的政治制度下生活"
         },
         {
           "id": "proud_of_system_binary",
-          "label": "整体而言，我以我们的政治制度为荣。"
+          "label": "整体而言，我以我们的政治制度为荣"
         },
         {
-          "id": "satisfied_central_govt_binary",
+          "id": "satisfied_central_gov_binary",
           "label": "Satisfied or unsatisfied: central government"
         },
         {
-          "id": "satisfied_govt_policies_binary",
+          "id": "satisfied_gov_policies_binary",
           "label": "Satisfied with government policies"
         },
         {
@@ -916,19 +1160,23 @@
         },
         {
           "id": "trust_ccp_binary",
-          "label": "trust ccp"
+          "label": "Trust Ccp"
         },
         {
           "id": "trust_central_binary",
-          "label": "您在多大程度上信任下列机构和组织：中央政府"
+          "label": "Confidence: The Government"
         },
         {
           "id": "trust_civil_service_binary",
           "label": "Confidence: The Civil Services"
         },
         {
+          "id": "trust_gov_officials_binary",
+          "label": "You can generally trust the people who run our government to do what is right"
+        },
+        {
           "id": "trust_city_binary",
-          "label": "请问您在多大程度上信任_区/市政府"
+          "label": "对各级政府的信任程度。市政府"
         },
         {
           "id": "trust_political_parties_binary",
@@ -948,10 +1196,10 @@
         },
         {
           "id": "system_can_solve_problems_binary",
-          "label": "从长远来看，我们的政治制度能解决我国面临的主要问题。"
+          "label": "从长远来看，我们的政治制度能解决我国面临的主要问题"
         },
         {
-          "id": "support_govt_decisions_binary",
+          "id": "support_gov_decisions_binary",
           "label": "People should always support the decisions of their government even if they disagree with them."
         },
         {
@@ -959,40 +1207,168 @@
           "label": "OUR POLITICAL SYSTEM IS BEST"
         },
         {
-          "id": "trust_obey_govt_binary",
+          "id": "trust_obey_gov_binary",
           "label": "TRUST AND OBEY GOVERNMENT"
         },
         {
-          "id": "unconditionally_support_govt_binary",
+          "id": "unconditionally_support_gov_binary",
           "label": "UNCONDITIONALLY SUPPORT GOVT"
         },
         {
-          "id": "govt_system_fits_conditions_binary",
+          "id": "gov_system_fits_conditions_binary",
           "label": "GOVERNMENT SYSTEM FITS CONDITIONS"
         },
         {
-          "id": "agree_support_gov_even_wrong_binary",
+          "id": "support_gov_even_wrong_binary",
           "label": "我们想知道您对下面各种说法的意见。任何人都应该支持自己的政府即使它做的不对"
         },
         {
+          "id": "courts_uphold_justice_binary",
+          "label": "您在多大程度上同意下列观点。我国法院/检察院维护司法公正"
+        },
+        {
+          "id": "defend_own_system_binary",
+          "label": "Our country should defend our way of life instead of becoming more and more like other countries"
+        },
+        {
+          "id": "fit_scale_binary",
+          "label": "1表示完全不适合，10表示完全适合。在程度上，数字越小表示越不适合，数字越大表示越%XCA"
+        },
+        {
+          "id": "gov_decisions_correct_binary",
+          "label": "我们可以相信，政府领导人所做的决定总是正确的。"
+        },
+        {
+          "id": "gov_honesty_binary",
+          "label": "是否同意“总体而言，政府官员通常讲实话”这一观点"
+        },
+        {
+          "id": "gov_not_care_me_binary",
+          "label": "政府官员不太在乎像我这样的人有何想法"
+        },
+        {
+          "id": "gov_treats_equally_binary",
+          "label": "政府对穷人和富人一视同仁。"
+        },
+        {
+          "id": "govt_considers_opinions_binary",
+          "label": "您认为政府在制定政策时有多重视人民的意见"
+        },
+        {
+          "id": "govt_officials_truthful_binary",
+          "label": "下面我谈几个观点，请您就每个观点表示您的意见。政府官员通常讲实话"
+        },
+        {
           "id": "i_am_well_represented_by_party_binary",
-          "label": "i am well represented by party"
+          "label": "是否同意“中国共产党是代表我的利益的”这一观点"
+        },
+        {
+          "id": "judge_honesty_binary",
+          "label": "您如何评价各类党政公职人员的清廉程度-法官"
+        },
+        {
+          "id": "judicial_powerless_binary",
+          "label": "当政府违法时，司法机关也无能为力。"
+        },
+        {
+          "id": "local_cadre_honesty_binary",
+          "label": "您如何评价各类党政公职人员的清廉程度-本地国家干部"
+        },
+        {
+          "id": "municipal_trust_binary",
+          "label": "对市政府的信任程度"
         },
         {
           "id": "npc_represents_people_binary",
-          "label": "npc represents people"
+          "label": "您在多大程度上同意下列观点。全国人民代表大会代表绝大多数人民的利益"
         },
         {
-          "id": "trust_military_binary",
-          "label": "trust military"
+          "id": "officials_abuse_power_binary",
+          "label": "在您看来，我国政府官员是不是经常违法或滥用权力？"
+        },
+        {
+          "id": "officials_dont_care_binary",
+          "label": "政府官员不太在乎想我这样的人在想什么"
+        },
+        {
+          "id": "officials_serve_people_binary",
+          "label": "政府官员的工作就是为老百姓服务"
+        },
+        {
+          "id": "officials_value_public_opinion_binary",
+          "label": "政府官员会重视我们对政府的态度和看法"
+        },
+        {
+          "id": "overall_cadre_honesty_binary",
+          "label": "您如何评价各类党政公职人员的清廉程度-对各类党政公职人员的总体评价"
+        },
+        {
+          "id": "police_honesty_binary",
+          "label": "您如何评价各类党政公职人员的清廉程度-警察"
+        },
+        {
+          "id": "prosecutor_honesty_binary",
+          "label": "您如何评价各类党政公职人员的清廉程度-检察官"
         },
         {
           "id": "satisfied_local_govt_binary",
-          "label": "satisfied local govt"
+          "label": "Satisfied or unsatisfied: local government"
+        },
+        {
+          "id": "trust_company_binary",
+          "label": "Confidence: Major Companies"
+        },
+        {
+          "id": "trust_corruption_info_binary",
+          "label": "[ur-e391]政府信任度:腐败信息"
+        },
+        {
+          "id": "trust_earthquake_forecast_binary",
+          "label": "[ur-e391]政府信任度:地震预报"
+        },
+        {
+          "id": "trust_graduate_employment_info_binary",
+          "label": "[ur-e391]政府信任度:大学生就业"
+        },
+        {
+          "id": "trust_housing_price_info_binary",
+          "label": "[ur-e391]政府信任度:房价信息"
+        },
+        {
+          "id": "trust_local_binary",
+          "label": "信任程度——本地政府（农村指乡政府）"
+        },
+        {
+          "id": "trust_military_binary",
+          "label": "How much trust do you have in the military?"
+        },
+        {
+          "id": "trust_mine_accident_info_binary",
+          "label": "[ur-e391]政府信任度:矿难伤亡"
+        },
+        {
+          "id": "trust_ngo_binary",
+          "label": "信任程度——民间组织"
+        },
+        {
+          "id": "trust_police_binary",
+          "label": "您对下面这些人的信任程度-警官"
         },
         {
           "id": "trust_provincial_govt_binary",
-          "label": "trust provincial govt"
+          "label": "Do you trust them: provincial government official"
+        },
+        {
+          "id": "trust_public_security_info_binary",
+          "label": "[ur-e391]政府信任度:治安形势"
+        },
+        {
+          "id": "trust_stock_market_info_binary",
+          "label": "[ur-e391]政府信任度:股市信息"
+        },
+        {
+          "id": "trust_wealth_gap_info_binary",
+          "label": "[ur-e391]政府信任度:贫富差距"
         }
       ]
     },
@@ -1001,20 +1377,20 @@
       "label": "Nationalism",
       "concepts": [
         {
-          "id": "agree_china_better_than_most_binary",
+          "id": "china_better_than_most_binary",
           "label": "China is a better country than most other countries"
         },
         {
-          "id": "agree_criticism_china_is_personal_binary",
-          "label": "您在多大程度上同意_别人在批评中国人的时候，我感觉就像批评我"
+          "id": "criticism_china_is_personal_binary",
+          "label": "我们想知道您对下面各种说法的意见。别人批评中国时我感觉他们也批评我自己"
         },
         {
-          "id": "agree_prefer_chinese_citizenship_binary",
+          "id": "prefer_chinese_citizenship_binary",
           "label": "I would rather be a citizen of China than of any other country"
         },
         {
           "id": "culture_superior_binary",
-          "label": "您在多大程度上同意_我们的文化优于其他文化"
+          "label": "我们的文化优于其他文化"
         },
         {
           "id": "foreign_culture_harmful_binary",
@@ -1059,6 +1435,10 @@
         {
           "id": "national_attachment_binary",
           "label": "ge1b. 你的国家"
+        },
+        {
+          "id": "proud_citizen_binary",
+          "label": "How proud are you to be a citizen of [Country]"
         }
       ]
     },
@@ -1080,11 +1460,11 @@
         },
         {
           "id": "satisfaction_environment_binary",
-          "label": "您对我国政府下列各项工作的满意程度如何：环境保护"
+          "label": "f17h.您对政府在下列工作方面的表现是否满意呢？ - 环境保护"
         },
         {
           "id": "satisfaction_education_binary",
-          "label": "对我国政府下列各项工作的满意程度：义务教育"
+          "label": "f17c.您对政府在下列工作方面的表现是否满意呢？ - 提供优质的基础教育"
         },
         {
           "id": "satisfaction_healthcare_binary",
@@ -1117,156 +1497,34 @@
         {
           "id": "satisfaction_public_health_binary",
           "label": "您对我国政府下列各项工作的满意程度如何：公共卫生"
-        }
-      ]
-    },
-    {
-      "id": "covariate",
-      "label": "Covariates",
-      "concepts": [
-        {
-          "id": "marriage_outdated_binary",
-          "label": "marriage outdated"
         },
         {
-          "id": "men_better_politicians_binary",
-          "label": "men better politicians"
+          "id": "central_govt_satisfaction_binary",
+          "label": "总的来说，您对中央政府和本市政府的满意程度如何？0代表非常不满意，10代表非常满意%XA1"
         },
         {
-          "id": "competition_good_or_harmful_binary",
-          "label": "competition good or harmful"
+          "id": "city_govt_satisfaction_binary",
+          "label": "总的来说，您对中央政府和本市政府的满意程度如何？0代表非常不满意，10代表非常满意%XA1"
         },
         {
-          "id": "wealth_accumulation_binary",
-          "label": "wealth accumulation"
+          "id": "local_economy_status_binary",
+          "label": "您认为本地现在的经济状况如何"
         },
         {
-          "id": "income_equality_binary",
-          "label": "income equality"
+          "id": "national_economy_status_binary",
+          "label": "您认为全国现在的经济状况"
         },
         {
-          "id": "general_trust_binary",
-          "label": "general trust"
+          "id": "satisfaction_central_gov_binary",
+          "label": "总的来说对中央政府的满意程度"
         },
         {
-          "id": "fatalism_binary",
-          "label": "fatalism"
+          "id": "satisfaction_city_gov_binary",
+          "label": "总的来说，您对中央政府和本市政府的满意程度如何？0代表非常不满意，10代表非常满意%XA1"
         },
         {
-          "id": "income_reasonable_binary",
-          "label": "income reasonable"
-        },
-        {
-          "id": "defend_own_system_binary",
-          "label": "defend own system"
-        },
-        {
-          "id": "people_influence_govt_binary",
-          "label": "people influence govt"
-        },
-        {
-          "id": "woker_predecessor_same_rich_binary",
-          "label": "woker predecessor same rich"
-        },
-        {
-          "id": "current_inequality_fair_binary",
-          "label": "current inequality fair"
-        },
-        {
-          "id": "effort_smart_opportunity_binary",
-          "label": "effort smart opportunity"
-        },
-        {
-          "id": "trust_company_binary",
-          "label": "trust company"
-        },
-        {
-          "id": "idnum",
-          "label": "idnum"
-        },
-        {
-          "id": "sex",
-          "label": "gender"
-        },
-        {
-          "id": "income",
-          "label": "annual income (RMB)"
-        },
-        {
-          "id": "income_rough",
-          "label": "您个人2008年的全年总收入是多少元？"
-        },
-        {
-          "id": "age",
-          "label": "actual age"
-        },
-        {
-          "id": "edu",
-          "label": "education"
-        },
-        {
-          "id": "fincome",
-          "label": "se13. household income"
-        },
-        {
-          "id": "fincome_rough",
-          "label": "Monthly Household Income"
-        },
-        {
-          "id": "job_category",
-          "label": "OCCUPATION"
-        },
-        {
-          "id": "housing",
-          "label": "是否提供住房或补贴"
-        },
-        {
-          "id": "car",
-          "label": "家用轿车数量"
-        },
-        {
-          "id": "pension",
-          "label": "是否提供基本养老保险"
-        },
-        {
-          "id": "healthcare",
-          "label": "是否提供基本医疗保险"
-        },
-        {
-          "id": "hukou_local",
-          "label": "您是否工作过（包括务农）？"
-        },
-        {
-          "id": "hukou_urban",
-          "label": "您现在的工作状况属于下列哪种？"
-        },
-        {
-          "id": "fses",
-          "label": "subjective social status"
-        },
-        {
-          "id": "fses_10yr_ago",
-          "label": "您家现拥有几处房产？"
-        },
-        {
-          "id": "party",
-          "label": "是否党员"
-        },
-        {
-          "id": "minority",
-          "label": "ethnicity"
-        },
-        {
-          "id": "prov_region",
-          "label": "采访地点-省/自治区/直辖市"
-        },
-        {
-          "id": "year",
-          "label": "Interview year"
-        },
-        {
-          "id": "short_name",
-          "label": "short name"
+          "id": "satisfaction_gov_binary",
+          "label": "总的来说，您对中央政府和本市政府的满意程度如何？0代表非常不满意，10代表非常满意%XA1"
         }
       ]
     }

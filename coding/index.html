@@ -26,7 +26,6 @@
   --dim-regime_support: #9b2226;
   --dim-nationalism: #ca6702;
   --dim-satisfaction: #6a994e;
-  --dim-covariate: #7b7b7b;
   --dim-none: #adb5bd;
 }
 
@@ -158,12 +157,19 @@ h1, h2, h3, .serif {
 }
 
 .btn-none {
-  background: var(--dim-none);
-  color: #fff;
-  border: 2px solid var(--dim-none);
+  background: #fff;
+  color: var(--text-light);
+  border: 2px dashed var(--border);
   min-height: 48px;
   font-weight: 600;
   font-size: 0.95rem;
+  transition: all 0.15s ease;
+}
+.btn-none.selected {
+  background: var(--dim-none);
+  color: #fff;
+  border: 2px solid var(--dim-none);
+  box-shadow: 0 0 0 3px rgba(173, 181, 189, 0.35);
 }
 
 /* ── Coding Screen ────────────────────────── */
@@ -301,7 +307,7 @@ h1, h2, h3, .serif {
 /* Dimension buttons */
 .dim-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
 }
 
@@ -489,7 +495,7 @@ h1, h2, h3, .serif {
 
 @media (min-width: 640px) {
   .coding-body { padding: 1.5rem 2rem; }
-  .dim-grid { grid-template-columns: repeat(4, 1fr); gap: 0.6rem; }
+  .dim-grid { grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
 }
 </style>
 </head>
@@ -593,17 +599,15 @@ const DIM_COLORS = {
   regime_support: 'var(--dim-regime_support)',
   nationalism: 'var(--dim-nationalism)',
   satisfaction: 'var(--dim-satisfaction)',
-  covariate: 'var(--dim-covariate)',
 };
 
 const DIM_SHORT = {
-  F1: 'F1',
-  F2: 'F2',
-  F3: 'F3',
-  regime_support: 'RS',
-  nationalism: 'NAT',
-  satisfaction: 'SAT',
-  covariate: 'COV',
+  F1: 'Political',
+  F2: 'Economic',
+  F3: 'Social',
+  regime_support: 'Regime Support',
+  nationalism: 'Nationalism',
+  satisfaction: 'Satisfaction',
 };
 
 // ── State ──────────────────────────────────
@@ -841,7 +845,7 @@ function resetSelection() {
     b.style.borderColor = '';
   });
   document.querySelectorAll('.btn-none').forEach(b => {
-    b.style.opacity = '';
+    b.classList.remove('selected');
   });
   document.getElementById('concept-panel').classList.remove('visible');
   document.getElementById('concept-search').value = '';
@@ -879,9 +883,7 @@ function selectNone(silent) {
   selectedDim = 'none';
   selectedConcept = 'none';
   document.querySelectorAll('.btn-none').forEach(b => {
-    b.style.opacity = '0.8';
-    b.style.outline = '3px solid var(--dim-none)';
-    b.style.outlineOffset = '-1px';
+    b.classList.add('selected');
   });
   document.getElementById('btn-confirm').disabled = false;
 }
