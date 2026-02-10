@@ -6,18 +6,16 @@
     <title>Siyao Zheng | Political Scientist</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --ivory: #FAF8F5;
-            --cream: #F5F2ED;
-            --navy: #1a2744;
-            --navy-light: #2d3d5c;
-            --accent: #8B4513;
-            --accent-light: #A0522D;
-            --text: #2c2c2c;
-            --text-light: #5a5a5a;
-            --border: #e0ddd8;
+            --bg: #fafafa;
+            --bg-alt: #f5f5f5;
+            --accent: #7c3aed;
+            --accent-light: #8b5cf6;
+            --text: #171717;
+            --text-secondary: #737373;
+            --border: #e5e5e5;
         }
 
         * {
@@ -31,26 +29,12 @@
         }
 
         body {
-            font-family: 'Source Sans 3', sans-serif;
-            background: var(--ivory);
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
             color: var(--text);
-            line-height: 1.7;
+            line-height: 1.6;
             font-weight: 400;
             position: relative;
-        }
-
-        /* Subtle grain texture overlay */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-            z-index: 9999;
         }
 
         /* Navigation */
@@ -63,17 +47,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(250, 248, 245, 0.95);
+            background: rgba(250, 250, 250, 0.95);
             backdrop-filter: blur(10px);
             z-index: 1000;
             border-bottom: 1px solid var(--border);
         }
 
         .nav-name {
-            font-family: 'Cormorant Garamond', serif;
             font-size: 1.4rem;
-            font-weight: 500;
-            color: var(--navy);
+            font-weight: 600;
+            color: var(--text);
             letter-spacing: 0.02em;
         }
 
@@ -86,7 +69,7 @@
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 0.12em;
-            color: var(--text-light);
+            color: var(--text-secondary);
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s ease;
@@ -105,7 +88,7 @@
         }
 
         .nav-links a:hover {
-            color: var(--navy);
+            color: var(--text);
         }
 
         .nav-links a:hover::after {
@@ -141,35 +124,34 @@
         }
 
         .hero-label {
+            font-family: 'JetBrains Mono', monospace;
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.2em;
             color: var(--accent);
             margin-bottom: 1.5rem;
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .hero h1 {
-            font-family: 'Cormorant Garamond', serif;
             font-size: 4.5rem;
-            font-weight: 400;
+            font-weight: 700;
             line-height: 1.1;
-            color: var(--navy);
+            color: var(--text);
             margin-bottom: 1.5rem;
             letter-spacing: -0.02em;
         }
 
         .hero h1 span {
-            font-style: italic;
             color: var(--accent);
         }
 
         .hero-subtitle {
             font-size: 1.15rem;
-            color: var(--text-light);
+            color: var(--text-secondary);
             margin-bottom: 2rem;
             max-width: 500px;
-            line-height: 1.8;
+            line-height: 1.7;
         }
 
         .hero-affiliation {
@@ -183,20 +165,21 @@
         .affiliation-logo {
             width: 50px;
             height: 50px;
-            background: var(--navy);
+            background: var(--text);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.2rem;
-            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
         }
 
         .affiliation-text {
             font-size: 0.9rem;
-            color: var(--text-light);
+            color: var(--text-secondary);
         }
 
         .affiliation-text strong {
@@ -216,14 +199,14 @@
             max-width: 380px;
             height: auto;
             border-radius: 4px;
-            box-shadow: 0 25px 50px -12px rgba(26, 39, 68, 0.15);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
             filter: grayscale(10%);
             transition: all 0.5s ease;
         }
 
         .hero-image:hover img {
             filter: grayscale(0%);
-            box-shadow: 0 30px 60px -15px rgba(26, 39, 68, 0.2);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.15);
         }
 
         /* Section Styling */
@@ -243,22 +226,20 @@
         }
 
         .section-number {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
             color: var(--accent);
-            font-style: italic;
         }
 
         .section-title {
-            font-family: 'Cormorant Garamond', serif;
             font-size: 2.5rem;
-            font-weight: 400;
-            color: var(--navy);
+            font-weight: 700;
+            color: var(--text);
         }
 
         /* Research Section */
         #research {
-            background: var(--cream);
+            background: var(--bg-alt);
             max-width: 100%;
             padding: 6rem 4rem;
         }
@@ -275,7 +256,7 @@
         }
 
         .research-card {
-            background: var(--ivory);
+            background: white;
             padding: 2.5rem;
             border: 1px solid var(--border);
             transition: all 0.4s ease;
@@ -296,7 +277,7 @@
 
         .research-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(26, 39, 68, 0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
         }
 
         .research-card:hover::before {
@@ -309,17 +290,16 @@
         }
 
         .research-card h3 {
-            font-family: 'Cormorant Garamond', serif;
             font-size: 1.5rem;
-            font-weight: 500;
-            color: var(--navy);
+            font-weight: 600;
+            color: var(--text);
             margin-bottom: 1rem;
         }
 
         .research-card p {
             font-size: 0.95rem;
-            color: var(--text-light);
-            line-height: 1.8;
+            color: var(--text-secondary);
+            line-height: 1.7;
         }
 
         /* Publications Section */
@@ -339,30 +319,28 @@
         }
 
         .publication-item:hover {
-            background: linear-gradient(90deg, var(--cream) 0%, transparent 100%);
+            background: linear-gradient(90deg, var(--bg-alt) 0%, transparent 100%);
             padding-left: 1rem;
             margin-left: -1rem;
         }
 
         .pub-year {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
             color: var(--accent);
-            font-style: italic;
         }
 
         .pub-content h4 {
-            font-family: 'Cormorant Garamond', serif;
             font-size: 1.25rem;
-            font-weight: 500;
-            color: var(--navy);
+            font-weight: 600;
+            color: var(--text);
             margin-bottom: 0.5rem;
             line-height: 1.4;
         }
 
         .pub-authors {
             font-size: 0.9rem;
-            color: var(--text-light);
+            color: var(--text-secondary);
             margin-bottom: 0.3rem;
         }
 
@@ -373,7 +351,7 @@
         .pub-venue {
             font-size: 0.9rem;
             font-style: italic;
-            color: var(--text-light);
+            color: var(--text-secondary);
         }
 
         .pub-tag {
@@ -382,34 +360,22 @@
             text-transform: uppercase;
             letter-spacing: 0.1em;
             padding: 0.3rem 0.8rem;
-            background: var(--navy);
+            background: var(--text);
             color: white;
             margin-top: 0.8rem;
         }
 
         /* Teaching Section */
         #teaching {
-            background: var(--navy);
+            background: white;
             max-width: 100%;
             padding: 6rem 4rem;
-            color: white;
+            color: var(--text);
         }
 
         #teaching .content-wrapper {
             max-width: 1400px;
             margin: 0 auto;
-        }
-
-        #teaching .section-header {
-            border-bottom-color: rgba(255,255,255,0.2);
-        }
-
-        #teaching .section-number {
-            color: var(--accent-light);
-        }
-
-        #teaching .section-title {
-            color: white;
         }
 
         .teaching-grid {
@@ -420,35 +386,35 @@
 
         .course-card {
             padding: 2.5rem;
-            border: 1px solid rgba(255,255,255,0.15);
-            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            background: white;
             transition: all 0.4s ease;
         }
 
         .course-card:hover {
-            background: rgba(255,255,255,0.08);
-            border-color: rgba(255,255,255,0.3);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
 
         .course-level {
+            font-family: 'JetBrains Mono', monospace;
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 0.15em;
-            color: var(--accent-light);
+            color: var(--accent);
             margin-bottom: 1rem;
         }
 
         .course-card h3 {
-            font-family: 'Cormorant Garamond', serif;
             font-size: 1.6rem;
-            font-weight: 400;
+            font-weight: 600;
             margin-bottom: 1rem;
-            color: white;
+            color: var(--text);
         }
 
         .course-card p {
             font-size: 0.95rem;
-            color: rgba(255,255,255,0.7);
+            color: var(--text-secondary);
             line-height: 1.7;
         }
 
@@ -480,12 +446,13 @@
             top: 0.5rem;
             width: 9px;
             height: 9px;
-            background: var(--ivory);
+            background: var(--bg);
             border: 2px solid var(--accent);
             border-radius: 50%;
         }
 
         .cv-date {
+            font-family: 'JetBrains Mono', monospace;
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
@@ -494,21 +461,20 @@
         }
 
         .cv-item h4 {
-            font-family: 'Cormorant Garamond', serif;
             font-size: 1.4rem;
-            font-weight: 500;
-            color: var(--navy);
+            font-weight: 600;
+            color: var(--text);
             margin-bottom: 0.3rem;
         }
 
         .cv-item p {
-            color: var(--text-light);
+            color: var(--text-secondary);
             font-size: 0.95rem;
         }
 
         /* Contact Section */
         #contact {
-            background: var(--cream);
+            background: var(--bg-alt);
             max-width: 100%;
             padding: 6rem 4rem;
         }
@@ -522,17 +488,11 @@
         }
 
         .contact-info h2 {
-            font-family: 'Cormorant Garamond', serif;
             font-size: 3rem;
-            font-weight: 400;
-            color: var(--navy);
+            font-weight: 700;
+            color: var(--text);
             margin-bottom: 2rem;
             line-height: 1.2;
-        }
-
-        .contact-info h2 span {
-            font-style: italic;
-            color: var(--accent);
         }
 
         .contact-details {
@@ -550,7 +510,7 @@
         .contact-icon {
             width: 40px;
             height: 40px;
-            background: var(--navy);
+            background: var(--text);
             color: white;
             display: flex;
             align-items: center;
@@ -561,7 +521,7 @@
 
         .contact-text {
             font-size: 0.95rem;
-            color: var(--text-light);
+            color: var(--text-secondary);
         }
 
         .contact-text strong {
@@ -577,11 +537,11 @@
         }
 
         .contact-text a:hover {
-            color: var(--navy);
+            color: var(--accent-light);
         }
 
         .contact-map {
-            background: var(--navy);
+            background: var(--text);
             padding: 3rem;
             display: flex;
             flex-direction: column;
@@ -589,6 +549,7 @@
         }
 
         .map-label {
+            font-family: 'JetBrains Mono', monospace;
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 0.2em;
@@ -597,8 +558,8 @@
         }
 
         .map-address {
-            font-family: 'Cormorant Garamond', serif;
             font-size: 1.8rem;
+            font-weight: 300;
             color: white;
             line-height: 1.5;
         }
@@ -609,7 +570,7 @@
             text-align: center;
             border-top: 1px solid var(--border);
             font-size: 0.85rem;
-            color: var(--text-light);
+            color: var(--text-secondary);
         }
 
         footer a {
@@ -973,7 +934,7 @@
     <section id="contact">
         <div class="content-wrapper">
             <div class="contact-info">
-                <h2>Let's <span>Connect</span></h2>
+                <h2>Contact</h2>
                 <div class="contact-details">
                     <div class="contact-item">
                         <div class="contact-icon">✉</div>
@@ -1004,7 +965,7 @@
     </section>
 
     <footer>
-        <p>© 2025 Siyao Zheng. Crafted with attention to detail.</p>
+        <p>© 2026 Siyao Zheng</p>
     </footer>
 
     <script>
