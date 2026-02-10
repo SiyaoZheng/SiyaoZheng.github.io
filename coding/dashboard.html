@@ -176,26 +176,50 @@ document.getElementById('tab-bar').addEventListener('click', e => {
   document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
 });
 
-// ── Fetch Data from GAS ────────────────────
-async function fetchData() {
+// ── Fetch Data from GAS (JSONP to avoid CORS) ──
+function fetchData() {
   if (!GAS_URL) {
     document.getElementById('overview-stats').innerHTML =
-      '<div class="card" style="grid-column:1/-1;text-align:center;color:var(--text-light);">GAS_URL not configured. Set it in dashboard.html and Code.gs.</div>';
+      '<div class="card" style="grid-column:1/-1;text-align:center;color:var(--text-light);">GAS_URL not configured.</div>';
     return;
   }
   document.getElementById('overview-stats').innerHTML = '<div class="loading">Loading...</div>';
-  try {
-    const url = GAS_URL + '?action=fetch_data&pw=' + encodeURIComponent(PASSWORD);
-    const res = await fetch(url);
-    const data = await res.json();
-    if (data.error) throw new Error(data.error);
+
+  const cbName = '_gasCb' + Date.now();
+  const script = document.createElement('script');
+
+  // Timeout fallback
+  const timer = setTimeout(() => {
+    cleanup();
+    document.getElementById('overview-stats').innerHTML =
+      '<div class="card" style="grid-column:1/-1;color:#c0392b;">Request timed out. Check GAS deployment.</div>';
+  }, 15000);
+
+  function cleanup() {
+    clearTimeout(timer);
+    delete window[cbName];
+    if (script.parentNode) script.parentNode.removeChild(script);
+  }
+
+  window[cbName] = function(data) {
+    cleanup();
+    if (data.error) {
+      document.getElementById('overview-stats').innerHTML =
+        '<div class="card" style="grid-column:1/-1;color:#c0392b;">Error: ' + data.error + '</div>';
+      return;
+    }
     allEvents = data.events || [];
     document.getElementById('last-refresh').textContent = new Date().toLocaleString();
     renderAll();
-  } catch (err) {
+  };
+
+  script.src = GAS_URL + '?action=fetch_data&pw=' + encodeURIComponent(PASSWORD) + '&cb=' + cbName;
+  script.onerror = function() {
+    cleanup();
     document.getElementById('overview-stats').innerHTML =
-      `<div class="card" style="grid-column:1/-1;color:#c0392b;">Error: ${err.message}</div>`;
-  }
+      '<div class="card" style="grid-column:1/-1;color:#c0392b;">Failed to load data. Check GAS URL and deployment.</div>';
+  };
+  document.head.appendChild(script);
 }
 
 // ── Render All Tabs ────────────────────────
