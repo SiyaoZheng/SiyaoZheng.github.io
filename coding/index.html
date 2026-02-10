@@ -333,6 +333,46 @@ h1, h2, h3, .serif {
   grid-column: 1 / -1;
 }
 
+/* Dimension tooltip */
+.dim-grid { position: relative; }
+.dim-tooltip {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.10);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--text);
+}
+.dim-tooltip.visible { display: block; }
+.dim-tooltip .tt-title {
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 0.25rem;
+  font-size: 0.82rem;
+}
+.dim-tooltip .tt-body {
+  color: var(--text);
+}
+.dim-tooltip .tt-examples {
+  color: var(--text-light);
+  margin-top: 0.2rem;
+}
+.dim-tooltip .tt-note {
+  font-size: 0.7rem;
+  color: var(--text-light);
+  margin-top: 0.35rem;
+  font-style: italic;
+  border-top: 1px solid var(--cream);
+  padding-top: 0.3rem;
+}
+
 /* Concept selection */
 .concept-panel {
   display: none;
@@ -698,7 +738,9 @@ h1, h2, h3, .serif {
     <div id="coded-indicator" style="display:none;"></div>
 
     <!-- Dimension Selection -->
-    <div class="dim-grid" id="dim-grid"></div>
+    <div class="dim-grid" id="dim-grid">
+      <div class="dim-tooltip" id="dim-tooltip"></div>
+    </div>
 
     <!-- Concept Selection (appears after dimension tap) -->
     <div class="concept-panel" id="concept-panel">
@@ -770,6 +812,47 @@ const DIM_SHORT = {
   nationalism: 'Nationalism',
   satisfaction: 'Satisfaction',
 };
+
+// Dimension descriptions for RA guidance tooltips.
+// These are coding instructions — wording is deliberately cautious.
+const DIM_TOOLTIPS = {
+  F1: {
+    title: 'Political Ideology 政治意识形态',
+    body: '对政治制度、权威结构、治理方式和公民权利的态度与偏好。',
+    examples: '常见主题举例：民主制度偏好、对强人政治的态度、言论与新闻自由、多党制与政党竞争、法治与司法独立、政治参与权利、政府权力制约等。',
+  },
+  F2: {
+    title: 'Economic Ideology 经济意识形态',
+    body: '对经济平等、政府经济职能和财富分配的态度与偏好。',
+    examples: '常见主题举例：政府在就业/医疗/教育/住房等方面的责任、收入差距与再分配、国有与私有经济、社会福利制度、对贫富差距的看法等。',
+  },
+  F3: {
+    title: 'Social/Cultural Ideology 社会文化意识形态',
+    body: '对性别角色、家庭关系、社会宽容度和传统价值观的态度与偏好。',
+    examples: '常见主题举例：男女平等与性别分工、对同性恋/婚前同居的接受度、子女对父母/长辈的服从、传统家庭观念、社会多元化与包容等。',
+  },
+  regime_support: {
+    title: 'Regime Support 政权支持',
+    body: '对现行政治体制、政府机构和执政党的直接评价、信任或支持程度。',
+    examples: '常见主题举例：对中央/地方政府的信任度、对执政党的支持、对现行体制的认同与拥护、对政府官员品质的评价等。',
+  },
+  nationalism: {
+    title: 'Nationalism 民族主义',
+    body: '对国家的认同感、爱国情感和本国文化优越感。',
+    examples: '常见主题举例：作为中国人的自豪感、国家利益优先于个人利益、本国文化优于他国、为国牺牲的意愿、对外来文化的排斥等。',
+  },
+  satisfaction: {
+    title: 'Satisfaction 政策满意度',
+    body: '对政府在具体政策领域提供的公共服务的满意程度。',
+    examples: '常见主题举例：对教育、医疗、治安、环境保护、社会保障、法律公正、扶贫等具体领域的满意度评价。',
+  },
+  none: {
+    title: 'Not Relevant 不相关',
+    body: '该变量与上述六个态度维度均无关。',
+    examples: '常见情形举例：人口统计变量（年龄、性别、收入等）、调查管理变量（问卷编号、访问日期等）、纯粹的行为或事实性变量等。',
+  },
+};
+const DIM_TOOLTIP_NOTE = '以上仅为常见示例。请根据变量实际测量的内容判断，而非仅凭关键词匹配。';
 
 // ── State ──────────────────────────────────
 let allVariables = [];      // full dataset
@@ -1029,25 +1112,73 @@ function startCoding() {
 // ── Dimension Buttons ──────────────────────
 function buildDimButtons() {
   const grid = document.getElementById('dim-grid');
+  // Preserve tooltip element
+  const tooltip = document.getElementById('dim-tooltip');
   grid.innerHTML = '';
+  grid.appendChild(tooltip);
 
   concepts.dimensions.forEach(dim => {
     const btn = document.createElement('button');
     btn.className = 'btn btn-dim';
     btn.dataset.dim = dim.id;
     btn.textContent = DIM_SHORT[dim.id] || dim.id;
-    btn.title = dim.label;
     btn.style.setProperty('--bg', DIM_COLORS[dim.id] || '#666');
     btn.addEventListener('click', () => selectDimension(dim.id));
+    attachTooltip(btn, dim.id);
     grid.appendChild(btn);
   });
 
   // "Not relevant" button
   const noneBtn = document.createElement('button');
   noneBtn.className = 'btn btn-none';
+  noneBtn.dataset.dim = 'none';
   noneBtn.textContent = 'Not Relevant';
   noneBtn.addEventListener('click', () => selectNone());
+  attachTooltip(noneBtn, 'none');
   grid.appendChild(noneBtn);
+}
+
+// ── Tooltip Logic ───────────────────────
+let tooltipTimer = null;
+function attachTooltip(btn, dimId) {
+  const info = DIM_TOOLTIPS[dimId];
+  if (!info) return;
+
+  btn.addEventListener('mouseenter', () => {
+    tooltipTimer = setTimeout(() => showDimTooltip(btn, info), 400);
+  });
+  btn.addEventListener('mouseleave', () => {
+    clearTimeout(tooltipTimer);
+    hideDimTooltip();
+  });
+  // Long-press for mobile
+  let touchTimer = null;
+  btn.addEventListener('touchstart', (e) => {
+    touchTimer = setTimeout(() => {
+      showDimTooltip(btn, info);
+    }, 500);
+  }, { passive: true });
+  btn.addEventListener('touchend', () => { clearTimeout(touchTimer); });
+  btn.addEventListener('touchmove', () => { clearTimeout(touchTimer); });
+}
+
+function showDimTooltip(btn, info) {
+  const tooltip = document.getElementById('dim-tooltip');
+  tooltip.innerHTML = `
+    <div class="tt-title">${escHtml(info.title)}</div>
+    <div class="tt-body">${escHtml(info.body)}</div>
+    <div class="tt-examples">${escHtml(info.examples)}</div>
+    <div class="tt-note">${escHtml(DIM_TOOLTIP_NOTE)}</div>`;
+  // Position below the button
+  const grid = document.getElementById('dim-grid');
+  const gridRect = grid.getBoundingClientRect();
+  const btnRect = btn.getBoundingClientRect();
+  tooltip.style.top = (btnRect.bottom - gridRect.top + 6) + 'px';
+  tooltip.classList.add('visible');
+}
+
+function hideDimTooltip() {
+  document.getElementById('dim-tooltip').classList.remove('visible');
 }
 
 // ── Render Variable ────────────────────────
@@ -1149,6 +1280,7 @@ function resetSelection() {
 // ── Dimension Selection ────────────────────
 function selectDimension(dimId, silent) {
   resetSelection();
+  hideDimTooltip();
   selectedDim = dimId;
 
   // Highlight button
@@ -1174,6 +1306,7 @@ function selectDimension(dimId, silent) {
 
 function selectNone(silent) {
   resetSelection();
+  hideDimTooltip();
   selectedDim = 'none';
   selectedConcept = 'none';
   document.querySelectorAll('.btn-none').forEach(b => {
