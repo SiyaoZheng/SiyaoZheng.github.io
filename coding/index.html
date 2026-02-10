@@ -670,6 +670,9 @@ h1, h2, h3, .serif {
 <div id="loading-screen" class="screen active">
   <div class="spinner"></div>
   <p style="color:var(--text-light); font-size:0.9rem;">Loading data…</p>
+  <p id="loading-hint" style="display:none; color:var(--text-light); font-size:0.78rem; text-align:center; max-width:300px;">
+    数据文件较大（约 19 MB），请耐心等待。<br>建议使用 WiFi 网络。
+  </p>
 </div>
 
 <!-- ═══ Setup Screen ═══ -->
@@ -864,6 +867,8 @@ let currentSurvey = '';
 let selectedDim = null;
 let selectedConcept = null;
 let answers = {};           // { varId: { dimension, concept, timestamp } }
+let lastExportedCount = 0;  // track whether current work has been exported
+let storageAvailable = true; // whether localStorage works
 
 // ── Storage Keys ───────────────────────────
 function storageKey(ra, survey) {
@@ -1016,6 +1021,12 @@ function showScreen(id) {
 
 // ── Data Loading ───────────────────────────
 async function loadData() {
+  // Show slow-network hint after 3s
+  const hintTimer = setTimeout(() => {
+    const hint = document.getElementById('loading-hint');
+    if (hint) hint.style.display = 'block';
+  }, 3000);
+
   try {
     const [varsRes, conRes] = await Promise.all([
       fetch('variables.json'),
@@ -1024,12 +1035,15 @@ async function loadData() {
     if (!varsRes.ok || !conRes.ok) throw new Error('Failed to load data files');
     allVariables = await varsRes.json();
     concepts = await conRes.json();
+    clearTimeout(hintTimer);
     initSetup();
   } catch (e) {
+    clearTimeout(hintTimer);
     document.getElementById('loading-screen').innerHTML =
       `<p style="color:#c0392b; padding:2rem; text-align:center;">
-        Error loading data: ${e.message}<br>
-        <small>Ensure variables.json and concepts.json are in the same directory.</small>
+        加载失败：${e.message}<br>
+        <small>请检查网络连接后刷新页面重试。<br>
+        如果反复失败，请使用 WiFi 或换一个浏览器（推荐 Chrome / Safari）。</small>
       </p>`;
   }
 }
@@ -1068,6 +1082,14 @@ function initSetup() {
 
   document.getElementById('start-btn').addEventListener('click', startCoding);
   showScreen('setup-screen');
+
+  // Warn if localStorage is unavailable (private browsing, WeChat, etc.)
+  if (!storageAvailable) {
+    const warn = document.createElement('div');
+    warn.style.cssText = 'background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:6px;padding:0.6rem 0.8rem;font-size:0.82rem;text-align:center;max-width:360px;line-height:1.5;';
+    warn.innerHTML = '<b>注意：</b>当前浏览器不支持本地存储（可能处于无痕/隐私模式，或使用了微信/QQ 内置浏览器）。<br>编码结果<b>无法自动保存</b>，请用 Safari / Chrome 打开此页面，并<b>频繁导出 CSV</b>。';
+    document.querySelector('.setup-form').prepend(warn);
+  }
 }
 
 function updateResumeInfo() {
@@ -1503,6 +1525,11 @@ function exportCSV() {
     }
   });
 
+  if (rows.length <= 1) {
+    alert('还没有编码结果可以导出。');
+    return;
+  }
+
   const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
   const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
@@ -1511,10 +1538,17 @@ function exportCSV() {
   a.download = `coding_${raName}_${currentSurvey}_${new Date().toISOString().slice(0,10)}.csv`;
   a.click();
   URL.revokeObjectURL(url);
+
+  // Track export state (disarms beforeunload warning)
+  lastExportedCount = Object.keys(answers).length;
 }
 
 // ── Switch Survey ──────────────────────────
 document.getElementById('btn-change-survey').addEventListener('click', () => {
+  const coded = Object.keys(answers).length;
+  if (coded > 0 && coded > lastExportedCount) {
+    if (!confirm(`你有 ${coded - lastExportedCount} 条未导出的编码结果。\n\n切换前建议先导出 CSV 保存。确定要切换吗？`)) return;
+  }
   showScreen('setup-screen');
 });
 
@@ -1644,14 +1678,19 @@ function checkMilestone(count) {
 // ── Save Reminder ─────────────────────────
 let lastRemindCount = 0;
 function checkSaveReminder(count) {
-  if (count > 0 && count % 30 === 0 && count !== lastRemindCount) {
+  // First reminder at 5, then every 20 — undergrads need frequent nudges
+  const sinceExport = count - lastExportedCount;
+  const shouldRemind = (count === 5 && lastExportedCount === 0)
+    || (sinceExport > 0 && sinceExport % 20 === 0);
+  if (shouldRemind && count !== lastRemindCount) {
     lastRemindCount = count;
     const el = document.getElementById('save-reminder');
     if (!el) return;
     el.className = 'save-reminder';
-    el.textContent = '建议定期导出 CSV 保存，避免工作量损失';
+    const unexported = sinceExport;
+    el.textContent = `你有 ${unexported} 条未导出的编码结果，建议点击 Export 保存 CSV`;
     el.style.display = 'block';
-    setTimeout(() => { el.style.display = 'none'; }, 5000);
+    setTimeout(() => { el.style.display = 'none'; }, 6000);
   }
 }
 
@@ -1686,7 +1725,36 @@ document.addEventListener('keydown', function(e) {
 // ── Clock Interval ────────────────────────
 setInterval(updateGreetings, 60000);
 
+// ── localStorage Availability Test ────────
+function testLocalStorage() {
+  try {
+    const k = '__ls_test__';
+    localStorage.setItem(k, '1');
+    localStorage.removeItem(k);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+// ── beforeunload: warn if unexported work ─
+window.addEventListener('beforeunload', function(e) {
+  const coded = Object.keys(answers).length;
+  if (coded > 0 && coded > lastExportedCount) {
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
+
+// ── visibilitychange: save when backgrounded
+document.addEventListener('visibilitychange', function() {
+  if (document.hidden && raName && currentSurvey) {
+    saveAnswers();
+  }
+});
+
 // ── Boot ───────────────────────────────────
+storageAvailable = testLocalStorage();
 updateGreetings();
 loadData();
 </script>
