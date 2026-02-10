@@ -27,7 +27,8 @@ function recordBeacon(p) {
       et: p.et || '', ra: p.ra || '', sv: p.sv || '',
       vi: p.vi || '', dm: p.dm || '', cn: p.cn || '',
       vm: p.vm || '', si: p.si || '',
-      cc: p.cc || '', tv: p.tv || ''
+      cc: p.cc || '', tv: p.tv || '',
+      rt: p.rt || '', oa: p.oa || ''
     };
 
     var key = 'e_' + meta.chunk;
@@ -71,7 +72,8 @@ function fetchData(p) {
           server_ts: r.ts, event_type: r.et, ra: r.ra,
           survey: r.sv, var_id: r.vi, dimension: r.dm,
           concept: r.cn, view_ms: r.vm, session_id: r.si,
-          coded_count: r.cc, total_vars: r.tv
+          coded_count: r.cc, total_vars: r.tv,
+          retest: r.rt, original_answer: r.oa
         });
       }
     }

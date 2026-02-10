@@ -213,6 +213,27 @@ function renderAlerts(ras, confirms) {
       const median = times[Math.floor(times.length / 2)];
       if (median < 2000) alerts.push({ level: 'caution', msg: '<strong>' + esc(ra) + '</strong> averaging ' + fmtMs(median) + ' per item — faster than usual.' });
     }
+
+    // Self-consistency alert
+    const retestEvts = raConf.filter(e => e.retest === '1');
+    if (retestEvts.length >= 5) {
+      const conMatch = retestEvts.filter(e => e.dimension === e.original_answer).length;
+      const conPct = Math.round(conMatch / retestEvts.length * 100);
+      if (conPct < 60) alerts.push({ level: 'warn', msg: '<strong>' + esc(ra) + '</strong> self-consistency at ' + conPct + '% (' + retestEvts.length + ' retests) — may need guidance on dimension boundaries.' });
+    }
+
+    // Speed drift alert
+    const normConf = raConf.filter(e => e.retest !== '1');
+    if (normConf.length >= 30) {
+      const midIdx = Math.floor(normConf.length / 2);
+      const earlySpd = normConf.slice(0, midIdx).map(e => parseInt(e.view_ms) || 0).filter(t => t > 0 && t < 600000).sort((a, b) => a - b);
+      const lateSpd = normConf.slice(midIdx).map(e => parseInt(e.view_ms) || 0).filter(t => t > 0 && t < 600000).sort((a, b) => a - b);
+      if (earlySpd.length && lateSpd.length) {
+        const eMed = earlySpd[Math.floor(earlySpd.length / 2)];
+        const lMed = lateSpd[Math.floor(lateSpd.length / 2)];
+        if (eMed > 0 && lMed < eMed * 0.4) alerts.push({ level: 'caution', msg: '<strong>' + esc(ra) + '</strong> recent pace (' + fmtMs(lMed) + '/item) is much faster than initial pace (' + fmtMs(eMed) + '/item).' });
+      }
+    }
   });
 
   alertsEl.innerHTML = alerts.map(a => '<div class="alert-bar ' + a.level + '">' + a.msg + '</div>').join('');
@@ -259,6 +280,28 @@ function buildRASection(ra, raConf, raAll, allRAs, sharedItems) {
   if (agreePct !== null && agreePct < 60) badges.push('<span class="badge badge-red">Agreement ' + agreePct + '%</span>');
   else if (agreePct !== null && agreePct < 75) badges.push('<span class="badge badge-yellow">Agreement ' + agreePct + '%</span>');
   else if (agreePct !== null) badges.push('<span class="badge badge-green">Agreement ' + agreePct + '%</span>');
+
+  // Self-consistency badge (from test-retest)
+  const retestEvts = raConf.filter(e => e.retest === '1');
+  if (retestEvts.length >= 5) {
+    const conMatch = retestEvts.filter(e => e.dimension === e.original_answer).length;
+    const conPct = Math.round(conMatch / retestEvts.length * 100);
+    if (conPct < 60) badges.push('<span class="badge badge-red">Consistency ' + conPct + '%</span>');
+    else if (conPct < 80) badges.push('<span class="badge badge-yellow">Consistency ' + conPct + '%</span>');
+  }
+
+  // Speed drift badge
+  const normalConf = raConf.filter(e => e.retest !== '1');
+  if (normalConf.length >= 20) {
+    const midPt = Math.floor(normalConf.length / 2);
+    const earlyTimes = normalConf.slice(0, midPt).map(e => parseInt(e.view_ms) || 0).filter(t => t > 0 && t < 600000).sort((a, b) => a - b);
+    const lateTimes = normalConf.slice(midPt).map(e => parseInt(e.view_ms) || 0).filter(t => t > 0 && t < 600000).sort((a, b) => a - b);
+    if (earlyTimes.length && lateTimes.length) {
+      const earlyMed = earlyTimes[Math.floor(earlyTimes.length / 2)];
+      const lateMed = lateTimes[Math.floor(lateTimes.length / 2)];
+      if (earlyMed > 0 && lateMed < earlyMed * 0.5) badges.push('<span class="badge badge-yellow">Speeding up</span>');
+    }
+  }
 
   // Header
   const header = document.createElement('div');
@@ -353,6 +396,87 @@ function buildRADetail(ra, raConf, raAll, allRAs, sharedItems, times) {
   html += '</div><div class="hour-labels">';
   for (let h = 0; h < 24; h++) html += '<span>' + (h % 3 === 0 ? h : '') + '</span>';
   html += '</div>';
+
+  // ── Self-Consistency (Test-Retest) ──
+  const retests = raConf.filter(e => e.retest === '1');
+  if (retests.length > 0) {
+    html += '<div class="section-title">Self-Consistency (Test-Retest)</div>';
+    html += '<p class="note">Items randomly re-presented without showing the previous answer. Measures intra-coder reliability.</p>';
+    let conMatch = 0;
+    retests.forEach(e => { if (e.dimension === e.original_answer) conMatch++; });
+    const conPct = Math.round(conMatch / retests.length * 100);
+    const conClass = conPct >= 80 ? 'ok-text' : conPct < 60 ? 'warn-text' : '';
+    html += '<div class="metrics">';
+    html += '<div class="metric"><div class="metric-num">' + retests.length + '</div><div class="metric-lbl">Retests</div></div>';
+    html += '<div class="metric"><div class="metric-num ' + conClass + '">' + conPct + '%</div><div class="metric-lbl">Consistent</div></div>';
+    html += '</div>';
+
+    // Per-dimension consistency
+    const dimRt = {};
+    retests.forEach(e => {
+      const oa = e.original_answer || 'none';
+      if (!dimRt[oa]) dimRt[oa] = { total: 0, match: 0 };
+      dimRt[oa].total++;
+      if (e.dimension === oa) dimRt[oa].match++;
+    });
+    if (Object.keys(dimRt).length > 1) {
+      html += '<table><tr><th>Original Dimension</th><th>Retests</th><th>Consistent</th></tr>';
+      ALL_DIMS.forEach(d => {
+        if (!dimRt[d]) return;
+        const dr = dimRt[d];
+        const pct = Math.round(dr.match / dr.total * 100);
+        html += '<tr><td><span class="dim-tag" style="background:' + DIM_COLORS[d] + '">' + DIM_LABELS[d] + '</span></td>';
+        html += '<td>' + dr.total + '</td>';
+        html += '<td class="' + (pct >= 80 ? 'ok-text' : pct < 60 ? 'warn-text' : '') + '">' + pct + '% (' + dr.match + '/' + dr.total + ')</td></tr>';
+      });
+      html += '</table>';
+    }
+  }
+
+  // ── Coding Trends (Drift Detection) ──
+  const driftConf = raConf.filter(e => e.retest !== '1');
+  if (driftConf.length >= 20) {
+    html += '<div class="section-title">Coding Trends</div>';
+    html += '<p class="note">Compares first half vs recent half to detect changes in speed or dimension preference.</p>';
+    const midPt = Math.floor(driftConf.length / 2);
+    const firstHalf = driftConf.slice(0, midPt);
+    const secondHalf = driftConf.slice(midPt);
+
+    // Speed comparison
+    const speedFirst = firstHalf.map(e => parseInt(e.view_ms) || 0).filter(t => t > 0 && t < 600000).sort((a, b) => a - b);
+    const speedSecond = secondHalf.map(e => parseInt(e.view_ms) || 0).filter(t => t > 0 && t < 600000).sort((a, b) => a - b);
+    const medFirst = speedFirst.length ? speedFirst[Math.floor(speedFirst.length / 2)] : 0;
+    const medSecond = speedSecond.length ? speedSecond[Math.floor(speedSecond.length / 2)] : 0;
+    const speedChange = medFirst > 0 ? Math.round((medSecond - medFirst) / medFirst * 100) : 0;
+    const speedArrow = speedChange < -20 ? 'faster' : speedChange > 20 ? 'slower' : 'stable';
+    const speedCls = Math.abs(speedChange) > 30 ? 'warn-text' : 'muted';
+
+    html += '<table><tr><th>Metric</th><th>First Half (' + firstHalf.length + ')</th><th>Recent Half (' + secondHalf.length + ')</th><th>Trend</th></tr>';
+    html += '<tr><td>Median Speed</td><td>' + fmtMs(medFirst) + '</td><td>' + fmtMs(medSecond) + '</td>';
+    html += '<td class="' + speedCls + '">' + (speedChange > 0 ? '+' : '') + speedChange + '% ' + speedArrow + '</td></tr>';
+
+    // Dimension distribution comparison — biggest shift
+    const dimFirst = {}, dimSecond = {};
+    ALL_DIMS.forEach(d => { dimFirst[d] = 0; dimSecond[d] = 0; });
+    firstHalf.forEach(e => { dimFirst[e.dimension || 'none']++; });
+    secondHalf.forEach(e => { dimSecond[e.dimension || 'none']++; });
+    let maxShift = 0, shiftDim = '';
+    ALL_DIMS.forEach(d => {
+      const p1 = firstHalf.length ? dimFirst[d] / firstHalf.length * 100 : 0;
+      const p2 = secondHalf.length ? dimSecond[d] / secondHalf.length * 100 : 0;
+      const shift = Math.abs(p2 - p1);
+      if (shift > maxShift) { maxShift = shift; shiftDim = d; }
+    });
+    if (maxShift > 10) {
+      const p1 = Math.round(dimFirst[shiftDim] / firstHalf.length * 100);
+      const p2 = Math.round(dimSecond[shiftDim] / secondHalf.length * 100);
+      html += '<tr><td>Biggest Shift</td>';
+      html += '<td><span class="dim-tag" style="background:' + DIM_COLORS[shiftDim] + '">' + DIM_LABELS[shiftDim] + '</span> ' + p1 + '%</td>';
+      html += '<td><span class="dim-tag" style="background:' + DIM_COLORS[shiftDim] + '">' + DIM_LABELS[shiftDim] + '</span> ' + p2 + '%</td>';
+      html += '<td class="' + (maxShift > 15 ? 'warn-text' : 'muted') + '">' + (p2 > p1 ? '+' : '') + Math.round(p2 - p1) + 'pp</td></tr>';
+    }
+    html += '</table>';
+  }
 
   // ── Agreement with each peer ──
   const otherRAs = allRAs.filter(r => r !== ra);
@@ -491,7 +615,7 @@ function esc(s) { const d = document.createElement('div'); d.textContent = s || 
 
 function downloadCSV() {
   if (allEvents.length === 0) return;
-  const headers = ['server_ts','event_type','ra','survey','var_id','dimension','concept','view_ms','session_id','coded_count','total_vars'];
+  const headers = ['server_ts','event_type','ra','survey','var_id','dimension','concept','view_ms','session_id','coded_count','total_vars','retest','original_answer'];
   let csv = headers.join(',') + '\n';
   allEvents.forEach(e => { csv += headers.map(h => '"' + String(e[h] || '').replace(/"/g, '""') + '"').join(',') + '\n'; });
   const blob = new Blob([csv], { type: 'text/csv' });

@@ -876,6 +876,13 @@ const BEACON_URL = 'https://script.google.com/macros/s/AKfycbyaNy_KfdXPbu827r5g-
 let _sessionId = '';
 let _varRenderTime = 0;
 
+// ── Test-Retest QC ─────────────────────────
+const RETEST_PROB = 0.03;     // 3% chance after each confirm
+const RETEST_MIN_CODED = 10;  // need at least 10 coded before triggering
+let _retestMode = false;
+let _retestVar = null;         // variable object being retested
+let _retestOriginal = null;    // { dimension, concept } of original coding
+
 function beacon(eventType, extra) {
   if (!BEACON_URL || !raName) return;
   try {
@@ -1256,7 +1263,7 @@ document.addEventListener('touchstart', function(e) {
 function renderVariable() {
   if (!surveyVars.length) return;
   _varRenderTime = performance.now();
-  const v = surveyVars[currentIdx];
+  const v = _retestMode ? _retestVar : surveyVars[currentIdx];
 
   // Top bar
   document.getElementById('tb-survey').textContent = currentSurvey;
@@ -1293,8 +1300,8 @@ function renderVariable() {
     });
   }
 
-  // Check if already coded
-  const existing = answers[v.id];
+  // Check if already coded (hide in retest mode for unbiased re-coding)
+  const existing = _retestMode ? null : answers[v.id];
   const indicator = document.getElementById('coded-indicator');
   if (existing) {
     const dimLabel = existing.dimension === 'none' ? 'Not Relevant'
@@ -1434,6 +1441,22 @@ document.getElementById('concept-search').addEventListener('input', function() {
 // ── Confirm ────────────────────────────────
 document.getElementById('btn-confirm').addEventListener('click', () => {
   if (!selectedDim) return;
+
+  // ── Test-Retest: handle retest confirm ──
+  if (_retestMode) {
+    beacon('confirm', {
+      vi: _retestVar.id, dm: selectedDim, cn: selectedConcept || 'none',
+      vm: viewDuration(), cc: Object.keys(answers).length, tv: surveyVars.length,
+      rt: '1', oa: _retestOriginal.dimension
+    });
+    _retestMode = false;
+    _retestVar = null;
+    _retestOriginal = null;
+    renderVariable();
+    window.scrollTo(0, 0);
+    return;
+  }
+
   const v = surveyVars[currentIdx];
   answers[v.id] = {
     dimension: selectedDim,
@@ -1451,6 +1474,21 @@ document.getElementById('btn-confirm').addEventListener('click', () => {
   checkSaveReminder(coded);
   updateInlineStats();
 
+  // ── Test-Retest: maybe trigger a retest before advancing ──
+  if (coded >= RETEST_MIN_CODED && Math.random() < RETEST_PROB) {
+    const codedIds = Object.keys(answers);
+    const pickId = codedIds[Math.floor(Math.random() * codedIds.length)];
+    const pickVar = surveyVars.find(sv => sv.id === pickId);
+    if (pickVar) {
+      _retestMode = true;
+      _retestVar = pickVar;
+      _retestOriginal = { dimension: answers[pickId].dimension, concept: answers[pickId].concept };
+      renderVariable();
+      window.scrollTo(0, 0);
+      return;
+    }
+  }
+
   // Advance
   if (currentIdx < surveyVars.length - 1) {
     currentIdx++;
@@ -1466,6 +1504,7 @@ document.getElementById('btn-confirm').addEventListener('click', () => {
 
 // ── Skip ───────────────────────────────────
 document.getElementById('btn-skip').addEventListener('click', () => {
+  if (_retestMode) { _retestMode = false; _retestVar = null; _retestOriginal = null; renderVariable(); window.scrollTo(0, 0); return; }
   if (currentIdx < surveyVars.length - 1) {
     currentIdx++;
     saveAnswers();
@@ -1476,6 +1515,7 @@ document.getElementById('btn-skip').addEventListener('click', () => {
 
 // ── Back ───────────────────────────────────
 document.getElementById('btn-prev').addEventListener('click', () => {
+  if (_retestMode) { _retestMode = false; _retestVar = null; _retestOriginal = null; renderVariable(); window.scrollTo(0, 0); return; }
   if (currentIdx > 0) {
     currentIdx--;
     saveAnswers();
