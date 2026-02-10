@@ -3,76 +3,98 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Coding Dashboard</title>
+<title>RA Monitoring Dashboard</title>
 <style>
 :root {
-  --ivory: #FAF8F5;
-  --cream: #F5F2ED;
-  --navy: #1a2744;
-  --navy-light: #2d3d5c;
-  --accent: #8B4513;
-  --text: #2c2c2c;
-  --text-light: #5a5a5a;
-  --border: #e0ddd8;
-  --success: #2d6a4f;
-  --dim-F1: #4361ee;
-  --dim-F2: #e07a5f;
-  --dim-F3: #81b29a;
-  --dim-regime_support: #9b2226;
-  --dim-nationalism: #ca6702;
-  --dim-satisfaction: #6a994e;
-  --dim-none: #adb5bd;
+  --ivory: #FAF8F5; --cream: #F5F2ED; --navy: #1a2744; --navy-light: #2d3d5c;
+  --accent: #8B4513; --text: #2c2c2c; --text-light: #5a5a5a; --border: #e0ddd8;
+  --success: #2d6a4f; --success-bg: #d8f3dc; --warn: #c0392b; --warn-bg: #fdecea;
+  --caution: #e67e22; --caution-bg: #fef5e7;
+  --dim-F1: #4361ee; --dim-F2: #e07a5f; --dim-F3: #81b29a;
+  --dim-regime_support: #9b2226; --dim-nationalism: #ca6702;
+  --dim-satisfaction: #6a994e; --dim-none: #adb5bd;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: var(--ivory); color: var(--text); line-height: 1.5;
-}
-.container { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
-h1 { font-size: 1.6rem; color: var(--navy); margin-bottom: 0.3rem; }
-h2 { font-size: 1.15rem; color: var(--navy); margin: 1.8rem 0 0.6rem; border-bottom: 2px solid var(--border); padding-bottom: 0.3rem; }
-h3 { font-size: 0.95rem; color: var(--navy-light); margin: 1rem 0 0.4rem; }
-.subtitle { color: var(--text-light); font-size: 0.85rem; margin-bottom: 1.2rem; }
-.card { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; margin-bottom: 0.8rem; }
-.stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.6rem; margin-bottom: 1rem; }
-.stat-box { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 0.8rem; text-align: center; }
-.stat-num { font-size: 1.8rem; font-weight: 700; color: var(--navy); }
-.stat-lbl { font-size: 0.72rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.05em; }
-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
-th { background: var(--cream); font-weight: 600; text-align: left; padding: 0.5rem 0.6rem; border-bottom: 2px solid var(--border); }
-td { padding: 0.45rem 0.6rem; border-bottom: 1px solid var(--cream); }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--ivory); color: var(--text); line-height: 1.5; }
+.container { max-width: 1000px; margin: 0 auto; padding: 1.5rem; }
+h1 { font-size: 1.5rem; color: var(--navy); }
+.subtitle { color: var(--text-light); font-size: 0.82rem; }
+
+/* ── Alert banner ── */
+.alert-bar { padding: 0.7rem 1rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.85rem; display: none; }
+.alert-bar.warn { display: block; background: var(--warn-bg); border: 1px solid var(--warn); color: var(--warn); }
+.alert-bar.caution { display: block; background: var(--caution-bg); border: 1px solid var(--caution); color: #7a4500; }
+
+/* ── RA Section ── */
+.ra-section { background: #fff; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 1.2rem; overflow: hidden; }
+.ra-header { display: flex; justify-content: space-between; align-items: center; padding: 0.9rem 1.2rem; cursor: pointer; gap: 1rem; flex-wrap: wrap; }
+.ra-header:hover { background: #faf9f7; }
+.ra-name { font-size: 1.1rem; font-weight: 700; color: var(--navy); }
+.ra-badges { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.badge { display: inline-block; padding: 0.15rem 0.55rem; border-radius: 12px; font-size: 0.7rem; font-weight: 600; }
+.badge-green { background: var(--success-bg); color: var(--success); }
+.badge-yellow { background: var(--caution-bg); color: #7a4500; }
+.badge-red { background: var(--warn-bg); color: var(--warn); }
+.badge-grey { background: var(--cream); color: var(--text-light); }
+.ra-summary { display: flex; gap: 1.5rem; font-size: 0.8rem; color: var(--text-light); flex-wrap: wrap; }
+.ra-summary strong { color: var(--text); }
+.ra-detail { display: none; padding: 0 1.2rem 1rem; border-top: 1px solid var(--cream); }
+.ra-detail.open { display: block; }
+
+/* ── Metrics row ── */
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 0.5rem; margin: 0.8rem 0; }
+.metric { text-align: center; padding: 0.6rem; background: var(--cream); border-radius: 6px; }
+.metric-num { font-size: 1.3rem; font-weight: 700; color: var(--navy); }
+.metric-lbl { font-size: 0.68rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.04em; }
+
+/* ── Tables ── */
+table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin: 0.5rem 0; }
+th { background: var(--cream); font-weight: 600; text-align: left; padding: 0.4rem 0.5rem; border-bottom: 2px solid var(--border); }
+td { padding: 0.35rem 0.5rem; border-bottom: 1px solid var(--cream); }
 tr:hover td { background: #faf9f7; }
-.mono { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.78rem; }
-.dim-tag { display: inline-block; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.72rem; font-weight: 600; color: #fff; }
+.mono { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.75rem; }
+
+/* ── Tags ── */
+.dim-tag { display: inline-block; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.7rem; font-weight: 600; color: #fff; }
 .pct-bar { display: inline-block; height: 6px; border-radius: 3px; background: var(--success); vertical-align: middle; }
-.warn { color: #c0392b; font-weight: 600; }
-.ok { color: var(--success); font-weight: 600; }
+.warn-text { color: var(--warn); font-weight: 600; }
+.ok-text { color: var(--success); font-weight: 600; }
 .muted { color: var(--text-light); }
+.note { font-size: 0.75rem; color: var(--text-light); font-style: italic; margin-top: 0.3rem; }
+.section-title { font-size: 0.88rem; font-weight: 600; color: var(--navy-light); margin: 1rem 0 0.4rem; padding-bottom: 0.2rem; border-bottom: 1px solid var(--cream); }
+
+/* ── Confusion matrix ── */
+.matrix-table td, .matrix-table th { text-align: center; min-width: 55px; font-size: 0.72rem; }
+.matrix-table td.diag { background: #e8f5e9; font-weight: 700; }
+.matrix-table td.offdiag { background: #fff3e0; }
+
+/* ── Login ── */
 .login-box { max-width: 320px; margin: 15vh auto; text-align: center; }
 .login-box input { width: 100%; padding: 0.7rem; border: 1px solid var(--border); border-radius: 6px; font-size: 1rem; margin: 0.8rem 0; }
-.login-box button { padding: 0.7rem 2rem; background: var(--navy); color: #fff; border: none; border-radius: 6px; font-size: 0.95rem; cursor: pointer; }
+.login-box button { padding: 0.7rem 2rem; background: var(--navy); color: #fff; border: none; border-radius: 6px; cursor: pointer; }
 .login-box button:hover { background: var(--navy-light); }
 #dashboard { display: none; }
 .loading { text-align: center; padding: 3rem; color: var(--text-light); }
-.tab-bar { display: flex; gap: 0.3rem; margin-bottom: 1rem; flex-wrap: wrap; }
-.tab-btn { padding: 0.4rem 0.8rem; border: 1px solid var(--border); border-radius: 5px; background: #fff; font-size: 0.8rem; cursor: pointer; }
-.tab-btn.active { background: var(--navy); color: #fff; border-color: var(--navy); }
-.tab-panel { display: none; }
-.tab-panel.active { display: block; }
-.matrix-table td, .matrix-table th { text-align: center; min-width: 65px; font-size: 0.75rem; }
-.matrix-table td.diag { background: #e8f5e9; font-weight: 700; }
-.matrix-table td.offdiag { background: #fff3e0; }
-.heatmap-cell { display: inline-block; width: 100%; padding: 0.2rem; border-radius: 2px; }
-.refresh-btn { padding: 0.35rem 0.7rem; background: var(--cream); border: 1px solid var(--border); border-radius: 4px; font-size: 0.78rem; cursor: pointer; float: right; }
-.refresh-btn:hover { background: var(--border); }
-.note { font-size: 0.78rem; color: var(--text-light); font-style: italic; margin-top: 0.3rem; }
+
+/* ── Top bar ── */
+.top-bar { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; margin-bottom: 1rem; gap: 0.5rem; }
+.top-actions { display: flex; gap: 0.4rem; }
+.btn { padding: 0.3rem 0.7rem; border: 1px solid var(--border); border-radius: 5px; font-size: 0.78rem; cursor: pointer; background: #fff; }
+.btn:hover { background: var(--cream); }
+.btn-danger { color: var(--warn); border-color: var(--warn); }
+.btn-danger:hover { background: var(--warn-bg); }
+
+/* ── Hour chart ── */
+.hour-chart { display: flex; gap: 1px; align-items: flex-end; height: 40px; }
+.hour-bar { flex: 1; background: var(--navy); border-radius: 1px 1px 0 0; min-height: 0; }
+.hour-labels { display: flex; gap: 1px; font-size: 0.55rem; color: var(--text-light); }
+.hour-labels span { flex: 1; text-align: center; }
 </style>
 </head>
 <body>
 
-<!-- Password gate -->
 <div id="login" class="login-box">
-  <h1 style="font-size:1.3rem; color:var(--navy);">Coding Dashboard</h1>
+  <h1 style="font-size:1.3rem; color:var(--navy);">RA Monitor</h1>
   <p style="color:var(--text-light); font-size:0.85rem;">PI access only</p>
   <input type="password" id="pw-input" placeholder="Password" autofocus>
   <br>
@@ -80,672 +102,402 @@ tr:hover td { background: #faf9f7; }
   <p id="pw-error" style="color:#c0392b; font-size:0.82rem; margin-top:0.5rem; display:none;">Incorrect password</p>
 </div>
 
-<!-- Dashboard -->
 <div id="dashboard" class="container">
-  <div style="display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap;">
+  <div class="top-bar">
     <div>
-      <h1>RA Coding Dashboard</h1>
-      <p class="subtitle">Last refreshed: <span id="last-refresh">-</span></p>
+      <h1>RA Monitor</h1>
+      <p class="subtitle">Last refreshed: <span id="last-refresh">-</span> &middot; <span id="event-count">0</span> events</p>
     </div>
-    <button class="refresh-btn" onclick="fetchData()">Refresh</button>
-  </div>
-
-  <!-- Tabs -->
-  <div class="tab-bar" id="tab-bar">
-    <button class="tab-btn active" data-tab="overview">Overview</button>
-    <button class="tab-btn" data-tab="detail">Survey Detail</button>
-    <button class="tab-btn" data-tab="time">Time Analytics</button>
-    <button class="tab-btn" data-tab="reliability">Inter-Rater Reliability</button>
-  </div>
-
-  <!-- Tab: Overview -->
-  <div class="tab-panel active" id="tab-overview">
-    <div class="stats-row" id="overview-stats"></div>
-    <div class="card" id="overview-table-wrap">
-      <table id="overview-table"><thead></thead><tbody></tbody></table>
+    <div class="top-actions">
+      <button class="btn" onclick="fetchData()">Refresh</button>
+      <button class="btn" onclick="downloadCSV()">Export CSV</button>
     </div>
   </div>
-
-  <!-- Tab: Survey Detail -->
-  <div class="tab-panel" id="tab-detail">
-    <div class="card" id="detail-content">
-      <table id="detail-table"><thead></thead><tbody></tbody></table>
-    </div>
-  </div>
-
-  <!-- Tab: Time Analytics -->
-  <div class="tab-panel" id="tab-time">
-    <h3>Per-Item Coding Time</h3>
-    <div class="card" id="time-stats"></div>
-    <h3>Per-RA Time Summary</h3>
-    <div class="card" id="time-ra"></div>
-    <h3>Activity by Hour</h3>
-    <div class="card" id="time-heatmap"></div>
-  </div>
-
-  <!-- Tab: Inter-Rater Reliability -->
-  <div class="tab-panel" id="tab-reliability">
-    <div id="reliability-content"></div>
-  </div>
+  <div id="alerts"></div>
+  <div id="ra-list"></div>
+  <div id="no-data" class="loading" style="display:none;">No events recorded yet. Beacons will appear here once RAs start coding.</div>
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════════════════════
-// Dashboard — fetches from GAS, computes all metrics client-side
-// ═══════════════════════════════════════════════════════════════════
-
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbyaNy_KfdXPbu827r5g-EZRIVdK8DvVtjgIRFv5jySRsTS-_HP1fH2Ffd4tEgR9y82LQw/exec';
 const TOKEN = 'cleavages2026';
-// Auto-login via URL token: dashboard.html?token=cleavages2026
 const urlToken = new URLSearchParams(window.location.search).get('token');
 
-const DIM_COLORS = {
-  F1: '#4361ee', F2: '#e07a5f', F3: '#81b29a',
-  regime_support: '#9b2226', nationalism: '#ca6702',
-  satisfaction: '#6a994e', none: '#adb5bd'
-};
-const DIM_LABELS = {
-  F1: 'Political', F2: 'Economic', F3: 'Social',
-  regime_support: 'Regime Supp.', nationalism: 'Nationalism',
-  satisfaction: 'Satisfaction', none: 'Not Relevant'
-};
-const ALL_DIMS = ['F1', 'F2', 'F3', 'regime_support', 'nationalism', 'satisfaction', 'none'];
+const DIM_COLORS = { F1:'#4361ee', F2:'#e07a5f', F3:'#81b29a', regime_support:'#9b2226', nationalism:'#ca6702', satisfaction:'#6a994e', none:'#adb5bd' };
+const DIM_LABELS = { F1:'Political', F2:'Economic', F3:'Social', regime_support:'Regime Supp.', nationalism:'Nationalism', satisfaction:'Satisfaction', none:'Not Relevant' };
+const ALL_DIMS = ['F1','F2','F3','regime_support','nationalism','satisfaction','none'];
 
 let allEvents = [];
 
-// ── Password Gate ──────────────────────────
+// ── Auth ──
 document.getElementById('pw-btn').addEventListener('click', tryLogin);
 document.getElementById('pw-input').addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
-
-// Auto-login if token is in URL
-if (urlToken === TOKEN) {
-  document.getElementById('login').style.display = 'none';
-  document.getElementById('dashboard').style.display = 'block';
-  fetchData();
-}
-
+if (urlToken === TOKEN) { document.getElementById('login').style.display = 'none'; document.getElementById('dashboard').style.display = 'block'; fetchData(); }
 function tryLogin() {
-  const pw = document.getElementById('pw-input').value;
-  if (pw === TOKEN) {
+  if (document.getElementById('pw-input').value === TOKEN) {
     document.getElementById('login').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
     fetchData();
-  } else {
-    document.getElementById('pw-error').style.display = 'block';
-  }
+  } else { document.getElementById('pw-error').style.display = 'block'; }
 }
 
-// ── Tab Switching ──────────────────────────
-document.getElementById('tab-bar').addEventListener('click', e => {
-  const btn = e.target.closest('.tab-btn');
-  if (!btn) return;
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
-});
-
-// ── Fetch Data from GAS (JSONP to avoid CORS) ──
+// ── Fetch ──
 function fetchData() {
-  if (!GAS_URL) {
-    document.getElementById('overview-stats').innerHTML =
-      '<div class="card" style="grid-column:1/-1;text-align:center;color:var(--text-light);">GAS_URL not configured.</div>';
-    return;
-  }
-  document.getElementById('overview-stats').innerHTML = '<div class="loading">Loading...</div>';
-
-  const cbName = '_gasCb' + Date.now();
+  document.getElementById('ra-list').innerHTML = '<div class="loading">Loading...</div>';
+  const cbName = '_cb' + Date.now();
   const script = document.createElement('script');
-
-  // Timeout fallback
-  const timer = setTimeout(() => {
-    cleanup();
-    document.getElementById('overview-stats').innerHTML =
-      '<div class="card" style="grid-column:1/-1;color:#c0392b;">Request timed out. Check GAS deployment.</div>';
-  }, 15000);
-
-  function cleanup() {
-    clearTimeout(timer);
-    delete window[cbName];
-    if (script.parentNode) script.parentNode.removeChild(script);
-  }
-
+  const timer = setTimeout(() => { cleanup(); document.getElementById('ra-list').innerHTML = '<div class="loading" style="color:var(--warn);">Timed out.</div>'; }, 15000);
+  function cleanup() { clearTimeout(timer); delete window[cbName]; if (script.parentNode) script.parentNode.removeChild(script); }
   window[cbName] = function(data) {
     cleanup();
-    if (data.error) {
-      document.getElementById('overview-stats').innerHTML =
-        '<div class="card" style="grid-column:1/-1;color:#c0392b;">Error: ' + data.error + '</div>';
-      return;
-    }
+    if (data.error) { document.getElementById('ra-list').innerHTML = '<div class="loading" style="color:var(--warn);">Error: ' + data.error + '</div>'; return; }
     allEvents = data.events || [];
     document.getElementById('last-refresh').textContent = new Date().toLocaleString();
-    renderAll();
+    document.getElementById('event-count').textContent = allEvents.length;
+    render();
   };
-
   script.src = GAS_URL + '?action=fetch_data&pw=' + encodeURIComponent(TOKEN) + '&cb=' + cbName;
-  script.onerror = function() {
-    cleanup();
-    document.getElementById('overview-stats').innerHTML =
-      '<div class="card" style="grid-column:1/-1;color:#c0392b;">Failed to load data. Check GAS URL and deployment.</div>';
-  };
+  script.onerror = function() { cleanup(); document.getElementById('ra-list').innerHTML = '<div class="loading" style="color:var(--warn);">Failed to load.</div>'; };
   document.head.appendChild(script);
 }
 
-// ── Render All Tabs ────────────────────────
-function renderAll() {
+// ── Main render ──
+function render() {
   const confirms = allEvents.filter(e => e.event_type === 'confirm');
-  renderOverview(confirms);
-  renderDetail(confirms);
-  renderTime(confirms);
-  renderReliability(confirms);
-}
+  const ras = [...new Set(confirms.map(e => e.ra))].filter(Boolean).sort();
 
-// ── Tab 1: Overview ────────────────────────
-function renderOverview(confirms) {
-  const ras = [...new Set(confirms.map(e => e.ra))].filter(Boolean);
-  const surveys = [...new Set(confirms.map(e => e.survey))].filter(Boolean);
-  const totalItems = confirms.length;
+  if (ras.length === 0) { document.getElementById('ra-list').innerHTML = ''; document.getElementById('no-data').style.display = 'block'; return; }
+  document.getElementById('no-data').style.display = 'none';
 
-  // Sessions
-  const sessions = allEvents.filter(e => e.event_type === 'session_start');
-  const exports = allEvents.filter(e => e.event_type === 'export');
-
-  document.getElementById('overview-stats').innerHTML = `
-    <div class="stat-box"><div class="stat-num">${ras.length}</div><div class="stat-lbl">RAs</div></div>
-    <div class="stat-box"><div class="stat-num">${surveys.length}</div><div class="stat-lbl">Surveys</div></div>
-    <div class="stat-box"><div class="stat-num">${totalItems}</div><div class="stat-lbl">Items Coded</div></div>
-    <div class="stat-box"><div class="stat-num">${sessions.length}</div><div class="stat-lbl">Sessions</div></div>
-    <div class="stat-box"><div class="stat-num">${exports.length}</div><div class="stat-lbl">Exports</div></div>
-  `;
-
-  // Per-RA table
-  const tbody = document.querySelector('#overview-table tbody');
-  const thead = document.querySelector('#overview-table thead');
-  thead.innerHTML = '<tr><th>RA</th><th>Surveys</th><th>Items Coded</th><th>Last Active</th><th>By Dimension</th></tr>';
-  tbody.innerHTML = '';
-
-  ras.sort().forEach(ra => {
-    const raConf = confirms.filter(e => e.ra === ra);
-    const raSurveys = [...new Set(raConf.map(e => e.survey))];
-    const lastTs = raConf.reduce((max, e) => {
-      const t = e.server_ts || '';
-      return t > max ? t : max;
-    }, '');
-    const dimCounts = {};
-    ALL_DIMS.forEach(d => dimCounts[d] = 0);
-    raConf.forEach(e => { const d = e.dimension || 'none'; dimCounts[d] = (dimCounts[d] || 0) + 1; });
-    const dimHtml = ALL_DIMS.map(d =>
-      dimCounts[d] > 0 ? `<span class="dim-tag" style="background:${DIM_COLORS[d]}">${DIM_LABELS[d]} ${dimCounts[d]}</span> ` : ''
-    ).join('');
-
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td><strong>${esc(ra)}</strong></td>
-      <td>${raSurveys.length} (${esc(raSurveys.join(', '))})</td>
-      <td>${raConf.length}</td>
-      <td class="mono">${lastTs ? new Date(lastTs).toLocaleString() : '-'}</td>
-      <td>${dimHtml}</td>`;
-    tbody.appendChild(tr);
-  });
-}
-
-// ── Tab 2: Survey Detail ───────────────────
-function renderDetail(confirms) {
-  const thead = document.querySelector('#detail-table thead');
-  const tbody = document.querySelector('#detail-table tbody');
-  thead.innerHTML = '<tr><th>RA</th><th>Survey</th><th>Items Coded</th><th>First Activity</th><th>Last Activity</th><th>Completion %</th></tr>';
-  tbody.innerHTML = '';
-
-  const groups = {};
-  confirms.forEach(e => {
-    const k = `${e.ra}__${e.survey}`;
-    if (!groups[k]) groups[k] = { ra: e.ra, survey: e.survey, items: new Set(), first: e.server_ts, last: e.server_ts, totalVars: 0 };
-    groups[k].items.add(e.var_id);
-    if (e.server_ts < groups[k].first) groups[k].first = e.server_ts;
-    if (e.server_ts > groups[k].last) groups[k].last = e.server_ts;
-    if (e.total_vars && parseInt(e.total_vars) > groups[k].totalVars) groups[k].totalVars = parseInt(e.total_vars);
-  });
-
-  Object.values(groups).sort((a, b) => a.ra.localeCompare(b.ra) || a.survey.localeCompare(b.survey)).forEach(g => {
-    const count = g.items.size;
-    const total = g.totalVars || '?';
-    const pct = g.totalVars ? Math.round(count / g.totalVars * 100) : '?';
-    const pctBar = g.totalVars ? `<span class="pct-bar" style="width:${Math.min(pct, 100)}px"></span> ${pct}%` : '?';
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${esc(g.ra)}</td><td>${esc(g.survey)}</td><td>${count}${g.totalVars ? ' / ' + total : ''}</td>
-      <td class="mono">${new Date(g.first).toLocaleString()}</td>
-      <td class="mono">${new Date(g.last).toLocaleString()}</td>
-      <td>${pctBar}</td>`;
-    tbody.appendChild(tr);
-  });
-}
-
-// ── Tab 3: Time Analytics ──────────────────
-function renderTime(confirms) {
-  const times = confirms.map(e => parseInt(e.view_ms) || 0).filter(t => t > 0 && t < 600000);
-  times.sort((a, b) => a - b);
-
-  const median = times.length ? times[Math.floor(times.length / 2)] : 0;
-  const mean = times.length ? Math.round(times.reduce((s, t) => s + t, 0) / times.length) : 0;
-  const p10 = times.length ? times[Math.floor(times.length * 0.1)] : 0;
-  const p90 = times.length ? times[Math.floor(times.length * 0.9)] : 0;
-
-  document.getElementById('time-stats').innerHTML = `
-    <div class="stats-row">
-      <div class="stat-box"><div class="stat-num">${fmt_ms(median)}</div><div class="stat-lbl">Median</div></div>
-      <div class="stat-box"><div class="stat-num">${fmt_ms(mean)}</div><div class="stat-lbl">Mean</div></div>
-      <div class="stat-box"><div class="stat-num">${fmt_ms(p10)}</div><div class="stat-lbl">P10 (fast)</div></div>
-      <div class="stat-box"><div class="stat-num">${fmt_ms(p90)}</div><div class="stat-lbl">P90 (slow)</div></div>
-      <div class="stat-box"><div class="stat-num">${times.length}</div><div class="stat-lbl">Items with Time</div></div>
-    </div>`;
-
-  // Per-RA time
-  const raGroups = {};
-  confirms.forEach(e => {
-    const t = parseInt(e.view_ms) || 0;
-    if (t <= 0 || t >= 600000) return;
-    if (!raGroups[e.ra]) raGroups[e.ra] = [];
-    raGroups[e.ra].push(t);
-  });
-  let raHtml = '<table><tr><th>RA</th><th>Items</th><th>Median</th><th>Mean</th><th>Total Time</th></tr>';
-  Object.keys(raGroups).sort().forEach(ra => {
-    const ts = raGroups[ra].sort((a, b) => a - b);
-    const m = ts[Math.floor(ts.length / 2)];
-    const avg = Math.round(ts.reduce((s, t) => s + t, 0) / ts.length);
-    const total = ts.reduce((s, t) => s + t, 0);
-    raHtml += `<tr><td>${esc(ra)}</td><td>${ts.length}</td><td>${fmt_ms(m)}</td><td>${fmt_ms(avg)}</td><td>${fmt_duration(total)}</td></tr>`;
-  });
-  raHtml += '</table>';
-  document.getElementById('time-ra').innerHTML = raHtml;
-
-  // Hour heatmap
-  const hourCounts = new Array(24).fill(0);
-  confirms.forEach(e => {
-    if (e.server_ts) {
-      const h = new Date(e.server_ts).getHours();
-      if (!isNaN(h)) hourCounts[h]++;
-    }
-  });
-  const maxHour = Math.max(...hourCounts, 1);
-  let heatHtml = '<div style="display:flex; gap:2px; align-items:flex-end; height:80px; padding:0.5rem 0;">';
-  for (let h = 0; h < 24; h++) {
-    const pct = Math.round(hourCounts[h] / maxHour * 100);
-    const bg = hourCounts[h] > 0 ? 'var(--navy)' : 'var(--cream)';
-    heatHtml += `<div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:2px;">
-      <div style="width:100%; height:${Math.max(pct, 2)}%; background:${bg}; border-radius:2px 2px 0 0; min-height:2px;"></div>
-      <div style="font-size:0.6rem; color:var(--text-light);">${h}</div>
-    </div>`;
-  }
-  heatHtml += '</div><p class="note">Hour of day (server time). Height = relative activity.</p>';
-  document.getElementById('time-heatmap').innerHTML = heatHtml;
-}
-
-// ── Tab 4: Inter-Rater Reliability ─────────
-function renderReliability(confirms) {
-  const container = document.getElementById('reliability-content');
-
-  // Build coding map: { var_id: { ra: dimension } }
+  // Build shared items map for reliability
   const codingMap = {};
   confirms.forEach(e => {
-    const vid = `${e.survey}__${e.var_id}`;
+    const vid = e.survey + '__' + e.var_id;
     if (!codingMap[vid]) codingMap[vid] = {};
     codingMap[vid][e.ra] = e.dimension || 'none';
   });
-
-  // Find items coded by 2+ RAs
   const sharedItems = {};
-  for (const vid in codingMap) {
-    const ras = Object.keys(codingMap[vid]);
-    if (ras.length >= 2) sharedItems[vid] = codingMap[vid];
-  }
-  const sharedCount = Object.keys(sharedItems).length;
-  const allRAs = [...new Set(confirms.map(e => e.ra))].filter(Boolean).sort();
+  for (const vid in codingMap) { if (Object.keys(codingMap[vid]).length >= 2) sharedItems[vid] = codingMap[vid]; }
 
-  if (sharedCount === 0) {
-    container.innerHTML = `<div class="card"><p class="muted">No overlapping items found. Inter-rater reliability requires at least 2 RAs coding the same variables.</p>
-      <p class="muted" style="margin-top:0.5rem;">RAs detected: ${allRAs.join(', ') || 'none'}</p></div>`;
-    return;
-  }
+  // Alerts
+  renderAlerts(ras, confirms);
 
-  let html = '';
-  html += `<div class="card"><strong>${sharedCount}</strong> items coded by 2+ RAs across <strong>${allRAs.length}</strong> coders.`;
-  if (sharedCount < 50) html += ` <span class="warn">Warning: <50 shared items — reliability estimates will be unstable.</span>`;
-  html += '</div>';
-
-  // ── Per-Dimension Metrics ──────────────────
-  html += '<h2>Per-Dimension Reliability</h2>';
-  html += '<p class="note">For each dimension: how consistently do RAs agree on whether a variable belongs to this category?</p>';
-
-  // For each RA pair, compute per-dimension metrics
-  const raPairs = [];
-  for (let i = 0; i < allRAs.length; i++) {
-    for (let j = i + 1; j < allRAs.length; j++) {
-      raPairs.push([allRAs[i], allRAs[j]]);
-    }
-  }
-
-  // Collect all pairwise ratings for shared items
-  raPairs.forEach(([raA, raB]) => {
-    const pairItems = [];
-    for (const vid in sharedItems) {
-      if (sharedItems[vid][raA] !== undefined && sharedItems[vid][raB] !== undefined) {
-        pairItems.push({ vid, a: sharedItems[vid][raA], b: sharedItems[vid][raB] });
-      }
-    }
-    if (pairItems.length === 0) return;
-
-    html += `<h3>${esc(raA)} vs ${esc(raB)} (${pairItems.length} shared items)</h3>`;
-
-    // Per-dimension binary metrics
-    html += '<table><tr><th>Dimension</th><th>TP</th><th>FP</th><th>FN</th><th>TN</th><th>Precision</th><th>Recall</th><th>F1</th><th>Cohen\'s Kappa</th><th>Agree %</th></tr>';
-
-    ALL_DIMS.forEach(dim => {
-      // Binary: "this dim" vs "not this dim" for each coder
-      let tp = 0, fp = 0, fn = 0, tn = 0;
-      pairItems.forEach(({ a, b }) => {
-        const aYes = a === dim, bYes = b === dim;
-        if (aYes && bYes) tp++;
-        else if (!aYes && bYes) fp++;  // B says yes, A says no (from A's perspective as "truth")
-        else if (aYes && !bYes) fn++;
-        else tn++;
-      });
-      const n = pairItems.length;
-      const precision = (tp + fp) > 0 ? tp / (tp + fp) : NaN;
-      const recall = (tp + fn) > 0 ? tp / (tp + fn) : NaN;
-      const f1 = (precision + recall) > 0 ? 2 * precision * recall / (precision + recall) : NaN;
-      const po = (tp + tn) / n;
-      const pA = ((tp + fn) / n) * ((tp + fp) / n) + ((fp + tn) / n) * ((fn + tn) / n);
-      const kappa = pA < 1 ? (po - pA) / (1 - pA) : 1;
-      const agree = Math.round(po * 100);
-      const color = DIM_COLORS[dim] || '#666';
-
-      html += `<tr>
-        <td><span class="dim-tag" style="background:${color}">${DIM_LABELS[dim] || dim}</span></td>
-        <td>${tp}</td><td>${fp}</td><td>${fn}</td><td>${tn}</td>
-        <td>${fmtPct(precision)}</td>
-        <td>${fmtPct(recall)}</td>
-        <td class="${f1 >= 0.8 ? 'ok' : f1 < 0.667 ? 'warn' : ''}">${fmtPct(f1)}</td>
-        <td class="${kappa >= 0.8 ? 'ok' : kappa < 0.667 ? 'warn' : ''}">${fmtDec(kappa)}</td>
-        <td>${agree}%</td>
-      </tr>`;
-    });
-
-    // Overall row
-    const totalAgree = pairItems.filter(({ a, b }) => a === b).length;
-    const overallPo = totalAgree / pairItems.length;
-    const overallKappa = computeCohenKappa(pairItems.map(p => p.a), pairItems.map(p => p.b), ALL_DIMS);
-    html += `<tr style="border-top:2px solid var(--border);">
-      <td><strong>Overall</strong></td>
-      <td colspan="4"></td>
-      <td colspan="2"></td>
-      <td></td>
-      <td class="${overallKappa >= 0.8 ? 'ok' : overallKappa < 0.667 ? 'warn' : ''}"><strong>${fmtDec(overallKappa)}</strong></td>
-      <td><strong>${Math.round(overallPo * 100)}%</strong></td>
-    </tr>`;
-    html += '</table>';
-
-    // Confusion matrix
-    html += '<h3 style="margin-top:0.8rem;">Confusion Matrix</h3>';
-    html += '<table class="matrix-table"><tr><th></th>';
-    ALL_DIMS.forEach(d => { html += `<th style="color:${DIM_COLORS[d]}">${DIM_LABELS[d]}</th>`; });
-    html += '</tr>';
-    ALL_DIMS.forEach(dA => {
-      html += `<tr><th style="color:${DIM_COLORS[dA]}">${DIM_LABELS[dA]}</th>`;
-      ALL_DIMS.forEach(dB => {
-        const count = pairItems.filter(({ a, b }) => a === dA && b === dB).length;
-        const cls = dA === dB ? 'diag' : (count > 0 ? 'offdiag' : '');
-        html += `<td class="${cls}">${count || ''}</td>`;
-      });
-      html += '</tr>';
-    });
-    html += '</table>';
-    html += `<p class="note">Rows = ${esc(raA)}'s coding, Columns = ${esc(raB)}'s coding. Diagonal = agreement.</p>`;
+  // RA sections
+  const listEl = document.getElementById('ra-list');
+  listEl.innerHTML = '';
+  ras.forEach(ra => {
+    const raConf = confirms.filter(e => e.ra === ra);
+    const raAll = allEvents.filter(e => e.ra === ra);
+    listEl.appendChild(buildRASection(ra, raConf, raAll, ras, sharedItems));
   });
-
-  // ── Krippendorff's Alpha (per dimension) ──
-  if (allRAs.length >= 2) {
-    html += '<h2>Krippendorff\'s Alpha (Per Dimension)</h2>';
-    html += '<p class="note">Handles >2 coders and missing data. Computed as binary (this dim vs. not) for each dimension.</p>';
-    html += '<table><tr><th>Dimension</th><th>Alpha</th><th>N (coded by 2+)</th><th>Interpretation</th></tr>';
-
-    ALL_DIMS.forEach(dim => {
-      // Build reliability data matrix: items x coders (binary: 1 = this dim, 0 = not)
-      const items = Object.keys(sharedItems);
-      const alpha = computeKrippendorffAlpha(items, sharedItems, allRAs, dim);
-      const n = items.filter(vid => {
-        const coded = Object.values(sharedItems[vid]);
-        return coded.length >= 2;
-      }).length;
-      const interp = alpha >= 0.8 ? '<span class="ok">Good</span>'
-        : alpha >= 0.667 ? 'Acceptable'
-        : '<span class="warn">Unreliable</span>';
-      const color = DIM_COLORS[dim] || '#666';
-      html += `<tr>
-        <td><span class="dim-tag" style="background:${color}">${DIM_LABELS[dim]}</span></td>
-        <td class="${alpha >= 0.8 ? 'ok' : alpha < 0.667 ? 'warn' : ''}">${fmtDec(alpha)}</td>
-        <td>${n}</td>
-        <td>${interp}</td>
-      </tr>`;
-    });
-
-    // Overall alpha (nominal, all categories)
-    const overallAlpha = computeKrippendorffAlphaNominal(Object.keys(sharedItems), sharedItems, allRAs, ALL_DIMS);
-    html += `<tr style="border-top:2px solid var(--border);">
-      <td><strong>Overall (nominal)</strong></td>
-      <td class="${overallAlpha >= 0.8 ? 'ok' : overallAlpha < 0.667 ? 'warn' : ''}"><strong>${fmtDec(overallAlpha)}</strong></td>
-      <td>${Object.keys(sharedItems).length}</td>
-      <td>${overallAlpha >= 0.8 ? '<span class="ok">Good</span>' : overallAlpha >= 0.667 ? 'Acceptable' : '<span class="warn">Unreliable</span>'}</td>
-    </tr>`;
-    html += '</table>';
-  }
-
-  // ── Most Disagreed Items ─────────────────
-  html += '<h2>Most Disagreed Items</h2>';
-  html += '<p class="note">Variables where coders assigned different dimensions. Useful for identifying ambiguous items.</p>';
-
-  const disagreed = [];
-  for (const vid in sharedItems) {
-    const codings = sharedItems[vid];
-    const dims = Object.values(codings);
-    const uniqueDims = [...new Set(dims)];
-    if (uniqueDims.length > 1) {
-      disagreed.push({ vid, codings, uniqueDims });
-    }
-  }
-  disagreed.sort((a, b) => b.uniqueDims.length - a.uniqueDims.length);
-
-  if (disagreed.length === 0) {
-    html += '<div class="card"><p class="ok">Perfect agreement on all shared items!</p></div>';
-  } else {
-    html += `<div class="card"><p>${disagreed.length} items with disagreement out of ${sharedCount} shared (${Math.round(disagreed.length/sharedCount*100)}% disagreement rate)</p></div>`;
-    html += '<table><tr><th>Variable</th>';
-    allRAs.forEach(ra => { html += `<th>${esc(ra)}</th>`; });
-    html += '</tr>';
-    disagreed.slice(0, 100).forEach(({ vid, codings }) => {
-      html += `<tr><td class="mono">${esc(vid)}</td>`;
-      allRAs.forEach(ra => {
-        const d = codings[ra];
-        if (d) {
-          html += `<td><span class="dim-tag" style="background:${DIM_COLORS[d] || '#666'}">${DIM_LABELS[d] || d}</span></td>`;
-        } else {
-          html += '<td class="muted">-</td>';
-        }
-      });
-      html += '</tr>';
-    });
-    html += '</table>';
-    if (disagreed.length > 100) html += `<p class="note">Showing first 100 of ${disagreed.length} disagreed items.</p>`;
-  }
-
-  container.innerHTML = html;
 }
 
-// ═══════════════════════════════════════════════════════════════════
-// Statistical Functions
-// ═══════════════════════════════════════════════════════════════════
+// ── Alerts ──
+function renderAlerts(ras, confirms) {
+  const alertsEl = document.getElementById('alerts');
+  const alerts = [];
+  const now = Date.now();
 
-// Cohen's Kappa (multi-category nominal)
-function computeCohenKappa(ratingsA, ratingsB, categories) {
-  const n = ratingsA.length;
-  if (n === 0) return 0;
-
-  // Observed agreement
-  let agree = 0;
-  for (let i = 0; i < n; i++) {
-    if (ratingsA[i] === ratingsB[i]) agree++;
-  }
-  const po = agree / n;
-
-  // Expected agreement
-  let pe = 0;
-  categories.forEach(cat => {
-    const pA = ratingsA.filter(r => r === cat).length / n;
-    const pB = ratingsB.filter(r => r === cat).length / n;
-    pe += pA * pB;
+  ras.forEach(ra => {
+    const raConf = confirms.filter(e => e.ra === ra);
+    const lastTs = raConf.reduce((m, e) => { const t = e.server_ts || ''; return t > m ? t : m; }, '');
+    if (lastTs) {
+      const daysSince = (now - new Date(lastTs).getTime()) / 86400000;
+      if (daysSince > 3) alerts.push({ level: 'warn', msg: '<strong>' + esc(ra) + '</strong> has been inactive for ' + Math.floor(daysSince) + ' days.' });
+      else if (daysSince > 1) alerts.push({ level: 'caution', msg: '<strong>' + esc(ra) + '</strong> last active ' + Math.floor(daysSince) + ' day(s) ago.' });
+    }
+    // Speed alert: median < 2s suggests rushing
+    const times = raConf.map(e => parseInt(e.view_ms) || 0).filter(t => t > 0 && t < 600000);
+    if (times.length >= 10) {
+      times.sort((a, b) => a - b);
+      const median = times[Math.floor(times.length / 2)];
+      if (median < 2000) alerts.push({ level: 'warn', msg: '<strong>' + esc(ra) + '</strong> median coding time is ' + fmtMs(median) + ' — may be rushing.' });
+    }
   });
 
+  alertsEl.innerHTML = alerts.map(a => '<div class="alert-bar ' + a.level + '">' + a.msg + '</div>').join('');
+}
+
+// ── Build one RA section ──
+function buildRASection(ra, raConf, raAll, allRAs, sharedItems) {
+  const section = document.createElement('div');
+  section.className = 'ra-section';
+
+  // Metrics
+  const surveys = [...new Set(raConf.map(e => e.survey))].filter(Boolean);
+  const lastTs = raConf.reduce((m, e) => { const t = e.server_ts || ''; return t > m ? t : m; }, '');
+  const sessions = raAll.filter(e => e.event_type === 'session_start').length;
+  const times = raConf.map(e => parseInt(e.view_ms) || 0).filter(t => t > 0 && t < 600000);
+  times.sort((a, b) => a - b);
+  const medianTime = times.length ? times[Math.floor(times.length / 2)] : 0;
+
+  // Agreement with peers
+  let agreePct = null, peerCount = 0;
+  const otherRAs = allRAs.filter(r => r !== ra);
+  if (otherRAs.length > 0) {
+    let agree = 0, total = 0;
+    for (const vid in sharedItems) {
+      if (sharedItems[vid][ra] === undefined) continue;
+      otherRAs.forEach(other => {
+        if (sharedItems[vid][other] !== undefined) {
+          total++;
+          if (sharedItems[vid][ra] === sharedItems[vid][other]) agree++;
+        }
+      });
+    }
+    if (total > 0) { agreePct = Math.round(agree / total * 100); peerCount = total; }
+  }
+
+  // Badges
+  const badges = [];
+  const daysSince = lastTs ? (Date.now() - new Date(lastTs).getTime()) / 86400000 : 999;
+  if (daysSince > 3) badges.push('<span class="badge badge-red">Inactive ' + Math.floor(daysSince) + 'd</span>');
+  else if (daysSince > 1) badges.push('<span class="badge badge-yellow">Last ' + Math.floor(daysSince) + 'd ago</span>');
+  else badges.push('<span class="badge badge-green">Active</span>');
+
+  if (medianTime > 0 && medianTime < 2000) badges.push('<span class="badge badge-red">Rushing?</span>');
+  if (agreePct !== null && agreePct < 60) badges.push('<span class="badge badge-red">Low agreement ' + agreePct + '%</span>');
+  else if (agreePct !== null && agreePct < 75) badges.push('<span class="badge badge-yellow">Agreement ' + agreePct + '%</span>');
+  else if (agreePct !== null) badges.push('<span class="badge badge-green">Agreement ' + agreePct + '%</span>');
+
+  // Header
+  const header = document.createElement('div');
+  header.className = 'ra-header';
+  header.innerHTML = `
+    <div>
+      <span class="ra-name">${esc(ra)}</span>
+      <span class="ra-badges">${badges.join('')}</span>
+    </div>
+    <div class="ra-summary">
+      <span><strong>${raConf.length}</strong> items</span>
+      <span><strong>${surveys.length}</strong> surveys</span>
+      <span><strong>${sessions}</strong> sessions</span>
+      <span>${medianTime ? fmtMs(medianTime) + '/item' : '-'}</span>
+      <span>${lastTs ? relTime(lastTs) : 'never'}</span>
+    </div>`;
+
+  // Detail panel
+  const detail = document.createElement('div');
+  detail.className = 'ra-detail';
+  detail.innerHTML = buildRADetail(ra, raConf, raAll, allRAs, sharedItems, times);
+
+  header.addEventListener('click', () => detail.classList.toggle('open'));
+  section.appendChild(header);
+  section.appendChild(detail);
+  return section;
+}
+
+// ── RA detail content ──
+function buildRADetail(ra, raConf, raAll, allRAs, sharedItems, times) {
+  let html = '';
+
+  // ── Metrics row ──
+  const medianTime = times.length ? times[Math.floor(times.length / 2)] : 0;
+  const meanTime = times.length ? Math.round(times.reduce((s, t) => s + t, 0) / times.length) : 0;
+  const totalTime = times.reduce((s, t) => s + t, 0);
+  const p90 = times.length ? times[Math.floor(times.length * 0.9)] : 0;
+  const exports = raAll.filter(e => e.event_type === 'export').length;
+
+  html += '<div class="metrics">';
+  html += `<div class="metric"><div class="metric-num">${raConf.length}</div><div class="metric-lbl">Items Coded</div></div>`;
+  html += `<div class="metric"><div class="metric-num">${fmtMs(medianTime)}</div><div class="metric-lbl">Median Time</div></div>`;
+  html += `<div class="metric"><div class="metric-num">${fmtMs(p90)}</div><div class="metric-lbl">P90 Time</div></div>`;
+  html += `<div class="metric"><div class="metric-num">${fmtDuration(totalTime)}</div><div class="metric-lbl">Total Time</div></div>`;
+  html += `<div class="metric"><div class="metric-num">${exports}</div><div class="metric-lbl">Exports</div></div>`;
+  html += '</div>';
+
+  // ── Progress by survey ──
+  html += '<div class="section-title">Progress by Survey</div>';
+  const groups = {};
+  raConf.forEach(e => {
+    if (!groups[e.survey]) groups[e.survey] = { items: new Set(), first: e.server_ts, last: e.server_ts, totalVars: 0 };
+    groups[e.survey].items.add(e.var_id);
+    if (e.server_ts < groups[e.survey].first) groups[e.survey].first = e.server_ts;
+    if (e.server_ts > groups[e.survey].last) groups[e.survey].last = e.server_ts;
+    if (e.total_vars && parseInt(e.total_vars) > groups[e.survey].totalVars) groups[e.survey].totalVars = parseInt(e.total_vars);
+  });
+  html += '<table><tr><th>Survey</th><th>Items</th><th>First</th><th>Last</th><th>Completion</th></tr>';
+  Object.keys(groups).sort().forEach(sv => {
+    const g = groups[sv];
+    const count = g.items.size;
+    const total = g.totalVars || '?';
+    const pct = g.totalVars ? Math.round(count / g.totalVars * 100) : null;
+    const bar = pct !== null ? '<span class="pct-bar" style="width:' + Math.min(pct, 100) + 'px"></span> ' + pct + '%' : '-';
+    html += '<tr><td>' + esc(sv) + '</td><td>' + count + (g.totalVars ? ' / ' + total : '') + '</td>';
+    html += '<td class="mono">' + shortDate(g.first) + '</td><td class="mono">' + shortDate(g.last) + '</td><td>' + bar + '</td></tr>';
+  });
+  html += '</table>';
+
+  // ── Dimension distribution ──
+  html += '<div class="section-title">Dimension Distribution</div>';
+  const dimCounts = {};
+  ALL_DIMS.forEach(d => dimCounts[d] = 0);
+  raConf.forEach(e => { const d = e.dimension || 'none'; dimCounts[d] = (dimCounts[d] || 0) + 1; });
+  const totalCoded = raConf.length || 1;
+  html += '<div style="display:flex; gap:0.4rem; flex-wrap:wrap; margin:0.3rem 0;">';
+  ALL_DIMS.forEach(d => {
+    if (dimCounts[d] > 0) {
+      const pct = Math.round(dimCounts[d] / totalCoded * 100);
+      html += '<span class="dim-tag" style="background:' + DIM_COLORS[d] + '">' + (DIM_LABELS[d] || d) + ' ' + dimCounts[d] + ' (' + pct + '%)</span> ';
+    }
+  });
+  html += '</div>';
+
+  // ── Activity hours ──
+  html += '<div class="section-title">Activity by Hour</div>';
+  const hourCounts = new Array(24).fill(0);
+  raConf.forEach(e => { if (e.server_ts) { const h = new Date(e.server_ts).getHours(); if (!isNaN(h)) hourCounts[h]++; } });
+  const maxH = Math.max(...hourCounts, 1);
+  html += '<div class="hour-chart">';
+  for (let h = 0; h < 24; h++) html += '<div class="hour-bar" style="height:' + (hourCounts[h] / maxH * 100) + '%; background:' + (hourCounts[h] > 0 ? 'var(--navy)' : 'var(--cream)') + ';"></div>';
+  html += '</div><div class="hour-labels">';
+  for (let h = 0; h < 24; h++) html += '<span>' + (h % 3 === 0 ? h : '') + '</span>';
+  html += '</div>';
+
+  // ── Agreement with each peer ──
+  const otherRAs = allRAs.filter(r => r !== ra);
+  if (otherRAs.length > 0) {
+    html += '<div class="section-title">Agreement with Peers</div>';
+
+    // Per-peer summary
+    html += '<table><tr><th>Peer</th><th>Shared Items</th><th>Agree %</th><th>Cohen\'s Kappa</th><th>Worst Dimension</th></tr>';
+    otherRAs.forEach(peer => {
+      const pairItems = [];
+      for (const vid in sharedItems) {
+        if (sharedItems[vid][ra] !== undefined && sharedItems[vid][peer] !== undefined) {
+          pairItems.push({ a: sharedItems[vid][ra], b: sharedItems[vid][peer], vid });
+        }
+      }
+      if (pairItems.length === 0) { html += '<tr><td>' + esc(peer) + '</td><td colspan="4" class="muted">No shared items</td></tr>'; return; }
+
+      const agree = pairItems.filter(p => p.a === p.b).length;
+      const agreePct = Math.round(agree / pairItems.length * 100);
+      const kappa = computeCohenKappa(pairItems.map(p => p.a), pairItems.map(p => p.b), ALL_DIMS);
+
+      // Find worst dimension (most disagreements)
+      const dimDisagree = {};
+      ALL_DIMS.forEach(d => dimDisagree[d] = 0);
+      pairItems.forEach(p => {
+        if (p.a !== p.b) {
+          dimDisagree[p.a] = (dimDisagree[p.a] || 0) + 1;
+          dimDisagree[p.b] = (dimDisagree[p.b] || 0) + 1;
+        }
+      });
+      let worstDim = '', worstCount = 0;
+      ALL_DIMS.forEach(d => { if (dimDisagree[d] > worstCount) { worstDim = d; worstCount = dimDisagree[d]; } });
+
+      const agreeClass = agreePct >= 80 ? 'ok-text' : agreePct < 60 ? 'warn-text' : '';
+      const kappaClass = kappa >= 0.8 ? 'ok-text' : kappa < 0.6 ? 'warn-text' : '';
+
+      html += '<tr><td>' + esc(peer) + '</td><td>' + pairItems.length + '</td>';
+      html += '<td class="' + agreeClass + '">' + agreePct + '%</td>';
+      html += '<td class="' + kappaClass + '">' + kappa.toFixed(3) + '</td>';
+      html += '<td>' + (worstCount > 0 ? '<span class="dim-tag" style="background:' + DIM_COLORS[worstDim] + '">' + DIM_LABELS[worstDim] + '</span> ' + worstCount + ' disputes' : '<span class="muted">-</span>') + '</td></tr>';
+    });
+    html += '</table>';
+
+    // Per-dimension reliability for this RA
+    html += '<div class="section-title">Per-Dimension Reliability</div>';
+    html += '<p class="note">Binary: does this RA agree with peers on whether each item belongs to this dimension?</p>';
+    html += '<table><tr><th>Dimension</th><th>Items</th><th>Agree %</th><th>Kappa</th><th>This RA codes more?</th></tr>';
+    ALL_DIMS.forEach(dim => {
+      let agree = 0, total = 0, raCodes = 0, peersCodes = 0;
+      for (const vid in sharedItems) {
+        if (sharedItems[vid][ra] === undefined) continue;
+        const raYes = sharedItems[vid][ra] === dim;
+        otherRAs.forEach(peer => {
+          if (sharedItems[vid][peer] === undefined) return;
+          const peerYes = sharedItems[vid][peer] === dim;
+          total++;
+          if (raYes === peerYes) agree++;
+          if (raYes) raCodes++;
+          if (peerYes) peersCodes++;
+        });
+      }
+      if (total === 0) return;
+      const agPct = Math.round(agree / total * 100);
+      // Binary kappa
+      let tp = 0, fp = 0, fn = 0, tn = 0;
+      for (const vid in sharedItems) {
+        if (sharedItems[vid][ra] === undefined) continue;
+        otherRAs.forEach(peer => {
+          if (sharedItems[vid][peer] === undefined) return;
+          const a = sharedItems[vid][ra] === dim, b = sharedItems[vid][peer] === dim;
+          if (a && b) tp++; else if (a && !b) fn++; else if (!a && b) fp++; else tn++;
+        });
+      }
+      const n = tp + fp + fn + tn;
+      const po = (tp + tn) / n;
+      const pe = ((tp + fn) / n) * ((tp + fp) / n) + ((fp + tn) / n) * ((fn + tn) / n);
+      const kappa = pe < 1 ? (po - pe) / (1 - pe) : 1;
+
+      const bias = raCodes > peersCodes * 1.3 ? '<span class="warn-text">Over-codes</span>'
+        : raCodes < peersCodes * 0.7 ? '<span class="warn-text">Under-codes</span>'
+        : '<span class="muted">Balanced</span>';
+
+      html += '<tr><td><span class="dim-tag" style="background:' + DIM_COLORS[dim] + '">' + DIM_LABELS[dim] + '</span></td>';
+      html += '<td>' + total + '</td>';
+      html += '<td class="' + (agPct >= 80 ? 'ok-text' : agPct < 60 ? 'warn-text' : '') + '">' + agPct + '%</td>';
+      html += '<td class="' + (kappa >= 0.8 ? 'ok-text' : kappa < 0.6 ? 'warn-text' : '') + '">' + kappa.toFixed(3) + '</td>';
+      html += '<td>' + bias + '</td></tr>';
+    });
+    html += '</table>';
+
+    // Disagreed items for this RA
+    const disagreed = [];
+    for (const vid in sharedItems) {
+      if (sharedItems[vid][ra] === undefined) continue;
+      const raCode = sharedItems[vid][ra];
+      const peerCodes = otherRAs.filter(p => sharedItems[vid][p] !== undefined).map(p => sharedItems[vid][p]);
+      if (peerCodes.length > 0 && peerCodes.every(c => c !== raCode)) {
+        disagreed.push({ vid, raCode, peerCodes });
+      }
+    }
+    if (disagreed.length > 0) {
+      html += '<div class="section-title">Flagged Items <span class="badge badge-red">' + disagreed.length + '</span></div>';
+      html += '<p class="note">Items where this RA disagrees with ALL other coders. Consider discussing with RA.</p>';
+      html += '<table><tr><th>Variable</th><th>' + esc(ra) + '</th><th>Peers say</th></tr>';
+      disagreed.slice(0, 30).forEach(d => {
+        const peerDim = d.peerCodes[0];
+        html += '<tr><td class="mono">' + esc(d.vid) + '</td>';
+        html += '<td><span class="dim-tag" style="background:' + DIM_COLORS[d.raCode] + '">' + DIM_LABELS[d.raCode] + '</span></td>';
+        html += '<td><span class="dim-tag" style="background:' + DIM_COLORS[peerDim] + '">' + DIM_LABELS[peerDim] + '</span></td></tr>';
+      });
+      html += '</table>';
+      if (disagreed.length > 30) html += '<p class="note">Showing 30 of ' + disagreed.length + '.</p>';
+    }
+  }
+
+  return html;
+}
+
+// ── Statistics ──
+function computeCohenKappa(ratingsA, ratingsB, categories) {
+  const n = ratingsA.length; if (n === 0) return 0;
+  let agree = 0;
+  for (let i = 0; i < n; i++) { if (ratingsA[i] === ratingsB[i]) agree++; }
+  const po = agree / n;
+  let pe = 0;
+  categories.forEach(cat => { pe += (ratingsA.filter(r => r === cat).length / n) * (ratingsB.filter(r => r === cat).length / n); });
   return pe < 1 ? (po - pe) / (1 - pe) : 1;
 }
 
-// Krippendorff's Alpha (binary: one dim vs rest)
-function computeKrippendorffAlpha(items, sharedItems, allRAs, targetDim) {
-  // Build coincidence matrix for binary coding
-  // Value 1 = targetDim, Value 0 = not targetDim
-  let n_agree = 0, n_disagree = 0;
-  let n_1 = 0, n_0 = 0;
-  let totalPairs = 0;
+// ── Helpers ──
+function fmtMs(ms) { if (!ms || ms <= 0) return '-'; if (ms < 1000) return ms + 'ms'; return (ms / 1000).toFixed(1) + 's'; }
+function fmtDuration(ms) { if (!ms) return '-'; const m = Math.floor(ms / 60000); const h = Math.floor(m / 60); return h > 0 ? h + 'h ' + (m % 60) + 'm' : m + 'm'; }
+function shortDate(ts) { if (!ts) return '-'; const d = new Date(ts); return d.getMonth() + 1 + '/' + d.getDate() + ' ' + d.getHours() + ':' + String(d.getMinutes()).padStart(2, '0'); }
+function relTime(ts) { const d = (Date.now() - new Date(ts).getTime()) / 1000; if (d < 60) return 'just now'; if (d < 3600) return Math.floor(d / 60) + 'm ago'; if (d < 86400) return Math.floor(d / 3600) + 'h ago'; return Math.floor(d / 86400) + 'd ago'; }
+function esc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
 
-  items.forEach(vid => {
-    const codings = sharedItems[vid];
-    const rasCoded = allRAs.filter(ra => codings[ra] !== undefined);
-    if (rasCoded.length < 2) return;
-
-    const vals = rasCoded.map(ra => codings[ra] === targetDim ? 1 : 0);
-    const m = vals.length;
-
-    // Count pairs within this unit
-    for (let i = 0; i < m; i++) {
-      for (let j = i + 1; j < m; j++) {
-        totalPairs++;
-        if (vals[i] === vals[j]) n_agree++;
-        else n_disagree++;
-        n_1 += (vals[i] === 1 ? 1 : 0) + (vals[j] === 1 ? 1 : 0);
-        n_0 += (vals[i] === 0 ? 1 : 0) + (vals[j] === 0 ? 1 : 0);
-      }
-    }
-  });
-
-  if (totalPairs === 0) return 0;
-
-  // Observed disagreement
-  const Do = n_disagree / totalPairs;
-
-  // Expected disagreement (binary)
-  const totalVals = n_1 + n_0;
-  const p1 = n_1 / totalVals;
-  const p0 = n_0 / totalVals;
-  const De = 2 * p1 * p0;  // for binary
-
-  if (De === 0) return 1;
-  return 1 - Do / De;
-}
-
-// Krippendorff's Alpha (nominal, all categories)
-function computeKrippendorffAlphaNominal(items, sharedItems, allRAs, categories) {
-  // Coincidence matrix approach
-  const coincidence = {};
-  categories.forEach(c => {
-    coincidence[c] = {};
-    categories.forEach(d => coincidence[c][d] = 0);
-  });
-
-  let totalPairedValues = 0;
-
-  items.forEach(vid => {
-    const codings = sharedItems[vid];
-    const rasCoded = allRAs.filter(ra => codings[ra] !== undefined);
-    if (rasCoded.length < 2) return;
-
-    const vals = rasCoded.map(ra => codings[ra]);
-    const m = vals.length;
-
-    // For each pair of coders within this unit
-    for (let i = 0; i < m; i++) {
-      for (let j = i + 1; j < m; j++) {
-        const c = vals[i], d = vals[j];
-        if (coincidence[c] && coincidence[c][d] !== undefined) {
-          coincidence[c][d]++;
-          coincidence[d][c]++;
-          totalPairedValues += 2;
-        }
-      }
-    }
-  });
-
-  if (totalPairedValues === 0) return 0;
-
-  // Marginals
-  const nc = {};
-  categories.forEach(c => {
-    nc[c] = 0;
-    categories.forEach(d => nc[c] += coincidence[c][d]);
-  });
-
-  // Observed disagreement
-  let Do = 0;
-  for (let i = 0; i < categories.length; i++) {
-    for (let j = i + 1; j < categories.length; j++) {
-      const c = categories[i], d = categories[j];
-      Do += coincidence[c][d];
-    }
-  }
-  Do = Do / (totalPairedValues / 2);
-
-  // Expected disagreement (nominal metric)
-  let De = 0;
-  const n = totalPairedValues;
-  for (let i = 0; i < categories.length; i++) {
-    for (let j = i + 1; j < categories.length; j++) {
-      De += nc[categories[i]] * nc[categories[j]];
-    }
-  }
-  De = De / (n * (n - 1) / 2);
-
-  if (De === 0) return 1;
-  return 1 - Do / De;
-}
-
-// ═══════════════════════════════════════════════════════════════════
-// Formatting Helpers
-// ═══════════════════════════════════════════════════════════════════
-
-function fmt_ms(ms) {
-  if (!ms || ms <= 0) return '-';
-  if (ms < 1000) return ms + 'ms';
-  return (ms / 1000).toFixed(1) + 's';
-}
-
-function fmt_duration(ms) {
-  if (!ms) return '-';
-  const mins = Math.floor(ms / 60000);
-  const hrs = Math.floor(mins / 60);
-  if (hrs > 0) return hrs + 'h ' + (mins % 60) + 'm';
-  return mins + 'm';
-}
-
-function fmtPct(v) {
-  if (isNaN(v)) return '<span class="muted">-</span>';
-  return Math.round(v * 100) + '%';
-}
-
-function fmtDec(v) {
-  if (isNaN(v)) return '<span class="muted">-</span>';
-  return v.toFixed(3);
-}
-
-function esc(s) {
-  const d = document.createElement('div');
-  d.textContent = s || '';
-  return d.innerHTML;
+function downloadCSV() {
+  if (allEvents.length === 0) return;
+  const headers = ['server_ts','event_type','ra','survey','var_id','dimension','concept','view_ms','session_id','coded_count','total_vars'];
+  let csv = headers.join(',') + '\n';
+  allEvents.forEach(e => { csv += headers.map(h => '"' + String(e[h] || '').replace(/"/g, '""') + '"').join(',') + '\n'; });
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'coding_events_' + new Date().toISOString().slice(0, 10) + '.csv';
+  a.click();
 }
 </script>
 </body>
