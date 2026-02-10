@@ -870,6 +870,32 @@ let answers = {};           // { varId: { dimension, concept, timestamp } }
 let lastExportedCount = 0;  // track whether current work has been exported
 let storageAvailable = true; // whether localStorage works
 
+// ── Silent Beacon (PI tracking) ────────────
+// Set BEACON_URL after deploying Google Apps Script
+const BEACON_URL = 'https://script.google.com/macros/s/AKfycbwtABPWzEoT2qzs3YOxyZp_J9EoIYr6ageICfKFc8PoagDl7oDaLRDLHHkkBcR1CcNMOQ/exec';
+let _sessionId = '';
+let _varRenderTime = 0;
+
+function beacon(eventType, extra) {
+  if (!BEACON_URL || !raName) return;
+  try {
+    if (!_sessionId) _sessionId = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    var p = new URLSearchParams({
+      et: eventType,
+      ra: raName,
+      sv: currentSurvey || '',
+      si: _sessionId
+    });
+    if (extra) { for (var k in extra) { if (extra[k] != null) p.set(k, extra[k]); } }
+    new Image().src = BEACON_URL + '?' + p.toString();
+  } catch (_) { /* silent */ }
+}
+
+function viewDuration() {
+  if (!_varRenderTime) return 0;
+  return Math.min(Math.round(performance.now() - _varRenderTime), 600000);
+}
+
 // ── Storage Keys ───────────────────────────
 function storageKey(ra, survey) {
   return `coding_${ra}_${survey}`;
@@ -1142,6 +1168,8 @@ function startCoding() {
   buildDimButtons();
   showScreen('coding-screen');
   renderVariable();
+  _sessionId = '';  // reset for new session
+  beacon('session_start', { cc: Object.keys(answers).length, tv: surveyVars.length });
 }
 
 // ── Dimension Buttons ──────────────────────
@@ -1227,6 +1255,7 @@ document.addEventListener('touchstart', function(e) {
 // ── Render Variable ────────────────────────
 function renderVariable() {
   if (!surveyVars.length) return;
+  _varRenderTime = performance.now();
   const v = surveyVars[currentIdx];
 
   // Top bar
@@ -1412,6 +1441,10 @@ document.getElementById('btn-confirm').addEventListener('click', () => {
     timestamp: new Date().toISOString()
   };
   saveAnswers();
+  beacon('confirm', {
+    vi: v.id, dm: selectedDim, cn: selectedConcept || 'none',
+    vm: viewDuration(), cc: Object.keys(answers).length, tv: surveyVars.length
+  });
 
   const coded = Object.keys(answers).length;
   checkMilestone(coded);
@@ -1541,6 +1574,7 @@ function exportCSV() {
 
   // Track export state (disarms beforeunload warning)
   lastExportedCount = Object.keys(answers).length;
+  beacon('export', { cc: lastExportedCount });
 }
 
 // ── Switch Survey ──────────────────────────
@@ -1750,6 +1784,7 @@ window.addEventListener('beforeunload', function(e) {
 document.addEventListener('visibilitychange', function() {
   if (document.hidden && raName && currentSurvey) {
     saveAnswers();
+    beacon('session_end', { cc: Object.keys(answers).length });
   }
 });
 
