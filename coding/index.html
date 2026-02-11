@@ -883,6 +883,13 @@ let _retestMode = false;
 let _retestVar = null;         // variable object being retested
 let _retestOriginal = null;    // { dimension, concept } of original coding
 
+function _bk() {
+  var w = Math.floor(Date.now() / 300000);
+  var h = 5381, s = 'sc2026b' + w;
+  for (var i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0;
+  return (h >>> 0).toString(36);
+}
+
 function beacon(eventType, extra) {
   if (!BEACON_URL || !raName) return;
   try {
@@ -891,7 +898,8 @@ function beacon(eventType, extra) {
       et: eventType,
       ra: raName,
       sv: currentSurvey || '',
-      si: _sessionId
+      si: _sessionId,
+      _k: _bk()
     });
     if (extra) { for (var k in extra) { if (extra[k] != null) p.set(k, extra[k]); } }
     new Image().src = BEACON_URL + '?' + p.toString();

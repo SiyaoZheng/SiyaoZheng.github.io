@@ -16,8 +16,24 @@ function doGet(e) {
   return recordBeacon(p);
 }
 
+// ── Beacon auth: djb2 hash with 5-min rotating window ──
+function validBeacon(p) {
+  var token = p._k || '';
+  if (!token) return false;
+  var now = Math.floor(new Date().getTime() / 300000);
+  for (var d = -1; d <= 1; d++) {
+    var h = 5381, s = 'sc2026b' + (now + d);
+    for (var i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0;
+    if ((h >>> 0).toString(36) === token) return true;
+  }
+  return false;
+}
+
 // ── Record one beacon event ──
 function recordBeacon(p) {
+  if (!validBeacon(p)) {
+    return ContentService.createTextOutput('').setMimeType(ContentService.MimeType.TEXT);
+  }
   try {
     var props = PropertiesService.getScriptProperties();
     var meta = JSON.parse(props.getProperty('_meta') || '{"chunk":0,"idx":0,"total":0}');
