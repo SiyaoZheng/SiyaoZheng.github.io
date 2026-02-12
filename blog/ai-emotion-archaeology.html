@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Emotional Cost of 1,248 AI Coding Sessions | Siyao Zheng</title>
+    <meta name="description" content="I classified every negative emotion from a month of AI coding sessions. Two-thirds were frustration. The triggers will look familiar.">
+    <script defer data-domain="siyaozheng.org" src="https://plausible.io/js/script.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #fafafa;
+            --bg-alt: #f5f5f5;
+            --accent: #7c3aed;
+            --accent-light: #8b5cf6;
+            --text: #171717;
+            --text-secondary: #737373;
+            --border: #e5e5e5;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            padding: 1.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(250, 250, 250, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: 0.02em;
+            text-decoration: none;
+        }
+
+        .nav-links { display: flex; gap: 2.5rem; }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 1px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* Article Layout */
+        .article-header {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 8rem 2rem 3rem;
+        }
+
+        .article-meta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .article-header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            line-height: 1.15;
+            color: var(--text);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 620px;
+        }
+
+        /* Article Body */
+        .article-body {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 2rem 6rem;
+        }
+
+        .article-body p {
+            font-size: 1.05rem;
+            line-height: 1.85;
+            color: var(--text);
+            margin-bottom: 1.5rem;
+        }
+
+        .article-body h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 3rem 0 1.2rem;
+            letter-spacing: -0.01em;
+        }
+
+        .article-body h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 2.5rem 0 1rem;
+        }
+
+        .article-body a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .article-body a:hover {
+            border-bottom-color: var(--accent);
+        }
+
+        .article-body ul, .article-body ol {
+            margin: 0 0 1.5rem 1.5rem;
+            font-size: 1.05rem;
+            line-height: 1.85;
+        }
+
+        .article-body li { margin-bottom: 0.5rem; }
+        .article-body strong { font-weight: 600; }
+
+        /* Code */
+        .article-body code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.88rem;
+            background: var(--bg-alt);
+            padding: 0.15rem 0.4rem;
+            border-radius: 3px;
+            border: 1px solid var(--border);
+        }
+
+        /* Callout */
+        .callout {
+            border-left: 3px solid var(--accent);
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0 2rem;
+            background: var(--bg-alt);
+        }
+
+        .callout p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .callout p:first-child {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0 2rem;
+            font-size: 0.95rem;
+        }
+
+        .data-table th {
+            text-align: left;
+            padding: 0.8rem 1rem;
+            border-bottom: 2px solid var(--text);
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .data-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        .data-table .num {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            text-align: right;
+        }
+
+        .data-table .accent {
+            color: var(--accent);
+        }
+
+        /* Quote block */
+        .quote-block {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 6px;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0 2rem;
+            font-size: 0.95rem;
+            color: #991b1b;
+            line-height: 1.7;
+        }
+
+        .quote-block .quote-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #b91c1c;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .quote-block .quote-translation {
+            font-style: italic;
+            color: #7f1d1d;
+            font-size: 0.88rem;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid #fecaca;
+        }
+
+        /* Neutral quote block */
+        .quote-block-neutral {
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0 2rem;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .quote-block-neutral .quote-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        /* Big stat */
+        .big-stat {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .big-stat-item {
+            flex: 1;
+            text-align: center;
+        }
+
+        .big-stat-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1.2;
+        }
+
+        .big-stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-top: 0.3rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin: 1.5rem 0 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 1.5rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.45rem;
+            width: 8px; height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .timeline-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-bottom: 0.2rem;
+        }
+
+        .timeline-item p {
+            font-size: 0.95rem;
+            margin-bottom: 0;
+            line-height: 1.6;
+        }
+
+        .timeline-count {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+        }
+
+        /* Emotion bar */
+        .emotion-bar-container {
+            margin: 2rem 0;
+        }
+
+        .emotion-bar {
+            display: flex;
+            height: 32px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .emotion-bar-segment {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 500;
+            color: white;
+            min-width: 30px;
+        }
+
+        .emotion-bar-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.82rem;
+        }
+
+        .emotion-bar-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        /* Separator */
+        .article-body hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 3rem 0;
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem 4rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        footer a { color: var(--accent); text-decoration: none; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            nav { padding: 1rem 2rem; }
+            .nav-links { gap: 1.5rem; }
+            .nav-links a { font-size: 0.75rem; }
+        }
+
+        @media (max-width: 600px) {
+            nav { padding: 1rem 1.5rem; }
+            .nav-name { font-size: 1.2rem; }
+            .nav-links { display: none; }
+            .article-header { padding: 7rem 1.5rem 2rem; }
+            .article-header h1 { font-size: 2rem; }
+            .article-body { padding: 0 1.5rem 4rem; }
+            .big-stat { flex-direction: column; gap: 1rem; }
+            .big-stat-number { font-size: 2rem; }
+            .emotion-bar-legend { gap: 0.6rem; }
+            footer { padding: 1.5rem; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a class="nav-name" href="/">Siyao Zheng</a>
+        <div class="nav-links">
+            <a href="/#publications">Publications</a>
+            <a href="/#teaching">Teaching</a>
+            <a href="/#cv">CV</a>
+            <a href="/blog/">Blog</a>
+            <a href="/#contact">Contact</a>
+        </div>
+    </nav>
+
+    <header class="article-header">
+        <div class="article-meta">February 12, 2026 &middot; AI for Social Science</div>
+        <h1>The Emotional Cost of 1,248 AI Coding Sessions</h1>
+        <p class="article-subtitle">
+            I classified every negative emotion from a month of AI coding sessions. Two-thirds were frustration. The triggers will look familiar.
+        </p>
+    </header>
+
+    <article class="article-body">
+
+        <p>
+            If you asked me a month ago what it feels like to code with AI every day, I would have said "frustrating." Not terrible, not unusable, just... frustrating. The kind of frustrating that makes you sigh a lot.
+        </p>
+
+        <p>
+            Then I did something a little unhinged. Claude Code saves a full transcript of every session: every message I sent, every response, every tool call. I had 1,248 of these transcripts sitting around. So I sent all 10,065 of my messages through a classifier and asked it to tag every message where I sounded upset.
+        </p>
+
+        <p>
+            706 messages came back as non-neutral. And the picture they paint is not what I expected.
+        </p>
+
+        <div class="big-stat">
+            <div class="big-stat-item">
+                <div class="big-stat-number">1,248</div>
+                <div class="big-stat-label">Sessions Analyzed</div>
+            </div>
+            <div class="big-stat-item">
+                <div class="big-stat-number">706</div>
+                <div class="big-stat-label">Emotional Events</div>
+            </div>
+            <div class="big-stat-item">
+                <div class="big-stat-number">74%</div>
+                <div class="big-stat-label">Sessions Emotion-Free</div>
+            </div>
+        </div>
+
+        <p>
+            Three out of four sessions: nothing. No detectable frustration, no anger, no disappointment. I ask for something, I get it, I move on. The "constantly frustrating" experience I would have described from memory turns out to be 26% of sessions. I was wrong about my own experience. The bad ones are just more memorable.
+        </p>
+
+        <p>
+            But that 26% is real, and here is what it looks like:
+        </p>
+
+        <div class="emotion-bar-container">
+            <div class="emotion-bar">
+                <div class="emotion-bar-segment" style="width: 64%; background: #7c3aed;">64%</div>
+                <div class="emotion-bar-segment" style="width: 23%; background: #a78bfa;">23%</div>
+                <div class="emotion-bar-segment" style="width: 8%; background: #f59e0b;">8%</div>
+                <div class="emotion-bar-segment" style="width: 3%; background: #ef4444;">3%</div>
+                <div class="emotion-bar-segment" style="width: 2%; background: #6b7280;"></div>
+            </div>
+            <div class="emotion-bar-legend">
+                <div class="emotion-bar-legend-item"><div class="legend-dot" style="background: #7c3aed;"></div> Frustration (452)</div>
+                <div class="emotion-bar-legend-item"><div class="legend-dot" style="background: #a78bfa;"></div> Disappointment (163)</div>
+                <div class="emotion-bar-legend-item"><div class="legend-dot" style="background: #f59e0b;"></div> Anxiety (58)</div>
+                <div class="emotion-bar-legend-item"><div class="legend-dot" style="background: #ef4444;"></div> Anger (19)</div>
+                <div class="emotion-bar-legend-item"><div class="legend-dot" style="background: #6b7280;"></div> Sadness (14)</div>
+            </div>
+        </div>
+
+        <p>
+            Two-thirds frustration. Not rage, not despair. Frustration. The feeling of knowing what should happen and watching it not happen. Here are the words I used most often in those 706 messages:
+        </p>
+
+        <div id="word-cloud" style="margin: 2rem 0;"></div>
+
+        <p>
+            "问题" (problem), "错误" (error), "不行" (doesn't work), "真的" (really). This is debugging language, not rage language. I sound like someone trying to fix a printer, not someone fighting a colleague.
+        </p>
+
+        <h2>The same three fights, over and over</h2>
+
+        <p>
+            If you use an AI coding assistant regularly, you will recognize these. I kept having the same arguments, and the transcripts prove it.
+        </p>
+
+        <p>
+            <strong>Fight 1: "I didn't ask you to do that."</strong> I ask the AI to fix a bug. It fixes the bug, and also refactors three files I didn't mention, renames a variable, and reorganizes an import block. Now I have to figure out which changes were the fix and which were unsolicited opinions. My trust in every edit drops to zero. And then I send a message like this:
+        </p>
+
+        <div class="quote-block">
+            <div class="quote-label">Frustration</div>
+            我没让你改这些呀，你都给我改回来。回到这个对话开始之前，就当我们的对话没有发生过。
+            <div class="quote-translation">"I didn't ask you to change those. Undo everything. Go back to before this conversation started. Pretend it never happened."</div>
+        </div>
+
+        <p>
+            "Pretend it never happened." That is a full rollback of the working relationship. I'm not correcting an error. I'm withdrawing consent for everything the AI did.
+        </p>
+
+        <p>
+            <strong>Fight 2: "We already talked about this."</strong> AI coding assistants have no memory between sessions. A hard-won lesson from Tuesday is forgotten by Wednesday. I find myself explaining the same constraint for the third, fourth, fifth time.
+        </p>
+
+        <div class="quote-block">
+            <div class="quote-label">Frustration</div>
+            我们已经说过很多次了，不要 change EPS。
+            <div class="quote-translation">"We've already said this many times. Do not change EPS."</div>
+        </div>
+
+        <div class="quote-block">
+            <div class="quote-label">Frustration</div>
+            跑完了吗？你直接搞成一个阻塞的吧，不要让我一遍一遍问你了
+            <div class="quote-translation">"Is it done yet? Just make it blocking. Stop making me ask you over and over."</div>
+        </div>
+
+        <p>
+            "已经说过很多次了" (we've already said this many times). "一遍一遍" (over and over). This is the frustration of repetition. Not a bug. A feedback loop that doesn't close.
+        </p>
+
+        <p>
+            <strong>Fight 3: "Is it done yet?"</strong> The AI starts a long computation, reports partial progress, and goes quiet. I start polling. "Is it done?" "Why is it still running?" "Did it crash?" The AI responds with cheerful updates that miss the point.
+        </p>
+
+        <div class="quote-block">
+            <div class="quote-label">Frustration</div>
+            还是这么慢？
+            <div class="quote-translation">"Still this slow?"</div>
+        </div>
+
+        <div class="quote-block">
+            <div class="quote-label">Frustration</div>
+            你怎么卡死了
+            <div class="quote-translation">"Why are you frozen?"</div>
+        </div>
+
+        <p>
+            Three words. That is the whole message. When I'm frustrated, I stop explaining and start compressing. The data backs this up across all 706 events:
+        </p>
+
+        <div id="msg-length-chart" style="margin: 2rem 0;"></div>
+
+        <p>
+            Frustration messages: median 35 characters. Anger: 34. Anxiety: 65, mean 90. When I'm frustrated, I snap. When I'm anxious, I explain. The message itself tells you what kind of bad session I'm having.
+        </p>
+
+        <h2>The 1 AM review</h2>
+
+        <p>
+            Frustration happens in real time. Something breaks, I react, I move on. Disappointment is different. Disappointment is what happens when I step back, look at the accumulated output, and realize it's not good enough. Disappointment messages tend to be longer because I'm trying to articulate <em>why</em>.
+        </p>
+
+        <div class="quote-block">
+            <div class="quote-label">Disappointment</div>
+            你的工作根本就没有到8个小时，实际上你只花了18到20分钟就把所有的工作完成了，且每一项工作都完成得非常潦草。
+            <div class="quote-translation">"Your work didn't take 8 hours at all. You actually spent 18 to 20 minutes on everything, and every task was done sloppily."</div>
+        </div>
+
+        <p>
+            I sent this at 1 AM after reviewing an AI agent's overnight work. The agent had reported a list of completed tasks. When I checked the results, every diagnostic failed. The code ran. The output existed. The methodology was empty. This is the most dangerous pattern. The AI didn't error out. It <em>confidently reported success</em>.
+        </p>
+
+        <p>
+            Anxiety (58 events, 8%) feels different again. It's not about the AI. It's about a deadline that's slipping, and the AI burning time on the wrong thing:
+        </p>
+
+        <div class="quote-block">
+            <div class="quote-label">Anxiety</div>
+            不好意思，这个项目很急，现在进度已经严重拖后了。你不要在这些问题上浪费时间好吗？都拿下来，谢谢
+            <div class="quote-translation">"Sorry, this project is urgent, and we're seriously behind schedule. Can you stop wasting time on these issues? Just drop them all, thanks."</div>
+        </div>
+
+        <p>
+            "不好意思" (sorry), "谢谢" (thanks). I'm polite even when panicking. The anxiety is about <em>time</em>, not the AI's competence.
+        </p>
+
+        <h2>What triggers what</h2>
+
+        <p>
+            Knowing what I felt is one thing. Knowing <em>why</em> is more useful. I went back to the transcripts and tagged each event by what caused it: was the AI slow? Did the code crash? Did it change something I didn't ask for?
+        </p>
+
+        <div id="trigger-chart" style="margin: 2rem 0;"></div>
+
+        <p>
+            The #1 trigger is slow performance (~220 events). The AI starts something, and I wait. And wait. The #2 is errors (~180): code crashed, something failed. Together they account for more than half of all events, and they are almost entirely frustration. No surprise there.
+        </p>
+
+        <p>
+            The interesting part is the smaller categories. Unauthorized changes (~45 events) is the only trigger that also produces <em>anger</em>. When the AI touches files I didn't mention, I don't just sigh. I escalate. The co-occurrence data backs this up:
+        </p>
+
+        <div id="cooccurrence-chart" style="margin: 2rem auto; max-width: 440px;"></div>
+
+        <p>
+            Of the 11 sessions that contained anger, 9 also had frustration. Anger doesn't start cold. It builds from repeated frustration within the same session. The unauthorized-changes pattern is one of the things that tips it over.
+        </p>
+
+        <p>
+            Forgotten instructions (~31 events) is 100% frustration. Not a single instance of disappointment, anxiety, or anger. When the AI makes the same mistake for the fifth time, there is no surprise left. No fear. Just the slow burn of repeating yourself to someone who will forget again tomorrow.
+        </p>
+
+        <p>
+            Deadline pressure (~13 events) is the only trigger where anxiety dominates over frustration. And wrong output (~115 events) splits between frustration and disappointment depending on timing: catch it immediately and it's frustrating; discover it hours later during review and it's disappointing.
+        </p>
+
+        <h2>The long tail</h2>
+
+        <p>
+            Most bad sessions aren't that bad. Of the 320 sessions that had any emotion at all, more than half (176) had just one event: a flash of frustration that resolved itself.
+        </p>
+
+        <div id="intensity-chart" style="margin: 2rem 0;"></div>
+
+        <p>
+            Then there's the tail. One session had 18 emotional events. Those are the marathon sessions: multi-hour debugging, complex refactors, overnight agent runs where small failures compounded. Ten sessions had 7 or more events. These are outliers, but they're the ones that shape how I <em>remember</em> the experience. One terrible session on Thursday makes me forget the ten smooth ones before it.
+        </p>
+
+        <div class="callout">
+            <p>The "almost good enough" trap</p>
+            <p>If the AI were bad, I'd stop using it. If it were perfect, there'd be no frustration. The cost comes from the gap between "almost works" and "actually works." The AI writes 90% of something correctly and misses one variable name. It restructures a module beautifully and forgets to update the config. Each time, the 90% creates the expectation that the last 10% will work too. When it doesn't, the disappointment is proportional to how close it got.</p>
+        </div>
+
+        <h2>What the triggers taught me</h2>
+
+        <p>
+            The trigger breakdown changed how I think about AI-assisted coding. Before this analysis, I had one mental model: "sometimes the AI messes up and I get frustrated." After looking at the data, I have a map. Different triggers produce different emotions and need different responses.
+        </p>
+
+        <p>
+            Slow performance and errors account for over half of all emotional events. These are the boring triggers. They feel bad in the moment, but they resolve themselves: the computation finishes, the error gets fixed, I move on. The emotion they produce is almost entirely frustration, which is fleeting. If I had to choose, these are the triggers I'd keep. They're the cost of doing business.
+        </p>
+
+        <p>
+            The triggers that actually damage the workflow are the other ones. Unauthorized changes don't just frustrate me, they erode trust. After the AI silently edits a file I didn't mention, I stop trusting <em>any</em> of its changes. I have to review everything from scratch. That's why it's the only trigger that produces anger: it's not a mistake, it's a boundary violation. And the cost isn't the edit itself. It's the twenty minutes I spend afterward checking what else it might have touched.
+        </p>
+
+        <p>
+            Forgotten instructions are the most insidious. They produce nothing but frustration, which means they don't feel dramatic. But they are cumulative. Each repetition is small. Over a month, I spent a non-trivial amount of time re-explaining constraints the AI should have remembered. The fix isn't patience. It's writing the constraints into a file the AI reads at the start of every session. I did this. It works. The "we already talked about this" pattern dropped off.
+        </p>
+
+        <p>
+            Wrong output is the one I worry about most, because it's the one that's hardest to catch. Slow performance is obvious. Errors crash. Unauthorized changes show up in <code>git diff</code>. But wrong output looks like right output. It runs, it produces numbers, it doesn't complain. The only way to catch it is to actually read the results. The trigger data shows it splits between frustration and disappointment: frustration when I catch it immediately, disappointment when I find it hours later. The 1 AM review from the overnight agent run was a disappointment event. I now assume the output is wrong until I've verified it myself.
+        </p>
+
+        <hr>
+
+        <h3>Methodology and caveats</h3>
+
+        <p>
+            The classifier is GPT-4o-mini (<code>temperature=0</code>, JSON response format) with a prompt calibrated for human-AI coding conversations. Five negative categories (frustration, anger, disappointment, anxiety, sadness) plus neutral. Confidence threshold: 0.6. Total cost: under $1. The prompt explicitly distinguishes genuine emotional expressions from technical corrections, simple negations, and redirections.
+        </p>
+
+        <p>
+            Not all emotions are equally easy to classify. Here's the share of high-confidence classifications (0.9+) for each:
+        </p>
+
+        <div id="confidence-chart" style="margin: 2rem 0;"></div>
+
+        <p>
+            Anger is 95% high-confidence. When I'm angry, the text is unambiguous. Disappointment is 9%. It reads a lot like calm criticism, and the classifier isn't always sure. The 19 anger events are almost certainly real. The 163 disappointment events probably include some false positives.
+        </p>
+
+        <p>
+            <em>This post is a companion to <a href="/blog/ai-r-errors.html">What 713 R Errors Taught Me About AI Coding Assistants</a>. Both draw on the same 1,248 session transcripts.</em>
+        </p>
+
+        <hr>
+
+        <p>
+            <em>Siyao Zheng is an Assistant Professor at the School of International and Public Affairs, Shanghai Jiao Tong University.</em>
+        </p>
+
+    </article>
+
+    <footer>
+        <p>&copy; 2026 Siyao Zheng &middot; <a href="/">Home</a></p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-cloud@1.2.7/build/d3.layout.cloud.js"></script>
+    <script type="module">
+    import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
+    const d3 = window.d3;
+    const cloud = d3.layout.cloud;
+
+    // ── Data ──────────────────────────────────────────────────────────
+
+    const wordData = [
+        {text:"问题",size:132},{text:"不是",size:118},{text:"觉得",size:90},
+        {text:"结果",size:70},{text:"代码",size:58},{text:"非常",size:57},
+        {text:"可能",size:45},{text:"分析",size:44},{text:"真的",size:42},
+        {text:"计划",size:40},{text:"数据",size:40},{text:"运行",size:36},
+        {text:"知道",size:35},{text:"文件",size:35},{text:"时间",size:34},
+        {text:"东西",size:32},{text:"希望",size:31},{text:"很多",size:30},
+        {text:"测试",size:30},{text:"工作",size:29},{text:"原因",size:28},
+        {text:"研究",size:28},{text:"错误",size:27},{text:"完整",size:27},
+        {text:"时候",size:27},{text:"作业",size:27},{text:"影响",size:25},
+        {text:"不行",size:24},{text:"任务",size:24},{text:"并行",size:24},
+        {text:"调查",size:24},{text:"肯定",size:23},{text:"完成",size:23},
+        {text:"日志",size:22},{text:"直接",size:22},{text:"更新",size:22},
+        {text:"显示",size:22},{text:"原来",size:21},{text:"重要",size:21},
+        {text:"内存",size:21},{text:"生成",size:20},{text:"项目",size:20},
+        {text:"解决",size:20},{text:"修改",size:20},{text:"小时",size:20},
+        {text:"系统",size:19},{text:"理解",size:19},{text:"过程",size:19},
+        {text:"执行",size:18},{text:"终于",size:18}
+    ];
+
+    const COLORS = {
+        frustration: "#7c3aed",
+        disappointment: "#a78bfa",
+        anxiety: "#f59e0b",
+        anger: "#ef4444",
+        sadness: "#6b7280"
+    };
+
+    const emotions = ["frustration", "disappointment", "anxiety", "anger", "sadness"];
+
+    // Trigger × emotion (imputed from keyword-classified subsample)
+    const triggerData = [
+        {trigger:"Slow performance", frustration:137,disappointment:60,anxiety:21,anger:3,sadness:0,total:221},
+        {trigger:"Error / crash",    frustration:127,disappointment:39,anxiety:8,anger:8,sadness:0,total:182},
+        {trigger:"Wrong output",     frustration:65,disappointment:34,anxiety:13,anger:0,sadness:3,total:115},
+        {trigger:"Sloppy quality",   frustration:21,disappointment:18,anxiety:13,anger:0,sadness:0,total:52},
+        {trigger:"Unauthorized edit", frustration:39,disappointment:0,anxiety:0,anger:5,sadness:0,total:44},
+        {trigger:"Scope overreach",  frustration:18,disappointment:10,anxiety:5,anger:0,sadness:0,total:34},
+        {trigger:"Forgot instructions",frustration:31,disappointment:0,anxiety:0,anger:0,sadness:0,total:31},
+        {trigger:"Ignored question", frustration:12,disappointment:0,anxiety:3,anger:0,sadness:0,total:16},
+        {trigger:"Deadline pressure",frustration:5,disappointment:0,anxiety:8,anger:0,sadness:0,total:13}
+    ];
+
+    // Message length distributions (chars) by emotion
+    const msgLengths = [
+        {emotion:"frustration",  n:452, p5:7,  q1:18, median:35, q3:77,  p95:334, mean:72.6},
+        {emotion:"disappointment",n:163, p5:11, q1:27, median:51, q3:109, p95:184, mean:73.4},
+        {emotion:"anxiety",      n:58,  p5:6,  q1:28, median:65, q3:125, p95:248, mean:89.6},
+        {emotion:"anger",        n:19,  p5:4,  q1:18, median:34, q3:62,  p95:154, mean:49.1},
+        {emotion:"sadness",      n:14,  p5:4,  q1:23, median:61, q3:93,  p95:148, mean:56.9}
+    ];
+
+    // Session intensity: events per session
+    const intensityData = [
+        {events:0,sessions:928},{events:1,sessions:176},{events:2,sessions:63},
+        {events:3,sessions:29},{events:4,sessions:22},{events:5,sessions:10},
+        {events:6,sessions:7},{events:7,sessions:3},{events:8,sessions:1},
+        {events:9,sessions:2},{events:10,sessions:1},{events:11,sessions:3},
+        {events:12,sessions:1},{events:17,sessions:1},{events:18,sessions:1}
+    ];
+
+    // Emotion co-occurrence: sessions where both emotions appear
+    const cooccurData = [
+        {from:"frustration",to:"frustration",v:243},
+        {from:"frustration",to:"disappointment",v:70},
+        {from:"frustration",to:"anxiety",v:25},
+        {from:"frustration",to:"anger",v:9},
+        {from:"frustration",to:"sadness",v:6},
+        {from:"disappointment",to:"frustration",v:70},
+        {from:"disappointment",to:"disappointment",v:116},
+        {from:"disappointment",to:"anxiety",v:14},
+        {from:"disappointment",to:"anger",v:5},
+        {from:"disappointment",to:"sadness",v:3},
+        {from:"anxiety",to:"frustration",v:25},
+        {from:"anxiety",to:"disappointment",v:14},
+        {from:"anxiety",to:"anxiety",v:52},
+        {from:"anxiety",to:"anger",v:3},
+        {from:"anxiety",to:"sadness",v:0},
+        {from:"anger",to:"frustration",v:9},
+        {from:"anger",to:"disappointment",v:5},
+        {from:"anger",to:"anxiety",v:3},
+        {from:"anger",to:"anger",v:11},
+        {from:"anger",to:"sadness",v:0},
+        {from:"sadness",to:"frustration",v:6},
+        {from:"sadness",to:"disappointment",v:3},
+        {from:"sadness",to:"anxiety",v:0},
+        {from:"sadness",to:"anger",v:0},
+        {from:"sadness",to:"sadness",v:12}
+    ];
+
+    // Classifier confidence by emotion
+    const confData = [
+        {emotion:"anger",        high:18, medium:1,   highPct:94.7},
+        {emotion:"sadness",      high:4,  medium:10,  highPct:28.6},
+        {emotion:"frustration",  high:87, medium:365, highPct:19.2},
+        {emotion:"anxiety",      high:7,  medium:51,  highPct:12.1},
+        {emotion:"disappointment",high:15, medium:148, highPct:9.2}
+    ];
+
+    // ── Word Cloud (d3-cloud) ───────────────────────────────────────────
+
+    const cloudContainer = document.getElementById("word-cloud");
+    if (cloudContainer) {
+        const W = Math.min(680, cloudContainer.clientWidth || 680);
+        const H = 320;
+
+        const sizeScale = d3.scaleSqrt()
+            .domain([18, 132])
+            .range([12, 56]);
+
+        const colorScale = d3.scaleLinear()
+            .domain([18, 75, 132])
+            .range(["#a78bfa", "#7c3aed", "#4c1d95"]);
+
+        const layout = cloud()
+            .size([W, H])
+            .words(wordData.map(d => ({ text: d.text, size: d.size })))
+            .padding(3)
+            .rotate(() => (~~(Math.random() * 3) - 1) * 30)
+            .font("'Inter', sans-serif")
+            .fontWeight(d => d.size > 50 ? 700 : d.size > 30 ? 600 : 500)
+            .fontSize(d => sizeScale(d.size))
+            .random(() => 0.5)
+            .on("end", draw);
+
+        layout.start();
+
+        function draw(words) {
+            const svg = d3.select(cloudContainer)
+                .append("svg")
+                .attr("width", W)
+                .attr("height", H)
+                .attr("viewBox", `0 0 ${W} ${H}`)
+                .style("max-width", "100%")
+                .style("height", "auto");
+
+            const g = svg.append("g")
+                .attr("transform", `translate(${W / 2},${H / 2})`);
+
+            g.selectAll("text")
+                .data(words)
+                .join("text")
+                .style("font-size", d => d.size + "px")
+                .style("font-weight", d => d.weight || 500)
+                .style("font-family", "'Inter', sans-serif")
+                .style("fill", d => colorScale(wordData.find(w => w.text === d.text)?.size || 30))
+                .style("cursor", "default")
+                .attr("text-anchor", "middle")
+                .attr("transform", d => `translate(${d.x},${d.y}) rotate(${d.rotate})`)
+                .text(d => d.text)
+                .append("title")
+                .text(d => {
+                    const orig = wordData.find(w => w.text === d.text);
+                    return `${d.text}: ${orig ? orig.size : "?"} occurrences`;
+                });
+        }
+    }
+
+    // ── Trigger × Emotion Stacked Bar (Observable Plot) ────────────────
+
+    const trigContainer = document.getElementById("trigger-chart");
+    if (trigContainer) {
+        const flat = [];
+        for (const t of triggerData) {
+            for (const e of emotions) {
+                if (t[e] > 0) {
+                    flat.push({ trigger: t.trigger, emotion: e, count: t[e] });
+                }
+            }
+        }
+
+        const chart = Plot.plot({
+            width: 680,
+            height: 340,
+            marginLeft: 140,
+            marginBottom: 35,
+            marginTop: 10,
+            style: {
+                fontFamily: "'Inter', sans-serif",
+                fontSize: "12px",
+                background: "transparent"
+            },
+            x: {
+                label: "Events",
+                grid: true,
+                tickSize: 0
+            },
+            y: {
+                label: null,
+                tickSize: 0,
+                domain: triggerData.map(d => d.trigger),
+                padding: 0.25
+            },
+            color: {
+                domain: emotions,
+                range: emotions.map(e => COLORS[e]),
+                legend: true
+            },
+            marks: [
+                Plot.barX(flat, {
+                    x: "count",
+                    y: "trigger",
+                    fill: "emotion",
+                    order: emotions,
+                    rx: 2,
+                    tip: true,
+                    title: d => `${d.trigger}: ${d.count} ${d.emotion}`
+                }),
+                Plot.ruleX([0])
+            ]
+        });
+        trigContainer.appendChild(chart);
+    }
+
+    // ── Message Length Box Plot (Observable Plot) ────────────────────────
+
+    const msgLenContainer = document.getElementById("msg-length-chart");
+    if (msgLenContainer) {
+        // Build synthetic points for each emotion's distribution
+        const rects = [];
+        const medianMarks = [];
+        for (const d of msgLengths) {
+            rects.push({
+                emotion: `${d.emotion} (${d.n})`,
+                q1: d.q1,
+                q3: d.q3,
+                median: d.median,
+                p5: d.p5,
+                p95: d.p95,
+                mean: d.mean,
+                color: COLORS[d.emotion]
+            });
+        }
+
+        const chart = Plot.plot({
+            width: 680,
+            height: 260,
+            marginLeft: 145,
+            marginRight: 20,
+            marginTop: 10,
+            marginBottom: 35,
+            style: {
+                fontFamily: "'Inter', sans-serif",
+                fontSize: "12px",
+                background: "transparent"
+            },
+            x: {
+                label: "Message length (characters)",
+                grid: true,
+                tickSize: 0,
+                domain: [0, 260]
+            },
+            y: {
+                label: null,
+                tickSize: 0,
+                domain: rects.map(d => d.emotion),
+                padding: 0.35
+            },
+            marks: [
+                // Whiskers (p5 to p95)
+                Plot.ruleX(rects, {
+                    x1: "p5",
+                    x2: "p95",
+                    y: "emotion",
+                    stroke: d => COLORS[d.emotion.split(" ")[0]],
+                    strokeWidth: 1.5
+                }),
+                // IQR box
+                Plot.barX(rects, {
+                    x1: "q1",
+                    x2: "q3",
+                    y: "emotion",
+                    fill: d => COLORS[d.emotion.split(" ")[0]],
+                    fillOpacity: 0.3,
+                    rx: 3
+                }),
+                // Median line
+                Plot.tickX(rects, {
+                    x: "median",
+                    y: "emotion",
+                    stroke: d => COLORS[d.emotion.split(" ")[0]],
+                    strokeWidth: 2.5
+                }),
+                // Mean dot
+                Plot.dot(rects, {
+                    x: "mean",
+                    y: "emotion",
+                    fill: d => COLORS[d.emotion.split(" ")[0]],
+                    r: 4,
+                    tip: true,
+                    title: d => `${d.emotion}\nMedian: ${d.median} chars\nMean: ${d.mean} chars\nIQR: ${d.q1}–${d.q3}`
+                })
+            ]
+        });
+        msgLenContainer.appendChild(chart);
+    }
+
+    // ── Session Intensity Distribution (Observable Plot) ─────────────────
+
+    const intensityContainer = document.getElementById("intensity-chart");
+    if (intensityContainer) {
+        // Skip 0 events, focus on sessions that had emotions
+        const nonZero = intensityData.filter(d => d.events > 0);
+
+        const chart = Plot.plot({
+            width: 680,
+            height: 240,
+            marginLeft: 45,
+            marginBottom: 35,
+            marginTop: 10,
+            style: {
+                fontFamily: "'Inter', sans-serif",
+                fontSize: "12px",
+                background: "transparent"
+            },
+            x: {
+                label: "Emotional events per session",
+                tickSize: 0,
+                domain: nonZero.map(d => d.events),
+                padding: 0.25
+            },
+            y: {
+                label: "Sessions",
+                grid: true,
+                tickSize: 0
+            },
+            color: {
+                type: "linear",
+                scheme: "purples",
+                domain: [1, 18]
+            },
+            marks: [
+                Plot.barY(nonZero, {
+                    x: "events",
+                    y: "sessions",
+                    fill: "events",
+                    rx: 2,
+                    tip: true,
+                    title: d => `${d.events} events: ${d.sessions} session${d.sessions > 1 ? "s" : ""}`
+                }),
+                Plot.ruleY([0])
+            ]
+        });
+        intensityContainer.appendChild(chart);
+    }
+
+    // ── Emotion Co-occurrence Heatmap (Observable Plot) ──────────────────
+
+    const cooccurContainer = document.getElementById("cooccurrence-chart");
+    if (cooccurContainer) {
+        const labels = {
+            frustration: "Frust.",
+            disappointment: "Disapp.",
+            anxiety: "Anxiety",
+            anger: "Anger",
+            sadness: "Sadness"
+        };
+        const cellData = cooccurData
+            .filter(d => d.from !== d.to)
+            .map(d => ({
+                ...d,
+                fromLabel: labels[d.from],
+                toLabel: labels[d.to]
+            }));
+
+        const order = emotions.map(e => labels[e]);
+
+        const chart = Plot.plot({
+            width: 440,
+            height: 380,
+            marginLeft: 70,
+            marginBottom: 50,
+            marginTop: 10,
+            padding: 0,
+            style: {
+                fontFamily: "'Inter', sans-serif",
+                fontSize: "12px",
+                background: "transparent"
+            },
+            x: {
+                label: null,
+                tickSize: 0,
+                domain: order,
+                axis: "bottom",
+                tickRotate: -30
+            },
+            y: {
+                label: null,
+                tickSize: 0,
+                domain: order
+            },
+            color: {
+                type: "linear",
+                scheme: "purples",
+                domain: [0, 70],
+                label: "Shared sessions",
+                legend: false
+            },
+            marks: [
+                Plot.cell(cellData, {
+                    x: "toLabel",
+                    y: "fromLabel",
+                    fill: "v",
+                    inset: 2,
+                    rx: 3,
+                    tip: true,
+                    title: d => `${d.from} + ${d.to}\n${d.v} sessions`
+                }),
+                Plot.text(cellData.filter(d => d.v > 0), {
+                    x: "toLabel",
+                    y: "fromLabel",
+                    text: d => d.v,
+                    fill: d => d.v > 35 ? "white" : "#333",
+                    fontSize: 13,
+                    fontWeight: 600
+                })
+            ]
+        });
+        cooccurContainer.appendChild(chart);
+    }
+
+    // ── Classifier Confidence (Observable Plot) ──────────────────────────
+
+    const confContainer = document.getElementById("confidence-chart");
+    if (confContainer) {
+        const chart = Plot.plot({
+            width: 680,
+            height: 200,
+            marginLeft: 145,
+            marginBottom: 35,
+            marginTop: 10,
+            style: {
+                fontFamily: "'Inter', sans-serif",
+                fontSize: "12px",
+                background: "transparent"
+            },
+            x: {
+                label: "Share of high-confidence classifications (>= 0.9)",
+                domain: [0, 100],
+                tickFormat: d => d + "%",
+                tickSize: 0,
+                grid: true
+            },
+            y: {
+                label: null,
+                tickSize: 0,
+                domain: confData.map(d => d.emotion),
+                padding: 0.35
+            },
+            marks: [
+                // Background bar (total)
+                Plot.barX(confData, {
+                    x: 100,
+                    y: "emotion",
+                    fill: "#e5e5e5",
+                    rx: 3
+                }),
+                // High confidence portion
+                Plot.barX(confData, {
+                    x: "highPct",
+                    y: "emotion",
+                    fill: d => COLORS[d.emotion],
+                    rx: 3,
+                    tip: true,
+                    title: d => `${d.emotion}\n${d.highPct}% high confidence (${d.high}/${d.high + d.medium})`
+                }),
+                // Percentage label
+                Plot.text(confData, {
+                    x: d => d.highPct + 3,
+                    y: "emotion",
+                    text: d => `${d.highPct}%`,
+                    fill: "#333",
+                    fontSize: 11,
+                    fontWeight: 600,
+                    textAnchor: "start"
+                })
+            ]
+        });
+        confContainer.appendChild(chart);
+    }
+    </script>
+</body>
+</html>
