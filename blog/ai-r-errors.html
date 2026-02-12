@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>What 213 R Errors Taught Me About AI Coding Assistants | Siyao Zheng</title>
-    <meta name="description" content="I mined 569 AI coding sessions for every R error. The finding: AI makes the exact same mistakes human researchers do — variable name mismatches, path issues, type surprises. Here's the data.">
+    <title>What 713 R Errors Taught Me About AI Coding Assistants | Siyao Zheng</title>
+    <meta name="description" content="I mined 1,237 AI coding sessions for every R error. The finding: AI makes the exact same mistakes human researchers do — variable name mismatches, path issues, type surprises. Here's the data.">
     <script defer data-domain="siyaozheng.org" src="https://plausible.io/js/script.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -386,9 +386,9 @@
 
     <header class="article-header">
         <div class="article-meta">February 12, 2026 &middot; AI for Social Science</div>
-        <h1>What 213 R Errors Taught Me About AI Coding Assistants</h1>
+        <h1>What 713 R Errors Taught Me About AI Coding Assistants</h1>
         <p class="article-subtitle">
-            I mined 569 AI coding sessions for every R error. The finding: AI doesn't make exotic mistakes. It makes <em>your</em> mistakes. Variable typos, broken paths, type surprises. And R is the reason why.
+            I mined 1,237 AI coding sessions for every R error. The finding: AI doesn't make exotic mistakes. It makes <em>your</em> mistakes. Variable typos, broken paths, type surprises. And R is the reason why.
         </p>
     </header>
 
@@ -399,32 +399,32 @@
         </p>
 
         <p>
-            Claude Code logs every session as a structured JSON transcript. 569 sessions over 30 days. I wrote a Python script to extract every R error from those transcripts, parsing stderr output and matching error patterns. 213 errors across 61 sessions.
+            Claude Code logs every session as a structured JSON transcript. 1,237 sessions over 33 days, across all my research projects. I wrote a Python script to extract every R error from those transcripts, parsing stderr output and matching error patterns. 713 unique errors across 168 sessions.
         </p>
 
         <p>
-            What I found was not what I expected.
+            I expected to find exotic failures &mdash; hallucinated function names, impossible syntax, the kind of mistakes only an AI would make. Instead, I found my own mistakes staring back at me.
         </p>
 
         <h2>The Numbers</h2>
 
         <div class="big-stat">
             <div class="big-stat-item">
-                <div class="big-stat-number">569</div>
+                <div class="big-stat-number">1,237</div>
                 <div class="big-stat-label">Coding Sessions</div>
             </div>
             <div class="big-stat-item">
-                <div class="big-stat-number">213</div>
+                <div class="big-stat-number">713</div>
                 <div class="big-stat-label">R Errors</div>
             </div>
             <div class="big-stat-item">
-                <div class="big-stat-number">89%</div>
+                <div class="big-stat-number">86%</div>
                 <div class="big-stat-label">Error-Free Sessions</div>
             </div>
         </div>
 
         <p>
-            First, the good news: 89% of sessions produced zero R errors. The AI is not constantly breaking things. But when errors do happen, the pattern is interesting.
+            86% of sessions produced zero R errors. The AI is not constantly breaking things. But those 713 errors across the remaining 14% tell a story, and the story is not about AI.
         </p>
 
         <table class="data-table">
@@ -438,64 +438,82 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Variable name doesn't exist</td>
-                    <td class="num accent">36</td>
-                    <td class="num">17%</td>
+                    <td>Variable/object not found</td>
+                    <td class="num accent">160</td>
+                    <td class="num">22%</td>
                     <td>Renamed in one file, forgot another</td>
                 </tr>
                 <tr>
-                    <td>Parallel worker failures</td>
-                    <td class="num accent">37</td>
+                    <td>Type and dimension errors</td>
+                    <td class="num accent">137</td>
+                    <td class="num">19%</td>
+                    <td>haven_labelled, subscript out of bounds, factor/numeric confusion</td>
+                </tr>
+                <tr>
+                    <td>File path and IO errors</td>
+                    <td class="num accent">123</td>
                     <td class="num">17%</td>
-                    <td>HPC infrastructure, not code logic</td>
+                    <td>Spaces in paths, wrong root directory, corrupt files</td>
                 </tr>
                 <tr>
-                    <td>File path errors</td>
-                    <td class="num accent">18</td>
-                    <td class="num">8%</td>
-                    <td>Spaces in paths, wrong root directory</td>
+                    <td>Package and API issues</td>
+                    <td class="num">65</td>
+                    <td class="num">9%</td>
+                    <td>Missing package, API renames, Quarto/igraph</td>
                 </tr>
                 <tr>
-                    <td>Quarto rendering</td>
-                    <td class="num">9</td>
+                    <td>Syntax errors</td>
+                    <td class="num">47</td>
+                    <td class="num">7%</td>
+                    <td>Escape characters, unexpected symbols</td>
+                </tr>
+                <tr>
+                    <td>Runtime logic errors</td>
+                    <td class="num">44</td>
+                    <td class="num">6%</td>
+                    <td>if() on NA, pipe chain failures, grid/ggplot</td>
+                </tr>
+                <tr>
+                    <td>Wrong function arguments</td>
+                    <td class="num">29</td>
                     <td class="num">4%</td>
-                    <td>Quarto CLI unstable when called from R</td>
+                    <td>Unused arguments, misspecified options</td>
                 </tr>
                 <tr>
-                    <td>igraph API changes</td>
-                    <td class="num">8</td>
+                    <td>Infrastructure failures</td>
+                    <td class="num">51</td>
+                    <td class="num">7%</td>
+                    <td>HPC workers, targets lock, C++ compilation</td>
+                </tr>
+                <tr>
+                    <td>Numerical/convergence</td>
+                    <td class="num">24</td>
+                    <td class="num">3%</td>
+                    <td>Singular matrix, memory limits, hIRT initialization</td>
+                </tr>
+                <tr>
+                    <td>Known pitfalls (mice)</td>
+                    <td class="num">7</td>
+                    <td class="num">1%</td>
+                    <td>Documented bugs, hit repeatedly</td>
+                </tr>
+                <tr>
+                    <td>Missing function/method</td>
+                    <td class="num">25</td>
                     <td class="num">4%</td>
-                    <td>Package updated, function names changed</td>
-                </tr>
-                <tr>
-                    <td>haven_labelled types</td>
-                    <td class="num">5</td>
-                    <td class="num">2%</td>
-                    <td>Survey data carrying hidden type metadata</td>
-                </tr>
-                <tr>
-                    <td>Known pitfall (mice)</td>
-                    <td class="num">5</td>
-                    <td class="num">2%</td>
-                    <td>Same documented bug, hit repeatedly</td>
-                </tr>
-                <tr>
-                    <td>Wrapped/unclear messages</td>
-                    <td class="num">76</td>
-                    <td class="num">36%</td>
-                    <td>Real error buried inside pipeline wrapper</td>
+                    <td>Function removed or not exported</td>
                 </tr>
             </tbody>
         </table>
 
         <p>
-            Let me walk through the most interesting categories.
+            The top three categories &mdash; wrong names, wrong types, wrong paths &mdash; account for 58% of all errors. Every R programmer will recognize them immediately. They share a single root cause: <strong>R gives you no feedback about code correctness until the code actually runs.</strong> This is what the rest of this post is about.
         </p>
 
-        <h2>Error #1: "Object Not Found" &mdash; The Chronic Disease</h2>
+        <h2>R Has No Compiler (And That Changes Everything)</h2>
 
         <p>
-            36 errors. 17% of the total. All variations of the same theme:
+            The single largest category: 160 naming errors, 22% of the total. The AI renames a variable in one file &mdash; say, changing <code>income_level</code> to <code>income_percentile</code> in the data cleaning script &mdash; and misses a reference downstream. A regression formula, a config file, a visualization three pipeline steps later.
         </p>
 
         <div class="error-block">
@@ -509,15 +527,11 @@
         </div>
 
         <p>
-            The pattern is always the same. The AI renames a variable in one file, say changing <code>income_level</code> to <code>income_percentile</code> in the data cleaning script, and misses a reference somewhere downstream. A regression formula, a visualization, a config file.
+            This is not an AI-specific problem. It is the most common mistake every R programmer makes. I've done it myself more times than I'd like to admit. But it reveals something fundamental about why R is different from the languages where AI coding assistants shine.
         </p>
 
         <p>
-            This is not an AI-specific problem. <strong>This is the most common mistake every R programmer makes.</strong> I've done it myself more times than I'd like to admit. The AI does it for the same reason you do: R gives you <em>zero feedback</em> that something is wrong until the pipeline actually reaches that line and crashes.
-        </p>
-
-        <p>
-            In Python, referencing an undefined name raises <code>NameError</code> immediately. In Go or Rust, the compiler refuses to build. In R, your pipeline hums along for thirty minutes, loading data, fitting models, running imputation, and only fails at minute 31 when it finally hits the line with the wrong name.
+            In Python, referencing an undefined name raises <code>NameError</code> immediately. In Go or Rust, the compiler refuses to build. In R, your pipeline hums along for thirty minutes &mdash; loading data, fitting models, running imputation &mdash; and only crashes at minute 31 when it finally reaches the line with the wrong name.
         </p>
 
         <pre><code># This runs for 30 minutes before failing
@@ -529,37 +543,52 @@ results &lt;- run_regressions(imps)
 # Error: object 'income_level' not found   # minute 31</code></pre>
 
         <p>
-            The AI has no way to "compile" R code. It writes the edit, it looks correct, and nothing validates it until runtime. That's why naming errors are the <em>only</em> category that persisted across the entire month. Every other error type was fixed once and stayed fixed. Naming errors kept recurring because R's lack of static checking never goes away.
+            The AI has no way to "compile" R code. It writes the edit, it looks correct, and nothing validates it until runtime. This is why naming errors were the <em>only</em> category that persisted across the entire month. Type errors were fixed once and stayed fixed. Path issues were resolved and didn't return. Only naming errors kept recurring, from the first week to the last day, because R's lack of static analysis is a permanent condition.
         </p>
 
         <div class="callout">
-            <p>The chronic vs. acute distinction</p>
-            <p>Most error categories follow an "acute" pattern: they appear during a specific refactoring, get fixed, and don't return. The <code>haven_labelled</code> errors appeared five times between Jan 24 and Feb 1, were fixed, and never returned. The <code>mice printFlag</code> bug appeared five times between Jan 27 and Feb 1, same story. Only variable naming errors persisted from the first week to the last day. They are a <em>chronic</em> condition, not an acute one, because R has no mechanism to prevent them.</p>
+            <p>Chronic vs. acute</p>
+            <p>Most error categories follow an "acute" pattern: they cluster around a specific refactoring, get fixed, and don't return. The <code>haven_labelled</code> type errors appeared in late January, were resolved, and never came back. The <code>mice</code> configuration bugs, same story. Only naming errors are <em>chronic</em> &mdash; a permanent condition of working in a language with no compile step.</p>
         </div>
 
-        <h2>Error #2: The Infrastructure Tax</h2>
+        <h2>Your Data Is Lying About Its Type</h2>
 
         <p>
-            37 errors from parallel computing workers. Same percentage as naming errors, but a completely different story. These are not logic errors. They are infrastructure failures:
+            If you're a quantitative social scientist, this section is about you specifically.
+        </p>
+
+        <p>
+            137 errors &mdash; 19% of the total &mdash; came from type and dimension mismatches. The most revealing variety involves survey data. When you load a Stata <code>.dta</code> file with <code>haven::read_dta()</code>, what you get back is not a normal data frame. The columns carry invisible metadata &mdash; value labels, variable labels, format specifications &mdash; encoded as a special <code>haven_labelled</code> type. It <em>looks</em> like a numeric vector. It prints like one. It isn't one.
         </p>
 
         <div class="error-block">
-            Error: could not receive a message from worker 3.<br>
-            mirai connection reset.
+            Error: &lt;haven_labelled&gt; - &lt;haven_labelled&gt; is not permitted
+        </div>
+
+        <div class="error-block">
+            Error: Can't combine &lt;haven_labelled&gt; and &lt;double&gt;.
         </div>
 
         <p>
-            When you run a research pipeline on a computing cluster (SLURM), you distribute work across multiple nodes. Workers start, connect, compute, return results. Sometimes a worker fails to start. Sometimes the network drops. Sometimes the scheduler kills a job for exceeding time limits.
+            Basic arithmetic fails. <code>bind_rows()</code> fails. The data looks numeric but doesn't behave numerically. The fix is a single function call &mdash; <code>haven::zap_labels()</code> &mdash; but you have to know to call it <em>immediately</em> after loading, before the labelled values propagate through the pipeline. Three files and two hours later, something breaks with an incomprehensible type error, and the root cause is a data type that never should have existed past line 10 of your cleaning script.
         </p>
 
         <p>
-            None of this is the AI's fault. It's the inherent unreliability of distributed computing. But it matters for an important reason: <strong>the AI has no way to distinguish "my code is wrong" from "the infrastructure had a hiccup."</strong> Both look like errors in the log. Both require investigation. When 17% of your errors are transient infrastructure failures, the AI wastes significant effort debugging phantom bugs.
+            This is a trap that only affects people who work with survey data stored in Stata or SPSS format &mdash; which is to say, a large fraction of quantitative social scientists. The AI doesn't know about <code>haven_labelled</code> unless it's been told. It sees a data frame, assumes it's a normal data frame, and writes perfectly reasonable code that fails for invisible reasons.
         </p>
 
-        <h2>Error #3: Paths With Spaces</h2>
+        <p>
+            The broader category includes other R type traps: subscript-out-of-bounds after unexpected filtering, factor/numeric confusion when columns were silently coerced, dimension mismatches after merges that dropped rows. All invisible until runtime. All correct-looking code meeting incorrect-at-runtime data.
+        </p>
+
+        <h2>The Gap Between Your Code and Your Computer</h2>
 
         <p>
-            18 path-related errors. If you're on macOS and your project lives in Dropbox, you probably have a path like:
+            174 errors &mdash; 24% of the total &mdash; have nothing to do with analytical logic. They come from the messy reality of how research computing actually works.
+        </p>
+
+        <p>
+            The biggest sub-category: file paths (123 errors). If you're on macOS and your project lives in Dropbox, you probably have a path like:
         </p>
 
         <pre><code>/Users/you/Dropbox/My Research Project/code/R/model.R</code></pre>
@@ -573,43 +602,21 @@ results &lt;- run_regressions(imps)
         </div>
 
         <p>
-            The path got truncated at the space. The AI writes the <code>system()</code> call without quoting the path, which is the same mistake I've made dozens of times. The fix is always the same: wrap the path in quotes. But the AI doesn't retain this lesson across sessions because each new <code>system()</code> call is a new context.
+            The AI writes the <code>system()</code> call without quoting the path &mdash; the same mistake I've made dozens of times. The fix is always the same: wrap the path in quotes. But the AI doesn't retain this lesson across sessions, because each new <code>system()</code> call is a new context. Separately, R's <code>here::here()</code> function can resolve to the <em>wrong</em> project root when a <code>renv.lock</code> file sits in a subdirectory. In our project, this sent every file lookup to <code>code/Data/</code> instead of <code>Data/</code>. A symlink fixed it, but the AI had to rediscover the problem. Multiple times.
         </p>
 
         <p>
-            A related sub-category: R's <code>here::here()</code> function, which is supposed to resolve paths relative to the project root, can resolve to the <em>wrong</em> root if there's a <code>renv.lock</code> file in a subdirectory. In our project, <code>here::here()</code> resolved to <code>code/</code> instead of the project root, because <code>renv.lock</code> lives in <code>code/</code>. So <code>here::here("Data", "surveys.csv")</code> looked in <code>code/Data/</code> instead of <code>Data/</code>. A symlink fixed it, but the AI had to discover this the hard way. Multiple times.
+            Then there's infrastructure (51 errors): the code is correct, but the environment fails. HPC workers crash mid-computation. Network connections drop between nodes. The <a href="https://docs.ropensci.org/targets/">targets</a> pipeline manager accumulates stale lock files that block new runs. C++ dependencies fail to compile on a remote cluster's older toolchain. None of this is the AI's fault. But <strong>the AI cannot distinguish "my code is wrong" from "the infrastructure had a hiccup"</strong> &mdash; both produce identical-looking errors in the log, and both send it down the wrong debugging path.
         </p>
 
-        <h2>Error #4: Survey Data's Hidden Type System</h2>
+        <h2>What the AI Remembers (and What It Doesn't)</h2>
 
         <p>
-            Only 5 errors, but they deserve attention because they're specific to social science workflows.
-        </p>
-
-        <p>
-            When you load a Stata <code>.dta</code> file with <code>haven::read_dta()</code>, what you get is not a normal data frame. The columns carry invisible metadata (value labels, variable labels, format specifications) encoded as a special <code>haven_labelled</code> type. This type <em>looks</em> like a regular numeric vector. It prints like one. But it's not:
-        </p>
-
-        <div class="error-block">
-            Error: &lt;haven_labelled&gt; - &lt;haven_labelled&gt; is not permitted
-        </div>
-
-        <div class="error-block">
-            Error: Can't combine &lt;haven_labelled&gt; and &lt;double&gt;.
-        </div>
-
-        <p>
-            Basic arithmetic fails. <code>bind_rows()</code> fails. Comparisons fail. The data looks numeric but doesn't behave numerically. The fix is a single function call: <code>haven::zap_labels()</code> strips the metadata and returns a plain data frame. But you have to know to call it, and you have to call it <em>immediately</em> after loading, before the labelled values propagate through the pipeline.
+            Seven errors, barely 1% of the total, but they reveal something important about how AI coding assistants actually work.
         </p>
 
         <p>
-            The AI doesn't know about <code>haven_labelled</code> unless it's been told. It sees a data frame, assumes it's a normal data frame, and writes code accordingly. Three files and two hours later, something breaks with an incomprehensible type error. This is a domain-specific trap: it only affects people who work with survey data stored in Stata format, which is to say, a large fraction of quantitative social scientists.
-        </p>
-
-        <h2>Error #5: The Same Bug, Five Times</h2>
-
-        <p>
-            This one surprised me. The <code>mice</code> package (multiple imputation) has a known quirk: when using the parallel variant <code>futuremice()</code>, you must <em>not</em> pass the <code>printFlag</code> argument, because the function passes it internally. If you pass it too, R complains:
+            The <code>mice</code> package for multiple imputation has a known quirk: when using its parallel variant <code>futuremice()</code>, you must <em>not</em> pass the <code>printFlag</code> argument, because the function passes it internally. Pass it anyway, and R complains:
         </p>
 
         <div class="error-block">
@@ -617,73 +624,14 @@ results &lt;- run_regressions(imps)
         </div>
 
         <p>
-            This was documented in our project notes from the start. Yet the AI hit this bug five times across four sessions (Jan 27, Jan 29, Jan 31, Feb 1). Each time it was modifying the <code>mice</code> code for some other reason, and each time it re-introduced the <code>printFlag</code> argument because, from the AI's perspective, passing <code>printFlag = FALSE</code> to a <code>mice</code>-like function is the obviously correct thing to do.
+            This was documented in our project notes from the start. Yet the AI kept re-introducing <code>printFlag = FALSE</code> every time it touched the imputation code for other reasons. Each time, from the AI's perspective, passing <code>printFlag = FALSE</code> to a <code>mice</code>-like function is the obviously correct thing to do &mdash; it has seen thousands of examples of exactly this pattern in its training data.
         </p>
 
         <p>
-            This reveals something important about how AI coding assistants work: <strong>they have strong priors from training data that can override project-specific knowledge.</strong> The AI has seen thousands of examples of <code>mice(..., printFlag = FALSE)</code> in its training data. Our project note saying "don't pass printFlag to futuremice" is one instruction competing against that overwhelming prior. The prior wins, repeatedly, until the code is structured in a way that makes the error impossible rather than merely inadvisable.
+            This is the tension at the heart of AI-assisted coding: <strong>the model has strong priors from training data that can override project-specific knowledge.</strong> Our project note saying "don't pass printFlag to futuremice" is one instruction competing against an overwhelming statistical prior. The prior wins, repeatedly, until the code is structured to make the error <em>impossible</em> rather than merely inadvisable. For researchers relying on AI assistants, the lesson is architectural: don't tell the AI what not to do; design your code so the wrong thing can't be done.
         </p>
 
-        <h2>Error #6: The Black Box Pipeline</h2>
-
-        <p>
-            The largest category: 76 errors (36%) where the actual error message was buried inside a pipeline wrapper. The <a href="https://docs.ropensci.org/targets/">targets</a> package, which manages pipeline execution, catches errors from individual steps and re-throws them with a generic wrapper:
-        </p>
-
-        <div class="error-block">
-            Error running targets::tar_make()
-        </div>
-
-        <p>
-            The real error (the <code>object 'income_level' not found</code> or the <code>haven_labelled</code> type mismatch) is buried in stderr, or in a metadata file you have to know to check. For more than a third of all errors, the AI's first task isn't fixing the bug. It's <em>finding</em> the bug, digging through pipeline logs and metadata tables to trace it back to its source.
-        </p>
-
-        <p>
-            The most frequently failing pipeline targets tell their own story:
-        </p>
-
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>Pipeline Target</th>
-                    <th class="num">Failures</th>
-                    <th>Typical Root Cause</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><code>mice_imputation</code></td>
-                    <td class="num accent">13</td>
-                    <td>Worker crashes + printFlag + data issues</td>
-                </tr>
-                <tr>
-                    <td><code>viz_self_censorship</code></td>
-                    <td class="num accent">12</td>
-                    <td>Function API changes during active refactoring</td>
-                </tr>
-                <tr>
-                    <td><code>raw_abs</code></td>
-                    <td class="num accent">10</td>
-                    <td>File paths + haven_labelled types</td>
-                </tr>
-                <tr>
-                    <td><code>nocov_models</code></td>
-                    <td class="num">8</td>
-                    <td>Model convergence + worker failures</td>
-                </tr>
-                <tr>
-                    <td><code>processed_data</code></td>
-                    <td class="num">6</td>
-                    <td>Variable renames not propagated</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <p>
-            The visualization target (<code>viz_self_censorship</code>) is the second most error-prone, not because visualization is hard, but because it was being actively refactored during that period.
-        </p>
-
-        <h2>The Temporal Pattern: Errors Follow Refactoring</h2>
+        <h2>Errors Follow the Calendar</h2>
 
         <p>
             Errors are not uniformly distributed. They cluster around major refactoring events:
@@ -691,52 +639,44 @@ results &lt;- run_regressions(imps)
 
         <div class="timeline">
             <div class="timeline-item">
-                <div class="timeline-date">Jan 29 &mdash; <span class="timeline-count">37 errors</span></div>
-                <p>Restructured pipeline from flat <code>functions/</code> directory to modular <code>R/</code> package layout</p>
+                <div class="timeline-date">Feb 1 &mdash; <span class="timeline-count">94 errors</span></div>
+                <p>Full-scale imputation run + regression model rewrite</p>
             </div>
             <div class="timeline-item">
-                <div class="timeline-date">Jan 31 &mdash; <span class="timeline-count">33 errors</span></div>
+                <div class="timeline-date">Jan 31 &mdash; <span class="timeline-count">88 errors</span></div>
                 <p>Unified loading of 33 surveys into a single function + new analysis module</p>
             </div>
             <div class="timeline-item">
-                <div class="timeline-date">Feb 2 &mdash; <span class="timeline-count">23 errors</span></div>
-                <p>First full-scale multiple imputation run (m=20, distributed across HPC)</p>
+                <div class="timeline-date">Feb 10 &mdash; <span class="timeline-count">66 errors</span></div>
+                <p>Visualization refactoring + beamer presentation pipeline</p>
             </div>
             <div class="timeline-item">
-                <div class="timeline-date">Feb 6 &mdash; <span class="timeline-count">22 errors</span></div>
-                <p>Regression models + dominance analysis rewrite</p>
+                <div class="timeline-date">Feb 2 &mdash; <span class="timeline-count">55 errors</span></div>
+                <p>First full-scale multiple imputation run (m=20, distributed across HPC)</p>
             </div>
         </div>
 
         <p>
-            These four days account for 54% of all errors. The remaining 26 days account for 46%. Major refactoring naturally produces errors, that's not news. What's interesting is the <em>type</em> of errors that dominate during refactoring: almost entirely naming errors and propagation failures. The AI restructures the code correctly in the files it touches, but misses references in files it didn't think to update.
+            Four days, 42% of all errors. The pattern is clear: errors spike when the project is being restructured, not when the AI is doing routine analytical work. And the errors that dominate during refactoring are almost entirely naming errors &mdash; the AI restructures code correctly in the files it touches, but misses references in files it didn't think to update. This is the same blind spot every human programmer has. You remember to update the three files you have open. You forget about the config file you last touched two weeks ago.
+        </p>
+
+        <h2>So What?</h2>
+
+        <p>
+            Here's what I keep coming back to: <strong>AI coding errors in R are not AI-specific errors. They are R-specific errors.</strong> The AI doesn't hallucinate function names or invent impossible syntax. It makes the same mistakes I make, for the same structural reasons.
         </p>
 
         <p>
-            This is the same pattern you see with human refactoring. When you rename a function, you remember to update the three files you have open. You forget about the config file you last touched two weeks ago. The AI has the same blind spot, for the same reason: neither of you has a complete, always-current map of every reference in the project.
-        </p>
-
-        <h2>So what?</h2>
-
-        <p>
-            Here's what I keep coming back to: <strong>AI coding errors in R are not AI-specific errors. They are R-specific errors.</strong> The AI doesn't hallucinate function names or invent impossible syntax. It makes the same mistakes I make, for the same reasons.
+            R is dynamically typed, lazily evaluated, and has no compile step. A misspelled variable is only caught when the line executes, potentially hours into a pipeline. A type mismatch &mdash; <code>haven_labelled</code> vs. <code>double</code> &mdash; is invisible until an operation fails. A file path with a space in it works inside R but breaks when passed to the shell. None of these have compile-time equivalents. There is no way to "build" a multi-file R project and check for consistency before running it.
         </p>
 
         <p>
-            R is dynamically typed, lazily evaluated, and has no compile step. A misspelled variable is only caught when the line executes, potentially hours into a pipeline. A type mismatch (<code>haven_labelled</code> vs. <code>double</code>) is invisible until an operation fails. There's no way to "build" a multi-file R project and check for consistency before running it.
-        </p>
-
-        <p>
-            These aren't bugs in R. They are design choices that prioritize interactivity and flexibility, which is what makes R so good for exploratory data analysis. But they also mean that neither humans nor AI gets any structural feedback about code correctness until something breaks at runtime.
-        </p>
-
-        <p>
-            In languages with static tooling (TypeScript, Rust, Go), the same AI assistant makes far fewer of these errors, because the compiler catches them before execution. The AI writes code, the compiler says "this variable doesn't exist," the AI fixes it, and the user never sees the error. R doesn't have that feedback loop.
+            These aren't bugs in R. They are design choices that prioritize interactivity and flexibility &mdash; exactly what makes R excellent for exploratory data analysis. But they also mean that neither humans nor AI gets any structural feedback about code correctness until something breaks at runtime. In languages with static tooling (TypeScript, Rust, Go), the same AI assistant makes far fewer of these errors, because the compiler catches them before execution. R doesn't have that feedback loop.
         </p>
 
         <div class="callout">
             <p>What I'm trying next</p>
-            <p>If the AI's biggest weakness in R is the same as mine (no structural feedback before runtime), then the solution probably isn't making the AI smarter. It's giving it better tools. R's <a href="https://github.com/REditorSupport/languageserver">Language Server</a> already provides some of this for IDE users: undefined variable detection, cross-file references, scope-aware renaming. I've been experimenting with making these same capabilities available to the AI assistant directly. Whether that actually reduces the error rate is a question I'll take up in a future post.</p>
+            <p>If the AI's biggest weakness in R is the same as mine &mdash; no structural feedback before runtime &mdash; then the solution probably isn't making the AI smarter. It's giving it better tools. R's <a href="https://github.com/REditorSupport/languageserver">Language Server</a> already provides some of this for IDE users: undefined variable detection, cross-file references, scope-aware renaming. I've been experimenting with making these same capabilities available to the AI assistant directly. Whether that actually reduces the error rate is a question I'll take up in a future post.</p>
         </div>
 
         <hr>
