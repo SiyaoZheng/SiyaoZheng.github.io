@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Siyao Zheng</title>
+    <meta name="description" content="Notes on computational social science, AI-assisted research, and R programming.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #fafafa;
+            --bg-alt: #f5f5f5;
+            --accent: #7c3aed;
+            --accent-light: #8b5cf6;
+            --text: #171717;
+            --text-secondary: #737373;
+            --border: #e5e5e5;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            padding: 1.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(250, 250, 250, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: 0.02em;
+            text-decoration: none;
+        }
+
+        .nav-links { display: flex; gap: 2.5rem; }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 1px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* Page Header */
+        .page-header {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 8rem 2rem 3rem;
+        }
+
+        .page-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text);
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 550px;
+        }
+
+        /* Post List */
+        .post-list {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem 6rem;
+        }
+
+        .post-item {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 2.5rem;
+            padding: 2.5rem 0;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.3s ease;
+        }
+
+        .post-item:first-child {
+            border-top: 1px solid var(--border);
+        }
+
+        .post-item:hover {
+            background: linear-gradient(90deg, var(--bg-alt) 0%, transparent 100%);
+            padding-left: 1.5rem;
+            margin-left: -1.5rem;
+        }
+
+        .post-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--accent);
+            padding-top: 0.2rem;
+        }
+
+        .post-content h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.6rem;
+            line-height: 1.35;
+        }
+
+        .post-content h3 a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .post-content h3 a:hover {
+            color: var(--accent);
+        }
+
+        .post-excerpt {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 0.8rem;
+        }
+
+        .post-tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.25rem 0.7rem;
+            background: var(--text);
+            color: white;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem 4rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            nav { padding: 1rem 2rem; }
+            .nav-links { gap: 1.5rem; }
+            .nav-links a { font-size: 0.75rem; }
+        }
+
+        @media (max-width: 600px) {
+            nav { padding: 1rem 1.5rem; }
+            .nav-name { font-size: 1.2rem; }
+            .nav-links { display: none; }
+            .page-header { padding: 7rem 1.5rem 2rem; }
+            .page-header h1 { font-size: 2.5rem; }
+            .post-list { padding: 0 1.5rem 4rem; }
+            .post-item { grid-template-columns: 1fr; gap: 0.5rem; }
+            footer { padding: 1.5rem; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a class="nav-name" href="/">Siyao Zheng</a>
+        <div class="nav-links">
+            <a href="/#publications">Publications</a>
+            <a href="/#teaching">Teaching</a>
+            <a href="/#cv">CV</a>
+            <a href="/blog/">Blog</a>
+            <a href="/#contact">Contact</a>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="page-label">Notes &amp; Reflections</div>
+        <h1>Blog</h1>
+        <p class="page-subtitle">
+            Notes on research, code, and everything in between.
+        </p>
+    </header>
+
+    <div class="post-list">
+        <div class="post-item">
+            <div class="post-date">2026.02.12</div>
+            <div class="post-content">
+                <h3><a href="/blog/ai-r-errors.html">What 213 R Errors Taught Me About AI Coding Assistants</a></h3>
+                <p class="post-excerpt">
+                    I mined 569 AI coding sessions for every R error. The finding: AI doesn't make exotic mistakes. It makes <em>your</em> mistakes &mdash; the same variable typos, the same path bugs, the same type surprises. And R is the reason why.
+                </p>
+                <span class="post-tag">AI for Social Science</span>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Siyao Zheng &middot; <a href="/">Home</a></p>
+    </footer>
+</body>
+</html>

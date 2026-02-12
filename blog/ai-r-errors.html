@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What 213 R Errors Taught Me About AI Coding Assistants | Siyao Zheng</title>
+    <meta name="description" content="I mined 569 AI coding sessions for every R error. The finding: AI makes the exact same mistakes human researchers do — variable name mismatches, path issues, type surprises. Here's the data.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #fafafa;
+            --bg-alt: #f5f5f5;
+            --accent: #7c3aed;
+            --accent-light: #8b5cf6;
+            --text: #171717;
+            --text-secondary: #737373;
+            --border: #e5e5e5;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            padding: 1.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(250, 250, 250, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: 0.02em;
+            text-decoration: none;
+        }
+
+        .nav-links { display: flex; gap: 2.5rem; }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 1px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* Article Layout */
+        .article-header {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 8rem 2rem 3rem;
+        }
+
+        .article-meta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .article-header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            line-height: 1.15;
+            color: var(--text);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .article-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 620px;
+        }
+
+        /* Article Body */
+        .article-body {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 2rem 6rem;
+        }
+
+        .article-body p {
+            font-size: 1.05rem;
+            line-height: 1.85;
+            color: var(--text);
+            margin-bottom: 1.5rem;
+        }
+
+        .article-body h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 3rem 0 1.2rem;
+            letter-spacing: -0.01em;
+        }
+
+        .article-body h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 2.5rem 0 1rem;
+        }
+
+        .article-body a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .article-body a:hover {
+            border-bottom-color: var(--accent);
+        }
+
+        .article-body ul, .article-body ol {
+            margin: 0 0 1.5rem 1.5rem;
+            font-size: 1.05rem;
+            line-height: 1.85;
+        }
+
+        .article-body li { margin-bottom: 0.5rem; }
+        .article-body strong { font-weight: 600; }
+
+        /* Code */
+        .article-body code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.88rem;
+            background: var(--bg-alt);
+            padding: 0.15rem 0.4rem;
+            border-radius: 3px;
+            border: 1px solid var(--border);
+        }
+
+        .article-body pre {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 1.5rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1.5rem 0 2rem;
+            line-height: 1.6;
+        }
+
+        .article-body pre code {
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: 0.85rem;
+            color: inherit;
+        }
+
+        /* Callout */
+        .callout {
+            border-left: 3px solid var(--accent);
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0 2rem;
+            background: var(--bg-alt);
+        }
+
+        .callout p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .callout p:first-child {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0 2rem;
+            font-size: 0.95rem;
+        }
+
+        .data-table th {
+            text-align: left;
+            padding: 0.8rem 1rem;
+            border-bottom: 2px solid var(--text);
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .data-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        .data-table .num {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            text-align: right;
+        }
+
+        .data-table .accent {
+            color: var(--accent);
+        }
+
+        /* Error block */
+        .error-block {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 6px;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0 2rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.88rem;
+            color: #991b1b;
+            line-height: 1.6;
+        }
+
+        /* Big stat */
+        .big-stat {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .big-stat-item {
+            flex: 1;
+            text-align: center;
+        }
+
+        .big-stat-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1.2;
+        }
+
+        .big-stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-top: 0.3rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin: 1.5rem 0 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 1.5rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.45rem;
+            width: 8px; height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .timeline-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-bottom: 0.2rem;
+        }
+
+        .timeline-item p {
+            font-size: 0.95rem;
+            margin-bottom: 0;
+            line-height: 1.6;
+        }
+
+        .timeline-count {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+        }
+
+        /* Separator */
+        .article-body hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 3rem 0;
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem 4rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        footer a { color: var(--accent); text-decoration: none; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            nav { padding: 1rem 2rem; }
+            .nav-links { gap: 1.5rem; }
+            .nav-links a { font-size: 0.75rem; }
+        }
+
+        @media (max-width: 600px) {
+            nav { padding: 1rem 1.5rem; }
+            .nav-name { font-size: 1.2rem; }
+            .nav-links { display: none; }
+            .article-header { padding: 7rem 1.5rem 2rem; }
+            .article-header h1 { font-size: 2rem; }
+            .article-body { padding: 0 1.5rem 4rem; }
+            .big-stat { flex-direction: column; gap: 1rem; }
+            .big-stat-number { font-size: 2rem; }
+            footer { padding: 1.5rem; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a class="nav-name" href="/">Siyao Zheng</a>
+        <div class="nav-links">
+            <a href="/#publications">Publications</a>
+            <a href="/#teaching">Teaching</a>
+            <a href="/#cv">CV</a>
+            <a href="/blog/">Blog</a>
+            <a href="/#contact">Contact</a>
+        </div>
+    </nav>
+
+    <header class="article-header">
+        <div class="article-meta">February 12, 2026 &middot; AI for Social Science</div>
+        <h1>What 213 R Errors Taught Me About AI Coding Assistants</h1>
+        <p class="article-subtitle">
+            I mined 569 AI coding sessions for every R error. The finding: AI doesn't make exotic mistakes. It makes <em>your</em> mistakes. Variable typos, broken paths, type surprises. And R is the reason why.
+        </p>
+    </header>
+
+    <article class="article-body">
+
+        <p>
+            Over the past month, I used <a href="https://docs.anthropic.com/en/docs/claude-code/overview">Claude Code</a> (Anthropic's AI coding assistant) to help build a large R-based research pipeline. Survey data from multiple sources, latent variable models, multiple imputation, regression analysis. The kind of project that grows to 40+ R files and hundreds of variables scattered across config files and model specifications.
+        </p>
+
+        <p>
+            Claude Code logs every session as a structured JSON transcript. 569 sessions over 30 days. I wrote a Python script to extract every R error from those transcripts, parsing stderr output and matching error patterns. 213 errors across 61 sessions.
+        </p>
+
+        <p>
+            What I found was not what I expected.
+        </p>
+
+        <h2>The Numbers</h2>
+
+        <div class="big-stat">
+            <div class="big-stat-item">
+                <div class="big-stat-number">569</div>
+                <div class="big-stat-label">Coding Sessions</div>
+            </div>
+            <div class="big-stat-item">
+                <div class="big-stat-number">213</div>
+                <div class="big-stat-label">R Errors</div>
+            </div>
+            <div class="big-stat-item">
+                <div class="big-stat-number">89%</div>
+                <div class="big-stat-label">Error-Free Sessions</div>
+            </div>
+        </div>
+
+        <p>
+            First, the good news: 89% of sessions produced zero R errors. The AI is not constantly breaking things. But when errors do happen, the pattern is interesting.
+        </p>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Error Category</th>
+                    <th class="num">Count</th>
+                    <th class="num">%</th>
+                    <th>In Plain English</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Variable name doesn't exist</td>
+                    <td class="num accent">36</td>
+                    <td class="num">17%</td>
+                    <td>Renamed in one file, forgot another</td>
+                </tr>
+                <tr>
+                    <td>Parallel worker failures</td>
+                    <td class="num accent">37</td>
+                    <td class="num">17%</td>
+                    <td>HPC infrastructure, not code logic</td>
+                </tr>
+                <tr>
+                    <td>File path errors</td>
+                    <td class="num accent">18</td>
+                    <td class="num">8%</td>
+                    <td>Spaces in paths, wrong root directory</td>
+                </tr>
+                <tr>
+                    <td>Quarto rendering</td>
+                    <td class="num">9</td>
+                    <td class="num">4%</td>
+                    <td>Quarto CLI unstable when called from R</td>
+                </tr>
+                <tr>
+                    <td>igraph API changes</td>
+                    <td class="num">8</td>
+                    <td class="num">4%</td>
+                    <td>Package updated, function names changed</td>
+                </tr>
+                <tr>
+                    <td>haven_labelled types</td>
+                    <td class="num">5</td>
+                    <td class="num">2%</td>
+                    <td>Survey data carrying hidden type metadata</td>
+                </tr>
+                <tr>
+                    <td>Known pitfall (mice)</td>
+                    <td class="num">5</td>
+                    <td class="num">2%</td>
+                    <td>Same documented bug, hit repeatedly</td>
+                </tr>
+                <tr>
+                    <td>Wrapped/unclear messages</td>
+                    <td class="num">76</td>
+                    <td class="num">36%</td>
+                    <td>Real error buried inside pipeline wrapper</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>
+            Let me walk through the most interesting categories.
+        </p>
+
+        <h2>Error #1: "Object Not Found" &mdash; The Chronic Disease</h2>
+
+        <p>
+            36 errors. 17% of the total. All variations of the same theme:
+        </p>
+
+        <div class="error-block">
+            Error: Can't subset columns that don't exist.<br>
+            x Column `income_level` doesn't exist.
+        </div>
+
+        <div class="error-block">
+            Error in eval(expr, envir, enclos):<br>
+            &nbsp;&nbsp;object 'birthyear' not found
+        </div>
+
+        <p>
+            The pattern is always the same. The AI renames a variable in one file, say changing <code>income_level</code> to <code>income_percentile</code> in the data cleaning script, and misses a reference somewhere downstream. A regression formula, a visualization, a config file.
+        </p>
+
+        <p>
+            This is not an AI-specific problem. <strong>This is the most common mistake every R programmer makes.</strong> I've done it myself more times than I'd like to admit. The AI does it for the same reason you do: R gives you <em>zero feedback</em> that something is wrong until the pipeline actually reaches that line and crashes.
+        </p>
+
+        <p>
+            In Python, referencing an undefined name raises <code>NameError</code> immediately. In Go or Rust, the compiler refuses to build. In R, your pipeline hums along for thirty minutes, loading data, fitting models, running imputation, and only fails at minute 31 when it finally hits the line with the wrong name.
+        </p>
+
+        <pre><code># This runs for 30 minutes before failing
+data &lt;- load_all_surveys()          # 2 min
+data &lt;- harmonize_variables(data)   # 3 min
+models &lt;- fit_irt_models(data)      # 10 min
+imps &lt;- run_mice(models, m = 20)   # 15 min
+results &lt;- run_regressions(imps)
+# Error: object 'income_level' not found   # minute 31</code></pre>
+
+        <p>
+            The AI has no way to "compile" R code. It writes the edit, it looks correct, and nothing validates it until runtime. That's why naming errors are the <em>only</em> category that persisted across the entire month. Every other error type was fixed once and stayed fixed. Naming errors kept recurring because R's lack of static checking never goes away.
+        </p>
+
+        <div class="callout">
+            <p>The chronic vs. acute distinction</p>
+            <p>Most error categories follow an "acute" pattern: they appear during a specific refactoring, get fixed, and don't return. The <code>haven_labelled</code> errors appeared five times between Jan 24 and Feb 1, were fixed, and never returned. The <code>mice printFlag</code> bug appeared five times between Jan 27 and Feb 1, same story. Only variable naming errors persisted from the first week to the last day. They are a <em>chronic</em> condition, not an acute one, because R has no mechanism to prevent them.</p>
+        </div>
+
+        <h2>Error #2: The Infrastructure Tax</h2>
+
+        <p>
+            37 errors from parallel computing workers. Same percentage as naming errors, but a completely different story. These are not logic errors. They are infrastructure failures:
+        </p>
+
+        <div class="error-block">
+            Error: could not receive a message from worker 3.<br>
+            mirai connection reset.
+        </div>
+
+        <p>
+            When you run a research pipeline on a computing cluster (SLURM), you distribute work across multiple nodes. Workers start, connect, compute, return results. Sometimes a worker fails to start. Sometimes the network drops. Sometimes the scheduler kills a job for exceeding time limits.
+        </p>
+
+        <p>
+            None of this is the AI's fault. It's the inherent unreliability of distributed computing. But it matters for an important reason: <strong>the AI has no way to distinguish "my code is wrong" from "the infrastructure had a hiccup."</strong> Both look like errors in the log. Both require investigation. When 17% of your errors are transient infrastructure failures, the AI wastes significant effort debugging phantom bugs.
+        </p>
+
+        <h2>Error #3: Paths With Spaces</h2>
+
+        <p>
+            18 path-related errors. If you're on macOS and your project lives in Dropbox, you probably have a path like:
+        </p>
+
+        <pre><code>/Users/you/Dropbox/My Research Project/code/R/model.R</code></pre>
+
+        <p>
+            That space in "My Research Project" is a ticking time bomb. Inside R, <code>here::here()</code> handles it fine. But the moment a path gets passed to a shell command via <code>system()</code> or <code>Rscript</code>, the space breaks things:
+        </p>
+
+        <div class="error-block">
+            Fatal error: cannot open file '/Users/you/Dropbox/My': No such file or directory
+        </div>
+
+        <p>
+            The path got truncated at the space. The AI writes the <code>system()</code> call without quoting the path, which is the same mistake I've made dozens of times. The fix is always the same: wrap the path in quotes. But the AI doesn't retain this lesson across sessions because each new <code>system()</code> call is a new context.
+        </p>
+
+        <p>
+            A related sub-category: R's <code>here::here()</code> function, which is supposed to resolve paths relative to the project root, can resolve to the <em>wrong</em> root if there's a <code>renv.lock</code> file in a subdirectory. In our project, <code>here::here()</code> resolved to <code>code/</code> instead of the project root, because <code>renv.lock</code> lives in <code>code/</code>. So <code>here::here("Data", "surveys.csv")</code> looked in <code>code/Data/</code> instead of <code>Data/</code>. A symlink fixed it, but the AI had to discover this the hard way. Multiple times.
+        </p>
+
+        <h2>Error #4: Survey Data's Hidden Type System</h2>
+
+        <p>
+            Only 5 errors, but they deserve attention because they're specific to social science workflows.
+        </p>
+
+        <p>
+            When you load a Stata <code>.dta</code> file with <code>haven::read_dta()</code>, what you get is not a normal data frame. The columns carry invisible metadata (value labels, variable labels, format specifications) encoded as a special <code>haven_labelled</code> type. This type <em>looks</em> like a regular numeric vector. It prints like one. But it's not:
+        </p>
+
+        <div class="error-block">
+            Error: &lt;haven_labelled&gt; - &lt;haven_labelled&gt; is not permitted
+        </div>
+
+        <div class="error-block">
+            Error: Can't combine &lt;haven_labelled&gt; and &lt;double&gt;.
+        </div>
+
+        <p>
+            Basic arithmetic fails. <code>bind_rows()</code> fails. Comparisons fail. The data looks numeric but doesn't behave numerically. The fix is a single function call: <code>haven::zap_labels()</code> strips the metadata and returns a plain data frame. But you have to know to call it, and you have to call it <em>immediately</em> after loading, before the labelled values propagate through the pipeline.
+        </p>
+
+        <p>
+            The AI doesn't know about <code>haven_labelled</code> unless it's been told. It sees a data frame, assumes it's a normal data frame, and writes code accordingly. Three files and two hours later, something breaks with an incomprehensible type error. This is a domain-specific trap: it only affects people who work with survey data stored in Stata format, which is to say, a large fraction of quantitative social scientists.
+        </p>
+
+        <h2>Error #5: The Same Bug, Five Times</h2>
+
+        <p>
+            This one surprised me. The <code>mice</code> package (multiple imputation) has a known quirk: when using the parallel variant <code>futuremice()</code>, you must <em>not</em> pass the <code>printFlag</code> argument, because the function passes it internally. If you pass it too, R complains:
+        </p>
+
+        <div class="error-block">
+            Error: formal argument "printFlag" matched by multiple actual arguments
+        </div>
+
+        <p>
+            This was documented in our project notes from the start. Yet the AI hit this bug five times across four sessions (Jan 27, Jan 29, Jan 31, Feb 1). Each time it was modifying the <code>mice</code> code for some other reason, and each time it re-introduced the <code>printFlag</code> argument because, from the AI's perspective, passing <code>printFlag = FALSE</code> to a <code>mice</code>-like function is the obviously correct thing to do.
+        </p>
+
+        <p>
+            This reveals something important about how AI coding assistants work: <strong>they have strong priors from training data that can override project-specific knowledge.</strong> The AI has seen thousands of examples of <code>mice(..., printFlag = FALSE)</code> in its training data. Our project note saying "don't pass printFlag to futuremice" is one instruction competing against that overwhelming prior. The prior wins, repeatedly, until the code is structured in a way that makes the error impossible rather than merely inadvisable.
+        </p>
+
+        <h2>Error #6: The Black Box Pipeline</h2>
+
+        <p>
+            The largest category: 76 errors (36%) where the actual error message was buried inside a pipeline wrapper. The <a href="https://docs.ropensci.org/targets/">targets</a> package, which manages pipeline execution, catches errors from individual steps and re-throws them with a generic wrapper:
+        </p>
+
+        <div class="error-block">
+            Error running targets::tar_make()
+        </div>
+
+        <p>
+            The real error (the <code>object 'income_level' not found</code> or the <code>haven_labelled</code> type mismatch) is buried in stderr, or in a metadata file you have to know to check. For more than a third of all errors, the AI's first task isn't fixing the bug. It's <em>finding</em> the bug, digging through pipeline logs and metadata tables to trace it back to its source.
+        </p>
+
+        <p>
+            The most frequently failing pipeline targets tell their own story:
+        </p>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Pipeline Target</th>
+                    <th class="num">Failures</th>
+                    <th>Typical Root Cause</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>mice_imputation</code></td>
+                    <td class="num accent">13</td>
+                    <td>Worker crashes + printFlag + data issues</td>
+                </tr>
+                <tr>
+                    <td><code>viz_self_censorship</code></td>
+                    <td class="num accent">12</td>
+                    <td>Function API changes during active refactoring</td>
+                </tr>
+                <tr>
+                    <td><code>raw_abs</code></td>
+                    <td class="num accent">10</td>
+                    <td>File paths + haven_labelled types</td>
+                </tr>
+                <tr>
+                    <td><code>nocov_models</code></td>
+                    <td class="num">8</td>
+                    <td>Model convergence + worker failures</td>
+                </tr>
+                <tr>
+                    <td><code>processed_data</code></td>
+                    <td class="num">6</td>
+                    <td>Variable renames not propagated</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>
+            The visualization target (<code>viz_self_censorship</code>) is the second most error-prone, not because visualization is hard, but because it was being actively refactored during that period.
+        </p>
+
+        <h2>The Temporal Pattern: Errors Follow Refactoring</h2>
+
+        <p>
+            Errors are not uniformly distributed. They cluster around major refactoring events:
+        </p>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">Jan 29 &mdash; <span class="timeline-count">37 errors</span></div>
+                <p>Restructured pipeline from flat <code>functions/</code> directory to modular <code>R/</code> package layout</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">Jan 31 &mdash; <span class="timeline-count">33 errors</span></div>
+                <p>Unified loading of 33 surveys into a single function + new analysis module</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">Feb 2 &mdash; <span class="timeline-count">23 errors</span></div>
+                <p>First full-scale multiple imputation run (m=20, distributed across HPC)</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">Feb 6 &mdash; <span class="timeline-count">22 errors</span></div>
+                <p>Regression models + dominance analysis rewrite</p>
+            </div>
+        </div>
+
+        <p>
+            These four days account for 54% of all errors. The remaining 26 days account for 46%. Major refactoring naturally produces errors, that's not news. What's interesting is the <em>type</em> of errors that dominate during refactoring: almost entirely naming errors and propagation failures. The AI restructures the code correctly in the files it touches, but misses references in files it didn't think to update.
+        </p>
+
+        <p>
+            This is the same pattern you see with human refactoring. When you rename a function, you remember to update the three files you have open. You forget about the config file you last touched two weeks ago. The AI has the same blind spot, for the same reason: neither of you has a complete, always-current map of every reference in the project.
+        </p>
+
+        <h2>So what?</h2>
+
+        <p>
+            Here's what I keep coming back to: <strong>AI coding errors in R are not AI-specific errors. They are R-specific errors.</strong> The AI doesn't hallucinate function names or invent impossible syntax. It makes the same mistakes I make, for the same reasons.
+        </p>
+
+        <p>
+            R is dynamically typed, lazily evaluated, and has no compile step. A misspelled variable is only caught when the line executes, potentially hours into a pipeline. A type mismatch (<code>haven_labelled</code> vs. <code>double</code>) is invisible until an operation fails. There's no way to "build" a multi-file R project and check for consistency before running it.
+        </p>
+
+        <p>
+            These aren't bugs in R. They are design choices that prioritize interactivity and flexibility, which is what makes R so good for exploratory data analysis. But they also mean that neither humans nor AI gets any structural feedback about code correctness until something breaks at runtime.
+        </p>
+
+        <p>
+            In languages with static tooling (TypeScript, Rust, Go), the same AI assistant makes far fewer of these errors, because the compiler catches them before execution. The AI writes code, the compiler says "this variable doesn't exist," the AI fixes it, and the user never sees the error. R doesn't have that feedback loop.
+        </p>
+
+        <div class="callout">
+            <p>What I'm trying next</p>
+            <p>If the AI's biggest weakness in R is the same as mine (no structural feedback before runtime), then the solution probably isn't making the AI smarter. It's giving it better tools. R's <a href="https://github.com/REditorSupport/languageserver">Language Server</a> already provides some of this for IDE users: undefined variable detection, cross-file references, scope-aware renaming. I've been experimenting with making these same capabilities available to the AI assistant directly. Whether that actually reduces the error rate is a question I'll take up in a future post.</p>
+        </div>
+
+        <hr>
+
+        <p>
+            <em>Siyao Zheng is an Assistant Professor at the School of International and Public Affairs, Shanghai Jiao Tong University. His research focuses on AI for Social Science and Digital Politics. The error data and extraction script are available on <a href="https://github.com/SiyaoZheng/">GitHub</a>.</em>
+        </p>
+
+    </article>
+
+    <footer>
+        <p>&copy; 2026 Siyao Zheng &middot; <a href="/">Home</a></p>
+    </footer>
+</body>
+</html>
