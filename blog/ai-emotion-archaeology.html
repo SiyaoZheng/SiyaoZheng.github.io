@@ -438,6 +438,7 @@
             footer { padding: 1.5rem; font-size: 0.8rem; }
         }
     </style>
+    <link rel="stylesheet" href="comments/comments.css">
 </head>
 <body>
     <nav>
@@ -717,6 +718,8 @@
         </p>
 
     </article>
+
+    <section id="comments" data-slug="ai-emotion-archaeology"></section>
 
     <footer>
         <p>&copy; 2026 Siyao Zheng &middot; <a href="/">Home</a></p>
@@ -1212,5 +1215,9 @@
         confContainer.appendChild(chart);
     }
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="comments/profanity-filter.js"></script>
+    <script src="comments/comments.js"></script>
 </body>
 </html>
