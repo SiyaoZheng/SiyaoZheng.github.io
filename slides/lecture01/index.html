@@ -1,0 +1,1221 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第一课 课程导论 — 机器学习与自然语言处理</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    :root {
+      --r-background-color: #fff;
+      --r-main-font: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+      --r-main-font-size: 32px;
+      --r-main-color: #1a1a2e;
+      --r-heading-font: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+      --r-heading-color: #0f0f1a;
+      --r-heading-font-weight: 700;
+      --r-link-color: #2563eb;
+      --accent: #2563eb;
+      --accent-light: #dbeafe;
+      --gray-50: #f8f9fa;
+      --gray-100: #f1f3f5;
+      --gray-200: #e9ecef;
+      --gray-400: #adb5bd;
+      --gray-600: #6c757d;
+      --gray-800: #343a40;
+    }
+
+    .reveal { font-weight: 400; }
+    .reveal h1 { font-size: 2.2em; letter-spacing: -0.02em; }
+    .reveal h2 { font-size: 1.6em; letter-spacing: -0.01em; color: var(--accent); text-transform: none; }
+    .reveal h3 { font-size: 1.2em; color: var(--gray-800); }
+    .reveal p, .reveal li { line-height: 1.6; }
+    .reveal ul { list-style: none; padding-left: 0; }
+    .reveal ul li { padding-left: 1.5em; position: relative; margin-bottom: 0.4em; }
+    .reveal ul li::before {
+      content: '';
+      position: absolute; left: 0; top: 0.55em;
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    .reveal code {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--gray-100);
+      padding: 0.1em 0.4em;
+      border-radius: 4px;
+      font-size: 0.85em;
+    }
+
+    /* Section title slides */
+    .section-title {
+      background: var(--r-background-color) !important;
+    }
+    .section-title h2 {
+      font-size: 2.4em;
+      color: var(--r-main-color);
+      border-left: 6px solid var(--accent);
+      padding-left: 0.6em;
+      text-align: left;
+    }
+    .section-title .section-num {
+      font-size: 0.5em;
+      color: var(--gray-400);
+      font-weight: 400;
+      display: block;
+      margin-bottom: 0.2em;
+    }
+
+    /* Cover slide */
+    .cover h1 {
+      font-size: 2.6em;
+      margin-bottom: 0.1em;
+    }
+    .cover .subtitle {
+      font-size: 1.1em;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 2em;
+    }
+    .cover .meta {
+      font-size: 0.7em;
+      color: var(--gray-600);
+      line-height: 1.8;
+    }
+
+    /* Highlight box */
+    .highlight-box {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-left: 4px solid var(--accent);
+      padding: 1em 1.5em;
+      border-radius: 4px;
+      text-align: left;
+      margin: 1em 0;
+    }
+
+    /* Two column layout */
+    .cols {
+      display: flex;
+      gap: 2em;
+      align-items: flex-start;
+    }
+    .cols .col { flex: 1; text-align: left; }
+
+    /* Image placeholder */
+    .img-placeholder {
+      background: var(--gray-100);
+      border: 2px dashed var(--gray-400);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gray-600);
+      font-size: 0.7em;
+      min-height: 300px;
+    }
+
+    /* Paper figure style */
+    .paper-fig {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.8em 1em;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .paper-fig img {
+      max-height: 340px;
+      max-width: 100%;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+    .paper-fig .caption {
+      font-size: 0.55em;
+      color: var(--gray-600);
+      margin-top: 0.5em;
+      line-height: 1.4;
+    }
+
+    /* Paper slide sections: tighter vertical spacing */
+    .paper-slide h2 {
+      font-size: 1.2em;
+      margin-bottom: 0.2em;
+    }
+    .paper-slide .paper-context {
+      font-size: 0.6em;
+      color: var(--gray-600);
+      line-height: 1.6;
+      margin: 0 auto 0.4em;
+      max-width: 90%;
+      text-align: left;
+    }
+    .paper-slide .paper-context strong {
+      color: var(--r-main-color);
+    }
+    .paper-slide .paper-fig {
+      margin: 0 auto;
+      max-width: 90%;
+    }
+
+    /* Multi-figure side-by-side */
+    .paper-slide .paper-figs {
+      display: flex;
+      gap: 0.8em;
+      margin: 0 auto;
+      max-width: 92%;
+    }
+    .paper-slide .paper-figs .paper-fig {
+      flex: 1;
+      margin: 0;
+      max-width: none;
+    }
+    .paper-slide .paper-figs .paper-fig img {
+      max-height: 250px;
+    }
+    .paper-slide .paper-figs .paper-fig .caption {
+      font-size: 0.48em;
+    }
+    .paper-slide .paper-cite {
+      font-size: 0.5em;
+      color: var(--gray-400);
+      text-align: center;
+      margin-top: 0.3em;
+    }
+
+    /* Slide number */
+    .reveal .slide-number {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: var(--gray-400);
+    }
+
+    /* Progress bar */
+    .reveal .progress span { background: var(--accent); }
+
+    /* Fragment highlight */
+    .reveal .highlight-blue { color: var(--accent); }
+
+    /* ===== DIAGRAM COMPONENTS ===== */
+
+    /* Flow: horizontal arrow chain */
+    .flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin: 1em 0;
+    }
+    .flow-node {
+      background: var(--gray-50);
+      border: 2px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.8em 1.2em;
+      font-size: 0.75em;
+      font-weight: 500;
+      text-align: center;
+      min-width: 120px;
+      position: relative;
+    }
+    .flow-node.accent {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .flow-node.outline {
+      background: #fff;
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .flow-arrow {
+      width: 48px;
+      height: 2px;
+      background: var(--gray-400);
+      position: relative;
+      flex-shrink: 0;
+    }
+    .flow-arrow::after {
+      content: '';
+      position: absolute;
+      right: -1px; top: -5px;
+      border: 6px solid transparent;
+      border-left: 8px solid var(--gray-400);
+    }
+    .flow-arrow.accent-arrow {
+      background: var(--accent);
+    }
+    .flow-arrow.accent-arrow::after {
+      border-left-color: var(--accent);
+    }
+
+    /* Box grid: icon-less card grid */
+    .card-grid {
+      display: grid;
+      gap: 1em;
+      margin: 1em 0;
+    }
+    .card-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .card-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+    .card-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 1.2em;
+      text-align: center;
+    }
+    .card .card-icon {
+      font-size: 2.2em;
+      margin-bottom: 0.3em;
+      line-height: 1;
+    }
+    .card .card-label {
+      font-size: 0.7em;
+      font-weight: 600;
+      color: var(--r-main-color);
+      margin-bottom: 0.2em;
+    }
+    .card .card-desc {
+      font-size: 0.55em;
+      color: var(--gray-600);
+      line-height: 1.4;
+    }
+
+    /* VS layout */
+    .vs-layout {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin: 0.8em 0;
+    }
+    .vs-panel {
+      flex: 1;
+      padding: 1.2em 1.5em;
+      border-radius: 8px;
+      text-align: left;
+    }
+    .vs-panel.left {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      margin-right: -1px;
+      border-radius: 8px 0 0 8px;
+    }
+    .vs-panel.right {
+      background: var(--accent-light);
+      border: 1px solid #bfdbfe;
+      border-radius: 0 8px 8px 0;
+    }
+    .vs-divider {
+      width: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4em;
+      font-weight: 700;
+      color: var(--gray-400);
+      flex-shrink: 0;
+    }
+    .vs-panel h3 {
+      font-size: 0.85em;
+      margin-bottom: 0.6em;
+    }
+    .vs-panel .vs-items {
+      font-size: 0.65em;
+      color: var(--gray-800);
+      line-height: 2;
+    }
+
+    /* Euler / nested circles */
+    .euler {
+      position: relative;
+      width: 600px;
+      height: 400px;
+      margin: 0 auto;
+    }
+    .euler-circle {
+      position: absolute;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
+    .euler-label {
+      position: absolute;
+      font-size: 0.65em;
+      font-weight: 600;
+    }
+
+    /* Timeline */
+    .timeline {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      position: relative;
+      margin: 2em 0 1em;
+      padding-top: 2em;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: calc(2em + 24px);
+      left: 10%;
+      right: 10%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gray-200), var(--accent));
+    }
+    .tl-item {
+      flex: 1;
+      text-align: center;
+      position: relative;
+      max-width: 200px;
+    }
+    .tl-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--gray-400);
+      margin: 0 auto 1em;
+      position: relative;
+      z-index: 1;
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 2px var(--gray-400);
+    }
+    .tl-dot.active {
+      background: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+    .tl-year {
+      font-size: 0.55em;
+      color: var(--gray-400);
+      font-weight: 600;
+      position: absolute;
+      top: -1.8em;
+      width: 100%;
+    }
+    .tl-label {
+      font-size: 0.65em;
+      font-weight: 600;
+      color: var(--r-main-color);
+      margin-bottom: 0.2em;
+    }
+    .tl-desc {
+      font-size: 0.5em;
+      color: var(--gray-600);
+      line-height: 1.4;
+    }
+
+    /* Vertical flow */
+    .vflow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      margin: 1em 0;
+    }
+    .vflow-arrow {
+      width: 2px;
+      height: 24px;
+      background: var(--gray-400);
+      position: relative;
+    }
+    .vflow-arrow::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: -5px;
+      border: 6px solid transparent;
+      border-top: 8px solid var(--gray-400);
+    }
+
+    /* Roadmap */
+    .roadmap {
+      display: flex;
+      gap: 0.6em;
+      margin: 1em 0;
+      align-items: stretch;
+    }
+    .rm-block {
+      flex: 1;
+      border-radius: 8px;
+      padding: 0.8em;
+      text-align: left;
+      border: 1px solid var(--gray-200);
+    }
+    .rm-block .rm-weeks {
+      font-size: 0.5em;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.3em;
+    }
+    .rm-block .rm-title {
+      font-size: 0.7em;
+      font-weight: 700;
+      color: var(--r-main-color);
+      margin-bottom: 0.4em;
+    }
+    .rm-block .rm-items {
+      font-size: 0.5em;
+      color: var(--gray-600);
+      line-height: 1.6;
+    }
+    .rm-block.mod1 { background: #eff6ff; border-color: #bfdbfe; }
+    .rm-block.mod2 { background: #f0fdf4; border-color: #bbf7d0; }
+    .rm-block.mod3 { background: #fef3c7; border-color: #fde68a; }
+    .rm-block.mid { background: var(--gray-50); flex: 0.5; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+
+    /* Summary diagram */
+    .summary-diagram {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2em;
+      margin: 1.5em 0;
+    }
+    .sd-box {
+      width: 220px;
+      padding: 1.5em;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .sd-box.ml { background: #eff6ff; border: 2px solid #2563eb; }
+    .sd-box.nlp { background: #f0fdf4; border: 2px solid #16a34a; }
+    .sd-box .sd-title {
+      font-size: 1.1em;
+      font-weight: 700;
+      margin-bottom: 0.3em;
+    }
+    .sd-box.ml .sd-title { color: #2563eb; }
+    .sd-box.nlp .sd-title { color: #16a34a; }
+    .sd-box .sd-desc {
+      font-size: 0.6em;
+      color: var(--gray-600);
+      line-height: 1.5;
+    }
+    .sd-arrows {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2em;
+      align-items: center;
+    }
+    .sd-arrow {
+      font-size: 0.55em;
+      font-weight: 500;
+      color: var(--gray-600);
+      position: relative;
+      padding: 0.3em 0;
+    }
+    .sd-arrow::before, .sd-arrow::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 2px;
+      background: var(--gray-400);
+      margin: 0.3em auto;
+    }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- ============================================================ -->
+<!-- PART 1: 课程介绍 (4 slides)                                   -->
+<!-- ============================================================ -->
+
+<!-- Slide 1: Cover -->
+<section class="cover">
+  <h1>机器学习与自然语言处理</h1>
+  <p class="subtitle">AI + 计算社会科学微专业</p>
+  <p class="meta">
+    第一课 课程导论<br>
+    郑思尧<br>
+    上海交通大学 国际与公共事务学院
+  </p>
+</section>
+
+<!-- ============================================================ -->
+<!-- PART 2: 机器学习与自然语言处理 (12 slides)                      -->
+<!-- ============================================================ -->
+
+<!-- Slide 5: Section title -->
+<section class="section-title">
+  <h2><span class="section-num">Part 1</span>什么是机器学习与自然语言处理</h2>
+</section>
+
+<!-- Slide 6: 一个场景 -->
+<section>
+  <h2>一个场景</h2>
+  <div style="text-align:left; max-width:820px; margin:0 auto;">
+    <p style="font-size:1.05em; line-height:1.8;">
+      你是一个政策研究者。<br>
+      你刚拿到过去 10 年间，<strong>全国 31 个省</strong>的政府工作报告。
+    </p>
+    <p style="font-size:2.2em; font-weight:700; color:var(--accent); margin:0.6em 0;">
+      3,200 份 &times; 15,000 字
+    </p>
+    <p style="font-size:1.05em; color:var(--gray-800);">
+      你的研究问题：各省的<strong>政策重心</strong>在这十年是怎么变化的？
+    </p>
+  </div>
+</section>
+
+<!-- Slide 7: 人工阅读的极限 -->
+<section>
+  <h2>你打算怎么做？</h2>
+  <p style="font-size:0.8em; color:var(--gray-600); margin-bottom:1em;">
+    3,200 &times; 15,000 = <strong style="font-size:1.3em; color:var(--r-main-color);">4,800 万字</strong>
+  </p>
+  <div class="vs-layout">
+    <div class="vs-panel left" style="text-align:center;">
+      <h3 style="text-align:center;">人工阅读</h3>
+      <p style="font-size:2.4em; font-weight:700; color:var(--gray-800); margin:0.3em 0;">~1.5 年</p>
+      <p style="font-size:0.6em; color:var(--gray-600);">按 300 字/分钟，每天 8 小时<br>而且只是"读完"，还没开始分析</p>
+    </div>
+    <div class="vs-divider">vs</div>
+    <div class="vs-panel right" style="text-align:center;">
+      <h3 style="text-align:center;">计算方法</h3>
+      <p style="font-size:2.4em; font-weight:700; color:var(--accent); margin:0.3em 0;">~3 分钟</p>
+      <p style="font-size:0.6em; color:var(--gray-600);">处理全部文本<br>输出主题分布、趋势、省际对比</p>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 8: 但是，机器能读吗？ -->
+<section>
+  <h2>但是——机器能"读"吗？</h2>
+  <p style="font-size:1.2em; margin-top:1.5em; margin-bottom:1.5em; text-align:center;">
+    机器不认识字。<br>机器只认识<strong style="color:var(--accent);">数字</strong>。
+  </p>
+  <div class="flow" style="margin-top:1em;">
+    <div class="flow-node" style="min-width:200px;font-size:0.75em;">
+      "这个政策很好"<br>
+      <span style="color:var(--gray-600); font-size:0.85em;">人类秒懂</span>
+    </div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node accent" style="min-width:80px; font-size:1.5em;">？</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node outline" style="min-width:220px;font-size:0.75em;">
+      [0.82, 0.15, 0.03, ...]<br>
+      <span style="color:var(--gray-600); font-size:0.85em;">机器能计算</span>
+    </div>
+  </div>
+  <p style="font-size:0.85em; color:var(--gray-600); text-align:center; margin-top:1.5em;">
+    关键问题：<strong style="color:var(--r-main-color);">怎么把文字变成数字，还不丢掉意思？</strong>
+  </p>
+</section>
+
+<!-- Slide 9: 从文字到向量 -->
+<section>
+  <h2>从文字到向量</h2>
+  <p style="font-size:0.85em; color:var(--gray-600); margin-bottom:1em;">意思相近的词，在数字空间里靠得近</p>
+  <div class="cols">
+    <div class="col">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:0.65em; line-height:2.2; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:1em 1.2em;">
+        <div>"经济发展" → <span style="color:var(--accent);">[0.82, 0.15, 0.03]</span></div>
+        <div>"GDP增长" &nbsp;→ <span style="color:var(--accent);">[0.79, 0.18, 0.01]</span></div>
+        <div style="border-top:1px solid var(--gray-200); margin:0.5em 0;"></div>
+        <div>"环境保护" → <span style="color:#16a34a;">[0.11, 0.85, 0.04]</span></div>
+        <div>"碳中和" &nbsp;&nbsp;→ <span style="color:#16a34a;">[0.09, 0.88, 0.06]</span></div>
+      </div>
+      <p style="margin-top:0.8em; font-size:0.65em; color:var(--gray-600);">每个词变成一串数字（向量）<br>每个数字代表语义空间的一个维度</p>
+    </div>
+    <div class="col" style="flex:0.85;">
+      <div style="position:relative; width:100%; height:250px; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px;">
+        <div style="position:absolute; bottom:32px; left:24px; right:24px; height:1px; background:var(--gray-300);"></div>
+        <div style="position:absolute; bottom:32px; left:24px; top:16px; width:1px; background:var(--gray-300);"></div>
+        <span style="position:absolute; top:48px; right:40px; font-size:0.7em; font-weight:600; color:var(--accent); background:var(--accent-light); padding:2px 8px; border-radius:4px;">经济发展</span>
+        <span style="position:absolute; top:78px; right:28px; font-size:0.7em; font-weight:600; color:var(--accent); background:var(--accent-light); padding:2px 8px; border-radius:4px;">GDP增长</span>
+        <span style="position:absolute; bottom:68px; left:36px; font-size:0.7em; font-weight:600; color:#16a34a; background:#dcfce7; padding:2px 8px; border-radius:4px;">环境保护</span>
+        <span style="position:absolute; bottom:44px; left:52px; font-size:0.7em; font-weight:600; color:#16a34a; background:#dcfce7; padding:2px 8px; border-radius:4px;">碳中和</span>
+        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:0.6em; color:var(--gray-400); text-align:center;">← 距离远 →<br>意思不同</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 10: 有了数字，就能计算 -->
+<section>
+  <h2>有了数字，就能计算</h2>
+  <div class="card-grid cols-2" style="margin-top:1em;">
+    <div class="card" style="text-align:left;">
+      <div class="card-label" style="text-align:left; color:var(--accent);">分类</div>
+      <div class="card-desc" style="text-align:left; font-size:0.7em;">这条评论是正面还是负面？<br>这篇报道的政治立场是什么？</div>
+    </div>
+    <div class="card" style="text-align:left;">
+      <div class="card-label" style="text-align:left; color:var(--accent);">聚类</div>
+      <div class="card-desc" style="text-align:left; font-size:0.7em;">这10万条微博在讨论哪些话题？<br>它们之间是什么关系？</div>
+    </div>
+    <div class="card" style="text-align:left;">
+      <div class="card-label" style="text-align:left; color:var(--accent);">相似度</div>
+      <div class="card-desc" style="text-align:left; font-size:0.7em;">哪两个省的政策报告最像？<br>这篇论文和哪些文献最相关？</div>
+    </div>
+    <div class="card" style="text-align:left;">
+      <div class="card-label" style="text-align:left; color:var(--accent);">趋势</div>
+      <div class="card-desc" style="text-align:left; font-size:0.7em;">"创新"在政策话语中的权重<br>10年间怎么变的？</div>
+    </div>
+  </div>
+  <p style="font-size:0.7em; color:var(--gray-600); text-align:center; margin-top:1em;">
+    你一直在问这些问题。区别是以前只能问几十条，现在能问<strong style="color:var(--accent);">几万条</strong>。
+  </p>
+</section>
+
+<!-- Slide 11: 有监督——你示范，机器模仿 -->
+<section>
+  <h2>有监督：你示范，机器模仿</h2>
+  <div class="flow" style="margin-top:1.5em; margin-bottom:1.5em;">
+    <div class="flow-node accent" style="min-width:150px;">
+      <strong>你标注 500 条</strong><br>
+      <span style="font-size:0.8em; opacity:0.85;">支持 / 反对 / 中立</span>
+    </div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node outline" style="min-width:150px;">
+      <strong>机器学习找规律</strong><br>
+      <span style="font-size:0.8em; color:var(--gray-600);">什么词对应什么判断？</span>
+    </div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node accent" style="min-width:160px;">
+      <strong>自动标注 49,500 条</strong><br>
+      <span style="font-size:0.8em; opacity:0.85;">准确率 85%+</span>
+    </div>
+  </div>
+  <div class="highlight-box" style="text-align:center;">
+    <strong style="color:var(--accent);">你的判断力 &times; 机器的速度 = 大规模分析</strong><br>
+    <span style="font-size:0.8em; color:var(--gray-600);">你先做500条样板，机器照着你的标准处理剩下49,500条。</span>
+  </div>
+</section>
+
+<!-- Slide 12: 无监督：发现你不知道的 -->
+<section>
+  <h2>无监督：发现你<em>不知道</em>的</h2>
+  <div class="flow" style="margin:1.2em 0;">
+    <div class="flow-node" style="min-width:160px;">
+      <strong>10年人民日报全文</strong><br>
+      <span style="font-size:0.8em; color:var(--gray-600);">无任何标注</span>
+    </div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node accent" style="min-width:110px;">
+      <strong>主题模型</strong>
+    </div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node outline" style="min-width:260px; padding:0.8em 1.2em; text-align:left; font-size:0.7em; line-height:1.9;">
+      <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#2563eb; margin-right:0.4em;"></span>经济 增长 改革 市场<br>
+      <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#16a34a; margin-right:0.4em;"></span>环境 生态 碳排放 绿色<br>
+      <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#dc2626; margin-right:0.4em;"></span>教育 人才 科技 创新<br>
+      <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#7c3aed; margin-right:0.4em;"></span>外交 合作 一带一路
+    </div>
+  </div>
+  <div class="highlight-box" style="font-size:0.85em;">
+    然后你会看到："创新"主题从 2015 年开始<strong style="color:var(--accent);">急剧上升</strong>。<br>
+    <span style="color:var(--gray-600); font-size:0.9em;">——这是你逐篇阅读时很难捕捉的宏观趋势。</span>
+  </div>
+  <div style="display:flex; gap:1em; margin-top:1em; font-size:0.7em;">
+    <div style="flex:1; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.6em 0.8em; text-align:center;">
+      <div style="font-weight:600; color:var(--gray-800);">有监督</div>
+      <div style="color:var(--gray-600);">你定义标准 → 机器执行</div>
+    </div>
+    <div style="flex:1; background:var(--accent-light); border:1px solid var(--accent); border-radius:8px; padding:0.6em 0.8em; text-align:center;">
+      <div style="font-weight:600; color:var(--accent);">无监督</div>
+      <div style="color:var(--gray-600);">数据自己说话 → 你来解读</div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 13: NLP 怎么走到今天 -->
+<section>
+  <h2>NLP 怎么走到今天</h2>
+  <p style="color:var(--gray-600); font-size:0.8em; margin-bottom:1em;">四个阶段，一个比一个敢想</p>
+  <div style="display:flex; flex-direction:column; gap:0.6em; text-align:left;">
+    <div style="display:flex; align-items:center; gap:1em; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.7em 1em;">
+      <div style="font-size:1.2em; font-weight:700; color:var(--gray-400); min-width:2.5em; text-align:center;">1.0</div>
+      <div style="text-align:left;">
+        <div style="font-size:0.85em; font-weight:600;">数词</div>
+        <div style="font-size:0.7em; color:var(--gray-600);">一篇文章出现了多少次"经济"？ <span style="color:var(--gray-400);">（词频 / TF-IDF）</span></div>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; gap:1em; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.7em 1em;">
+      <div style="font-size:1.2em; font-weight:700; color:var(--gray-400); min-width:2.5em; text-align:center;">2.0</div>
+      <div style="text-align:left;">
+        <div style="font-size:0.85em; font-weight:600;">理解词义</div>
+        <div style="font-size:0.7em; color:var(--gray-600);">"经济"和"发展"总一起出现——它们意思相近 <span style="color:var(--gray-400);">（Word2Vec）</span></div>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; gap:1em; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.7em 1em;">
+      <div style="font-size:1.2em; font-weight:700; color:var(--gray-400); min-width:2.5em; text-align:center;">3.0</div>
+      <div style="text-align:left;">
+        <div style="font-size:0.85em; font-weight:600;">理解语境</div>
+        <div style="font-size:0.7em; color:var(--gray-600);">"苹果"在不同句子里——是水果，还是公司？ <span style="color:var(--gray-400);">（BERT）</span></div>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; gap:1em; background:var(--accent-light); border:2px solid var(--accent); border-radius:8px; padding:0.7em 1em;">
+      <div style="font-size:1.2em; font-weight:700; color:var(--accent); min-width:2.5em; text-align:center;">4.0</div>
+      <div style="text-align:left;">
+        <div style="font-size:0.85em; font-weight:600; color:var(--accent);">理解意图</div>
+        <div style="font-size:0.7em; color:var(--gray-600);">"帮我分析这份报告的政策倾向"——它就去做 <span style="color:var(--gray-400);">（GPT / Claude）</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 14: 大语言模型改变了什么 -->
+<section>
+  <h2>大语言模型改变了什么</h2>
+  <div class="vs-layout" style="margin-top:1em;">
+    <div class="vs-panel left">
+      <h3 style="text-align:center; color:var(--gray-600); font-size:0.75em; letter-spacing:0.05em;">2020 年之前</h3>
+      <div class="vs-items" style="line-height:2.2;">
+        每个任务 → 独立模型<br>
+        需要大量标注数据<br>
+        需要训练与调参<br>
+        <span style="border-top:1px solid var(--gray-200); display:block; padding-top:0.4em; margin-top:0.4em;">门槛：<strong>会编程</strong></span>
+      </div>
+    </div>
+    <div class="vs-divider" style="color:var(--accent); font-weight:600;">→</div>
+    <div class="vs-panel right">
+      <h3 style="text-align:center; color:var(--accent); font-size:0.75em; letter-spacing:0.05em;">现在</h3>
+      <div class="vs-items" style="line-height:2.2;">
+        一个模型 → 几乎所有任务<br>
+        用自然语言描述需求<br>
+        零样本 / 少样本学习<br>
+        <span style="border-top:1px solid var(--accent-light); display:block; padding-top:0.4em; margin-top:0.4em;">门槛：<strong style="color:var(--accent);">会提问</strong></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 15: ML 与 NLP 是什么关系 -->
+<section>
+  <h2>ML 与 NLP 是什么关系</h2>
+  <div class="summary-diagram" style="margin-top:1.5em;">
+    <div class="sd-box ml" style="text-align:left; padding:1.2em 1.4em;">
+      <div class="sd-title">机器学习</div>
+      <div style="display:inline-block; font-size:0.6em; font-weight:600; color:#fff; background:var(--accent); border-radius:4px; padding:0.15em 0.5em; margin-bottom:0.5em;">怎么学</div>
+      <div class="sd-desc">从数据中发现规律的<br>通用方法论</div>
+    </div>
+    <div class="sd-arrows">
+      <div class="sd-arrow">提供学习方法 →</div>
+      <div class="sd-arrow">← 提供最大的战场</div>
+    </div>
+    <div class="sd-box nlp" style="text-align:left; padding:1.2em 1.4em;">
+      <div class="sd-title">自然语言处理</div>
+      <div style="display:inline-block; font-size:0.6em; font-weight:600; color:#fff; background:#16a34a; border-radius:4px; padding:0.15em 0.5em; margin-bottom:0.5em;">学什么</div>
+      <div class="sd-desc">让机器理解人类语言的<br>应用方向</div>
+    </div>
+  </div>
+  <p style="font-size:0.65em; color:var(--gray-400); margin-top:1.5em; text-align:center;">
+    ML 提供了一套从数据中学习的方法；NLP 把这套方法用在了语言上。
+  </p>
+</section>
+
+<!-- Slide 16: 核心认知 -->
+<section>
+  <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; padding:2em; text-align:center;">
+    <div style="width:3em; height:3px; background:var(--accent); border-radius:2px; margin-bottom:1.8em;"></div>
+    <p style="font-size:1.5em; font-weight:700; color:var(--accent); line-height:1.45; margin:0 0 1.2em 0; max-width:15em;">
+      NLP 把人类语言<br>变成了可计算的数据。
+    </p>
+    <p style="font-size:0.82em; color:var(--gray-600); line-height:1.8; margin:0 0 2em 0; max-width:28em;">
+      以前做社科研究，文本数据看得见、用不了。<br>现在能用了。
+    </p>
+    <div style="width:3em; height:1px; background:var(--gray-200); margin-bottom:1.2em;"></div>
+    <p style="font-size:0.6em; color:var(--gray-400); letter-spacing:0.04em; margin:0;">
+      接下来 → 研究者已经用这些工具发现了什么
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PART 3: ML/NLP 与社会科学 (18 slides)                          -->
+<!-- ============================================================ -->
+
+<!-- Slide 17: Section title -->
+<section class="section-title">
+  <h2><span class="section-num">Part 2</span>ML/NLP 能为社会科学做什么</h2>
+</section>
+
+<!-- Slide 18: Twitter 假新闻 -->
+<section class="paper-slide">
+  <h2>1% 的用户传播了 80% 的假新闻</h2>
+  <div class="paper-context">
+    <strong>做了什么：</strong>追踪 2016 美国大选期间 16,000 名 Twitter 用户，用 NLP 识别假新闻来源。<br>
+    <strong>发现：</strong>假新闻传播极度集中（左图洛伦兹曲线），且集中在极端保守派用户（右图密度分布）。
+  </div>
+  <div class="paper-figs">
+    <div class="paper-fig">
+      <img src="images/10-fake-news-lorenz.png" alt="假新闻传播洛伦兹曲线">
+      <div class="caption">1% 用户贡献 80% 假新闻转发</div>
+    </div>
+    <div class="paper-fig">
+      <img src="images/10-fake-news-fig2.png" alt="按政治倾向分布">
+      <div class="caption">假新闻消费按政治倾向分布</div>
+    </div>
+  </div>
+  <div class="paper-cite">Grinberg et al. · <em>Science</em> 363, 2019</div>
+</section>
+
+
+<!-- Slides 20-32: Paper figures (to be filled with actual figures) -->
+
+<!-- Slide 20: Twitter 算法放大 -->
+<section class="paper-slide">
+  <h2>Twitter 算法在 7 个国家放大右翼内容</h2>
+  <div class="paper-context">
+    <strong>做了什么：</strong>Twitter 官方自我审计——将用户随机分到"算法推荐"和"纯时间线"两组。<br>
+    <strong>发现：</strong>算法在 7 国系统性放大右翼政党内容（左图），具体到媒体层面右翼出口放大更多（右图）。
+  </div>
+  <div class="paper-figs">
+    <div class="paper-fig">
+      <img src="images/09-twitter-amplification.png" alt="7国算法放大率">
+      <div class="caption">7 国左右翼政党的算法放大率</div>
+    </div>
+    <div class="paper-fig">
+      <img src="images/09-twitter-media-grid.png" alt="媒体偏见放大">
+      <div class="caption">各媒体出口的算法放大程度</div>
+    </div>
+  </div>
+  <div class="paper-cite">Huszár, Ktena et al. · <em>PNAS</em> 119, 2022</div>
+</section>
+
+<!-- Slide 21: ChatGPT vs 众包标注 -->
+<section class="paper-slide">
+  <h2>ChatGPT 标注质量碾压人类众包工人</h2>
+  <div class="paper-context">
+    <strong>做了什么：</strong>在情感、立场、主题、框架 4 类标注任务上，对比 ChatGPT 与 Amazon MTurk 众包工人。<br>
+    <strong>发现：</strong>ChatGPT 在准确率和标注者间一致性上均大幅超越众包，平均领先约 25 个百分点。
+  </div>
+  <div class="paper-fig">
+    <img src="images/04-chatgpt-vs-mturk.png" alt="GPT vs MTurk vs 专家准确率">
+    <div class="caption">Gilardi, Alizadeh, Kubli · <em>PNAS</em> 120, 2023</div>
+  </div>
+</section>
+
+<!-- Slide 22: 文本理想点 -->
+<section class="paper-slide">
+  <h2>纯文本读出意识形态：左中右一目了然</h2>
+  <div class="paper-context">
+    <strong>做了什么：</strong>仅用参议员演讲文本（不看投票），通过概率模型推导每位参议员的意识形态位置。<br>
+    <strong>发现：</strong>纯文本推算结果与 DW-NOMINATE 投票指标高度吻合（右图 r=0.88–0.94）。
+  </div>
+  <div class="paper-figs">
+    <div class="paper-fig">
+      <img src="images/06-text-ideal-points.png" alt="参议员意识形态一维排列">
+      <div class="caption">参议员意识形态一维排列</div>
+    </div>
+    <div class="paper-fig">
+      <img src="images/06-text-ideal-fig2.png" alt="文本理想点 vs DW-NOMINATE">
+      <div class="caption">文本理想点 vs 投票理想点</div>
+    </div>
+  </div>
+  <div class="paper-cite">Vafa, Naidu, Blei · <em>ACL</em> 2020</div>
+</section>
+
+<!-- Slide 23: 议会情感修辞 -->
+<section class="paper-slide">
+  <h2>观众越多，政客越"情绪化"</h2>
+  <div class="paper-context">
+    <strong>做了什么：</strong>对 200 万场英国议会演讲做情感分析，比较不同场合的情感修辞强度。<br>
+    <strong>发现：</strong>首相质询（PMQ）等高关注场合的情感修辞远强于委员会辩论，且 2001-2019 趋势稳定。
+  </div>
+  <div class="paper-figs">
+    <div class="paper-fig">
+      <img src="images/07-emotive-rhetoric.png" alt="不同场合情感强度对比">
+      <div class="caption">不同场合的情感修辞强度</div>
+    </div>
+    <div class="paper-fig">
+      <img src="images/07-emotive-fig2.png" alt="情感修辞时间趋势">
+      <div class="caption">各类辩论的情感修辞趋势（2001–2019）</div>
+    </div>
+  </div>
+  <div class="paper-cite">Osnabrügge, Hobolt, Rodon · <em>APSR</em> 115, 2021</div>
+</section>
+
+<!-- Slide 24: 70年民粹/民族/威权 -->
+<section class="paper-slide">
+  <h2>Trump 是70年修辞史上的真正异常值</h2>
+  <div class="paper-context">
+    <strong>做了什么：</strong>用 RoBERTa 对 1952–2020 年 17 届总统竞选演讲做民粹/民族/威权三维分类。<br>
+    <strong>发现：</strong>Trump 在三个维度上都是 70 年来的异常值（左图），主成分分析进一步确认其偏离（右图）。
+  </div>
+  <div class="paper-figs">
+    <div class="paper-fig">
+      <img src="images/08-populism-70years.png" alt="70年时间序列">
+      <div class="caption">1952–2020 三维修辞时间序列</div>
+    </div>
+    <div class="paper-fig">
+      <img src="images/08-populism-fig2.png" alt="主成分分析">
+      <div class="caption">竞选话语的主成分分析</div>
+    </div>
+  </div>
+  <div class="paper-cite">Bonikowski, Luo, Stuhler · <em>Sociological Methods &amp; Research</em> 51, 2022</div>
+</section>
+
+<!-- Slide 25: 文化的几何学 -->
+<section class="paper-slide">
+  <h2>词向量里藏着100年的阶级观念变迁</h2>
+  <div class="paper-context">
+    <strong>做了什么：</strong>用每个年代的语料训练词嵌入，在"性别""阶级""种族"等语义轴上追踪概念漂移。<br>
+    <strong>发现：</strong>职业词在性别-阶级轴上 100 年间持续移动（左图）；音乐类型在种族-阶级轴上的投影与真人调查高度一致（右图）。
+  </div>
+  <div class="paper-figs">
+    <div class="paper-fig">
+      <img src="images/15-geometry-of-culture.png" alt="100年语义轴漂移">
+      <div class="caption">职业词在性别-阶级轴上的漂移</div>
+    </div>
+    <div class="paper-fig">
+      <img src="images/15-geometry-fig2.png" alt="音乐类型投影">
+      <div class="caption">音乐类型在种族-阶级轴上的投影</div>
+    </div>
+  </div>
+  <div class="paper-cite">Kozlowski, Taddy, Evans · <em>American Sociological Review</em> 84, 2019</div>
+</section>
+
+<!-- Slide 26: LLM 模拟人类样本 -->
+<section class="paper-slide">
+  <h2>给 GPT 一个人口背景，它就变成那个人</h2>
+  <div class="paper-context">
+    <strong>做了什么：</strong>给 GPT-3 输入人口特征（种族、性别、学历、党派），让它模拟该群体对政策问题的回答。<br>
+    <strong>发现：</strong>GPT 模拟的词频分布与 ANES 真实调查高度吻合（左图），变量间条件相关性也接近真人（右图）。
+  </div>
+  <div class="paper-figs">
+    <div class="paper-fig">
+      <img src="images/05-silicon-sampling.png" alt="GPT-3 vs ANES 散点图">
+      <div class="caption">GPT-3 模拟 vs ANES 真实调查</div>
+    </div>
+    <div class="paper-fig">
+      <img src="images/05-silicon-fig2.png" alt="条件相关性对比">
+      <div class="caption">条件相关性：GPT vs ANES</div>
+    </div>
+  </div>
+  <div class="paper-cite">Argyle et al. · <em>Political Analysis</em> 31, 2023</div>
+</section>
+
+<!-- Slide 27: LLM 政治文本定位 -->
+<section class="paper-slide">
+  <h2>零样本 LLM 打分，比肩 DW-NOMINATE</h2>
+  <div class="paper-context">
+    <strong>做了什么：</strong>让多个 LLM 对议员推文做意识形态打分，无需任何标注数据。<br>
+    <strong>发现：</strong>Llama 3 与 DW-NOMINATE 相关高达 r=0.96（左图），方法还可迁移至英国党纲定位（右图）。
+  </div>
+  <div class="paper-figs">
+    <div class="paper-fig">
+      <img src="images/14-llm-positioning.png" alt="LLM vs DW-NOMINATE">
+      <div class="caption">LLM 打分 vs DW-NOMINATE（美国）</div>
+    </div>
+    <div class="paper-fig">
+      <img src="images/14-llm-fig2.png" alt="英国党纲定位">
+      <div class="caption">各 LLM 对英国党纲的经济维度定位</div>
+    </div>
+  </div>
+  <div class="paper-cite">Pedersen et al. · <em>Political Analysis</em>, 2024</div>
+</section>
+
+<!-- Slide 28: 文本因果推断 -->
+<section class="paper-slide">
+  <h2>文本数据里，因果推断有四种玩法</h2>
+  <div class="paper-context">
+    <strong>做了什么：</strong>提出统一框架：文本可做处理/结果/混淆/调节变量，对应不同因果设计。<br>
+    <strong>发现：</strong>左图是四种设计的 DAG 框架，右图是实证应用——移民实验中文本发现的处理效应。
+  </div>
+  <div class="paper-figs">
+    <div class="paper-fig">
+      <img src="images/12-text-causal-inference.png" alt="DAG 因果框架">
+      <div class="caption">四种文本因果设计的 DAG 框架</div>
+    </div>
+    <div class="paper-fig">
+      <img src="images/12-text-causal-fig2.png" alt="移民实验处理效应">
+      <div class="caption">实证应用：移民实验处理效应</div>
+    </div>
+  </div>
+  <div class="paper-cite">Egami, Fong, Grimmer et al. · <em>Science Advances</em> 8, 2022</div>
+</section>
+
+<!-- Slide 29: 反教派仇恨言论实验 -->
+<section class="paper-slide">
+  <h2>派机器人去 Twitter，真的能减少仇恨言论</h2>
+  <div class="paper-context">
+    <strong>做了什么：</strong>田野实验——用机器人向阿拉伯语 Twitter 仇恨言论者发送反对信息，随机分配不同身份策略。<br>
+    <strong>发现：</strong>宗教精英身份最有效（左图），海湾用户子样本中效应尤为显著且持续一个月（右图）。
+  </div>
+  <div class="paper-figs">
+    <div class="paper-fig">
+      <img src="images/bonus-counter-speech.png" alt="处理效应">
+      <div class="caption">反仇恨言论干预的处理效应</div>
+    </div>
+    <div class="paper-fig">
+      <img src="images/bonus-counter-fig2.png" alt="海湾用户子样本">
+      <div class="caption">海湾用户子样本的效应估计</div>
+    </div>
+  </div>
+  <div class="paper-cite">Siegel &amp; Badaan · <em>APSR</em> 114, 2020</div>
+</section>
+
+<!-- Slide 33: 这些离你有多远？ -->
+<section>
+  <h2>这些离你有多远？</h2>
+  <div class="highlight-box" style="font-size:1.05em; text-align:center;">
+    工具已成熟，门槛在降低。<br>
+    这门课就是带你<strong>跨过这道门槛</strong>。
+  </div>
+</section>
+
+<!-- Slide 34: 能做什么、不能做什么 -->
+<section>
+  <h2>能做什么、不能做什么</h2>
+  <div class="cols">
+    <div class="col">
+      <h3 style="color:var(--accent);">能</h3>
+      <ul>
+        <li>大规模文本分析</li>
+        <li>自动分类与标注</li>
+        <li>发现隐藏模式</li>
+        <li>辅助研究设计</li>
+      </ul>
+    </div>
+    <div class="col">
+      <h3 style="color:#dc2626;">不能</h3>
+      <ul>
+        <li>替代理论思考</li>
+        <li>保证因果推断</li>
+        <li>消除数据偏见</li>
+        <li>脱离领域知识运作</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PART 4: 课程路线图 (2 slides)                                  -->
+<!-- ============================================================ -->
+
+<!-- Slide 35: 课程路线图 -->
+<section>
+  <h2>课程路线图</h2>
+  <div class="roadmap">
+    <div class="rm-block mod1">
+      <div class="rm-weeks">第 1–5 周</div>
+      <div class="rm-title">模块一 ML 基础</div>
+      <div class="rm-items">
+        课程导论<br>
+        机器学习技术基础<br>
+        ML 与社会科学<br>
+        有监督学习<br>
+        无监督学习
+      </div>
+    </div>
+    <div class="rm-block mod2">
+      <div class="rm-weeks">第 6–9 周</div>
+      <div class="rm-title">模块二 NLP 技术</div>
+      <div class="rm-items">
+        文本处理基础<br>
+        文本分类<br>
+        主题模型<br>
+        大语言模型
+      </div>
+    </div>
+    <div class="rm-block mid">
+      <div class="rm-weeks">第 10 周</div>
+      <div class="rm-title">期中交流</div>
+    </div>
+    <div class="rm-block mod3">
+      <div class="rm-weeks">第 11–15 周</div>
+      <div class="rm-title">模块三 应用实战</div>
+      <div class="rm-items">
+        多模态 AI<br>
+        社交媒体分析<br>
+        政策文本分析<br>
+        问卷开放题分析<br>
+        AI 伦理
+      </div>
+    </div>
+    <div class="rm-block mid">
+      <div class="rm-weeks">第 16 周</div>
+      <div class="rm-title">期末简报</div>
+    </div>
+  </div>
+</section>
+
+<!-- 课程安排 -->
+<section>
+  <h2>课程安排</h2>
+  <h3>三个模块</h3>
+  <ul>
+    <li><strong>机器学习基础</strong>——核心概念与直觉</li>
+    <li><strong>自然语言处理</strong>——让机器读懂文本</li>
+    <li><strong>社会科学应用</strong>——在你的领域落地</li>
+  </ul>
+  <p style="font-size:0.75em; color:var(--gray-600); text-align:center; margin-top:1em;">
+    不要求编程基础。重点是<strong>理解方法</strong>和<strong>解读结果</strong>。
+  </p>
+</section>
+
+<!-- 学完能做什么 -->
+<section>
+  <h2>学完这门课，你能做什么</h2>
+  <ul>
+    <li>看到一篇用 NLP 方法的论文，读懂它在干什么</li>
+    <li>判断一个问题适不适合用计算方法来回答</li>
+    <li>跟技术团队说清楚你要什么、结果好不好</li>
+    <li>AI 给你一个结论，你知道该不该信</li>
+  </ul>
+</section>
+
+<!-- 期末简报 -->
+<section>
+  <h2>期末简报</h2>
+  <ul>
+    <li><strong>选题</strong>　围绕自身专业/工作，选一个 ML/NLP 可以帮忙的场景</li>
+    <li><strong>分析</strong>　用课程介绍的工具做一次初步分析</li>
+    <li><strong>展示</strong>　课堂简报，展示思路、过程与发现</li>
+  </ul>
+  <div class="highlight-box" style="margin-top:1em;">
+    不要求写代码，重在<strong>理解方法</strong>与<strong>解读结果</strong>。
+  </div>
+</section>
+
+<!-- Slide 37: 考核方式 -->
+<section>
+  <h2>考核方式</h2>
+  <div class="card-grid cols-3" style="margin-top:1.5em;">
+    <div class="card">
+      <div class="card-icon" style="font-size:1.8em; font-weight:700; color:var(--accent);">20</div>
+      <div class="card-label">课堂参与</div>
+      <div class="card-desc">出勤 + 讨论</div>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="font-size:1.8em; font-weight:700; color:var(--accent);">20</div>
+      <div class="card-label">课程小作业</div>
+      <div class="card-desc">随堂练习</div>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="font-size:1.8em; font-weight:700; color:var(--accent);">60</div>
+      <div class="card-label">期末简报</div>
+      <div class="card-desc">选一个你自己领域的问题，<br>用课上学到的方法做一次分析</div>
+    </div>
+  </div>
+</section>
+
+</div><!-- .slides -->
+</div><!-- .reveal -->
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    width: 1280,
+    height: 720,
+    margin: 0.08,
+    transition: 'none',
+    backgroundTransition: 'none',
+    center: true,
+  });
+</script>
+</body>
+</html>
