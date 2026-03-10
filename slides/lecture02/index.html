@@ -1,0 +1,2481 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>第二课 机器学习的技术基础 — 机器学习与自然语言处理</title>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    :root {
+      --r-background-color: #fff;
+      --r-main-font: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+      --r-main-font-size: 32px;
+      --r-main-color: #1a1a2e;
+      --r-heading-font: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+      --r-heading-color: #0f0f1a;
+      --r-heading-font-weight: 700;
+      --r-link-color: #2563eb;
+      --accent: #2563eb;
+      --accent-light: #dbeafe;
+      --gray-50: #f8f9fa;
+      --gray-100: #f1f3f5;
+      --gray-200: #e9ecef;
+      --gray-400: #adb5bd;
+      --gray-600: #6c757d;
+      --gray-800: #343a40;
+    }
+
+    .reveal { font-weight: 400; }
+    .reveal h1 { font-size: 2.2em; letter-spacing: -0.02em; }
+    .reveal h2 { font-size: 1.6em; letter-spacing: -0.01em; color: var(--accent); text-transform: none; }
+    .reveal h3 { font-size: 1.2em; color: var(--gray-800); }
+    .reveal p, .reveal li { line-height: 1.6; }
+    .reveal ul { list-style: none; padding-left: 0; }
+    .reveal ul li { padding-left: 1.5em; position: relative; margin-bottom: 0.4em; }
+    .reveal ul li::before {
+      content: '';
+      position: absolute; left: 0; top: 0.55em;
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    .reveal code {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--gray-100);
+      padding: 0.1em 0.4em;
+      border-radius: 4px;
+      font-size: 0.85em;
+    }
+
+    /* Section title slides */
+    .section-title {
+      background: var(--r-background-color) !important;
+    }
+    .section-title h2 {
+      font-size: 2.4em;
+      color: var(--r-main-color);
+      border-left: 6px solid var(--accent);
+      padding-left: 0.6em;
+      text-align: left;
+    }
+    .section-title .section-num {
+      font-size: 0.5em;
+      color: var(--gray-400);
+      font-weight: 400;
+      display: block;
+      margin-bottom: 0.2em;
+    }
+
+    /* Cover slide */
+    .cover h1 {
+      font-size: 2.6em;
+      margin-bottom: 0.1em;
+    }
+    .cover .subtitle {
+      font-size: 1.1em;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 2em;
+    }
+    .cover .meta {
+      font-size: 0.7em;
+      color: var(--gray-600);
+      line-height: 1.8;
+    }
+
+    /* Highlight box */
+    .highlight-box {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-left: 4px solid var(--accent);
+      padding: 1em 1.5em;
+      border-radius: 4px;
+      text-align: left;
+      margin: 1em 0;
+    }
+
+    /* Two column layout */
+    .cols {
+      display: flex;
+      gap: 2em;
+      align-items: flex-start;
+    }
+    .cols .col { flex: 1; text-align: left; }
+
+    /* Flow: horizontal arrow chain */
+    .flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin: 1em 0;
+    }
+    .flow-node {
+      background: var(--gray-50);
+      border: 2px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.8em 1.2em;
+      font-size: 0.75em;
+      font-weight: 500;
+      text-align: center;
+      min-width: 120px;
+      position: relative;
+    }
+    .flow-node.accent {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .flow-node.outline {
+      background: #fff;
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .flow-arrow {
+      width: 48px;
+      height: 2px;
+      background: var(--gray-400);
+      position: relative;
+      flex-shrink: 0;
+    }
+    .flow-arrow::after {
+      content: '';
+      position: absolute;
+      right: -1px; top: -5px;
+      border: 6px solid transparent;
+      border-left: 8px solid var(--gray-400);
+    }
+    .flow-arrow.accent-arrow {
+      background: var(--accent);
+    }
+    .flow-arrow.accent-arrow::after {
+      border-left-color: var(--accent);
+    }
+
+    /* Box grid: card grid */
+    .card-grid {
+      display: grid;
+      gap: 1em;
+      margin: 1em 0;
+    }
+    .card-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .card-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+    .card-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 1.2em;
+      text-align: center;
+    }
+    .card .card-icon {
+      font-size: 2.2em;
+      margin-bottom: 0.3em;
+      line-height: 1;
+    }
+    .card .card-label {
+      font-size: 0.7em;
+      font-weight: 600;
+      color: var(--r-main-color);
+      margin-bottom: 0.2em;
+    }
+    .card .card-desc {
+      font-size: 0.55em;
+      color: var(--gray-600);
+      line-height: 1.4;
+    }
+
+    /* VS layout */
+    .vs-layout {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin: 0.8em 0;
+    }
+    .vs-panel {
+      flex: 1;
+      padding: 1.2em 1.5em;
+      border-radius: 8px;
+      text-align: left;
+    }
+    .vs-panel.left {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      margin-right: -1px;
+      border-radius: 8px 0 0 8px;
+    }
+    .vs-panel.right {
+      background: var(--accent-light);
+      border: 1px solid #bfdbfe;
+      border-radius: 0 8px 8px 0;
+    }
+    .vs-divider {
+      width: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4em;
+      font-weight: 700;
+      color: var(--gray-400);
+      flex-shrink: 0;
+    }
+    .vs-panel h3 {
+      font-size: 0.85em;
+      margin-bottom: 0.6em;
+    }
+    .vs-panel .vs-items {
+      font-size: 0.65em;
+      color: var(--gray-800);
+      line-height: 2;
+    }
+
+    /* Data table */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.6em;
+      margin: 0.8em 0;
+    }
+    .data-table th {
+      background: var(--accent);
+      color: #fff;
+      padding: 0.6em 0.8em;
+      font-weight: 600;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .data-table th:first-child { border-radius: 6px 0 0 0; }
+    .data-table th:last-child { border-radius: 0 6px 0 0; }
+    .data-table td {
+      padding: 0.5em 0.8em;
+      border-bottom: 1px solid var(--gray-200);
+      text-align: center;
+    }
+    .data-table tr:nth-child(even) td {
+      background: var(--gray-50);
+    }
+    .data-table .label-good {
+      background: #dcfce7;
+      color: #16a34a;
+      padding: 0.15em 0.6em;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .data-table .label-bad {
+      background: #fee2e2;
+      color: #dc2626;
+      padding: 0.15em 0.6em;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    /* Decision tree */
+    .tree {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      margin: 1em 0;
+    }
+    .tree-node {
+      border-radius: 8px;
+      padding: 0.5em 1.2em;
+      font-size: 0.7em;
+      font-weight: 500;
+      text-align: center;
+      position: relative;
+    }
+    .tree-node.question {
+      background: var(--accent-light);
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .tree-node.leaf-good {
+      background: #dcfce7;
+      border: 2px solid #16a34a;
+      color: #16a34a;
+      font-weight: 700;
+    }
+    .tree-node.leaf-bad {
+      background: #fee2e2;
+      border: 2px solid #dc2626;
+      color: #dc2626;
+      font-weight: 700;
+    }
+    .tree-branches {
+      display: flex;
+      gap: 3em;
+      position: relative;
+    }
+    .tree-branch {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+    .tree-edge {
+      height: 28px;
+      width: 2px;
+      background: var(--gray-400);
+    }
+    .tree-edge-label {
+      font-size: 0.55em;
+      color: var(--gray-600);
+      font-weight: 600;
+      padding: 0.2em 0;
+    }
+
+    /* Confusion matrix */
+    .cm-table {
+      border-collapse: collapse;
+      margin: 0.5em auto;
+      font-size: 0.65em;
+    }
+    .cm-table th, .cm-table td {
+      padding: 0.6em 1.2em;
+      text-align: center;
+      border: 1px solid var(--gray-200);
+    }
+    .cm-table th {
+      background: var(--gray-100);
+      font-weight: 600;
+      color: var(--gray-800);
+    }
+    .cm-table .cm-corner {
+      background: #fff;
+      border-color: #fff;
+    }
+    .cm-table .cm-tp { background: #dcfce7; color: #16a34a; font-weight: 700; font-size: 1.1em; }
+    .cm-table .cm-tn { background: #dcfce7; color: #16a34a; font-weight: 700; font-size: 1.1em; }
+    .cm-table .cm-fp { background: #fef3c7; color: #b45309; font-weight: 600; }
+    .cm-table .cm-fn { background: #fee2e2; color: #dc2626; font-weight: 600; }
+
+    /* Pipeline */
+    .pipeline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin: 1.5em 0;
+    }
+    .pipe-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3em;
+    }
+    .pipe-num {
+      font-size: 0.5em;
+      font-weight: 700;
+      color: #fff;
+      background: var(--accent);
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pipe-label {
+      font-size: 0.65em;
+      font-weight: 600;
+      color: var(--r-main-color);
+    }
+    .pipe-desc {
+      font-size: 0.5em;
+      color: var(--gray-600);
+      max-width: 120px;
+      text-align: center;
+      line-height: 1.3;
+    }
+    .pipe-arrow {
+      width: 32px;
+      height: 2px;
+      background: var(--gray-300);
+      position: relative;
+      flex-shrink: 0;
+      margin: 0 0.2em;
+    }
+    .pipe-arrow::after {
+      content: '';
+      position: absolute;
+      right: -1px; top: -4px;
+      border: 5px solid transparent;
+      border-left: 6px solid var(--gray-300);
+    }
+
+    /* Vertical flow */
+    .vflow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      margin: 1em 0;
+    }
+    .vflow-arrow {
+      width: 2px;
+      height: 24px;
+      background: var(--gray-400);
+      position: relative;
+    }
+    .vflow-arrow::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: -5px;
+      border: 6px solid transparent;
+      border-top: 8px solid var(--gray-400);
+    }
+
+    /* Bias chain */
+    .bias-chain {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin: 1em 0;
+    }
+    .bias-node {
+      border-radius: 8px;
+      padding: 0.8em 1.2em;
+      font-size: 0.7em;
+      text-align: center;
+      min-width: 140px;
+    }
+    .bias-arrow {
+      width: 40px;
+      height: 2px;
+      background: #dc2626;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .bias-arrow::after {
+      content: '';
+      position: absolute;
+      right: -1px; top: -4px;
+      border: 5px solid transparent;
+      border-left: 6px solid #dc2626;
+    }
+
+    /* Task overview table */
+    .task-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.6em;
+      margin: 0.6em 0;
+    }
+    .task-table th {
+      padding: 0.6em 1em;
+      font-weight: 600;
+      text-align: left;
+      border-bottom: 2px solid var(--accent);
+      color: var(--accent);
+    }
+    .task-table td {
+      padding: 0.6em 1em;
+      border-bottom: 1px solid var(--gray-200);
+      text-align: left;
+      vertical-align: top;
+    }
+    .task-table .week-badge {
+      background: var(--accent-light);
+      color: var(--accent);
+      padding: 0.15em 0.5em;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.9em;
+      white-space: nowrap;
+    }
+
+    /* Slide number */
+    .reveal .slide-number {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: var(--gray-400);
+    }
+
+    /* Progress bar */
+    .reveal .progress span { background: var(--accent); }
+
+    /* Fragment highlight */
+    .reveal .highlight-blue { color: var(--accent); }
+
+    /* Fit diagram */
+    .fit-panels {
+      display: flex;
+      gap: 1em;
+      margin: 1em 0;
+    }
+    .fit-panel {
+      flex: 1;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 1em;
+      text-align: center;
+    }
+    .fit-panel.bad { border-color: #fca5a5; background: #fef2f2; }
+    .fit-panel.good { border-color: #86efac; background: #f0fdf4; }
+    .fit-panel .fit-title {
+      font-size: 0.75em;
+      font-weight: 700;
+      margin-bottom: 0.3em;
+    }
+    .fit-panel .fit-desc {
+      font-size: 0.55em;
+      color: var(--gray-600);
+      line-height: 1.4;
+    }
+
+    /* SVG chart area */
+    .chart-area {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 1em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Takeaway slide */
+    .takeaway {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      padding: 2em;
+      text-align: center;
+    }
+    .takeaway .divider {
+      width: 3em;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 1.8em;
+    }
+    .takeaway .main-text {
+      font-size: 1.5em;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1.45;
+      margin: 0 0 1.2em 0;
+      max-width: 15em;
+    }
+    .takeaway .sub-text {
+      font-size: 0.82em;
+      color: var(--gray-600);
+      line-height: 1.8;
+      margin: 0 0 2em 0;
+      max-width: 28em;
+    }
+    .takeaway .hint {
+      font-size: 0.6em;
+      color: var(--gray-400);
+      letter-spacing: 0.04em;
+    }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- ============================================================ -->
+<!-- COVER                                                         -->
+<!-- ============================================================ -->
+
+<!-- Slide 1 -->
+<section class="cover">
+ <h1>机器学习的技术基础</h1>
+ <p class="subtitle">AI + 计算社会科学微专业</p>
+ <p class="meta">
+ 第二课<br>
+ 郑思尧<br>
+ 上海交通大学 国际与公共事务学院
+ </p>
+</section>
+
+<!-- ============================================================ -->
+<!-- PART 1: 机器学习在"学"什么 (13 slides)                         -->
+<!-- ============================================================ -->
+
+<!-- Slide 2 -->
+<section class="section-title">
+ <h2><span class="section-num">Part 1</span>机器学习在「学」什么</h2>
+</section>
+
+<!-- Slide 3: 场景引入 -->
+<section>
+ <h2>一个场景</h2>
+ <div style="text-align:left; max-width:820px; margin:0 auto;">
+ <p style="font-size:1.05em; line-height:1.8;">
+ 你经常在美团/饿了么点外卖。<br>
+ 平台上一家新店，两个月收到了<strong>5,000 条</strong>评价。
+ </p>
+ <p style="font-size:1.05em; color:var(--gray-800); margin-top:1em;">
+ 老板想了解顾客到底<strong style="color:var(--accent);">满不满意</strong>。<br>
+ 哪些方面被吐槽最多。
+ </p>
+ <p style="font-size:0.8em; color:var(--gray-600); margin-top:1em;">
+ 一条条读，5,000 条 &times; 30 秒 = <strong>42 小时</strong>，而且只是读完还没开始分析。
+ </p>
+ <p style="font-size:0.75em; color:var(--gray-600); margin-top:0.6em;">
+ 更头疼的是，很多评价<strong>不是一目了然</strong>的 阴阳怪气、先夸后贬、字面好评实际吐槽……<br>
+ 你自己读都得想一想，找实习生来帮忙更难保证一致性。
+ </p>
+ </div>
+</section>
+
+<!-- Slide 3b: 真实评价长什么样 -->
+<section>
+ <h2>真实评价的多样性</h2>
+ <p style="font-size:0.7em; color:var(--gray-600); margin-bottom:0.6em;">同一家店的几条评价，类型各不相同</p>
+ <div style="max-width:820px; margin:0 auto; display:flex; flex-direction:column; gap:0.6em;">
+ <div style="background:#dcfce7; border:1px solid #86efac; border-radius:8px; padding:0.7em 1.2em; font-size:0.75em; text-align:left;">
+ <span style="color:#16a34a; font-weight:600;">热情好评</span><br>
+ 「好吃到哭！！宫保鸡丁超大份，米饭粒粒分明，小哥还提前5分钟送到。以后就吃这家了，五星好评！」
+ </div>
+ <div style="background:#fee2e2; border:1px solid #fca5a5; border-radius:8px; padding:0.7em 1.2em; font-size:0.75em; text-align:left;">
+ <span style="color:#dc2626; font-weight:600;">愤怒差评</span><br>
+ 「等了一个小时外卖才到，饭都凉了，而且少了一份小菜。打电话给商家没人接。再也不点了。」
+ </div>
+ <div style="background:#fef3c7; border:1px solid #fde68a; border-radius:8px; padding:0.7em 1.2em; font-size:0.75em; text-align:left;">
+ <span style="color:#b45309; font-weight:600;">温吞评价</span><br>
+ 「一般般吧，味道说不上好也说不上差。配送速度还可以。没啥特别想说的。」
+ </div>
+ <div style="background:#fef2f2; border:1px solid #fca5a5; border-radius:8px; padding:0.7em 1.2em; font-size:0.75em; text-align:left;">
+ <span style="color:#dc2626; font-weight:600;">阴阳怪气</span><br>
+ 「嗯，花38块钱等了50分钟吃一盒糊了的炒饭，这体验真的很'独特'呢 :)」
+ </div>
+ <div style="background:#f0fdf4; border:1px solid #86efac; border-radius:8px; padding:0.7em 1.2em; font-size:0.75em; text-align:left;">
+ <span style="color:#16a34a; font-weight:600;">先抑后扬</span><br>
+ 「本来没抱什么期望，结果意外地好吃！尤其是酸辣汤，料给得很足。下次还点。」
+ </div>
+ </div>
+ <p style="font-size:0.7em; color:var(--gray-600); text-align:center; margin-top:0.6em;">
+ 5,000 条里各种类型混在一起这就是机器学习要解决的问题
+ </p>
+</section>
+
+<!-- Slide: 第一反应——写规则 -->
+<section>
+ <h2>第一反应 写规则</h2>
+ <div style="max-width:800px; margin:0 auto; text-align:left;">
+ <p style="font-size:0.9em; line-height:1.8;">
+ 面对 5,000 条评价，你的第一个想法可能是<strong>写一套规则</strong>
+ </p>
+ <div style="background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:1em 1.5em; margin:1em 0; font-family:'JetBrains Mono',monospace; font-size:0.7em; line-height:2.2;">
+ <span style="color:var(--accent);">如果</span> 评分 &le; 2 星 &rarr; 不满意<br>
+ <span style="color:var(--accent);">如果</span> 包含「难吃」「凉了」&rarr; 不满意<br>
+ <span style="color:var(--accent);">如果</span> 评分 &ge; 4 星 且 包含「好吃」&rarr; 满意<br>
+ <span style="color:var(--accent);">如果</span> 配送超过 45 分钟 &rarr; 不满意<br>
+ <span style="color:var(--gray-400);">……</span>
+ </div>
+ <p style="font-size:0.8em; color:var(--gray-600);">
+ 这就是<strong>传统编程</strong>的思路 人类想好规则，写成代码，计算机负责执行。
+ </p>
+ </div>
+</section>
+
+<!-- Slide: 规则为什么不够用 -->
+<section>
+ <h2>规则为什么不够用</h2>
+ <div style="max-width:820px; margin:0 auto;">
+ <div style="display:flex; flex-direction:column; gap:0.7em;">
+ <div style="display:flex; align-items:flex-start; gap:1em; background:#fef2f2; border:1px solid #fca5a5; border-radius:8px; padding:0.7em 1em;">
+ <div style="font-size:1.2em; font-weight:700; color:#dc2626; min-width:1.5em; text-align:center;">1</div>
+ <div style="font-size:0.75em; text-align:left;">
+ <strong style="color:#dc2626;">规则爆炸</strong><br>
+ 写了 10 条还不够，20 条还有遗漏，规则之间还会互相矛盾<br>
+ <span style="color:var(--gray-500);">评分 4 星但包含「难吃」，到底满意还是不满意</span>
+ </div>
+ </div>
+ <div style="display:flex; align-items:flex-start; gap:1em; background:#fef2f2; border:1px solid #fca5a5; border-radius:8px; padding:0.7em 1em;">
+ <div style="font-size:1.2em; font-weight:700; color:#dc2626; min-width:1.5em; text-align:center;">2</div>
+ <div style="font-size:0.75em; text-align:left;">
+ <strong style="color:#dc2626;">语言太灵活</strong><br>
+ 「花38块钱等了50分钟吃一盒糊了的炒饭，这体验真的很'独特'呢 :)」<br>
+ <span style="color:var(--gray-500);">没有任何关键词命中，但人一看就知道是差评</span>
+ </div>
+ </div>
+ <div style="display:flex; align-items:flex-start; gap:1em; background:#fef2f2; border:1px solid #fca5a5; border-radius:8px; padding:0.7em 1em;">
+ <div style="font-size:1.2em; font-weight:700; color:#dc2626; min-width:1.5em; text-align:center;">3</div>
+ <div style="font-size:0.75em; text-align:left;">
+ <strong style="color:#dc2626;">无法迁移</strong><br>
+ 换一个行业（酒店、电影），规则全部要重写<br>
+ <span style="color:var(--gray-500);">外卖的「凉了」到了酒店变成「隔音差」「空调不制冷」</span>
+ </div>
+ </div>
+ </div>
+ <p style="font-size:0.75em; color:var(--gray-600); text-align:center; margin-top:0.8em;">
+ 人类语言太复杂，靠穷举规则走不通
+ </p>
+ </div>
+</section>
+
+<!-- Slide: 换一个思路——机器学习 -->
+<section>
+ <h2>换一个思路 机器学习</h2>
+ <div style="max-width:820px; margin:0 auto;">
+ <div class="vs-layout">
+ <div class="vs-panel left">
+ <h3 style="color:var(--gray-800);">传统编程</h3>
+ <div class="vs-items" style="font-size:0.85em;">
+ 人写规则 + 数据 &rarr; 结果<br><br>
+ <span style="color:var(--gray-500); font-size:0.85em;">规则是<strong>人想出来</strong>的<br>计算机只是执行</span>
+ </div>
+ </div>
+ <div class="vs-divider">VS</div>
+ <div class="vs-panel right">
+ <h3 style="color:var(--accent);">机器学习</h3>
+ <div class="vs-items" style="font-size:0.85em;">
+ 数据 + 答案 &rarr; 规则<br><br>
+ <span style="color:var(--gray-500); font-size:0.85em;">规则是<strong>机器从数据里学出来</strong>的<br>人只需要提供例子和答案</span>
+ </div>
+ </div>
+ </div>
+ <div class="highlight-box" style="text-align:center; margin-top:1em;">
+ <strong style="color:var(--accent); font-size:1.05em;">规则不是人写的，是机器从数据里「学」出来的</strong><br>
+ <span style="font-size:0.85em; color:var(--gray-600);">这就是「机器学习」这个名字的由来</span>
+ </div>
+ </div>
+</section>
+
+<!-- Slide: 你每天都在用机器学习 -->
+<section>
+ <h2>你每天都在用机器学习</h2>
+ <div class="card-grid cols-3" style="max-width:880px; margin:0 auto; gap:0.7em;">
+ <div class="card" style="text-align:center; padding:0.8em;">
+ <div class="card-label" style="color:var(--accent);">手机人脸解锁</div>
+ <div class="card-desc" style="font-size:0.6em;">你录入几张照片<br>手机学会识别你的脸</div>
+ </div>
+ <div class="card" style="text-align:center; padding:0.8em;">
+ <div class="card-label" style="color:var(--accent);">垃圾邮件过滤</div>
+ <div class="card-desc" style="font-size:0.6em;">千万封邮件被标记为垃圾/正常<br>系统自动判断新邮件</div>
+ </div>
+ <div class="card" style="text-align:center; padding:0.8em;">
+ <div class="card-label" style="color:var(--accent);">购物推荐</div>
+ <div class="card-desc" style="font-size:0.6em;">淘宝记录你的浏览和购买<br>猜你下一次想买什么</div>
+ </div>
+ <div class="card" style="text-align:center; padding:0.8em;">
+ <div class="card-label" style="color:var(--accent);">语音助手</div>
+ <div class="card-desc" style="font-size:0.6em;">Siri / 小爱听你说话<br>把声音转成文字再理解意思</div>
+ </div>
+ <div class="card" style="text-align:center; padding:0.8em;">
+ <div class="card-label" style="color:var(--accent);">导航到达时间</div>
+ <div class="card-desc" style="font-size:0.6em;">从历史行驶数据中学规律<br>预测当前路况下要开多久</div>
+ </div>
+ <div class="card" style="text-align:center; padding:0.8em;">
+ <div class="card-label" style="color:var(--accent);">搜索引擎排序</div>
+ <div class="card-desc" style="font-size:0.6em;">你搜什么、点什么都是数据<br>搜索引擎学你想要什么结果</div>
+ </div>
+ </div>
+ <p style="font-size:0.75em; color:var(--gray-600); text-align:center; margin-top:0.6em;">
+ 共同点 没有人写死规则，都是<strong>从大量数据中学出来的</strong>
+ </p>
+</section>
+
+<!-- Slide 4: 你是怎么判断的 -->
+<section>
+ <h2>人类的判断过程</h2>
+ <div style="text-align:left; max-width:800px; margin:0 auto;">
+ <div style="background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:1.2em 1.5em; font-size:0.85em; margin-bottom:1em;">
+ <div style="color:var(--gray-400); font-size:0.8em; margin-bottom:0.4em;">用户评价 #2471</div>
+ <div style="font-size:1.1em; line-height:1.6;">「等了一个小时外卖才到，<strong style="color:#dc2626;">饭都凉了</strong>，而且少了一份小菜。打电话给商家没人接。<strong style="color:#dc2626;">再也不点了。</strong>」</div>
+ <div style="margin-top:0.6em; color:var(--gray-600);">
+ <span style="color:#f59e0b;">&#9733;</span> 1 星 &nbsp;|&nbsp; 配送时长 62 分钟 &nbsp;|&nbsp; 无图片
+ </div>
+ </div>
+ <p style="font-size:0.95em; margin-top:0.8em;">
+ 你<strong>秒判</strong>这是差评。你的大脑用到了以下<strong style="color:var(--accent);">线索</strong>
+ </p>
+ <ul style="font-size:0.78em; margin-top:0.5em;">
+ <li>「饭都凉了」「再也不点了」 — <strong>负面关键词</strong>，表达强烈不满</li>
+ <li>1 星评分 — <strong>数字信号</strong>，直接量化态度</li>
+ <li>62 分钟配送 — <strong>异常数值</strong>，远超正常 30 分钟</li>
+ <li>「少了一份小菜」「没人接」 — <strong>具体事实</strong>，投诉内容的数量</li>
+ <li>无图片 — <strong>行为信号</strong>，差评用户往往懒得拍照（但有时也会拍照维权）</li>
+ </ul>
+ <p style="font-size:0.7em; color:var(--gray-600); margin-top:0.6em;">
+ 你不自觉地在做一件事 <strong style="color:var(--accent);">把文字、数字、行为综合起来，形成判断</strong>。<br>
+ 机器学习做的事情一模一样只是它用数学来「综合」。
+ </p>
+ </div>
+</section>
+
+<!-- Slide 5: 把线索变成特征 -->
+<section>
+ <h2>把「线索」变成「特征」</h2>
+ <p style="font-size:0.8em; color:var(--gray-600); margin-bottom:0.6em;">人看的是线索，机器看的是一张表格</p>
+ <div class="flow">
+ <div class="flow-node" style="min-width:180px;">
+ 一条条评价<br>
+ <span style="font-size:0.8em; color:var(--gray-600);">非结构化文本</span>
+ </div>
+ <div class="flow-arrow accent-arrow"></div>
+ <div class="flow-node accent" style="min-width:100px;">
+ 转化
+ </div>
+ <div class="flow-arrow accent-arrow"></div>
+ <div class="flow-node outline" style="min-width:220px;">
+ 一行行数据<br>
+ <span style="font-size:0.8em; color:var(--gray-600);">每列一个特征（Feature）</span>
+ </div>
+ </div>
+ <div class="highlight-box" style="text-align:center; font-size:0.85em;">
+ <strong style="color:var(--accent);">特征 = 你认为对判断有帮助的线索，用数字或类别表示。</strong><br>
+ <span style="color:var(--gray-600);">评分、配送时长、评价字数、是否包含「难吃」……都是特征。</span>
+ </div>
+</section>
+
+<!-- Slide 6: 特征表格 -->
+<section>
+ <h2>特征表格 机器学习的起点</h2>
+ <p style="font-size:0.7em; color:var(--gray-600); margin-bottom:0.4em;">每行一条评价，每列一个特征，最后一列是「答案」</p>
+ <table class="data-table" style="font-size:0.55em;">
+ <thead>
+ <tr>
+ <th>#</th>
+ <th>评分</th>
+ <th>配送(分钟)</th>
+ <th>字数</th>
+ <th>含「难吃」</th>
+ <th>含「好吃」</th>
+ <th>有图片</th>
+ <th>感叹号数</th>
+ <th>标签</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr>
+ <td>1</td><td>5</td><td>28</td><td>35</td><td>否</td><td>是</td><td>是</td><td>2</td>
+ <td><span class="label-good">满意</span></td>
+ </tr>
+ <tr>
+ <td>2</td><td>1</td><td>62</td><td>48</td><td>否</td><td>否</td><td>否</td><td>0</td>
+ <td><span class="label-bad">不满意</span></td>
+ </tr>
+ <tr>
+ <td>3</td><td>4</td><td>31</td><td>12</td><td>否</td><td>否</td><td>否</td><td>0</td>
+ <td><span class="label-good">满意</span></td>
+ </tr>
+ <tr>
+ <td>4</td><td>2</td><td>55</td><td>67</td><td>是</td><td>否</td><td>是</td><td>3</td>
+ <td><span class="label-bad">不满意</span></td>
+ </tr>
+ <tr>
+ <td>5</td><td>5</td><td>22</td><td>28</td><td>否</td><td>是</td><td>是</td><td>2</td>
+ <td><span class="label-good">满意</span></td>
+ </tr>
+ <tr>
+ <td>6</td><td>3</td><td>35</td><td>18</td><td>否</td><td>否</td><td>否</td><td>0</td>
+ <td><span class="label-good">满意</span></td>
+ </tr>
+ <tr>
+ <td>7</td><td>1</td><td>48</td><td>92</td><td>是</td><td>否</td><td>是</td><td>5</td>
+ <td><span class="label-bad">不满意</span></td>
+ </tr>
+ <tr>
+ <td>8</td><td>4</td><td>26</td><td>41</td><td>否</td><td>是</td><td>是</td><td>1</td>
+ <td><span class="label-good">满意</span></td>
+ </tr>
+ <tr>
+ <td style="color:var(--gray-400);">…</td>
+ <td style="color:var(--gray-400);">…</td>
+ <td style="color:var(--gray-400);">…</td>
+ <td style="color:var(--gray-400);">…</td>
+ <td style="color:var(--gray-400);">…</td>
+ <td style="color:var(--gray-400);">…</td>
+ <td style="color:var(--gray-400);">…</td>
+ <td style="color:var(--gray-400);">…</td>
+ <td style="color:var(--gray-400);">…</td>
+ </tr>
+ </tbody>
+ </table>
+ <div style="display:flex; gap:1.5em; justify-content:center; margin-top:0.4em;">
+ <div style="font-size:0.6em; color:var(--accent); font-weight:600;">&larr; 特征（Features） 输入</div>
+ <div style="font-size:0.6em; color:#dc2626; font-weight:600;">标签（Label） 答案 &rarr;</div>
+ </div>
+ <p style="font-size:0.6em; color:var(--gray-600); text-align:center; margin-top:0.4em;">
+ 注意 #6 评分只有 3 分但标为满意、#7 写了 92 个字还配图差评用户的「长文控诉」模式。<br>
+ 这些<strong>反直觉的案例</strong>正是模型需要从数据里学到的。
+ </p>
+</section>
+
+<!-- Slide: 好特征 vs 没用的特征 -->
+<section>
+ <h2>好特征 vs 没用的特征</h2>
+ <p style="font-size:0.7em; color:var(--gray-600); margin-bottom:0.4em;">特征不是越多越好，关键是对判断有没有帮助</p>
+ <div style="max-width:820px; margin:0 auto;">
+ <div style="display:flex; gap:1.5em;">
+ <div style="flex:1;">
+ <div style="font-weight:600; color:#16a34a; margin-bottom:0.5em; font-size:0.8em;">有区分度的特征</div>
+ <div style="display:flex; flex-direction:column; gap:0.4em;">
+ <div style="background:#dcfce7; border:1px solid #86efac; border-radius:6px; padding:0.5em 0.8em; font-size:0.65em;">
+ <strong>评分</strong> 1 星几乎必差评，5 星几乎必好评
+ </div>
+ <div style="background:#dcfce7; border:1px solid #86efac; border-radius:6px; padding:0.5em 0.8em; font-size:0.65em;">
+ <strong>是否包含「难吃」</strong> 出现 &rarr; 大概率不满意
+ </div>
+ <div style="background:#dcfce7; border:1px solid #86efac; border-radius:6px; padding:0.5em 0.8em; font-size:0.65em;">
+ <strong>配送时长</strong> 超过 45 分钟 &rarr; 不满意风险升高
+ </div>
+ </div>
+ </div>
+ <div style="flex:1;">
+ <div style="font-weight:600; color:#dc2626; margin-bottom:0.5em; font-size:0.8em;">没什么用的特征</div>
+ <div style="display:flex; flex-direction:column; gap:0.4em;">
+ <div style="background:#fee2e2; border:1px solid #fca5a5; border-radius:6px; padding:0.5em 0.8em; font-size:0.65em;">
+ <strong>用户 ID</strong> 每条评价都不同，没有规律可循
+ </div>
+ <div style="background:#fee2e2; border:1px solid #fca5a5; border-radius:6px; padding:0.5em 0.8em; font-size:0.65em;">
+ <strong>下单是周几</strong> 周一和周五的满意度差不多
+ </div>
+ <div style="background:#fee2e2; border:1px solid #fca5a5; border-radius:6px; padding:0.5em 0.8em; font-size:0.65em;">
+ <strong>评价的标点数</strong> 和满意度关系不大
+ </div>
+ </div>
+ </div>
+ </div>
+ <div class="highlight-box" style="text-align:center; margin-top:0.8em; font-size:0.8em;">
+ <strong style="color:var(--accent);">好特征 = 知道它的值之后，你对结果的判断会改变</strong><br>
+ <span style="color:var(--gray-600);">知道评分是 1 星 &rarr; 你立刻倾向「不满意」。知道今天是周三 &rarr; 你的判断不变。</span>
+ </div>
+ </div>
+</section>
+
+<!-- Slide 7: 标签 -->
+<section>
+ <h2>标签 你给机器的「答案」</h2>
+ <div style="max-width:800px; margin:0 auto; text-align:left;">
+ <p style="font-size:0.9em; line-height:1.8;">
+ 5,000 条评价里，你<strong>亲手标注</strong>了 500 条 <br>
+ 每条看一遍，判断「满意」还是「不满意」。
+ </p>
+ <div style="display:flex; gap:1.5em; margin:1.2em 0;">
+ <div style="flex:1; background:#dcfce7; border:1px solid #86efac; border-radius:8px; padding:1em; text-align:center;">
+ <div style="font-size:2em; font-weight:700; color:#16a34a;">320</div>
+ <div style="font-size:0.7em; color:#16a34a; font-weight:600;">条标为「满意」</div>
+ </div>
+ <div style="flex:1; background:#fee2e2; border:1px solid #fca5a5; border-radius:8px; padding:1em; text-align:center;">
+ <div style="font-size:2em; font-weight:700; color:#dc2626;">180</div>
+ <div style="font-size:0.7em; color:#dc2626; font-weight:600;">条标为「不满意」</div>
+ </div>
+ </div>
+ <p style="font-size:0.8em; color:var(--gray-600);">
+ 这 500 条带标签的数据 = <strong style="color:var(--r-main-color);">训练数据（Training Data）</strong><br>
+ 剩下 4,500 条 = 等机器去预测的
+ </p>
+ <p style="font-size:0.7em; color:var(--gray-600); margin-top:0.6em;">
+ 标注过程中你会遇到难题，比如那条「一般般吧」到底算满意还是不满意，需要你来定义<br>
+ <strong style="color:var(--r-main-color);">你的标注标准，就是模型学到的标准。</strong>标注的质量直接决定模型的上限。
+ </p>
+ </div>
+</section>
+
+<!-- Slide: 标签决定了你在回答什么问题 -->
+<section>
+ <h2>标签决定了你在回答什么问题</h2>
+ <p style="font-size:0.7em; color:var(--gray-600); margin-bottom:0.5em;">同样的 5,000 条评价，换一套标签 = 换一个研究问题</p>
+ <div style="max-width:820px; margin:0 auto; display:flex; flex-direction:column; gap:0.7em;">
+ <div style="display:flex; align-items:center; gap:1em; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.7em 1em;">
+ <div style="min-width:7em; font-weight:600; color:var(--accent); font-size:0.75em;">满意 / 不满意</div>
+ <div style="font-size:0.75em; color:var(--gray-600);">顾客总体上高不高兴 &rarr; <strong>情感分类</strong></div>
+ </div>
+ <div style="display:flex; align-items:center; gap:1em; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.7em 1em;">
+ <div style="min-width:7em; font-weight:600; color:var(--accent); font-size:0.75em;">1 / 2 / 3 / 4 / 5 星</div>
+ <div style="font-size:0.75em; color:var(--gray-600);">满意<em>到什么程度</em> &rarr; <strong>回归 / 有序分类</strong></div>
+ </div>
+ <div style="display:flex; align-items:center; gap:1em; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.7em 1em;">
+ <div style="min-width:7em; font-weight:600; color:var(--accent); font-size:0.75em;">口味 / 配送 / 包装</div>
+ <div style="font-size:0.75em; color:var(--gray-600);">顾客在讨论什么<em>话题</em> &rarr; <strong>多标签分类</strong></div>
+ </div>
+ <div style="display:flex; align-items:center; gap:1em; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.7em 1em;">
+ <div style="min-width:7em; font-weight:600; color:var(--accent); font-size:0.75em;">真实 / 刷单</div>
+ <div style="font-size:0.75em; color:var(--gray-600);">这条评价是真实的还是水军写的 &rarr; <strong>虚假检测</strong></div>
+ </div>
+ </div>
+ <p style="font-size:0.75em; color:var(--gray-600); text-align:center; margin-top:0.8em;">
+ 数据相同，标签不同，训练出完全不同的模型。<br>
+ <strong style="color:var(--r-main-color);">选择什么标签，就是选择让机器回答什么问题。</strong>
+ </p>
+</section>
+
+<!-- Slide 8: 模型 = 找规律 -->
+<section>
+ <h2>模型 = 从数据里找规律</h2>
+ <div style="max-width:800px; margin:0 auto;">
+ <div class="flow" style="margin:1.5em 0;">
+ <div class="flow-node" style="min-width:150px;">
+ <strong>500 条训练数据</strong><br>
+ <span style="font-size:0.8em; color:var(--gray-600);">特征 + 标签</span>
+ </div>
+ <div class="flow-arrow accent-arrow"></div>
+ <div class="flow-node accent" style="min-width:120px;">
+ <strong>学习规律</strong>
+ </div>
+ <div class="flow-arrow accent-arrow"></div>
+ <div class="flow-node outline" style="min-width:150px;">
+ <strong>模型</strong><br>
+ <span style="font-size:0.8em; color:var(--gray-600);">一套判断规则</span>
+ </div>
+ </div>
+ <div class="highlight-box" style="text-align:center;">
+ <strong>类比</strong><br>
+ <span style="font-size:0.9em;">你带了一个实习生。<br>
+ 给 TA 看 500 条评价和你的判断，<br>
+ TA 总结出规则，然后去处理剩下 4,500 条。</span>
+ </div>
+ <p style="font-size:0.7em; color:var(--gray-600); text-align:center; margin-top:0.8em;">
+ 模型不理解「好吃」的意思，但它知道 包含「好吃」的评价，<strong>92%</strong> 被你标为满意。
+ </p>
+ </div>
+</section>
+
+<!-- Slide: 「学习」到底是什么意思 -->
+<section>
+ <h2>「学习」到底是什么意思</h2>
+ <div style="max-width:800px; margin:0 auto; text-align:left;">
+ <p style="font-size:0.85em; color:var(--gray-600); margin-bottom:1em;">
+ 机器不会「思考」。所谓「学习」，就是一个不断试错的过程
+ </p>
+ <div style="display:flex; flex-direction:column; gap:0.6em;">
+ <div style="display:flex; align-items:center; gap:0.8em;">
+ <div style="min-width:2em; height:2em; border-radius:50%; background:var(--accent); color:white; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.8em;">1</div>
+ <div style="font-size:0.8em;">先<strong>随机猜</strong>一套规则，比如「评分 &le; 3 就是不满意」</div>
+ </div>
+ <div style="display:flex; align-items:center; gap:0.8em;">
+ <div style="min-width:2em; height:2em; border-radius:50%; background:var(--accent); color:white; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.8em;">2</div>
+ <div style="font-size:0.8em;">用这套规则去预测 500 条训练数据，<strong>对比答案</strong>，发现猜错了 120 条</div>
+ </div>
+ <div style="display:flex; align-items:center; gap:0.8em;">
+ <div style="min-width:2em; height:2em; border-radius:50%; background:var(--accent); color:white; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.8em;">3</div>
+ <div style="font-size:0.8em;"><strong>调整规则</strong>，比如「光看评分不够，还要看有没有负面关键词」</div>
+ </div>
+ <div style="display:flex; align-items:center; gap:0.8em;">
+ <div style="min-width:2em; height:2em; border-radius:50%; background:var(--accent); color:white; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.8em;">4</div>
+ <div style="font-size:0.8em;">再预测，<strong>再对比</strong>，这次只错了 80 条</div>
+ </div>
+ <div style="display:flex; align-items:center; gap:0.8em;">
+ <div style="min-width:2em; height:2em; border-radius:50%; background:var(--accent); color:white; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.8em;">5</div>
+ <div style="font-size:0.8em;">反复调整，直到在训练数据上<strong>错误最少</strong></div>
+ </div>
+ </div>
+ <div class="highlight-box" style="text-align:center; margin-top:1em;">
+ <strong style="color:var(--accent);">学习 = 猜规则 &rarr; 对答案 &rarr; 改规则 &rarr; 再对答案 &rarr; ……</strong><br>
+ <span style="font-size:0.85em; color:var(--gray-600);">没有理解，没有思考，只有<strong>不断减少错误</strong></span>
+ </div>
+ </div>
+</section>
+
+<!-- Slide 9: 决策树 -->
+<section>
+ <h2>决策树 最直觉的模型</h2>
+ <p style="font-size:0.7em; color:var(--gray-600); margin-bottom:0.3em;">机器从数据中自动学出来的 if-then 规则</p>
+ <div style="display:flex; flex-direction:column; align-items:center; gap:0;">
+ <!-- Root -->
+ <div class="tree-node question" style="font-size:0.65em;">评分 ≤ 2 星？</div>
+ <div style="display:flex; align-items:flex-start;">
+ <!-- Left branch: 评分 ≤ 2 -->
+ <div style="display:flex; flex-direction:column; align-items:center; width:240px;">
+ <div class="tree-edge" style="height:16px;"></div>
+ <div class="tree-edge-label" style="color:#dc2626;">是</div>
+ <div class="tree-node question" style="font-size:0.58em;">配送 &gt; 45 分钟？</div>
+ <div style="display:flex; gap:1.2em; margin-top:0;">
+ <div style="display:flex; flex-direction:column; align-items:center;">
+ <div class="tree-edge" style="height:14px;"></div>
+ <div class="tree-edge-label" style="color:#dc2626;">是</div>
+ <div class="tree-node leaf-bad" style="font-size:0.55em;">不满意 (96%)</div>
+ </div>
+ <div style="display:flex; flex-direction:column; align-items:center;">
+ <div class="tree-edge" style="height:14px;"></div>
+ <div class="tree-edge-label" style="color:#16a34a;">否</div>
+ <div class="tree-node leaf-bad" style="font-size:0.55em;">不满意 (78%)</div>
+ </div>
+ </div>
+ </div>
+ <!-- Right branch: 评分 > 2 -->
+ <div style="display:flex; flex-direction:column; align-items:center; width:320px;">
+ <div class="tree-edge" style="height:16px;"></div>
+ <div class="tree-edge-label" style="color:#16a34a;">否</div>
+ <div class="tree-node question" style="font-size:0.58em;">含「难吃」「凉了」「慢」？</div>
+ <div style="display:flex; gap:1.2em; margin-top:0;">
+ <div style="display:flex; flex-direction:column; align-items:center;">
+ <div class="tree-edge" style="height:14px;"></div>
+ <div class="tree-edge-label" style="color:#dc2626;">是</div>
+ <div class="tree-node question" style="font-size:0.52em;">评分 ≤ 3 星？</div>
+ <div style="display:flex; gap:0.8em; margin-top:0;">
+ <div style="display:flex; flex-direction:column; align-items:center;">
+ <div class="tree-edge" style="height:12px;"></div>
+ <div class="tree-edge-label" style="color:#dc2626; font-size:0.5em;">是</div>
+ <div class="tree-node leaf-bad" style="font-size:0.5em;">不满意 (82%)</div>
+ </div>
+ <div style="display:flex; flex-direction:column; align-items:center;">
+ <div class="tree-edge" style="height:12px;"></div>
+ <div class="tree-edge-label" style="color:#16a34a; font-size:0.5em;">否</div>
+ <div class="tree-node leaf-good" style="font-size:0.5em;">满意 (61%)</div>
+ </div>
+ </div>
+ </div>
+ <div style="display:flex; flex-direction:column; align-items:center;">
+ <div class="tree-edge" style="height:14px;"></div>
+ <div class="tree-edge-label" style="color:#16a34a;">否</div>
+ <div class="tree-node leaf-good" style="font-size:0.55em;">满意 (93%)</div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ <p style="font-size:0.6em; color:var(--gray-600); text-align:center; margin-top:0.5em;">
+ 树越深，判断越细致 低分+超时 = 几乎必差评；高分但含负面词 = 需要再看评分才能定。<br>
+ 你没有告诉机器先问什么它自己从 500 条数据中找到了最有区分度的特征来提问。
+ </p>
+</section>
+
+<!-- Slide 10: 新评价来了 -->
+<section>
+ <h2>训练完成，新评价来了</h2>
+ <div style="max-width:800px; margin:0 auto;">
+ <div style="background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:1em 1.5em; margin-bottom:1.2em;">
+ <div style="color:var(--gray-400); font-size:0.65em; margin-bottom:0.3em;">新评价 #3847</div>
+ <div style="font-size:0.9em; line-height:1.6;">「送餐挺快的，味道一般般吧，分量还行。」</div>
+ <div style="margin-top:0.4em; color:var(--gray-600); font-size:0.75em;">
+ <span style="color:#f59e0b;">&#9733;&#9733;&#9733;</span><span style="color:var(--gray-300);">&#9733;&#9733;</span> &nbsp;|&nbsp; 配送 25 分钟 &nbsp;|&nbsp; 28 字
+ </div>
+ </div>
+ <div style="display:flex; align-items:center; gap:1em; justify-content:center; font-size:0.8em;">
+ <div style="background:var(--accent-light); border:1px solid var(--accent); border-radius:6px; padding:0.4em 0.8em;">评分 3 星 &gt; 2 → 否</div>
+ <span style="color:var(--gray-400);">→</span>
+ <div style="background:var(--accent-light); border:1px solid var(--accent); border-radius:6px; padding:0.4em 0.8em;">无「难吃」「凉了」 → 否</div>
+ <span style="color:var(--gray-400);">→</span>
+ <div style="background:#dcfce7; border:1px solid #86efac; border-radius:6px; padding:0.4em 0.8em; font-weight:600; color:#16a34a;">满意</div>
+ </div>
+ <p style="font-size:0.8em; color:var(--gray-600); text-align:center; margin-top:1.2em;">
+ 模型沿着树走一遍，<strong>毫秒级</strong>给出预测。<br>4,500 条评价，几秒钟全部处理完。
+ </p>
+ </div>
+</section>
+
+<!-- Slide 10b: 手工 vs 机器学习 -->
+<section>
+ <h2>手工处理 vs 机器学习</h2>
+ <p style="font-size:0.7em; color:var(--gray-600); margin-bottom:0.6em;">同样处理 5,000 条评价，两种方式的对比</p>
+ <div class="vs-layout">
+ <div class="vs-panel left">
+ <h3 style="color:var(--gray-800);">纯手工</h3>
+ <div class="vs-items">
+ 每条评价人工阅读 + 判断<br>
+ 5,000 条 &times; 30 秒 = <strong>42 小时</strong><br>
+ 换人标注，标准可能不一致<br>
+ 老板下周又要分析，再花 42 小时<br>
+ 标注者疲劳 &rarr; 后期质量下降
+ </div>
+ </div>
+ <div class="vs-divider">VS</div>
+ <div class="vs-panel right">
+ <h3 style="color:var(--accent);">机器学习辅助</h3>
+ <div class="vs-items">
+ 人工标注 500 条 = <strong>约 4 小时</strong><br>
+ 模型训练 = <strong>几分钟</strong><br>
+ 预测剩余 4,500 条 = <strong>几秒钟</strong><br>
+ 新数据来了，同一个模型直接用<br>
+ 标准始终一致，不会疲劳
+ </div>
+ </div>
+ </div>
+ <div style="display:flex; gap:1em; margin-top:0.6em; justify-content:center;">
+ <div style="background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.5em 1em; text-align:center; font-size:0.6em;">
+ <div style="font-weight:600; color:var(--gray-800);">总耗时</div>
+ <div style="color:var(--gray-600);">手工 <strong style="color:#dc2626;">42 小时</strong> &nbsp;vs&nbsp; ML <strong style="color:#16a34a;">4.5 小时</strong></div>
+ </div>
+ <div style="background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.5em 1em; text-align:center; font-size:0.6em;">
+ <div style="font-weight:600; color:var(--gray-800);">可复用性</div>
+ <div style="color:var(--gray-600);">手工 <strong style="color:#dc2626;">每次从头来</strong> &nbsp;vs&nbsp; ML <strong style="color:#16a34a;">模型可复用</strong></div>
+ </div>
+ <div style="background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.5em 1em; text-align:center; font-size:0.6em;">
+ <div style="font-weight:600; color:var(--gray-800);">一致性</div>
+ <div style="color:var(--gray-600);">手工 <strong style="color:#dc2626;">因人而异</strong> &nbsp;vs&nbsp; ML <strong style="color:#16a34a;">标准统一</strong></div>
+ </div>
+ </div>
+</section>
+
+<!-- Slide 11: 这就是有监督学习 -->
+<section>
+ <h2>这就是有监督学习</h2>
+ <div class="flow" style="margin:1.5em 0;">
+ <div class="flow-node accent" style="min-width:160px;">
+ <strong>你标注 500 条</strong><br>
+ <span style="font-size:0.8em; opacity:0.85;">满意 / 不满意</span>
+ </div>
+ <div class="flow-arrow accent-arrow"></div>
+ <div class="flow-node outline" style="min-width:160px;">
+ <strong>机器学习规律</strong><br>
+ <span style="font-size:0.8em; color:var(--gray-600);">什么特征→什么判断</span>
+ </div>
+ <div class="flow-arrow accent-arrow"></div>
+ <div class="flow-node accent" style="min-width:180px;">
+ <strong>自动预测 4,500 条</strong><br>
+ <span style="font-size:0.8em; opacity:0.85;">准确率 85%+</span>
+ </div>
+ </div>
+ <div class="highlight-box" style="text-align:center;">
+ <strong style="color:var(--accent);">有监督 = 你给答案，机器学规律</strong><br>
+ <span style="font-size:0.85em; color:var(--gray-600);">核心 标签（Label）是你提供的「标准答案」</span>
+ </div>
+ <p style="font-size:0.7em; color:var(--gray-400); text-align:center; margin-top:0.8em;">
+ 第四课会深入讲有监督学习的各种模型
+ </p>
+</section>
+
+<!-- Slide 12: 如果没有标签呢 -->
+<section>
+ <h2>没有标签的情况</h2>
+ <div style="max-width:800px; margin:0 auto; text-align:left;">
+ <p style="font-size:0.9em; line-height:1.8;">
+ 另一个问题 老板不想知道满意不满意，<br>
+ 他想知道<strong style="color:var(--accent);">顾客在讨论哪几类问题</strong>。
+ </p>
+ <div class="flow" style="margin:1em 0;">
+ <div class="flow-node" style="min-width:140px;">
+ <strong>5,000 条评价</strong><br>
+ <span style="font-size:0.8em; color:var(--gray-600);">不做任何标注</span>
+ </div>
+ <div class="flow-arrow accent-arrow"></div>
+ <div class="flow-node accent" style="min-width:110px;"><strong>聚类分析</strong></div>
+ <div class="flow-arrow accent-arrow"></div>
+ <div class="flow-node outline" style="min-width:200px; text-align:left; padding:0.6em 1em; font-size:0.7em; line-height:1.8;">
+ <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#2563eb; margin-right:0.4em;"></span>口味与菜品<br>
+ <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#16a34a; margin-right:0.4em;"></span>配送速度<br>
+ <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#dc2626; margin-right:0.4em;"></span>包装与分量<br>
+ <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#7c3aed; margin-right:0.4em;"></span>卫生与安全
+ </div>
+ </div>
+ <div style="display:flex; gap:1em; font-size:0.7em;">
+ <div style="flex:1; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.6em 0.8em; text-align:center;">
+ <div style="font-weight:600; color:var(--gray-800);">有监督</div>
+ <div style="color:var(--gray-600);">你定义标准 &rarr; 机器执行</div>
+ <div style="color:var(--gray-400); font-size:0.85em; margin-top:0.3em;">分类、回归</div>
+ </div>
+ <div style="flex:1; background:var(--accent-light); border:1px solid var(--accent); border-radius:8px; padding:0.6em 0.8em; text-align:center;">
+ <div style="font-weight:600; color:var(--accent);">无监督</div>
+ <div style="color:var(--gray-600);">没有标签 &rarr; 机器自己发现结构</div>
+ <div style="color:var(--gray-400); font-size:0.85em; margin-top:0.3em;">聚类、主题模型、降维</div>
+ </div>
+ </div>
+ <p style="font-size:0.7em; color:var(--gray-600); margin-top:0.6em;">
+ 社科研究中两种都很常用 <br>
+ 有监督 &rarr; 情感分析、立场检测、事件分类<br>
+ 无监督 &rarr; 话题发现、舆情聚类、文本探索
+ </p>
+ </div>
+</section>
+
+<!-- Slide 13: 几种常见的模型 -->
+<section>
+ <h2>不只决策树 常见的模型一览</h2>
+ <p style="font-size:0.65em; color:var(--gray-600); margin-bottom:0.4em;">名字不同，但核心逻辑一样 从数据中学规律。每种模型用一句话理解 </p>
+ <div class="card-grid cols-2" style="max-width:880px; margin:0 auto; gap:0.7em;">
+ <div class="card" style="text-align:left; padding:0.8em 1em;">
+ <div class="card-label" style="text-align:left; color:var(--accent);">决策树 Decision Tree</div>
+ <div class="card-desc" style="text-align:left; font-size:0.6em;">像你做判断一样，一连串 if-then 问题<br><strong style="color:var(--gray-800);">直觉 流程图按条件一步步走到答案</strong></div>
+ </div>
+ <div class="card" style="text-align:left; padding:0.8em 1em;">
+ <div class="card-label" style="text-align:left; color:var(--accent);">逻辑回归 Logistic Regression</div>
+ <div class="card-desc" style="text-align:left; font-size:0.6em;">你已经在用的回归分析，只是因变量变成了 0/1<br><strong style="color:var(--gray-800);">直觉 算一个概率，超过阈值就判「满意」</strong></div>
+ </div>
+ <div class="card" style="text-align:left; padding:0.8em 1em;">
+ <div class="card-label" style="text-align:left; color:var(--accent);">朴素贝叶斯 Naive Bayes</div>
+ <div class="card-desc" style="text-align:left; font-size:0.6em;">根据每个词出现的频率算概率，简单但对文本很有效<br><strong style="color:var(--gray-800);">直觉 垃圾邮件过滤器用的就是这个</strong></div>
+ </div>
+ <div class="card" style="text-align:left; padding:0.8em 1em;">
+ <div class="card-label" style="text-align:left; color:var(--accent);">支持向量机 SVM</div>
+ <div class="card-desc" style="text-align:left; font-size:0.6em;">在数据之间画一条最优分界线<br><strong style="color:var(--gray-800);">直觉 找到把好评和差评分得最开的那条线</strong></div>
+ </div>
+ <div class="card" style="text-align:left; padding:0.8em 1em;">
+ <div class="card-label" style="text-align:left; color:var(--accent);">随机森林 Random Forest</div>
+ <div class="card-desc" style="text-align:left; font-size:0.6em;">100 棵决策树一起投票，少数服从多数<br><strong style="color:var(--gray-800);">直觉 三个臭皮匠顶个诸葛亮</strong></div>
+ </div>
+ <div class="card" style="text-align:left; padding:0.8em 1em;">
+ <div class="card-label" style="text-align:left; color:var(--accent);">神经网络 Neural Network</div>
+ <div class="card-desc" style="text-align:left; font-size:0.6em;">层层变换，自动发现人想不到的特征组合<br><strong style="color:var(--gray-800);">直觉 GPT/BERT 的底层架构，深度学习的基础</strong></div>
+ </div>
+ </div>
+ <p style="font-size:0.6em; color:var(--gray-400); text-align:center; margin-top:0.5em;">
+ 本课程不要求你自己训练这些模型，但你需要知道 模型不是黑箱，它在做什么是可以理解的。
+ </p>
+</section>
+
+<!-- Slide 14: Part 1 核心认知 -->
+<section>
+ <div class="takeaway">
+ <div class="divider"></div>
+ <p class="main-text">
+ 机器学习 =<br>把人的判断力编码成可复用的规则
+ </p>
+ <p class="sub-text">
+ 特征是输入，标签是答案，模型是从数据中学到的规律。<br>
+ 有标签 → 有监督；没标签 → 无监督。
+ </p>
+ <div style="width:3em; height:1px; background:var(--gray-200); margin-bottom:1.2em;"></div>
+ <p class="hint">接下来 → 模型说「准确率 96%」，这个数字到底能不能信</p>
+ </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PART 2: 怎么知道学得好不好 (18 slides)                          -->
+<!-- ============================================================ -->
+
+<!-- Slide 15 -->
+<section class="section-title">
+ <h2><span class="section-num">Part 2</span>怎么知道学得好不好</h2>
+</section>
+
+<!-- Slide 16: 准确率陷阱 -->
+<section>
+ <h2>准确率 96% 的陷阱</h2>
+ <div style="max-width:850px; margin:0 auto;">
+ <div style="display:flex; gap:1.5em; margin-bottom:0.8em;">
+ <!-- 外卖例子 -->
+ <div style="flex:1; background:#fef3c7; border:1px solid #fde68a; border-radius:8px; padding:1em; text-align:center;">
+ <div style="font-size:0.65em; font-weight:600; color:#92400e; margin-bottom:0.3em;">外卖评价分类</div>
+ <div style="font-size:2em; font-weight:700; color:#b45309;">96%</div>
+ <div style="font-size:0.6em; color:#92400e; margin-top:0.3em;">5,000 条评价中 4,800 条是好评</div>
+ <div style="font-size:0.6em; color:var(--gray-600); margin-top:0.4em; line-height:1.5;">
+ 「模型」 <strong>无论输入什么，都输出「满意」</strong><br>
+ 4800 / 5000 = <strong style="color:#dc2626;">96%</strong>
+ </div>
+ </div>
+ <!-- 欺诈检测例子 -->
+ <div style="flex:1; background:#fee2e2; border:1px solid #fca5a5; border-radius:8px; padding:1em; text-align:center;">
+ <div style="font-size:0.65em; font-weight:600; color:#991b1b; margin-bottom:0.3em;">信用卡欺诈检测</div>
+ <div style="font-size:2em; font-weight:700; color:#dc2626;">99.9%</div>
+ <div style="font-size:0.6em; color:#991b1b; margin-top:0.3em;">100,000 笔交易中只有 100 笔是欺诈</div>
+ <div style="font-size:0.6em; color:var(--gray-600); margin-top:0.4em; line-height:1.5;">
+ 「模型」 <strong>无论什么交易，都输出「正常」</strong><br>
+ 99,900 / 100,000 = <strong style="color:#dc2626;">99.9%</strong>
+ </div>
+ </div>
+ </div>
+ <div class="highlight-box" style="text-align:center;">
+ <strong style="color:var(--r-main-color);">准确率高 ≠ 模型好。</strong><br>
+ <span style="font-size:0.85em; color:var(--gray-600);">
+ 当数据类别不平衡时，一个「什么都不做」的模型也能拿到极高准确率。<br>
+ 右边的「模型」准确率 99.9%，却<strong>一笔欺诈都没抓到</strong>。
+ </span>
+ </div>
+ </div>
+</section>
+
+<!-- Slide 17: 训练集 vs 测试集 -->
+<section>
+ <h2>训练集 vs 测试集</h2>
+ <p style="font-size:0.8em; color:var(--gray-600); margin-bottom:0.6em;">考试类比 用练习题学习，用新题检验</p>
+ <div class="vs-layout">
+ <div class="vs-panel left" style="text-align:center;">
+ <h3 style="text-align:center;">训练集 (Training Set)</h3>
+ <div class="vs-items" style="line-height:2;">
+ <strong>400 条</strong>评价<br>
+ 机器用来学规律<br>
+ <span style="color:var(--gray-400); font-size:0.9em;">= 平时做的练习题</span>
+ </div>
+ </div>
+ <div class="vs-divider">|</div>
+ <div class="vs-panel right" style="text-align:center;">
+ <h3 style="text-align:center; color:var(--accent);">测试集 (Test Set)</h3>
+ <div class="vs-items" style="line-height:2;">
+ <strong>100 条</strong>评价<br>
+ 机器从未见过<br>
+ <span style="color:var(--gray-400); font-size:0.9em;">= 考试出的新题</span>
+ </div>
+ </div>
+ </div>
+ <div style="background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.8em 1.2em; margin-top:0.6em; max-width:800px; margin-left:auto; margin-right:auto;">
+ <div style="font-size:0.7em; font-weight:600; color:var(--gray-800); margin-bottom:0.3em;">想象这个场景 </div>
+ <div style="font-size:0.65em; color:var(--gray-600); line-height:1.6;">
+ 小明期末考前拿到了往年题库 50 道题，他<strong>背下了每道题的答案</strong>，一道都没理解。<br>
+ 模拟考用的是同一套题 → 小明考了 <strong style="color:#16a34a;">100 分</strong>。<br>
+ 期末考换了一套新题 → 小明只考了 <strong style="color:#dc2626;">45 分</strong>。
+ </div>
+ </div>
+ <div class="highlight-box" style="text-align:center; margin-top:0.5em;">
+ 只有在<strong style="color:var(--accent);">没见过的数据</strong>上表现好，才算真的学到了。<br>
+ <span style="font-size:0.85em; color:var(--gray-600);">所以我们必须留一部分数据「藏起来」，只在最后才拿出来检验。</span>
+ </div>
+</section>
+
+<!-- Slide 18: 过拟合 -->
+<section>
+ <h2>过拟合 为什么背题库考不好</h2>
+ <div style="max-width:800px; margin:0 auto; text-align:left;">
+ <p style="font-size:0.85em; line-height:1.8; margin-bottom:1em;">
+ 模型把训练数据里的<strong>每条评价都「记住了」</strong>，<br>
+ 包括噪音和巧合。
+ </p>
+ <div style="display:flex; gap:1.5em; margin:1em 0;">
+ <div style="flex:1; text-align:center;">
+ <div style="font-size:0.7em; font-weight:600; color:var(--gray-800); margin-bottom:0.4em;">训练集上</div>
+ <div style="font-size:2.5em; font-weight:700; color:#16a34a;">99%</div>
+ <div style="font-size:0.65em; color:var(--gray-600);">几乎全对</div>
+ </div>
+ <div style="flex:0.3; display:flex; align-items:center; justify-content:center;">
+ <span style="font-size:1.5em; color:var(--gray-400);">vs</span>
+ </div>
+ <div style="flex:1; text-align:center;">
+ <div style="font-size:0.7em; font-weight:600; color:var(--gray-800); margin-bottom:0.4em;">测试集上</div>
+ <div style="font-size:2.5em; font-weight:700; color:#dc2626;">68%</div>
+ <div style="font-size:0.65em; color:var(--gray-600);">大幅下降</div>
+ </div>
+ </div>
+ <p style="font-size:0.8em; color:var(--gray-600); text-align:center;">
+ <strong style="color:var(--r-main-color);">过拟合（Overfitting）</strong>= 模型在训练数据上表现很好，在新数据上表现很差。
+ </p>
+ </div>
+</section>
+
+<!-- Slide 18b: 外卖过拟合具体例子 -->
+<section>
+ <h2>过拟合的具体表现</h2>
+ <p style="font-size:0.7em; color:var(--gray-600); margin-bottom:0.6em;">同一条差评，两种模型的「理解方式」</p>
+ <div style="max-width:850px; margin:0 auto;">
+ <div style="background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.8em 1.2em; text-align:center; margin-bottom:0.8em;">
+ <div style="font-size:0.65em; color:var(--gray-400); margin-bottom:0.2em;">训练集中的一条评价</div>
+ <div style="font-size:0.8em; color:var(--gray-800); line-height:1.6;">
+ 「评价#2471 等了一个半小时，饭到了已经凉透了，而且少了一份小菜」
+ </div>
+ </div>
+ <div style="display:flex; gap:1.5em;">
+ <div style="flex:1; border:2px solid #dc2626; border-radius:8px; padding:1em; text-align:left; background:#fef2f2;">
+ <div style="font-size:0.7em; font-weight:700; color:#dc2626; margin-bottom:0.5em;">过拟合模型（死记硬背）</div>
+ <div style="font-size:0.6em; color:var(--gray-600); line-height:1.7;">
+ 记住了 <strong>「评价#2471」 → 不满意</strong><br>
+ 记住了 <strong>「一个半小时」 → 不满意</strong><br>
+ 记住了 <strong>「小菜」 → 不满意</strong><br><br>
+ 遇到新评价「小菜味道不错」<br>
+ → 看到「小菜」 → 判为 <strong style="color:#dc2626;">不满意</strong>
+ </div>
+ </div>
+ <div style="flex:1; border:2px solid #16a34a; border-radius:8px; padding:1em; text-align:left; background:#f0fdf4;">
+ <div style="font-size:0.7em; font-weight:700; color:#16a34a; margin-bottom:0.5em;">好模型（学到规律）</div>
+ <div style="font-size:0.6em; color:var(--gray-600); line-height:1.7;">
+ 学到了 <strong>「等了很久」 → 配送慢 → 负面</strong><br>
+ 学到了 <strong>「凉透了」 → 体验差 → 负面</strong><br>
+ 学到了 <strong>「少了」 → 缺漏 → 负面</strong><br><br>
+ 遇到新评价「小菜味道不错」<br>
+ → 「味道不错」 = 正面 → 判为 <strong style="color:#16a34a;">满意</strong>
+ </div>
+ </div>
+ </div>
+ <p style="font-size:0.7em; color:var(--gray-600); text-align:center; margin-top:0.6em;">
+ 过拟合模型记住了<strong>具体的词和编号</strong>，好模型学到了<strong>背后的语义规律</strong>。
+ </p>
+ </div>
+</section>
+
+<!-- Slide 19: 三种拟合 -->
+<section>
+ <h2>欠拟合、刚好、过拟合</h2>
+ <div class="fit-panels">
+ <div class="fit-panel bad">
+ <div class="fit-title" style="color:#dc2626;">欠拟合</div>
+ <div style="height:120px; display:flex; align-items:center; justify-content:center; margin:0.5em 0;">
+ <svg width="140" height="100" viewBox="0 0 140 100">
+ <circle cx="25" cy="30" r="4" fill="#2563eb" opacity="0.5"/>
+ <circle cx="40" cy="25" r="4" fill="#2563eb" opacity="0.5"/>
+ <circle cx="55" cy="50" r="4" fill="#dc2626" opacity="0.5"/>
+ <circle cx="70" cy="45" r="4" fill="#2563eb" opacity="0.5"/>
+ <circle cx="85" cy="70" r="4" fill="#dc2626" opacity="0.5"/>
+ <circle cx="100" cy="65" r="4" fill="#dc2626" opacity="0.5"/>
+ <circle cx="115" cy="75" r="4" fill="#dc2626" opacity="0.5"/>
+ <line x1="10" y1="40" x2="130" y2="55" stroke="#adb5bd" stroke-width="2.5"/>
+ </svg>
+ </div>
+ <div class="fit-desc">模型太简单<br>只学了皮毛，什么都分不好</div>
+ </div>
+ <div class="fit-panel good">
+ <div class="fit-title" style="color:#16a34a;">刚好</div>
+ <div style="height:120px; display:flex; align-items:center; justify-content:center; margin:0.5em 0;">
+ <svg width="140" height="100" viewBox="0 0 140 100">
+ <circle cx="25" cy="30" r="4" fill="#2563eb" opacity="0.5"/>
+ <circle cx="40" cy="25" r="4" fill="#2563eb" opacity="0.5"/>
+ <circle cx="55" cy="50" r="4" fill="#dc2626" opacity="0.5"/>
+ <circle cx="70" cy="45" r="4" fill="#2563eb" opacity="0.5"/>
+ <circle cx="85" cy="70" r="4" fill="#dc2626" opacity="0.5"/>
+ <circle cx="100" cy="65" r="4" fill="#dc2626" opacity="0.5"/>
+ <circle cx="115" cy="75" r="4" fill="#dc2626" opacity="0.5"/>
+ <path d="M10,35 Q50,20 70,48 Q90,70 130,72" stroke="#16a34a" stroke-width="2.5" fill="none"/>
+ </svg>
+ </div>
+ <div class="fit-desc">模型复杂度合适<br>学到了真正的规律</div>
+ </div>
+ <div class="fit-panel bad">
+ <div class="fit-title" style="color:#dc2626;">过拟合</div>
+ <div style="height:120px; display:flex; align-items:center; justify-content:center; margin:0.5em 0;">
+ <svg width="140" height="100" viewBox="0 0 140 100">
+ <circle cx="25" cy="30" r="4" fill="#2563eb" opacity="0.5"/>
+ <circle cx="40" cy="25" r="4" fill="#2563eb" opacity="0.5"/>
+ <circle cx="55" cy="50" r="4" fill="#dc2626" opacity="0.5"/>
+ <circle cx="70" cy="45" r="4" fill="#2563eb" opacity="0.5"/>
+ <circle cx="85" cy="70" r="4" fill="#dc2626" opacity="0.5"/>
+ <circle cx="100" cy="65" r="4" fill="#dc2626" opacity="0.5"/>
+ <circle cx="115" cy="75" r="4" fill="#dc2626" opacity="0.5"/>
+ <path d="M10,33 Q20,28 25,30 Q30,32 35,22 Q38,18 40,25 Q45,35 50,48 Q52,52 55,50 Q60,44 65,42 Q68,43 70,45 Q75,55 80,65 Q83,72 85,70 Q90,60 95,63 Q98,65 100,65 Q105,68 110,73 Q113,76 115,75 Q120,72 130,78" stroke="#dc2626" stroke-width="2.5" fill="none"/>
+ </svg>
+ </div>
+ <div class="fit-desc">模型太复杂<br>死记硬背，连噪音都学了</div>
+ </div>
+ </div>
+ <p style="font-size:0.65em; color:var(--gray-400); text-align:center; margin-top:0.4em;">
+ 蓝色 = 满意 &nbsp;&nbsp; 红色 = 不满意 &nbsp;&nbsp; 线 = 模型学到的决策边界
+ </p>
+</section>
+
+<!-- Slide 20: 两条曲线 -->
+<section>
+ <h2>一张图记住过拟合</h2>
+ <div style="display:flex; gap:2em; align-items:center; max-width:850px; margin:0 auto;">
+ <div style="flex:1.2;">
+ <div class="chart-area" style="height:300px;">
+ <svg width="360" height="260" viewBox="0 0 360 260">
+ <!-- Axes -->
+ <line x1="50" y1="220" x2="340" y2="220" stroke="var(--gray-400)" stroke-width="1.5"/>
+ <line x1="50" y1="220" x2="50" y2="20" stroke="var(--gray-400)" stroke-width="1.5"/>
+ <!-- Axis labels -->
+ <text x="195" y="252" text-anchor="middle" font-size="12" fill="var(--gray-600)" font-family="Inter, sans-serif">模型复杂度 →</text>
+ <text x="16" y="120" text-anchor="middle" font-size="12" fill="var(--gray-600)" font-family="Inter, sans-serif" transform="rotate(-90,16,120)">误差 ↑</text>
+ <!-- Training error - keeps going down -->
+ <path d="M70,60 Q120,55 160,90 Q200,110 260,150 Q300,170 330,190" stroke="#2563eb" stroke-width="2.5" fill="none" stroke-dasharray="6,4"/>
+ <!-- Test error - goes down then up -->
+ <path d="M70,80 Q120,65 170,55 Q200,52 220,58 Q260,80 300,120 Q320,145 330,160" stroke="#dc2626" stroke-width="2.5" fill="none"/>
+ <!-- Sweet spot -->
+ <line x1="195" y1="220" x2="195" y2="45" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4,4"/>
+ <text x="195" y="240" text-anchor="middle" font-size="11" fill="var(--accent)" font-weight="600" font-family="Inter, sans-serif">最佳</text>
+ <!-- Labels -->
+ <text x="332" y="195" font-size="11" fill="#2563eb" font-weight="600" font-family="Inter, sans-serif">训练误差</text>
+ <text x="332" y="155" font-size="11" fill="#dc2626" font-weight="600" font-family="Inter, sans-serif">测试误差</text>
+ <!-- Zone labels -->
+ <text x="110" y="205" text-anchor="middle" font-size="10" fill="var(--gray-400)" font-family="Inter, sans-serif">欠拟合</text>
+ <text x="280" y="205" text-anchor="middle" font-size="10" fill="var(--gray-400)" font-family="Inter, sans-serif">过拟合</text>
+ </svg>
+ </div>
+ </div>
+ <div style="flex:0.8; text-align:left;">
+ <p style="font-size:0.75em; line-height:1.8;">
+ <span style="color:#2563eb; font-weight:600;">- - -</span> 训练误差 持续下降<br>
+ <span style="color:#dc2626; font-weight:600;"></span> 测试误差 先降后升<br><br>
+ 转折点 = 最佳复杂度<br><br>
+ <strong>你不需要记公式</strong>，<br>只需要记住这个形状。
+ </p>
+ </div>
+ </div>
+</section>
+
+<!-- Slide 21: 混淆矩阵 -->
+<section>
+ <h2>混淆矩阵 一张表看清对错</h2>
+ <p style="font-size:0.7em; color:var(--gray-600); margin-bottom:0.4em;">模型在 100 条测试集上的预测结果</p>
+ <table class="cm-table">
+ <tr>
+ <td class="cm-corner" rowspan="2" colspan="2" style="vertical-align:bottom; text-align:right; padding-right:1em;">
+ <div style="font-size:0.85em; color:var(--gray-600);">
+ <div>实际 →</div>
+ <div>预测 ↓</div>
+ </div>
+ </td>
+ <th>实际满意</th>
+ <th>实际不满意</th>
+ </tr>
+ <tr></tr>
+ <tr>
+ <th>预测满意</th>
+ <td class="cm-tp">55<br><span style="font-size:0.7em; font-weight:400;">正确好评</span></td>
+ <td class="cm-fn">8<br><span style="font-size:0.7em; font-weight:400;">漏判差评</span></td>
+ </tr>
+ <tr>
+ <th>预测不满意</th>
+ <td class="cm-fp">5<br><span style="font-size:0.7em; font-weight:400;">误判好评</span></td>
+ <td class="cm-tn">32<br><span style="font-size:0.7em; font-weight:400;">正确差评</span></td>
+ </tr>
+ </table>
+ <div style="display:flex; gap:1.5em; justify-content:center; margin-top:0.6em; font-size:0.7em;">
+ <div style="color:#16a34a; font-weight:600;">对角线 = 判对了 (55+32=87)</div>
+ <div style="color:#dc2626; font-weight:600;">其余 = 判错了 (8+5=13)</div>
+ </div>
+ <p style="font-size:0.7em; color:var(--gray-600); text-align:center; margin-top:0.4em;">
+ 准确率 = 87/100 = 87% — 但 8 和 5 的含义很不同
+ </p>
+</section>
+
+<!-- Slide 21b: 混淆矩阵具体例子 -->
+<section>
+ <h2>混淆矩阵里的真实评价</h2>
+ <div class="card-grid cols-2" style="max-width:850px; margin:0.5em auto; gap:0.8em;">
+ <div class="card" style="text-align:left; border-left:4px solid #16a34a; padding:0.8em 1em;">
+ <div class="card-label" style="text-align:left; color:#16a34a; font-size:0.65em;">正确好评 (TP) — 55 条</div>
+ <div class="card-desc" style="text-align:left; font-size:0.6em; line-height:1.5; color:var(--gray-600);">
+ 「味道很好，配送也快，好评！」<br>
+ <span style="color:var(--gray-400);">实际满意，模型也说满意 &#10003;</span>
+ </div>
+ </div>
+ <div class="card" style="text-align:left; border-left:4px solid #dc2626; padding:0.8em 1em;">
+ <div class="card-label" style="text-align:left; color:#dc2626; font-size:0.65em;">漏判差评 (FN) — 8 条</div>
+ <div class="card-desc" style="text-align:left; font-size:0.6em; line-height:1.5; color:var(--gray-600);">
+ 「包装精致，但打开一看分量好少」<br>
+ <span style="color:var(--gray-400);">实际不满意，模型却说满意 &#10007;</span>
+ </div>
+ </div>
+ <div class="card" style="text-align:left; border-left:4px solid #f59e0b; padding:0.8em 1em;">
+ <div class="card-label" style="text-align:left; color:#b45309; font-size:0.65em;">误判好评 (FP) — 5 条</div>
+ <div class="card-desc" style="text-align:left; font-size:0.6em; line-height:1.5; color:var(--gray-600);">
+ 「终于到了！等得花都谢了哈哈」<br>
+ <span style="color:var(--gray-400);">实际满意（调侃语气），模型却说不满意 &#10007;</span>
+ </div>
+ </div>
+ <div class="card" style="text-align:left; border-left:4px solid #16a34a; padding:0.8em 1em;">
+ <div class="card-label" style="text-align:left; color:#16a34a; font-size:0.65em;">正确差评 (TN) — 32 条</div>
+ <div class="card-desc" style="text-align:left; font-size:0.6em; line-height:1.5; color:var(--gray-600);">
+ 「难吃到想退款，再也不点了」<br>
+ <span style="color:var(--gray-400);">实际不满意，模型也说不满意 &#10003;</span>
+ </div>
+ </div>
+ </div>
+ <div class="highlight-box" style="text-align:center; margin-top:0.4em;">
+ <span style="font-size:0.85em;">
+ <strong style="color:#dc2626;">漏判差评</strong> 措辞含蓄，先扬后抑，模型没听出弦外之音<br>
+ <strong style="color:#b45309;">误判好评</strong> 反讽、调侃，模型把玩笑话当真了
+ </span>
+ </div>
+</section>
+
+<!-- Slide 22: 精确率 vs 召回率 -->
+<section>
+ <h2>精确率 vs 召回率</h2>
+ <p style="font-size:0.7em; color:var(--gray-600); margin-bottom:0.6em;">两种不同的「准」</p>
+ <div class="vs-layout" style="max-width:850px; margin:0 auto;">
+ <div class="vs-panel left" style="text-align:center; flex:1;">
+ <h3 style="text-align:center;">精确率 (Precision)</h3>
+ <div style="font-size:2em; font-weight:700; color:var(--gray-800); margin:0.3em 0;">32/37 = 86%</div>
+ <div style="font-size:0.65em; color:var(--gray-600); line-height:1.8;">
+ 模型说「不满意」的 37 条里<br>
+ 真的不满意的有 32 条<br><br>
+ <strong style="color:var(--r-main-color);">别冤枉好评</strong>
+ </div>
+ </div>
+ <div class="vs-divider">vs</div>
+ <div class="vs-panel right" style="text-align:center; flex:1;">
+ <h3 style="text-align:center; color:var(--accent);">召回率 (Recall)</h3>
+ <div style="font-size:2em; font-weight:700; color:var(--accent); margin:0.3em 0;">32/40 = 80%</div>
+ <div style="font-size:0.65em; color:var(--gray-600); line-height:1.8;">
+ 真正不满意的 40 条里<br>
+ 被模型找到的有 32 条<br><br>
+ <strong style="color:var(--accent);">别漏掉差评</strong>
+ </div>
+ </div>
+ </div>
+</section>
+
+<!-- Slide 22b: 捕鱼网类比 -->
+<section>
+ <h2>捕鱼的比喻 网眼大小的权衡</h2>
+ <p style="font-size:0.7em; color:var(--gray-600); margin-bottom:0.5em;">目标 从池塘里捞出所有的鲈鱼（= 找到所有差评）</p>
+ <div style="display:flex; gap:1.5em; max-width:850px; margin:0 auto;">
+ <!-- 细网 -->
+ <div style="flex:1; border:2px solid #2563eb; border-radius:8px; padding:1em; text-align:center; background:#eff6ff;">
+ <div style="font-size:0.8em; font-weight:700; color:var(--accent); margin-bottom:0.4em;">细网（网眼很小）</div>
+ <div style="font-size:3em; line-height:1; margin:0.3em 0;">&#127386;</div>
+ <div style="font-size:0.6em; color:var(--gray-600); line-height:1.7; text-align:left;">
+ 捞上来 50 条鱼 <br>
+ <strong style="color:#16a34a;">30 条鲈鱼</strong>（目标！全捞到了）<br>
+ <strong style="color:#dc2626;">20 条杂鱼</strong>（混进来的）<br><br>
+ <span style="color:var(--accent); font-weight:600;">召回率 = 30/30 = 100%</span><br>
+ <span style="color:var(--gray-800); font-weight:600;">精确率 = 30/50 = 60%</span>
+ </div>
+ </div>
+ <!-- 粗网 -->
+ <div style="flex:1; border:2px solid var(--gray-400); border-radius:8px; padding:1em; text-align:center; background:var(--gray-50);">
+ <div style="font-size:0.8em; font-weight:700; color:var(--gray-800); margin-bottom:0.4em;">粗网（网眼很大）</div>
+ <div style="font-size:3em; line-height:1; margin:0.3em 0;">&#129707;</div>
+ <div style="font-size:0.6em; color:var(--gray-600); line-height:1.7; text-align:left;">
+ 捞上来 12 条鱼 <br>
+ <strong style="color:#16a34a;">11 条鲈鱼</strong>（确实是大鲈鱼）<br>
+ <strong style="color:#dc2626;">1 条杂鱼</strong>（几乎没有误捞）<br><br>
+ <span style="color:var(--accent); font-weight:600;">召回率 = 11/30 = 37%</span><br>
+ <span style="color:var(--gray-800); font-weight:600;">精确率 = 11/12 = 92%</span>
+ </div>
+ </div>
+ </div>
+ <p style="font-size:0.7em; color:var(--gray-600); text-align:center; margin-top:0.6em;">
+ <strong style="color:var(--r-main-color);">网眼越小，漏得越少（高召回），但杂鱼也越多（低精确）。</strong><br>
+ 没有完美的网，只有适合你目标的网。
+ </p>
+</section>
+
+<!-- Slide 23: 日常类比 -->
+<section>
+ <h2>直觉理解 两种错误</h2>
+ <div class="card-grid cols-2" style="max-width:800px; margin:0.8em auto;">
+ <div class="card" style="text-align:left; border-left:4px solid #f59e0b;">
+ <div class="card-label" style="text-align:left; color:#b45309;">误报（False Positive）</div>
+ <div class="card-desc" style="text-align:left; font-size:0.7em; line-height:1.6;">
+ 把好评判成了差评<br>
+ <span style="color:var(--gray-400);">= 虚惊一场</span>
+ </div>
+ </div>
+ <div class="card" style="text-align:left; border-left:4px solid #dc2626;">
+ <div class="card-label" style="text-align:left; color:#dc2626;">漏报（False Negative）</div>
+ <div class="card-desc" style="text-align:left; font-size:0.7em; line-height:1.6;">
+ 差评没被发现<br>
+ <span style="color:var(--gray-400);">= 漏网之鱼</span>
+ </div>
+ </div>
+ </div>
+ <p style="font-size:0.85em; color:var(--gray-800); text-align:center; margin-top:0.8em; margin-bottom:0.6em;">
+ 不同场景，容忍度不同 
+ </p>
+ <div style="display:flex; gap:1em; max-width:800px; margin:0 auto; font-size:0.7em;">
+ <div style="flex:1; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.8em; text-align:left;">
+ <div style="font-weight:600; color:var(--gray-800); margin-bottom:0.3em;">垃圾短信过滤</div>
+ <div style="color:var(--gray-600); line-height:1.5;">宁可放过垃圾短信，也别误拦正常短信<br>→ 侧重<strong style="color:var(--accent);">精确率</strong></div>
+ </div>
+ <div style="flex:1; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.8em; text-align:left;">
+ <div style="font-weight:600; color:var(--gray-800); margin-bottom:0.3em;">疾病筛查</div>
+ <div style="color:var(--gray-600); line-height:1.5;">宁可多查几个正常人，也别漏掉一个病人<br>→ 侧重<strong style="color:var(--accent);">召回率</strong></div>
+ </div>
+ </div>
+</section>
+
+<!-- Slide 24: 外卖场景的权衡 -->
+<section>
+ <h2>回到外卖场景的权衡</h2>
+ <div style="max-width:800px; margin:0 auto;">
+ <div style="display:flex; gap:1.5em; margin:1em 0;">
+ <div style="flex:1; background:#fff7ed; border:1px solid #fed7aa; border-radius:8px; padding:1em; text-align:left;">
+ <div style="font-weight:700; color:#c2410c; font-size:0.85em; margin-bottom:0.4em;">场景 A 改进服务</div>
+ <div style="font-size:0.7em; color:var(--gray-600); line-height:1.6;">
+ 老板想找到所有差评来改进<br>
+ 漏掉一条差评 = 错过一个问题<br><br>
+ → 侧重<strong style="color:var(--accent);">召回率</strong><br>
+ <span style="color:var(--gray-400);">代价 会多标记一些好评</span>
+ </div>
+ </div>
+ <div style="flex:1; background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:1em; text-align:left;">
+ <div style="font-weight:700; color:var(--accent); font-size:0.85em; margin-bottom:0.4em;">场景 B 展示差评精选</div>
+ <div style="font-size:0.7em; color:var(--gray-600); line-height:1.6;">
+ 平台想展示可信的精选差评<br>
+ 误标好评为差评 = 冤枉商家<br><br>
+ → 侧重<strong style="color:var(--accent);">精确率</strong><br>
+ <span style="color:var(--gray-400);">代价 会漏掉一些差评</span>
+ </div>
+ </div>
+ </div>
+ <div class="highlight-box" style="text-align:center;">
+ <strong style="color:var(--accent);">没有绝对最优的模型，只有最适合你问题的模型。</strong><br>
+ <span style="font-size:0.85em; color:var(--gray-600);">选什么指标，取决于你要回答什么研究问题。</span>
+ </div>
+ </div>
+</section>
+
+<!-- Slide 25: F1 -->
+<section>
+ <h2>F1 分数 精确率与召回率的折中</h2>
+ <div style="max-width:750px; margin:0 auto;">
+ <div style="text-align:center; margin:1em 0;">
+ <div style="display:inline-flex; align-items:center; gap:0.8em; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:1em 2em;">
+ <div style="text-align:center;">
+ <div style="font-size:0.65em; color:var(--gray-600);">精确率</div>
+ <div style="font-size:1.4em; font-weight:700; color:var(--gray-800);">86%</div>
+ </div>
+ <div style="font-size:1.2em; color:var(--gray-400); font-weight:300;">+</div>
+ <div style="text-align:center;">
+ <div style="font-size:0.65em; color:var(--gray-600);">召回率</div>
+ <div style="font-size:1.4em; font-weight:700; color:var(--gray-800);">80%</div>
+ </div>
+ <div style="font-size:1.5em; color:var(--accent); font-weight:300;">→</div>
+ <div style="text-align:center;">
+ <div style="font-size:0.65em; color:var(--accent); font-weight:600;">F1</div>
+ <div style="font-size:1.8em; font-weight:700; color:var(--accent);">83%</div>
+ </div>
+ </div>
+ </div>
+ <p style="font-size:0.8em; color:var(--gray-600); text-align:center; line-height:1.8; margin-top:1em;">
+ F1 是精确率和召回率的<strong>调和平均</strong>。<br>
+ 当你不确定该侧重哪边时，看 F1。<br>
+ <span style="font-size:0.85em; color:var(--gray-400);">两个都高，F1 才高；一个很低，F1 就被拉下来。</span>
+ </p>
+ </div>
+</section>
+
+<!-- Slide 25b: 完整情感分析评估实例 -->
+<section>
+ <h2>完整实例 1,000 条外卖评价的分类报告</h2>
+ <p style="font-size:0.65em; color:var(--gray-600); margin-bottom:0.4em;">模型对三个类别的表现各不相同</p>
+ <div style="max-width:800px; margin:0 auto;">
+ <table class="data-table" style="font-size:0.6em;">
+ <tr>
+ <th>类别</th>
+ <th>精确率</th>
+ <th>召回率</th>
+ <th>F1</th>
+ <th>样本数</th>
+ </tr>
+ <tr>
+ <td style="text-align:left;"><span class="label-good">满意</span></td>
+ <td><strong>91%</strong></td>
+ <td><strong>95%</strong></td>
+ <td><strong>93%</strong></td>
+ <td>620</td>
+ </tr>
+ <tr>
+ <td style="text-align:left;"><span class="label-bad">不满意</span></td>
+ <td><strong>84%</strong></td>
+ <td><strong>78%</strong></td>
+ <td><strong>81%</strong></td>
+ <td>250</td>
+ </tr>
+ <tr>
+ <td style="text-align:left;"><span style="background:#fef3c7; color:#b45309; padding:0.15em 0.6em; border-radius:4px; font-weight:600;">中立</span></td>
+ <td><strong>62%</strong></td>
+ <td><strong>53%</strong></td>
+ <td><strong>57%</strong></td>
+ <td>130</td>
+ </tr>
+ </table>
+ <div style="display:flex; gap:1em; margin-top:0.8em;">
+ <div style="flex:1; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.7em; text-align:left;">
+ <div style="font-size:0.65em; font-weight:600; color:var(--gray-800); margin-bottom:0.3em;">读懂这张表</div>
+ <div style="font-size:0.58em; color:var(--gray-600); line-height:1.6;">
+ 「满意」最好分 — 样本多，特征明显<br>
+ 「不满意」稍难 — 有 22% 差评被漏掉了<br>
+ 「中立」最难 — 模糊表达多，将近一半被错分
+ </div>
+ </div>
+ <div style="flex:1; background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:0.7em; text-align:left;">
+ <div style="font-size:0.65em; font-weight:600; color:var(--accent); margin-bottom:0.3em;">社科研究启示</div>
+ <div style="font-size:0.58em; color:var(--gray-600); line-height:1.6;">
+ 如果你的研究关注「不满意」群体<br>
+ 78% 召回率意味着有 22% 的不满被遗漏<br>
+ 这会<strong>系统性低估</strong>负面情绪的比例
+ </div>
+ </div>
+ </div>
+ </div>
+</section>
+
+<!-- Slide 26: 回扣 Gilardi -->
+<section>
+ <h2>回看上节课的论文</h2>
+ <div style="max-width:800px; margin:0 auto;">
+ <div style="display:flex; gap:1.5em; align-items:center;">
+ <div style="flex:1;">
+ <div style="background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:1em; text-align:center; min-height:200px; display:flex; align-items:center; justify-content:center;">
+ <div style="color:var(--gray-400); font-size:0.7em;">
+ Gilardi et al. (2023)<br>ChatGPT vs MTurk 准确率对比图<br><br>
+ <span style="font-size:0.85em;">[Lesson 1 展示过的图]</span>
+ </div>
+ </div>
+ </div>
+ <div style="flex:1; text-align:left;">
+ <p style="font-size:0.8em; line-height:1.8;">
+ 现在你能看懂 
+ </p>
+ <ul style="font-size:0.75em;">
+ <li>纵轴是<strong>准确率</strong>（Accuracy）</li>
+ <li>但作者也报告了 <strong>F1</strong></li>
+ <li>GPT 不只是「更准」是在精确率和召回率上<strong>同时</strong>更好</li>
+ <li>众包工人的<strong>标注者间一致性</strong>也用了类似的评估框架</li>
+ </ul>
+ <p style="font-size:0.7em; color:var(--gray-400); margin-top:0.8em;">
+ Gilardi, Alizadeh, Kubli &middot; <em>PNAS</em> 120, 2023
+ </p>
+ </div>
+ </div>
+ </div>
+</section>
+
+<!-- Slide 27: 为什么这对社科研究者重要 -->
+<section>
+ <h2>为什么你需要懂这些</h2>
+ <div style="max-width:800px; margin:0 auto;">
+ <p style="font-size:0.85em; color:var(--gray-600); text-align:center; margin-bottom:1em;">
+ 用 ML 做了文本分类，提交论文后审稿人会问 
+ </p>
+ <div style="display:flex; flex-direction:column; gap:0.8em;">
+ <div style="display:flex; align-items:center; gap:1em; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.7em 1em;">
+ <div style="font-size:0.9em; font-weight:700; color:var(--accent); min-width:2em; text-align:center;">Q1</div>
+ <div style="font-size:0.8em; text-align:left;">「你的分类器在<strong>测试集</strong>上表现如何，训练集和测试集是怎么划分的」</div>
+ </div>
+ <div style="display:flex; align-items:center; gap:1em; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.7em 1em;">
+ <div style="font-size:0.9em; font-weight:700; color:var(--accent); min-width:2em; text-align:center;">Q2</div>
+ <div style="font-size:0.8em; text-align:left;">「只报了准确率，<strong>Precision 和 Recall</strong> 分别是多少，类别不平衡怎么处理的」</div>
+ </div>
+ <div style="display:flex; align-items:center; gap:1em; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.7em 1em;">
+ <div style="font-size:0.9em; font-weight:700; color:var(--accent); min-width:2em; text-align:center;">Q3</div>
+ <div style="font-size:0.8em; text-align:left;">「有没有<strong>过拟合</strong>的风险，用了什么正则化或交叉验证策略」</div>
+ </div>
+ </div>
+ <p style="font-size:0.75em; color:var(--gray-600); text-align:center; margin-top:1em;">
+ 今天学的每个概念，都是你未来读论文、做研究、回应审稿人时需要的<strong>基本词汇</strong>。
+ </p>
+ </div>
+</section>
+
+<!-- Slide 28: Part 2 核心认知 -->
+<section>
+ <div class="takeaway">
+ <div class="divider"></div>
+ <p class="main-text">
+ 评估模型，不能只看准确率。
+ </p>
+ <p class="sub-text">
+ 训练集表现好不代表真的好（过拟合）。<br>
+ 精确率和召回率是一对权衡，取决于你的研究问题。<br>
+ F1 是折中方案。
+ </p>
+ <div style="width:3em; height:1px; background:var(--gray-200); margin-bottom:1.2em;"></div>
+ <p class="hint">接下来 → 从原始数据到最终结论，完整流程是什么样的</p>
+ </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PART 3: 从原始数据到研究结论 (12 slides)                        -->
+<!-- ============================================================ -->
+
+<!-- Slide 29 -->
+<section class="section-title">
+ <h2><span class="section-num">Part 3</span>从原始数据到研究结论</h2>
+</section>
+
+<!-- Slide 30: ML Pipeline -->
+<section>
+ <h2>机器学习的完整流程</h2>
+ <div class="pipeline" style="margin:1.2em 0;">
+ <div class="pipe-step">
+ <div class="pipe-num">1</div>
+ <div class="pipe-label">数据收集</div>
+ <div class="pipe-desc">从哪获取数据</div>
+ </div>
+ <div class="pipe-arrow"></div>
+ <div class="pipe-step">
+ <div class="pipe-num">2</div>
+ <div class="pipe-label">数据清洗</div>
+ <div class="pipe-desc">去噪、补缺、统一格式</div>
+ </div>
+ <div class="pipe-arrow"></div>
+ <div class="pipe-step">
+ <div class="pipe-num">3</div>
+ <div class="pipe-label">特征工程</div>
+ <div class="pipe-desc">选什么变量、怎么构建</div>
+ </div>
+ <div class="pipe-arrow"></div>
+ <div class="pipe-step">
+ <div class="pipe-num">4</div>
+ <div class="pipe-label">模型训练</div>
+ <div class="pipe-desc">选模型、调参数</div>
+ </div>
+ <div class="pipe-arrow"></div>
+ <div class="pipe-step">
+ <div class="pipe-num">5</div>
+ <div class="pipe-label">评估</div>
+ <div class="pipe-desc">测试集上验证</div>
+ </div>
+ <div class="pipe-arrow"></div>
+ <div class="pipe-step">
+ <div class="pipe-num">6</div>
+ <div class="pipe-label">迭代</div>
+ <div class="pipe-desc">分析错误、改进</div>
+ </div>
+ </div>
+ <p style="font-size:0.65em; color:var(--gray-600); text-align:center; margin-bottom:0.6em;">
+ 一个<strong>反复迭代</strong>的循环。
+ </p>
+ <div style="background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.8em 1.2em; max-width:880px; margin:0 auto;">
+ <div style="font-size:0.7em; font-weight:600; color:var(--accent); margin-bottom:0.5em;">用外卖评价走一遍这个流程</div>
+ <div style="display:flex; gap:0.6em; font-size:0.58em; color:var(--gray-800); line-height:1.5;">
+ <div style="flex:1; border-right:1px solid var(--gray-200); padding-right:0.6em;">
+ <strong style="color:var(--accent);">1 收集</strong> 爬取美团/饿了么 10 万条评价<br>
+ <strong style="color:var(--accent);">2 清洗</strong> 去掉刷单、空评价、广告评论
+ </div>
+ <div style="flex:1; border-right:1px solid var(--gray-200); padding-right:0.6em;">
+ <strong style="color:var(--accent);">3 特征</strong> 提取文本长度、关键词、配送时间、是否有图<br>
+ <strong style="color:var(--accent);">4 训练</strong> 用逻辑回归学「哪些特征预测好评」
+ </div>
+ <div style="flex:1;">
+ <strong style="color:var(--accent);">5 评估</strong> 测试集 F1 = 0.78，发现「吐槽配送」类错最多<br>
+ <strong style="color:var(--accent);">6 迭代</strong> 加入配送相关关键词特征 → F1 升至 0.85
+ </div>
+ </div>
+ </div>
+</section>
+
+<!-- Slide 31: 数据从哪来 -->
+<section>
+ <h2>第一步 数据从哪来</h2>
+ <div class="card-grid cols-2" style="max-width:800px; margin:0.8em auto;">
+ <div class="card" style="text-align:left;">
+ <div class="card-label" style="text-align:left; color:var(--accent);">平台数据</div>
+ <div class="card-desc" style="text-align:left; font-size:0.65em; line-height:1.6;">
+ 外卖评价、电商评论、社交媒体帖子<br>
+ <span style="color:var(--gray-400);">优势 量大；挑战 噪音多、偏向特定群体</span>
+ </div>
+ </div>
+ <div class="card" style="text-align:left;">
+ <div class="card-label" style="text-align:left; color:var(--accent);">政府公开数据</div>
+ <div class="card-desc" style="text-align:left; font-size:0.65em; line-height:1.6;">
+ 政策文件、统计年鉴、政府工作报告<br>
+ <span style="color:var(--gray-400);">优势 权威；挑战 格式不统一</span>
+ </div>
+ </div>
+ <div class="card" style="text-align:left;">
+ <div class="card-label" style="text-align:left; color:var(--accent);">问卷调查</div>
+ <div class="card-desc" style="text-align:left; font-size:0.65em; line-height:1.6;">
+ 开放回答、量表数据<br>
+ <span style="color:var(--gray-400);">优势 有研究设计；挑战 样本量有限</span>
+ </div>
+ </div>
+ <div class="card" style="text-align:left;">
+ <div class="card-label" style="text-align:left; color:var(--accent);">学术数据集</div>
+ <div class="card-desc" style="text-align:left; font-size:0.65em; line-height:1.6;">
+ 已清洗、已标注、可复现的公开数据<br>
+ <span style="color:var(--gray-400);">优势 即用；挑战 可能不完全匹配你的问题</span>
+ </div>
+ </div>
+ </div>
+ <p style="font-size:0.7em; color:var(--gray-600); text-align:center; margin-top:0.4em;">
+ <strong style="color:var(--r-main-color);">数据质量决定上限</strong>，模型只能逼近这个上限。
+ </p>
+</section>
+
+<!-- Slide 32: 数据清洗 -->
+<section>
+ <h2>第二步 数据清洗</h2>
+ <p style="font-size:0.75em; color:var(--gray-600); margin-bottom:0.6em;">真实世界的数据永远是「脏」的看看外卖评价里能有多脏</p>
+ <div style="display:flex; gap:1.2em; max-width:880px; margin:0 auto;">
+ <div style="flex:1;">
+ <div style="background:#fee2e2; border:1px solid #fca5a5; border-radius:8px; padding:0.8em; font-size:0.65em;">
+ <div style="font-weight:600; color:#dc2626; margin-bottom:0.4em;">真实「脏」数据示例</div>
+ <div style="font-family:'JetBrains Mono',monospace; font-size:0.9em; line-height:1.7; color:var(--gray-800);">
+ 「好吃好吃好吃好吃好吃」 <span style="color:var(--gray-400);">(刷单复读)</span><br>
+ 「此用户未填写评价。」 <span style="color:var(--gray-400);">(系统默认)</span><br>
+ 评分=NULL <span style="color:var(--gray-400);">(缺失值)</span><br>
+ 「太难吃了！！！！！！」 <span style="color:var(--gray-400);">(重复标点)</span><br>
+ 「很nice，yyds」 <span style="color:var(--gray-400);">(中英混杂+网络用语)</span><br>
+ 「加V:xxx888减10元」 <span style="color:var(--gray-400);">(广告/引流)</span><br>
+ 「2024/1/3」 vs 「1-3-2024」 <span style="color:var(--gray-400);">(日期格式不统一)</span>
+ </div>
+ </div>
+ </div>
+ <div style="flex:0.1; display:flex; align-items:center; justify-content:center;">
+ <span style="font-size:1.5em; color:var(--accent);">→</span>
+ </div>
+ <div style="flex:1;">
+ <div style="background:#dcfce7; border:1px solid #86efac; border-radius:8px; padding:0.8em; font-size:0.65em;">
+ <div style="font-weight:600; color:#16a34a; margin-bottom:0.4em;">清洗策略</div>
+ <div style="font-family:'JetBrains Mono',monospace; font-size:0.9em; line-height:1.7; color:var(--gray-800);">
+ 去除刷单/复读机评价<br>
+ 过滤系统默认文本<br>
+ 填充或标记缺失值<br>
+ 标点归一化（多个!→单个!）<br>
+ 建立网络用语映射表<br>
+ 识别并移除广告/引流内容<br>
+ 统一日期格式为 YYYY-MM-DD
+ </div>
+ </div>
+ </div>
+ </div>
+ <div class="highlight-box" style="text-align:center; margin-top:0.5em;">
+ 数据清洗占 ML 项目 <strong style="color:var(--accent);">60–80%</strong> 的时间。不光彩，但决定成败。<br>
+ <span style="font-size:0.85em; color:var(--gray-600);">清洗质量直接决定模型能学到什么垃圾进，垃圾出。</span>
+ </div>
+</section>
+
+<!-- Slide 33: 特征工程 -->
+<section>
+ <h2>第三步 特征工程</h2>
+ <p style="font-size:0.75em; color:var(--accent); font-weight:600; margin-bottom:0.4em;">最像「研究设计」的一步</p>
+ <div style="max-width:860px; margin:0 auto; text-align:left;">
+ <p style="font-size:0.75em; line-height:1.7; margin-bottom:0.5em;">
+ 选<strong>哪些特征</strong>、<strong>怎么构建</strong>特征，本质上是在做<strong style="color:var(--accent);">操作化（Operationalization）</strong>。
+ </p>
+ <div style="display:flex; gap:0.8em; margin:0.5em 0; font-size:0.65em;">
+ <div style="flex:1; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.6em;">
+ <div style="font-weight:600; color:var(--gray-800); margin-bottom:0.2em;">研究问题</div>
+ <div style="color:var(--gray-600);">顾客满意度受什么影响</div>
+ </div>
+ <div style="flex:0.08; display:flex; align-items:center; justify-content:center; color:var(--gray-400);">→</div>
+ <div style="flex:1; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.6em;">
+ <div style="font-weight:600; color:var(--gray-800); margin-bottom:0.2em;">操作化</div>
+ <div style="color:var(--gray-600);">选择衡量「满意度」的变量</div>
+ </div>
+ <div style="flex:0.08; display:flex; align-items:center; justify-content:center; color:var(--gray-400);">→</div>
+ <div style="flex:1; background:var(--accent-light); border:1px solid var(--accent); border-radius:8px; padding:0.6em;">
+ <div style="font-weight:600; color:var(--accent); margin-bottom:0.2em;">特征工程</div>
+ <div style="color:var(--gray-600);">构建特征列 评分、关键词、配送时间……</div>
+ </div>
+ </div>
+ <!-- 好特征 vs 坏特征 对比表 -->
+ <div style="display:flex; gap:1em; margin:0.6em 0;">
+ <div style="flex:1; background:#f0fdf4; border:1px solid #86efac; border-radius:8px; padding:0.7em;">
+ <div style="font-weight:600; color:#16a34a; font-size:0.7em; margin-bottom:0.4em;">好特征</div>
+ <div style="font-size:0.6em; color:var(--gray-800); line-height:1.7;">
+ 评价文本中「难吃」「慢」等关键词出现次数<br>
+ 配送时间与承诺时间的差值（分钟）<br>
+ 评价是否包含图片（用户参与度信号）<br>
+ <span style="color:var(--gray-400);">→ 有理论依据，可解释，与满意度直接相关</span>
+ </div>
+ </div>
+ <div style="flex:1; background:#fef2f2; border:1px solid #fca5a5; border-radius:8px; padding:0.7em;">
+ <div style="font-weight:600; color:#dc2626; font-size:0.7em; margin-bottom:0.4em;">坏特征</div>
+ <div style="font-size:0.6em; color:var(--gray-800); line-height:1.7;">
+ 用户 ID 的数字大小<br>
+ 评价提交时间的秒数<br>
+ 评价文本的 UTF-8 字节长度<br>
+ <span style="color:var(--gray-400);">→ 无理论意义，模型可能「碰巧」找到虚假相关</span>
+ </div>
+ </div>
+ </div>
+ <div class="highlight-box" style="padding:0.6em 1em;">
+ <strong>社科学生的优势</strong> 你比工程师更懂什么变量有<strong style="color:var(--accent);">理论意义</strong>。<br>
+ <span style="font-size:0.85em; color:var(--gray-600);">工程师会把所有能算的都扔进去；你会问「这个变量该不该放」。</span>
+ </div>
+ </div>
+</section>
+
+<!-- Slide 34: 选模型与训练 -->
+<section>
+ <h2>第四步 选模型，训练</h2>
+ <div style="max-width:800px; margin:0 auto;">
+ <div style="display:flex; gap:0.8em; margin:1em 0;">
+ <div style="flex:1; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.8em; text-align:center;">
+ <div style="font-size:0.75em; font-weight:600; color:var(--gray-800);">决策树</div>
+ <div style="font-size:0.6em; color:var(--gray-600); margin-top:0.3em;">易解释<br>适合入门</div>
+ </div>
+ <div style="flex:1; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.8em; text-align:center;">
+ <div style="font-size:0.75em; font-weight:600; color:var(--gray-800);">逻辑回归</div>
+ <div style="font-size:0.6em; color:var(--gray-600); margin-top:0.3em;">概率输出<br>社科常用</div>
+ </div>
+ <div style="flex:1; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.8em; text-align:center;">
+ <div style="font-size:0.75em; font-weight:600; color:var(--gray-800);">随机森林</div>
+ <div style="font-size:0.6em; color:var(--gray-600); margin-top:0.3em;">多树投票<br>稳健好用</div>
+ </div>
+ <div style="flex:1; background:var(--accent-light); border:1px solid var(--accent); border-radius:8px; padding:0.8em; text-align:center;">
+ <div style="font-size:0.75em; font-weight:600; color:var(--accent);">神经网络</div>
+ <div style="font-size:0.6em; color:var(--gray-600); margin-top:0.3em;">自动学特征<br>需要大数据</div>
+ </div>
+ </div>
+ <p style="font-size:0.8em; color:var(--gray-600); text-align:center; line-height:1.8;">
+ 没有「最好的模型」，只有最适合<strong style="color:var(--r-main-color);">你的数据和问题</strong>的模型。<br>
+ <span style="font-size:0.85em;">数据少 → 简单模型；数据多 → 复杂模型也不容易过拟合。</span>
+ </p>
+ </div>
+</section>
+
+<!-- Slide 35: 评估与迭代 -->
+<section>
+ <h2>第五步 评估与迭代</h2>
+ <div style="max-width:800px; margin:0 auto;">
+ <div style="display:flex; align-items:center; gap:0; justify-content:center; margin:1.5em 0;">
+ <div style="background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.7em 1em; font-size:0.7em; text-align:center;">
+ <strong>训练模型</strong>
+ </div>
+ <div class="pipe-arrow"></div>
+ <div style="background:var(--accent-light); border:1px solid var(--accent); border-radius:8px; padding:0.7em 1em; font-size:0.7em; text-align:center;">
+ <strong>测试集评估</strong><br>
+ <span style="color:var(--gray-600); font-size:0.85em;">准确率/F1/混淆矩阵</span>
+ </div>
+ <div class="pipe-arrow"></div>
+ <div style="background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.7em 1em; font-size:0.7em; text-align:center;">
+ <strong>分析错误</strong><br>
+ <span style="color:var(--gray-600); font-size:0.85em;">哪类评价判错最多</span>
+ </div>
+ <div class="pipe-arrow"></div>
+ <div style="background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.7em 1em; font-size:0.7em; text-align:center;">
+ <strong>改进</strong><br>
+ <span style="color:var(--gray-600); font-size:0.85em;">加特征、换模型</span>
+ </div>
+ </div>
+ <div style="text-align:center; margin:0.8em 0;">
+ <div style="display:inline-block; font-size:0.7em; color:var(--accent); font-weight:500; background:var(--accent-light); border-radius:20px; padding:0.3em 1.2em;">
+ ↺ 循环迭代，直到满意
+ </div>
+ </div>
+ <p style="font-size:0.75em; color:var(--gray-600); text-align:center; margin-top:0.8em;">
+ 科学研究是迭代的，ML 也是。<br>
+ 第一版模型很少是最终版本。
+ </p>
+ </div>
+</section>
+
+<!-- Slide 36: 社科研究者的视角 -->
+<section>
+ <h2>哪些是你的决策，哪些是技术操作</h2>
+ <div style="max-width:800px; margin:0 auto;">
+ <div style="display:flex; gap:1.5em; margin:1em 0;">
+ <div style="flex:1; background:#eff6ff; border:2px solid var(--accent); border-radius:8px; padding:1em;">
+ <div style="font-weight:700; color:var(--accent); font-size:0.85em; margin-bottom:0.6em;">研究决策（你负责）</div>
+ <div style="font-size:0.7em; line-height:2; color:var(--gray-800);">
+ 数据来源与抽样<br>
+ 特征选择（变量选择）<br>
+ 标注标准（概念界定）<br>
+ 评估指标（看什么指标）<br>
+ 结果解读（意味着什么）
+ </div>
+ </div>
+ <div style="flex:1; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:1em;">
+ <div style="font-weight:700; color:var(--gray-800); font-size:0.85em; margin-bottom:0.6em;">技术操作（可以外包）</div>
+ <div style="font-size:0.7em; line-height:2; color:var(--gray-800);">
+ 数据清洗脚本<br>
+ 模型选择与调参<br>
+ 代码实现<br>
+ 计算资源配置<br>
+ 输出可视化
+ </div>
+ </div>
+ </div>
+ <div class="highlight-box" style="text-align:center;">
+ <strong style="color:var(--accent);">你不需要亲自写代码，但研究决策必须你来做。</strong>
+ </div>
+ </div>
+</section>
+
+<!-- Slide 37: 偏见 -->
+<section>
+ <h2>偏见从哪里进来</h2>
+ <div style="max-width:860px; margin:0 auto;">
+ <div class="bias-chain" style="margin:1em 0;">
+ <div class="bias-node" style="background:#fee2e2; border:1px solid #fca5a5;">
+ <div style="font-weight:600; color:#dc2626; font-size:0.85em;">数据偏见</div>
+ <div style="font-size:0.6em; color:var(--gray-600); margin-top:0.2em;">训练数据不代表总体</div>
+ </div>
+ <div class="bias-arrow"></div>
+ <div class="bias-node" style="background:#fef3c7; border:1px solid #fde68a;">
+ <div style="font-weight:600; color:#b45309; font-size:0.85em;">模型偏见</div>
+ <div style="font-size:0.6em; color:var(--gray-600); margin-top:0.2em;">学到了数据里的偏差</div>
+ </div>
+ <div class="bias-arrow"></div>
+ <div class="bias-node" style="background:#fce7f3; border:1px solid #f9a8d4;">
+ <div style="font-weight:600; color:#be185d; font-size:0.85em;">结果偏见</div>
+ <div style="font-size:0.6em; color:var(--gray-600); margin-top:0.2em;">系统性不公平</div>
+ </div>
+ </div>
+ <div style="display:flex; gap:0.8em; margin-top:0.8em;">
+ <div style="flex:1; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.7em;">
+ <div style="font-size:0.65em; font-weight:600; color:var(--accent); margin-bottom:0.3em;">外卖评价的城乡偏见</div>
+ <div style="font-size:0.6em; color:var(--gray-600); line-height:1.6;">
+ 训练数据全是一线城市用户「30分钟=正常」。<br>
+ 县城用户写「40分钟很快了」，模型却判为差评。
+ </div>
+ </div>
+ <div style="flex:1; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.7em;">
+ <div style="font-size:0.65em; font-weight:600; color:var(--accent); margin-bottom:0.3em;">跨语言的仇恨言论检测</div>
+ <div style="font-size:0.6em; color:var(--gray-600); line-height:1.6;">
+ 用英文训练的仇恨言论分类器，迁移到中文社交媒体。<br>
+ 中文的讽刺、谐音梗全部漏判语言结构决定偏见形式。
+ </div>
+ </div>
+ </div>
+ <div style="display:flex; gap:0.8em; margin-top:0.6em;">
+ <div style="flex:1; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.7em;">
+ <div style="font-size:0.65em; font-weight:600; color:var(--accent); margin-bottom:0.3em;">城市调查预测农村态度</div>
+ <div style="font-size:0.6em; color:var(--gray-600); line-height:1.6;">
+ 用城市居民问卷训练的「公共政策满意度」模型，<br>
+ 直接应用于农村样本生活经验完全不同，预测失效。
+ </div>
+ </div>
+ <div style="flex:1; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.7em;">
+ <div style="font-size:0.65em; font-weight:600; color:var(--accent); margin-bottom:0.3em;">历史文本中的歧视</div>
+ <div style="font-size:0.6em; color:var(--gray-600); line-height:1.6;">
+ 用 20 世纪报纸训练词向量，模型学到「女性=家庭」<br>
+ 「男性=职业」的关联历史偏见被编码进了算法。
+ </div>
+ </div>
+ </div>
+ <p style="font-size:0.7em; color:var(--r-main-color); font-weight:600; text-align:center; margin-top:0.6em;">
+ 偏见不是模型制造的，是数据带进来的。识别偏见，是研究者的责任。
+ </p>
+ </div>
+</section>
+
+<!-- Slide 38: 三类任务 -->
+<section>
+ <h2>三类 ML 任务</h2>
+ <p style="font-size:0.65em; color:var(--gray-600); margin-bottom:0.5em;">后面的课会一个个深入，这里先建立整体地图</p>
+ <table class="task-table" style="max-width:880px; margin:0 auto;">
+ <thead>
+ <tr>
+ <th style="width:12%;">任务类型</th>
+ <th style="width:18%;">做什么</th>
+ <th style="width:48%;">研究场景</th>
+ <th style="width:10%;">标签</th>
+ <th style="width:12%;">课程</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr>
+ <td><strong>分类</strong></td>
+ <td>预测类别<br><span style="color:var(--gray-400);">A 还是 B</span></td>
+ <td style="font-size:0.9em; line-height:1.5; text-align:left;">
+ <strong>情感分析</strong> 10 万条外卖评价，自动判断好评/差评，再按区域汇总，研究「哪些城市的餐饮服务满意度最低」。<br>
+ <strong>立场检测</strong> 微博上关于某政策的帖子，分类为「支持/反对/中立」，追踪舆论随时间的变化。
+ </td>
+ <td>有监督</td>
+ <td><span class="week-badge">第 4 课</span></td>
+ </tr>
+ <tr>
+ <td><strong>回归</strong></td>
+ <td>预测数值<br><span style="color:var(--gray-400);">多少</span></td>
+ <td style="font-size:0.9em; line-height:1.5; text-align:left;">
+ <strong>舆情热度预测</strong> 根据帖子的发布时间、关键词、首小时转发量，预测 24 小时后的总传播量，帮助研究者识别「即将爆发」的议题。
+ </td>
+ <td>有监督</td>
+ <td style="color:var(--gray-400);">不深入</td>
+ </tr>
+ <tr>
+ <td><strong>聚类</strong></td>
+ <td>发现分组<br><span style="color:var(--gray-400);">谁和谁像</span></td>
+ <td style="font-size:0.9em; line-height:1.5; text-align:left;">
+ <strong>主题发现</strong> 收集 5 万条关于「教育焦虑」的微博，不预设类别，让算法自动发现隐含话题可能出现「学区房」「鸡娃」「内卷」等自然分组。
+ </td>
+ <td>无监督</td>
+ <td><span class="week-badge">第 5 课</span></td>
+ </tr>
+ </tbody>
+ </table>
+</section>
+
+<!-- Slide 39: 关键术语回顾 -->
+<section>
+ <h2>关键术语回顾</h2>
+ <p style="font-size:0.7em; color:var(--gray-600); margin-bottom:0.5em;">今天出现的所有新概念，一张表讲清楚</p>
+ <div style="max-width:880px; margin:0 auto;">
+ <table class="data-table" style="font-size:0.58em;">
+ <thead>
+ <tr>
+ <th style="width:20%; text-align:left;">术语</th>
+ <th style="width:42%; text-align:left;">一句话解释</th>
+ <th style="width:38%; text-align:left;">外卖评价中的对应</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr>
+ <td style="text-align:left; font-weight:600;">特征（Feature）</td>
+ <td style="text-align:left;">输入给模型的变量，描述一个样本的属性</td>
+ <td style="text-align:left;">评价文本、配送时间、评分、是否有图片</td>
+ </tr>
+ <tr>
+ <td style="text-align:left; font-weight:600;">标签（Label）</td>
+ <td style="text-align:left;">我们希望模型预测的答案</td>
+ <td style="text-align:left;">好评/差评</td>
+ </tr>
+ <tr>
+ <td style="text-align:left; font-weight:600;">训练集 / 测试集</td>
+ <td style="text-align:left;">用来学习的数据 / 用来考试的数据</td>
+ <td style="text-align:left;">8000 条学习 / 2000 条验证</td>
+ </tr>
+ <tr>
+ <td style="text-align:left; font-weight:600;">过拟合（Overfitting）</td>
+ <td style="text-align:left;">模型把训练数据的噪音也学进去了，考试翻车</td>
+ <td style="text-align:left;">记住了「张三=好评」而非学到通用规律</td>
+ </tr>
+ <tr>
+ <td style="text-align:left; font-weight:600;">精确率（Precision）</td>
+ <td style="text-align:left;">模型说「是差评」的里面，真的有多少是差评</td>
+ <td style="text-align:left;">标记的 100 条差评中 85 条确实是差评</td>
+ </tr>
+ <tr>
+ <td style="text-align:left; font-weight:600;">召回率（Recall）</td>
+ <td style="text-align:left;">所有真实差评中，模型找到了多少</td>
+ <td style="text-align:left;">200 条真实差评中模型找到了 150 条</td>
+ </tr>
+ <tr>
+ <td style="text-align:left; font-weight:600;">F1</td>
+ <td style="text-align:left;">精确率和召回率的调和平均两者的折中</td>
+ <td style="text-align:left;">一个数字概括分类器的综合表现</td>
+ </tr>
+ <tr>
+ <td style="text-align:left; font-weight:600;">特征工程</td>
+ <td style="text-align:left;">把原始数据加工成模型能用的变量</td>
+ <td style="text-align:left;">从评价文本中提取「关键词出现次数」</td>
+ </tr>
+ </tbody>
+ </table>
+ </div>
+</section>
+
+<!-- Slide 40: 今日要点 -->
+<section>
+ <h2>今日要点</h2>
+ <div style="display:flex; flex-direction:column; gap:0.7em; max-width:820px; margin:0.6em auto;">
+ <div style="display:flex; align-items:flex-start; gap:1em; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.8em 1em;">
+ <div style="font-size:1.2em; font-weight:700; color:var(--accent); min-width:2em; text-align:center;">1</div>
+ <div style="text-align:left;">
+ <div style="font-size:0.85em; font-weight:600;">ML = 把人的判断力编码成可复用的规则</div>
+ <div style="font-size:0.68em; color:var(--gray-600); line-height:1.6;">特征是输入，标签是答案，模型从数据中学规律。社科研究者的优势在于 你知道什么变量有理论意义。</div>
+ </div>
+ </div>
+ <div style="display:flex; align-items:flex-start; gap:1em; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.8em 1em;">
+ <div style="font-size:1.2em; font-weight:700; color:var(--accent); min-width:2em; text-align:center;">2</div>
+ <div style="text-align:left;">
+ <div style="font-size:0.85em; font-weight:600;">评估要看对的指标，警惕过拟合</div>
+ <div style="font-size:0.68em; color:var(--gray-600); line-height:1.6;">训练集上表现好不代表真的好。精确率与召回率是一对权衡，选哪个取决于你的研究问题漏判的代价大还是误判的代价大。</div>
+ </div>
+ </div>
+ <div style="display:flex; align-items:flex-start; gap:1em; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.8em 1em;">
+ <div style="font-size:1.2em; font-weight:700; color:var(--accent); min-width:2em; text-align:center;">3</div>
+ <div style="text-align:left;">
+ <div style="font-size:0.85em; font-weight:600;">从数据到结论是一个完整流程</div>
+ <div style="font-size:0.68em; color:var(--gray-600); line-height:1.6;">数据质量决定上限，清洗占大部分时间。偏见是数据带进来的，识别和消除偏见是研究者不可推卸的责任。</div>
+ </div>
+ </div>
+ <div style="display:flex; align-items:flex-start; gap:1em; background:var(--gray-50); border:1px solid var(--gray-200); border-radius:8px; padding:0.8em 1em;">
+ <div style="font-size:1.2em; font-weight:700; color:var(--accent); min-width:2em; text-align:center;">4</div>
+ <div style="text-align:left;">
+ <div style="font-size:0.85em; font-weight:600;">研究决策在你手里，技术可以外包</div>
+ <div style="font-size:0.68em; color:var(--gray-600); line-height:1.6;">你不需要亲自写代码，但数据来源、变量选择、标注标准、结果解读这些决策只有你能做。</div>
+ </div>
+ </div>
+ </div>
+</section>
+
+<!-- Slide 41: 下节课 -->
+<section>
+ <h2>下节课预告</h2>
+ <div style="max-width:700px; margin:1.5em auto; text-align:center;">
+ <p style="font-size:1.3em; font-weight:700; color:var(--r-main-color); margin-bottom:0.8em;">
+ 第三课 机器学习与社会计算范式革新
+ </p>
+ <p style="font-size:0.85em; color:var(--gray-600); line-height:1.8;">
+ 今天学了 ML 的基本原理，<br>
+ 下节课看研究者如何用这些工具<br>
+ <strong style="color:var(--accent);">改变社会科学的研究方式</strong>。
+ </p>
+ <div style="margin-top:2em; padding-top:1.5em; border-top:1px solid var(--gray-200);">
+ <p style="font-size:0.7em; color:var(--gray-400);">
+ 课前阅读 待定<br>
+ 带着你的研究问题来讨论
+ </p>
+ </div>
+ </div>
+</section>
+
+</div><!-- .slides -->
+</div><!-- .reveal -->
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    width: 1280,
+    height: 720,
+    margin: 0.08,
+    transition: 'none',
+    backgroundTransition: 'none',
+    center: true,
+  });
+</script>
+</body>
+</html>
