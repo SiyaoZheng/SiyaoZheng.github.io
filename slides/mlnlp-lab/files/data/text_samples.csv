@@ -1,0 +1,7 @@
+id,text,label
+1,这门课的案例很清楚,positive
+2,这个例子帮助我理解了文本向量化,positive
+3,今天的练习稍微有点难,neutral
+4,分词结果还需要再调整,neutral
+5,这个模型在小样本上表现不好,negative
+6,运行速度太慢需要优化,negative

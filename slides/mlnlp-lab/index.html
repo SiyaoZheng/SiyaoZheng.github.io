@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MLNLP Lab</title>
+    <script
+      id="jupyter-config-data"
+      type="application/json"
+      data-jupyter-lite-root="."
+    >
+      {}
+    </script>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #e7edf3;
+        --panel: rgba(255, 255, 255, 0.82);
+        --text: #18212b;
+        --muted: #51606f;
+        --line: rgba(24, 33, 43, 0.12);
+        --accent: #0f6cbd;
+        --accent-strong: #0a4f8a;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Helvetica Neue", "PingFang SC", "Noto Sans SC", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top left, rgba(15, 108, 189, 0.18), transparent 32%),
+          linear-gradient(180deg, #f6f9fc 0%, var(--bg) 100%);
+        display: grid;
+        place-items: center;
+        padding: 24px;
+      }
+
+      main {
+        width: min(860px, 100%);
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 36px;
+        box-shadow: 0 20px 60px rgba(15, 23, 42, 0.12);
+        backdrop-filter: blur(12px);
+      }
+
+      .eyebrow {
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin: 0 0 10px;
+      }
+
+      h1 {
+        margin: 0 0 12px;
+        font-size: clamp(32px, 5vw, 54px);
+        line-height: 1.05;
+      }
+
+      .lead {
+        margin: 0;
+        font-size: 18px;
+        line-height: 1.7;
+        color: var(--muted);
+        max-width: 700px;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 28px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 0 18px;
+        border-radius: 999px;
+        font-size: 16px;
+        text-decoration: none;
+        transition: transform 0.15s ease, background 0.15s ease;
+      }
+
+      .button.primary {
+        background: var(--accent);
+        color: white;
+      }
+
+      .button.secondary {
+        border: 1px solid var(--line);
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.72);
+      }
+
+      .button:hover {
+        transform: translateY(-1px);
+      }
+
+      .grid {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        margin-top: 32px;
+      }
+
+      .card {
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.66);
+        padding: 18px;
+      }
+
+      .card h2 {
+        margin: 0 0 8px;
+        font-size: 16px;
+      }
+
+      .card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.65;
+        font-size: 14px;
+      }
+
+      .note {
+        margin-top: 22px;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        line-height: 1.7;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">Machine Learning and NLP</p>
+      <h1>浏览器版课堂 Notebook</h1>
+      <p class="lead">
+        这是课程的 JupyterLite 环境。学生不需要安装 Anaconda，打开网页后即可进入 Notebook。
+        计算在各自浏览器中完成，所以 20 人左右同时进入也不会把服务器打满。
+      </p>
+
+      <div class="actions">
+        <a class="button primary" href="./lab/index.html">进入课堂环境</a>
+        <a class="button secondary" href="./files/00_welcome.ipynb">下载欢迎 Notebook</a>
+      </div>
+
+      <section class="grid">
+        <article class="card">
+          <h2>适合的内容</h2>
+          <p>Python 基础、`pandas`、`matplotlib`、小规模文本分析和课堂演示。</p>
+        </article>
+        <article class="card">
+          <h2>不适合的内容</h2>
+          <p>GPU 作业、大模型推理、长时间训练和需要共享服务器状态的任务。</p>
+        </article>
+        <article class="card">
+          <h2>课后保存</h2>
+          <p>Notebook 和文件默认保存在浏览器本地，下课前请下载 `.ipynb` 或导出数据。</p>
+        </article>
+      </section>
+
+      <p class="note">
+        建议使用 Chrome 或 Edge。进入 Lab 后请在左侧点击 <strong>00_welcome.ipynb</strong> 开始上课。
+        第一次启动 Python 内核会比普通网页慢一些，这是正常现象。
+      </p>
+    </main>
+  </body>
+</html>
