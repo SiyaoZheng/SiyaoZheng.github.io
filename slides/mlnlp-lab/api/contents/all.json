@@ -2,6 +2,20 @@
   "content": [
     {
       "content": null,
+      "created": "2026-03-17T10:06:25.550Z",
+      "format": null,
+      "hash": null,
+      "hash_algorithm": null,
+      "last_modified": "2026-03-17T10:06:25.550Z",
+      "mimetype": null,
+      "name": "00_data_science_intro.ipynb",
+      "path": "00_data_science_intro.ipynb",
+      "size": 5531,
+      "type": "notebook",
+      "writable": true
+    },
+    {
+      "content": null,
       "created": "2026-03-17T09:59:52.338017Z",
       "format": null,
       "hash": null,
@@ -33,7 +47,7 @@
   "format": "json",
   "hash": null,
   "hash_algorithm": null,
-  "last_modified": "2026-03-17T09:59:52.338184Z",
+  "last_modified": "2026-03-17T10:06:25.550Z",
   "mimetype": null,
   "name": "",
   "path": "",

@@ -22,6 +22,14 @@
     </script>
     <script>
       (async function () {
+        const params = new URLSearchParams(window.location.search);
+        if (!params.has('path')) {
+          params.set('path', '00_data_science_intro.ipynb');
+          window.location.replace(
+            `${window.location.pathname}?${params.toString()}${window.location.hash || ''}`
+          );
+          return;
+        }
         const { pathname, origin, search, hash } = window.location;
         if (pathname.match(/(index.html|\/?)$/) == null) {
           window.location.href = `${origin}${pathname}/${search}${hash}`;
