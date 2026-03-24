@@ -1582,6 +1582,38 @@
 </section>
 
 <section>
+  <h2>一个实用 Trick：先写排除规则</h2>
+  <p class="slide-note">做评论二分类时，很多误判不是因为模型不知道什么叫 <code>negative</code>，而是因为你没有写清楚什么情况<strong>不算</strong> <code>negative</code>。</p>
+  <div class="cols">
+    <div class="col">
+      <div class="card">
+        <div class="kicker">WITHOUT TRICK</div>
+        <div class="title">只写正向规则</div>
+        <div class="desc">
+          “退款、异味、客服失联，判为 <code>negative</code>。”<br><br>
+          问题是：模型容易把“早餐普通”“隔音一般”这类轻微抱怨也往负面里塞。
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card accent-card">
+        <div class="kicker">WITH TRICK</div>
+        <div class="title">补一条排除规则</div>
+        <div class="desc">
+          “轻微不满但总体接受，不算 <code>negative</code>。”<br><br>
+          这一句会直接帮模型守住边界，特别适合处理“还行”“一般”“能接受”这类模糊评论。
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box">
+    <strong style="color:var(--accent);">可直接复用的写法：</strong>
+    除非评论出现明确且实质性的负面体验，否则不要判为 <code>negative</code>；
+    轻微抱怨但总体接受，统一判为 <code>non_negative</code>。
+  </div>
+</section>
+
+<section>
   <h2>长上下文输入的组织原则</h2>
   <p class="slide-note">如果你要一次性把“标签定义 + 边界规则 + 几条评论示例 + 当前待分类评论”都放进去，就必须把顺序排清楚。</p>
   <div class="flow" style="margin-top:1.1em;">
