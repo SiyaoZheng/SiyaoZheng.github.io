@@ -1438,66 +1438,66 @@
 
 <section>
   <h2>少样本学习（Few-shot Learning）</h2>
-  <p class="slide-note">对文本分类任务来说，最常见也最有效的输入提示方法之一，就是先给模型几个带标签的例子。</p>
+  <p class="slide-note">继续用前面的评论二分类任务为例：few-shot 的作用，就是先拿几条已经标好 <code>negative</code> / <code>non_negative</code> 的评论，把分类口径喂给模型。</p>
   <div class="card-grid cols-3">
     <div class="card">
       <div class="kicker">WHAT</div>
       <div class="title">先给示例</div>
-      <div class="desc">把几条已经标好标签的评论放进输入 prompt，让模型先看到任务长什么样。</div>
+      <div class="desc">先放 2 到 5 条已经标好标签的酒店评论，让模型看到这次到底在分什么。</div>
     </div>
     <div class="card">
       <div class="kicker">WHY</div>
       <div class="title">再校边界</div>
-      <div class="desc">真正有用的 few-shot，不是最明显的正负例，而是最容易分歧的边界样本。</div>
+      <div class="desc">真正该放进去的，不是最明显的差评，而是“有点抱怨但还能接受”这类最容易分歧的评论。</div>
     </div>
     <div class="card">
       <div class="kicker">GOAL</div>
       <div class="title">最后再做泛化</div>
-      <div class="desc">模型不是在背答案，而是在从这些例子里学会这次分类任务的口径。</div>
+      <div class="desc">目标不是让模型背这几条评论，而是让它学会这门课前半部分一直在用的分类标准。</div>
     </div>
   </div>
 </section>
 
 <section>
   <h2>输入 Prompt 的六段骨架</h2>
-  <p class="slide-note">现在更实用的写法，不是只写一句任务，而是把输入 prompt 拆成几个稳定的段落。</p>
+  <p class="slide-note">还用同一个酒店评论分类任务。更稳的写法，不是只写一句“请分类”，而是把这个输入 prompt 拆成几个固定段落。</p>
   <div class="card-grid cols-3">
     <div class="card">
       <div class="kicker">1</div>
       <div class="title">身份</div>
-      <div class="desc">你是谁，负责什么类型的文本判断。</div>
+      <div class="desc">例如：你是中文酒店评论分类助手。</div>
     </div>
     <div class="card">
       <div class="kicker">2</div>
       <div class="title">任务</div>
-      <div class="desc">明确是分类、抽取、排序，还是生成解释。</div>
+      <div class="desc">例如：把每条评论判成 <code>negative</code> 或 <code>non_negative</code>。</div>
     </div>
     <div class="card">
       <div class="kicker">3</div>
       <div class="title">标签定义</div>
-      <div class="desc">`negative` 和 `non_negative` 分别是什么意思。</div>
+      <div class="desc">明确什么算负面，什么算轻微抱怨但总体可接受。</div>
     </div>
     <div class="card">
       <div class="kicker">4</div>
       <div class="title">边界规则</div>
-      <div class="desc">轻微抱怨、补偿后接受、混合情绪怎么算。</div>
+      <div class="desc">把“早餐普通但还能接受”“补送后是否仍算负面”这种边界写清楚。</div>
     </div>
     <div class="card">
       <div class="kicker">5</div>
       <div class="title">示例</div>
-      <div class="desc">优先放最容易分歧的 few-shot 边界样本。</div>
+      <div class="desc">优先放最容易误判的评论示例，而不是最典型的差评。</div>
     </div>
     <div class="card">
       <div class="kicker">6</div>
       <div class="title">当前输入</div>
-      <div class="desc">把这一次要分类的评论单独放在最后。</div>
+      <div class="desc">把本次待判别的那条评论单独放在最后，避免和示例混在一起。</div>
     </div>
   </div>
 </section>
 
 <section>
   <h2>零样本 Prompt 示例</h2>
-  <p class="slide-note">先不给例子，只把任务和规则写清楚，这就叫 zero-shot prompt。</p>
+  <p class="slide-note">先不给示例，只拿前面那套评论分类规则直接去判一条新评论，这就是 zero-shot。</p>
   <div class="cols">
     <div class="col">
       <div class="raw-review" style="font-family:'JetBrains Mono', monospace; font-size:0.72em;">
@@ -1528,7 +1528,7 @@
 
 <section>
   <h2>Few-shot 示例的边界校准作用</h2>
-  <p class="slide-note">真正该补进 prompt 的，不是最明显的样本，而是最容易分歧的样本。</p>
+  <p class="slide-note">对这个评论二分类任务来说，few-shot 最有价值的地方，就是先把最容易摇摆的评论边界钉住。</p>
   <table class="example-table" style="font-size:0.5em;">
     <thead>
       <tr>
@@ -1559,23 +1559,23 @@
 
 <section>
   <h2>Prompt 设计中的歧义表达问题</h2>
-  <p class="slide-note">像“情绪不好”“体验一般”这种写法，模型和人都可能理解得不一样。</p>
+  <p class="slide-note">还是以前面的评论分类为例。如果标签标准写得模糊，模型每次判 <code>negative</code> 的边界都可能变。</p>
   <div class="vs-layout">
     <div class="vs-panel left">
       <h3>歧义表达</h3>
       <div class="vs-items">
         <div><strong>例子：</strong>“帮我判断哪些评论比较差。”</div>
-        <div><strong>问题：</strong>“比较差”到底指强烈差评、轻微抱怨，还是需要人工复核？</div>
-        <div><strong>结果：</strong>模型每次都可能抓不一样的边界。</div>
+        <div><strong>问题：</strong>“比较差”到底等不等于 <code>negative</code>？轻微抱怨算不算？</div>
+        <div><strong>结果：</strong>同一条“早餐普通，整体还行”的评论，模型可能一会儿判负面，一会儿不判。</div>
       </div>
     </div>
     <div class="vs-divider">vs</div>
     <div class="vs-panel right">
       <h3>可执行表达</h3>
       <div class="vs-items">
-        <div><strong>例子：</strong>“明确抱怨退款、异味、客服失联，标成 `negative`。”</div>
-        <div><strong>补充：</strong>“轻微不满但总体接受，标成 `non_negative`。”</div>
-        <div><strong>结果：</strong>同一个任务会更稳定，也更容易检查。</div>
+        <div><strong>例子：</strong>“明确抱怨退款、异味、客服失联，标成 <code>negative</code>。”</div>
+        <div><strong>补充：</strong>“轻微不满但总体接受，标成 <code>non_negative</code>。”</div>
+        <div><strong>结果：</strong>这样写之后，前面那批评论的判别标准才能前后一致。</div>
       </div>
     </div>
   </div>
@@ -1583,7 +1583,7 @@
 
 <section>
   <h2>长上下文输入的组织原则</h2>
-  <p class="slide-note">最新的主流做法都强调：把输入 prompt 分区，而且把静态规则放前面，把本次文本放后面。</p>
+  <p class="slide-note">如果你要一次性把“标签定义 + 边界规则 + 几条评论示例 + 当前待分类评论”都放进去，就必须把顺序排清楚。</p>
   <div class="flow" style="margin-top:1.1em;">
     <div class="flow-node" style="min-width:170px;">
       <strong>前面放静态内容</strong><br>
@@ -1592,7 +1592,7 @@
     <div class="flow-arrow"></div>
     <div class="flow-node outline" style="min-width:180px;">
       <strong>中间放规则与示例</strong><br>
-      边界规则、few-shot 样本
+      边界规则、few-shot 评论
     </div>
     <div class="flow-arrow accent-arrow"></div>
     <div class="flow-node accent" style="min-width:180px;">
@@ -1602,66 +1602,66 @@
   </div>
   <div class="highlight-box">
     <strong style="color:var(--accent);">写法上也要分区：</strong>
-    可以用 Markdown 标题、编号步骤，或 XML 标签把
+    对这个评论分类任务，可以用 Markdown 标题、编号步骤，或 XML 标签把
     <code>&lt;instructions&gt;</code>、<code>&lt;examples&gt;</code>、<code>&lt;input&gt;</code>
-    分开，这样模型更不容易把规则和样本混在一起。
+    分开，这样模型更不容易把“示例评论”和“本次待判别评论”混在一起。
   </div>
 </section>
 
 <section>
   <h2>复杂任务的 Prompt Chaining</h2>
-  <p class="slide-note">当任务太复杂时，不要把所有动作塞进一个输入 prompt；拆成两到三步通常更稳。</p>
+  <p class="slide-note">如果这门课里的评论分类任务还要求你同时抽取抱怨点、给标签、写理由，那就不要一条 prompt 全做完。</p>
   <div class="card-grid cols-3">
     <div class="card">
       <div class="kicker">STEP 1</div>
       <div class="title">先抽取关键信号</div>
       <div class="desc">
-        先让模型找出抱怨点、关键词、问题类型，不急着给最终标签。
+        先从评论里抽出退款、异味、失联、态度差等线索，不急着判 <code>negative</code>。
       </div>
     </div>
     <div class="card">
       <div class="kicker">STEP 2</div>
       <div class="title">再做标签判断</div>
       <div class="desc">
-        根据前一步抽取出的线索，再判断 `negative` 或 `non_negative`。
+        再根据这些线索，判断这条评论是 <code>negative</code> 还是 <code>non_negative</code>。
       </div>
     </div>
     <div class="card">
       <div class="kicker">STEP 3</div>
       <div class="title">最后生成简短理由</div>
       <div class="desc">
-        只在最后补一句解释，避免模型一边判断一边把任务做散。
+        最后只补一句简短理由，例如“存在退款投诉且客服失联，因此判为 negative”。
       </div>
     </div>
   </div>
   <div class="mini-note" style="margin-top:0.8em; text-align:left;">
-    对分类、抽取、证据定位这类任务，这种“抽取 → 判断 → 解释”的链式提示，往往比一条 prompt 包打天下更稳定。
+    对前面这个评论分类任务来说，这种“抽取线索 → 判断标签 → 输出理由”的链式提示，往往比一条 prompt 包打天下更稳定。
   </div>
 </section>
 
 <section>
   <h2>主流模型的输入提示偏好差异</h2>
-  <p class="slide-note">现在市面上的共识越来越清楚，但不同平台对输入 prompt 的偏好并不完全一样。</p>
+  <p class="slide-note">即使都是在做前面那个评论二分类任务，不同平台对这条输入 prompt 的组织方式也有不同偏好。</p>
   <div class="card-grid cols-3">
     <div class="card">
       <div class="kicker">OPENAI</div>
       <div class="title">清楚分角色，提示要直接</div>
       <div class="desc">
-        整体角色放在 system / developer，任务细节和示例放在 user；对推理模型，提示越清楚直接越好，不必反复要求“请一步一步思考”。
+        例如把“你是中文酒店评论分类助手”放在上层角色里，再把标签定义、few-shot 评论和当前评论放进输入；写得直接，通常比堆很多修辞更稳。
       </div>
     </div>
     <div class="card">
       <div class="kicker">ANTHROPIC</div>
       <div class="title">强调 XML 标签和多样示例</div>
       <div class="desc">
-        官方文档反复强调用 XML 标签分开 instructions、examples、input；few-shot 最好放 3-5 个相关且多样的示例。
+        把这个分类 prompt 分成 <code>&lt;instructions&gt;</code>、<code>&lt;examples&gt;</code>、<code>&lt;input&gt;</code> 三段，会更清楚；few-shot 评论最好兼顾典型样本和边界样本。
       </div>
     </div>
     <div class="card">
       <div class="kicker">GEMINI</div>
       <div class="title">强调分区和格式示范</div>
       <div class="desc">
-        官方指南强调用 tags 或 Markdown 区分 instructions、context、task；few-shot 的一个重要作用，是先把目标格式教给模型。
+        对这类评论分类任务，先示范目标输出格式也很重要，例如先示范一条 <code>{"label":"negative","reason":"..."}</code>，再喂当前评论。
       </div>
     </div>
   </div>
@@ -1669,7 +1669,7 @@
 
 <section>
   <h2>本讲总结</h2>
-  <p class="slide-note">前半段讲算法，后半段讲怎么把分类任务写给大模型。</p>
+  <p class="slide-note">前半段讲模型怎么做同一个评论分类任务，后半段讲怎么把这个任务稳定地写进输入 prompt。</p>
   <div class="card-grid cols-2" style="grid-template-columns: repeat(2, 1fr);">
     <div class="card">
       <div class="kicker">PART 1</div>
@@ -1682,13 +1682,13 @@
       <div class="kicker">PART 2</div>
       <div class="title">Prompt Engineering</div>
       <div class="desc">
-        输入 prompt 要有骨架、有顺序；复杂任务要拆链；不同平台的输入偏好也不完全一样。
+        围绕同一个 <code>negative / non_negative</code> 评论分类任务，输入 prompt 要有骨架、有顺序，也要把边界样本写进去。
       </div>
     </div>
   </div>
   <div class="highlight-box">
     <strong style="color:var(--accent);">一句话总结：</strong>
-    前半段是在学“模型怎么做分类”，后半段是在学“怎么把分类标准写成一个更稳定的输入 prompt”。
+    前半段是在学“模型怎么给评论分类”，后半段是在学“怎么把同一套分类标准写成更稳定的输入 prompt”。
   </div>
 </section>
 
