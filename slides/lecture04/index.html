@@ -1,0 +1,1712 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第四课 有监督学习技术 — 机器学习与自然语言处理</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    :root {
+      --r-background-color: #fff;
+      --r-main-font: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+      --r-main-font-size: 32px;
+      --r-main-color: #1a1a2e;
+      --r-heading-font: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+      --r-heading-color: #0f0f1a;
+      --r-heading-font-weight: 700;
+      --r-link-color: #2563eb;
+      --accent: #2563eb;
+      --accent-light: #dbeafe;
+      --accent-soft: #eef4ff;
+      --green: #16a34a;
+      --green-light: #dcfce7;
+      --amber: #d97706;
+      --amber-light: #fef3c7;
+      --red: #dc2626;
+      --red-light: #fee2e2;
+      --gray-50: #f8f9fa;
+      --gray-100: #f1f3f5;
+      --gray-200: #e9ecef;
+      --gray-300: #dee2e6;
+      --gray-400: #adb5bd;
+      --gray-500: #868e96;
+      --gray-600: #6c757d;
+      --gray-700: #495057;
+      --gray-800: #343a40;
+    }
+
+    .reveal {
+      font-weight: 400;
+    }
+    .reveal h1 {
+      font-size: 2.25em;
+      letter-spacing: -0.02em;
+    }
+    .reveal h2 {
+      font-size: 1.55em;
+      letter-spacing: -0.01em;
+      color: var(--accent);
+      text-transform: none;
+      margin-bottom: 0.25em;
+    }
+    .reveal h3 {
+      font-size: 0.9em;
+      color: var(--gray-800);
+      margin-bottom: 0.4em;
+    }
+    .reveal p,
+    .reveal li {
+      line-height: 1.6;
+    }
+    .reveal ul {
+      list-style: none;
+      padding-left: 0;
+      margin-left: 0;
+    }
+    .reveal ul li {
+      padding-left: 1.4em;
+      position: relative;
+      margin-bottom: 0.45em;
+    }
+    .reveal ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    .reveal code {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--gray-100);
+      padding: 0.1em 0.35em;
+      border-radius: 4px;
+      font-size: 0.84em;
+    }
+
+    .cover h1 {
+      font-size: 2.7em;
+      margin-bottom: 0.12em;
+    }
+    .cover .subtitle {
+      font-size: 1.08em;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 1.6em;
+    }
+    .cover .lead {
+      font-size: 0.78em;
+      color: var(--gray-700);
+      line-height: 1.8;
+      max-width: 24em;
+      margin: 0 auto 1.4em;
+    }
+    .cover .meta {
+      font-size: 0.62em;
+      color: var(--gray-500);
+      line-height: 1.8;
+    }
+
+    .section-title h2 {
+      font-size: 2.35em;
+      color: var(--r-main-color);
+      border-left: 6px solid var(--accent);
+      padding-left: 0.6em;
+      text-align: left;
+      margin-left: 0.2em;
+    }
+    .section-title .section-num {
+      display: block;
+      font-size: 0.5em;
+      color: var(--gray-400);
+      font-weight: 400;
+      margin-bottom: 0.18em;
+    }
+
+    .highlight-box {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-left: 4px solid var(--accent);
+      padding: 0.95em 1.2em;
+      border-radius: 4px;
+      text-align: left;
+      margin: 0.9em 0 0;
+      font-size: 0.72em;
+      line-height: 1.65;
+    }
+
+    .cols {
+      display: flex;
+      gap: 1.4em;
+      align-items: stretch;
+      margin-top: 0.8em;
+    }
+    .col {
+      flex: 1;
+      text-align: left;
+    }
+
+    .flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin: 1em 0;
+      flex-wrap: nowrap;
+    }
+    .flow-node {
+      background: var(--gray-50);
+      border: 2px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.8em 1.1em;
+      font-size: 0.72em;
+      font-weight: 500;
+      text-align: center;
+      min-width: 150px;
+      line-height: 1.5;
+    }
+    .flow-node.accent {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .flow-node.outline {
+      background: #fff;
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    .flow-node.success {
+      background: var(--green-light);
+      color: #14532d;
+      border-color: #86efac;
+    }
+    .flow-arrow {
+      width: 44px;
+      height: 2px;
+      background: var(--gray-400);
+      position: relative;
+      flex-shrink: 0;
+    }
+    .flow-arrow::after {
+      content: '';
+      position: absolute;
+      right: -1px;
+      top: -5px;
+      border: 6px solid transparent;
+      border-left: 8px solid var(--gray-400);
+    }
+    .flow-arrow.accent-arrow {
+      background: var(--accent);
+    }
+    .flow-arrow.accent-arrow::after {
+      border-left-color: var(--accent);
+    }
+
+    .card-grid {
+      display: grid;
+      gap: 0.9em;
+      margin-top: 0.9em;
+    }
+    .card-grid.cols-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .card-grid.cols-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 1em 1.05em;
+      text-align: left;
+    }
+    .card .kicker {
+      font-size: 0.54em;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 0.45em;
+    }
+    .card .title {
+      font-size: 0.82em;
+      font-weight: 700;
+      color: var(--r-main-color);
+      margin-bottom: 0.3em;
+    }
+    .card .desc {
+      font-size: 0.67em;
+      color: var(--gray-600);
+      line-height: 1.55;
+    }
+
+    .comment-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75em;
+      margin-top: 0.8em;
+    }
+    .comment-box {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.75em 0.9em;
+      text-align: left;
+      font-size: 0.62em;
+      line-height: 1.55;
+      color: var(--gray-700);
+      min-height: 4.8em;
+    }
+    .comment-box strong {
+      color: var(--r-main-color);
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.8em;
+      margin-top: 0.9em;
+    }
+    .stat-card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 0.9em 0.8em;
+      text-align: center;
+    }
+    .stat-card .stat-num {
+      font-size: 1.65em;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.18em;
+    }
+    .stat-card .stat-title {
+      font-size: 0.64em;
+      font-weight: 700;
+      color: var(--r-main-color);
+      margin-bottom: 0.25em;
+    }
+    .stat-card .stat-desc {
+      font-size: 0.55em;
+      color: var(--gray-600);
+      line-height: 1.45;
+    }
+
+    .vs-layout {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin-top: 0.9em;
+    }
+    .vs-panel {
+      flex: 1;
+      padding: 1.05em 1.15em;
+      border-radius: 8px;
+      text-align: left;
+    }
+    .vs-panel.left {
+      background: var(--accent-soft);
+      border: 1px solid #bfdbfe;
+      border-radius: 8px 0 0 8px;
+    }
+    .vs-panel.right {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-radius: 0 8px 8px 0;
+    }
+    .vs-divider {
+      width: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15em;
+      font-weight: 700;
+      color: var(--gray-400);
+      flex-shrink: 0;
+    }
+    .vs-panel h3 {
+      font-size: 0.8em;
+      margin-bottom: 0.5em;
+    }
+    .vs-panel .vs-items {
+      font-size: 0.66em;
+      color: var(--gray-700);
+      line-height: 1.75;
+    }
+    .vs-panel .vs-items div {
+      margin-bottom: 0.45em;
+    }
+    .vs-panel .vs-items strong {
+      color: var(--r-main-color);
+    }
+
+    .example-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.8em;
+      font-size: 0.54em;
+    }
+    .example-table th {
+      background: var(--accent);
+      color: #fff;
+      text-align: left;
+      padding: 0.7em 0.8em;
+      font-weight: 600;
+      vertical-align: middle;
+    }
+    .example-table th:first-child {
+      border-radius: 6px 0 0 0;
+    }
+    .example-table th:last-child {
+      border-radius: 0 6px 0 0;
+    }
+    .example-table td {
+      padding: 0.62em 0.8em;
+      border-bottom: 1px solid var(--gray-200);
+      vertical-align: top;
+      text-align: left;
+      background: #fff;
+      line-height: 1.5;
+    }
+    .example-table tr:nth-child(even) td {
+      background: var(--gray-50);
+    }
+
+    .label-chip {
+      display: inline-block;
+      padding: 0.18em 0.55em;
+      border-radius: 999px;
+      font-size: 0.9em;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .label-chip.positive {
+      color: #166534;
+      background: var(--green-light);
+    }
+    .label-chip.negative {
+      color: #991b1b;
+      background: var(--red-light);
+    }
+    .label-chip.review {
+      color: #92400e;
+      background: var(--amber-light);
+    }
+
+    .mini-note {
+      font-size: 0.58em;
+      color: var(--gray-500);
+      line-height: 1.6;
+      margin-top: 0.55em;
+      text-align: center;
+    }
+
+    .raw-review {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-left: 4px solid var(--accent);
+      border-radius: 10px;
+      padding: 1em 1.1em;
+      font-size: 0.9em;
+      line-height: 1.7;
+      color: var(--r-main-color);
+      text-align: left;
+      margin-top: 0.7em;
+    }
+
+    .question-box {
+      margin-top: 0.9em;
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-left: 4px solid var(--amber);
+      border-radius: 6px;
+      padding: 0.8em 1.05em;
+      font-size: 0.68em;
+      color: #7c2d12;
+      text-align: left;
+      line-height: 1.6;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.8em;
+      margin-top: 0.8em;
+    }
+    .feature-card {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 0.9em 0.95em;
+      text-align: left;
+    }
+    .feature-card .feature-type {
+      font-size: 0.55em;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 0.45em;
+    }
+    .feature-card .feature-title {
+      font-size: 0.78em;
+      font-weight: 700;
+      color: var(--r-main-color);
+      margin-bottom: 0.3em;
+    }
+    .feature-card .feature-desc {
+      font-size: 0.63em;
+      color: var(--gray-600);
+      line-height: 1.55;
+    }
+
+    .clue-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.7em;
+      margin-top: 0.7em;
+    }
+    .clue-card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.75em 0.85em;
+      text-align: left;
+    }
+    .clue-card .clue-label {
+      font-size: 0.56em;
+      font-weight: 700;
+      color: var(--gray-500);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 0.35em;
+    }
+    .clue-card .clue-value {
+      font-size: 0.72em;
+      font-weight: 700;
+      color: var(--r-main-color);
+      margin-bottom: 0.18em;
+    }
+    .clue-card .clue-note {
+      font-size: 0.6em;
+      color: var(--gray-600);
+      line-height: 1.5;
+    }
+
+    .matrix-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 2px;
+      margin-top: 0.9em;
+      font-size: 0.62em;
+      background: var(--gray-200);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .matrix-table th,
+    .matrix-table td {
+      padding: 0.8em 0.9em;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 1.45;
+    }
+    .matrix-table th {
+      background: var(--gray-50);
+      color: var(--r-main-color);
+      font-weight: 700;
+    }
+    .matrix-table td {
+      background: #fff;
+      color: var(--gray-700);
+    }
+    .matrix-table td.tp {
+      background: #dcfce7;
+      color: #166534;
+    }
+    .matrix-table td.fp {
+      background: #fff7ed;
+      color: #9a3412;
+    }
+    .matrix-table td.fn {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+    .matrix-table td.tn {
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.8em;
+      margin-top: 0.9em;
+    }
+    .metric-card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 0.95em 0.9em;
+      text-align: center;
+    }
+    .metric-card .metric-name {
+      font-size: 0.64em;
+      font-weight: 700;
+      color: var(--r-main-color);
+      margin-bottom: 0.2em;
+    }
+    .metric-card .metric-value {
+      font-size: 1.7em;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.15em;
+    }
+    .metric-card .metric-formula {
+      font-size: 0.56em;
+      color: var(--gray-500);
+      line-height: 1.45;
+    }
+
+    .decision-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.8em;
+      margin-top: 0.9em;
+    }
+    .decision-card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 0.95em 1em;
+      text-align: left;
+    }
+    .decision-card .decision-q {
+      font-size: 0.72em;
+      font-weight: 700;
+      color: var(--r-main-color);
+      margin-bottom: 0.25em;
+    }
+    .decision-card .decision-a {
+      font-size: 0.62em;
+      color: var(--gray-600);
+      line-height: 1.55;
+    }
+
+    .mini-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin-top: 0.95em;
+    }
+    .mini-flow .step {
+      min-width: 170px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 0.8em 0.9em;
+      text-align: center;
+    }
+    .mini-flow .step .step-label {
+      font-size: 0.54em;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 0.35em;
+    }
+    .mini-flow .step .step-title {
+      font-size: 0.75em;
+      font-weight: 700;
+      color: var(--r-main-color);
+      margin-bottom: 0.18em;
+    }
+    .mini-flow .step .step-desc {
+      font-size: 0.58em;
+      color: var(--gray-600);
+      line-height: 1.45;
+    }
+    .mini-flow .step-arrow {
+      width: 42px;
+      height: 2px;
+      background: var(--gray-400);
+      position: relative;
+      flex-shrink: 0;
+    }
+    .mini-flow .step-arrow::after {
+      content: '';
+      position: absolute;
+      right: -1px;
+      top: -5px;
+      border: 6px solid transparent;
+      border-left: 8px solid var(--gray-400);
+    }
+
+    .algo-sketch-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.8em;
+      margin-top: 0.9em;
+    }
+    .algo-sketch {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 0.9em 0.95em;
+      text-align: left;
+    }
+    .algo-sketch .algo-head {
+      font-size: 0.56em;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.45em;
+    }
+    .algo-sketch .algo-line {
+      display: flex;
+      align-items: center;
+      gap: 0.4em;
+      margin-bottom: 0.38em;
+    }
+    .algo-sketch .algo-box {
+      border-radius: 999px;
+      padding: 0.22em 0.52em;
+      font-size: 0.58em;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .algo-sketch .algo-box.gray {
+      background: var(--gray-100);
+      color: var(--gray-700);
+    }
+    .algo-sketch .algo-box.blue {
+      background: var(--accent-light);
+      color: #1d4ed8;
+    }
+    .algo-sketch .algo-box.green {
+      background: var(--green-light);
+      color: #166534;
+    }
+    .algo-sketch .algo-box.red {
+      background: var(--red-light);
+      color: #991b1b;
+    }
+    .algo-sketch .algo-arrow {
+      color: var(--gray-400);
+      font-size: 0.64em;
+      font-weight: 700;
+    }
+    .algo-sketch .algo-caption {
+      font-size: 0.58em;
+      color: var(--gray-600);
+      line-height: 1.5;
+      margin-top: 0.45em;
+    }
+
+    .evidence-board {
+      display: grid;
+      grid-template-columns: 1fr 1fr 0.9fr;
+      gap: 0.75em;
+      margin-top: 0.8em;
+    }
+    .evidence-column {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 0.85em 0.9em;
+      text-align: left;
+    }
+    .evidence-column .evidence-head {
+      font-size: 0.56em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.55em;
+    }
+    .evidence-column.negative .evidence-head {
+      color: var(--red);
+    }
+    .evidence-column.positive .evidence-head {
+      color: var(--green);
+    }
+    .evidence-item {
+      margin-bottom: 0.42em;
+    }
+    .evidence-item .word {
+      font-size: 0.62em;
+      font-weight: 700;
+      color: var(--r-main-color);
+      margin-bottom: 0.12em;
+    }
+    .evidence-item .bar {
+      height: 10px;
+      border-radius: 999px;
+      background: var(--gray-100);
+      overflow: hidden;
+    }
+    .evidence-item .fill {
+      height: 100%;
+      border-radius: 999px;
+    }
+    .evidence-column.negative .fill {
+      background: linear-gradient(90deg, #fca5a5, #ef4444);
+    }
+    .evidence-column.positive .fill {
+      background: linear-gradient(90deg, #86efac, #16a34a);
+    }
+    .evidence-score {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 0.9em;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .evidence-score .score-title {
+      font-size: 0.56em;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5em;
+    }
+    .evidence-score .score-pill {
+      display: inline-block;
+      margin: 0 auto 0.45em;
+      padding: 0.28em 0.72em;
+      border-radius: 999px;
+      background: var(--red-light);
+      color: #991b1b;
+      font-size: 0.7em;
+      font-weight: 700;
+    }
+    .evidence-score .score-note {
+      font-size: 0.6em;
+      color: var(--gray-600);
+      line-height: 1.5;
+    }
+
+    .weight-bars {
+      margin-top: 0.75em;
+    }
+    .weight-row {
+      display: grid;
+      grid-template-columns: 120px 1fr 78px;
+      gap: 0.65em;
+      align-items: center;
+      margin-bottom: 0.6em;
+    }
+    .weight-name {
+      font-size: 0.6em;
+      font-weight: 700;
+      color: var(--r-main-color);
+    }
+    .weight-track {
+      height: 16px;
+      background: var(--gray-100);
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+    .weight-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #93c5fd, #2563eb);
+    }
+    .weight-value {
+      font-size: 0.58em;
+      font-weight: 700;
+      color: var(--accent);
+      text-align: right;
+    }
+    .score-gauge {
+      margin-top: 0.9em;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 0.8em 0.9em;
+      text-align: left;
+    }
+    .score-gauge .gauge-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.45em;
+    }
+    .score-gauge .gauge-label {
+      font-size: 0.58em;
+      font-weight: 700;
+      color: var(--r-main-color);
+    }
+    .score-gauge .gauge-number {
+      font-size: 0.62em;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .score-gauge .gauge-track {
+      height: 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #dbeafe 0%, #bfdbfe 45%, #fecaca 70%, #f87171 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .score-gauge .gauge-marker {
+      position: absolute;
+      top: -3px;
+      width: 6px;
+      height: 20px;
+      border-radius: 999px;
+      background: #111827;
+      left: 74%;
+    }
+    .score-gauge .gauge-note {
+      font-size: 0.58em;
+      color: var(--gray-600);
+      line-height: 1.45;
+      margin-top: 0.45em;
+    }
+
+    .algo-map {
+      position: relative;
+      height: 290px;
+      margin-top: 0.95em;
+      border: 1px solid var(--gray-200);
+      border-radius: 14px;
+      background:
+        linear-gradient(to right, var(--gray-100) 1px, transparent 1px) 0 0/25% 100%,
+        linear-gradient(to top, var(--gray-100) 1px, transparent 1px) 0 0/100% 25%,
+        #fff;
+      overflow: hidden;
+    }
+    .algo-map .axis-x,
+    .algo-map .axis-y {
+      position: absolute;
+      font-size: 0.56em;
+      font-weight: 700;
+      color: var(--gray-500);
+      letter-spacing: 0.03em;
+    }
+    .algo-map .axis-x {
+      right: 16px;
+      bottom: 10px;
+    }
+    .algo-map .axis-y {
+      left: 12px;
+      top: 12px;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+    .algo-map .algo-dot {
+      position: absolute;
+      width: 126px;
+      padding: 0.55em 0.65em;
+      border-radius: 12px;
+      font-size: 0.58em;
+      line-height: 1.45;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+    }
+    .algo-map .algo-dot strong {
+      display: block;
+      font-size: 1.05em;
+      color: var(--r-main-color);
+      margin-bottom: 0.18em;
+    }
+    .algo-map .algo-dot.nb {
+      left: 120px;
+      top: 60px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+    }
+    .algo-map .algo-dot.lr {
+      left: 350px;
+      top: 100px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+    }
+    .algo-map .algo-dot.tree {
+      left: 590px;
+      top: 48px;
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+    }
+
+    .slide-note {
+      font-size: 0.72em;
+      color: var(--gray-600);
+      margin-top: 0.2em;
+    }
+
+    .reveal .slide-number {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: var(--gray-400);
+    }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section class="cover">
+  <h1>有监督学习技术</h1>
+  <p class="subtitle">第四课｜文本分类中的有监督学习算法与提示词工程</p>
+  <p class="lead">
+    这一讲只做两件事：
+    先用公开评论数据讲清常见的有监督学习算法，
+    再看怎样把大模型的分类任务写成一个可执行的 prompt。
+  </p>
+  <div class="meta">
+    《机器学习与自然语言处理》<br>
+    AI + 计算社会科学微专业
+  </div>
+</section>
+
+<section class="section-title">
+  <h2><span class="section-num">Part 1</span>有监督学习算法</h2>
+</section>
+
+<section>
+  <h2>文本分类任务设定</h2>
+  <p class="slide-note">为了把算法讲清楚，这一讲先固定成一个最简单的文本分类任务。</p>
+  <div class="card-grid cols-3" style="margin-top:1.1em;">
+    <div class="card">
+      <div class="kicker">DATA</div>
+      <div class="title">公开中文评论</div>
+      <div class="desc">
+        酒店、电商、外卖评论都可以。<br>
+        数据公开，课后也能复现。
+      </div>
+    </div>
+    <div class="card">
+      <div class="kicker">TASK</div>
+      <div class="title">负面 / 非负面二分类</div>
+      <div class="desc">
+        输入一条评论，输出一个标签：<br>
+        `negative` 或 `non_negative`。
+      </div>
+    </div>
+    <div class="card">
+      <div class="kicker">GOAL</div>
+      <div class="title">比较常见算法</div>
+      <div class="desc">
+        朴素贝叶斯、逻辑回归、决策树，<br>
+        看它们各自怎么做同一个任务。
+      </div>
+    </div>
+  </div>
+  <div class="comment-grid">
+    <div class="comment-box"><strong>评论 A：</strong>房间干净，前台也很热情，下次还会住。</div>
+    <div class="comment-box"><strong>评论 B：</strong>图片和实际不符，入住体验很差，不会再来。</div>
+    <div class="comment-box"><strong>评论 C：</strong>位置方便，但早餐普通，整体还能接受。</div>
+    <div class="comment-box"><strong>评论 D：</strong>退房三天还没退款，客服一直没人回，很生气。</div>
+  </div>
+  <div class="mini-flow">
+    <div class="step">
+      <div class="step-label">Input</div>
+      <div class="step-title">评论文本</div>
+      <div class="step-desc">一句中文评论</div>
+    </div>
+    <div class="step-arrow"></div>
+    <div class="step">
+      <div class="step-label">Model</div>
+      <div class="step-title">算法处理</div>
+      <div class="step-desc">提取线索并判别</div>
+    </div>
+    <div class="step-arrow"></div>
+    <div class="step">
+      <div class="step-label">Output</div>
+      <div class="step-title">分类标签</div>
+      <div class="step-desc">negative / non_negative</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>常见算法的基本直观比较</h2>
+  <p class="slide-note">同一个分类任务，不同算法的“想法”并不一样。</p>
+  <div class="card-grid cols-3">
+    <div class="card">
+      <div class="kicker">ALGO 1</div>
+      <div class="title">朴素贝叶斯：像数词</div>
+      <div class="desc">
+        看哪些词更常出现在负面评论里，<br>
+        哪些词更常出现在非负面评论里。
+      </div>
+    </div>
+    <div class="card">
+      <div class="kicker">ALGO 2</div>
+      <div class="title">逻辑回归：像打分卡</div>
+      <div class="desc">
+        每个线索加一点分、减一点分，<br>
+        最后合成一个总分。
+      </div>
+    </div>
+    <div class="card">
+      <div class="kicker">ALGO 3</div>
+      <div class="title">决策树：像连续提问</div>
+      <div class="desc">
+        一步步问：有没有退款、有没有失联、<br>
+        有没有强烈抱怨。
+      </div>
+    </div>
+  </div>
+  <div class="algo-sketch-grid">
+    <div class="algo-sketch">
+      <div class="algo-head">Naive Bayes</div>
+      <div class="algo-line">
+        <span class="algo-box gray">退款</span>
+        <span class="algo-arrow">+</span>
+        <span class="algo-box gray">异味</span>
+        <span class="algo-arrow">→</span>
+        <span class="algo-box red">负面概率上升</span>
+      </div>
+      <div class="algo-line">
+        <span class="algo-box gray">干净</span>
+        <span class="algo-arrow">+</span>
+        <span class="algo-box gray">热情</span>
+        <span class="algo-arrow">→</span>
+        <span class="algo-box green">非负面概率上升</span>
+      </div>
+      <div class="algo-caption">核心直觉：先看词，再比较两边证据。</div>
+    </div>
+    <div class="algo-sketch">
+      <div class="algo-head">Logistic Regression</div>
+      <div class="algo-line">
+        <span class="algo-box blue">退款 +3</span>
+        <span class="algo-arrow">+</span>
+        <span class="algo-box blue">异味 +2</span>
+      </div>
+      <div class="algo-line">
+        <span class="algo-box blue">没人回 +2</span>
+        <span class="algo-arrow">→</span>
+        <span class="algo-box red">总分 7</span>
+      </div>
+      <div class="algo-caption">核心直觉：把多个线索加权后合成一个分数。</div>
+    </div>
+    <div class="algo-sketch">
+      <div class="algo-head">Decision Tree</div>
+      <div class="algo-line">
+        <span class="algo-box gray">有退款？</span>
+        <span class="algo-arrow">→</span>
+        <span class="algo-box gray">有失联？</span>
+      </div>
+      <div class="algo-line">
+        <span class="algo-box red">是 / 是</span>
+        <span class="algo-arrow">→</span>
+        <span class="algo-box red">负面</span>
+      </div>
+      <div class="algo-caption">核心直觉：按条件一路分下去，像走流程图。</div>
+    </div>
+  </div>
+  <div class="mini-note" style="margin-top:0.75em; text-align:left;">
+    记忆时可以抓三个动作：看词频、做加权、走流程。
+  </div>
+</section>
+
+<section>
+  <h2>算法一：朴素贝叶斯的词频判别机制</h2>
+  <p class="slide-note">它先把一句话拆成词，再看这些词更像常出现在负面，还是常出现在非负面。</p>
+  <div class="raw-review">
+    “图片和实际不符，不会再来。”
+  </div>
+  <div class="evidence-board">
+    <div class="evidence-column negative">
+      <div class="evidence-head">负面词证据</div>
+      <div class="evidence-item">
+        <div class="word">不符</div>
+        <div class="bar"><div class="fill" style="width:84%;"></div></div>
+      </div>
+      <div class="evidence-item">
+        <div class="word">不会再来</div>
+        <div class="bar"><div class="fill" style="width:92%;"></div></div>
+      </div>
+      <div class="evidence-item">
+        <div class="word">退款</div>
+        <div class="bar"><div class="fill" style="width:76%;"></div></div>
+      </div>
+    </div>
+    <div class="evidence-column positive">
+      <div class="evidence-head">非负面词证据</div>
+      <div class="evidence-item">
+        <div class="word">干净</div>
+        <div class="bar"><div class="fill" style="width:80%;"></div></div>
+      </div>
+      <div class="evidence-item">
+        <div class="word">热情</div>
+        <div class="bar"><div class="fill" style="width:74%;"></div></div>
+      </div>
+      <div class="evidence-item">
+        <div class="word">还会来</div>
+        <div class="bar"><div class="fill" style="width:88%;"></div></div>
+      </div>
+    </div>
+    <div class="evidence-score">
+      <div class="score-title">判别结果</div>
+      <div class="score-pill">negative</div>
+      <div class="score-note">
+        如果这句话里出现的词，整体更像常见于差评，
+        模型就会把它往负面一侧推。
+      </div>
+    </div>
+  </div>
+  <div class="mini-note" style="text-align:left;">
+    朴素贝叶斯不会先理解整句语义，它先看词：`不符`、`不会再来`、`差` 之类的词，在负面评论里是否更常见。
+  </div>
+</section>
+
+<section class="section-title">
+  <h2><span class="section-num">Part 1</span>算法的适用条件与局限性</h2>
+</section>
+
+<section>
+  <h2>朴素贝叶斯的适用条件与局限性</h2>
+  <p class="slide-note">它快、轻、好上手，但它也会忽略很多上下文信息。</p>
+  <div class="vs-layout">
+    <div class="vs-panel left">
+      <h3>优势</h3>
+      <div class="vs-items">
+        <div><strong>快：</strong>训练和预测都很轻，适合先跑第一版。</div>
+        <div><strong>稳：</strong>当关键词信号很强时，表现常常不差。</div>
+        <div><strong>省：</strong>对小样本和稀疏文本也比较友好。</div>
+      </div>
+    </div>
+    <div class="vs-divider">vs</div>
+    <div class="vs-panel right">
+      <h3>局限性</h3>
+      <div class="vs-items">
+        <div><strong>不看顺序：</strong>词和词之间的组合关系抓得比较弱。</div>
+        <div><strong>假设很强：</strong>默认各个词的贡献彼此独立。</div>
+        <div><strong>怕语境：</strong>“不差”“还行”这类细微表达不一定处理得好。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>算法二：逻辑回归的加权判别机制</h2>
+  <p class="slide-note">它不只是看词出现没有，而是把多种线索加权后合成一个分数。</p>
+  <div class="cols">
+    <div class="col">
+      <div class="raw-review">
+        “房间有异味，要求退款，客服一直没人回。”
+      </div>
+    </div>
+    <div class="col">
+      <div class="weight-bars">
+        <div class="weight-row">
+          <div class="weight-name">异味</div>
+          <div class="weight-track"><div class="weight-fill" style="width:42%;"></div></div>
+          <div class="weight-value">+2</div>
+        </div>
+        <div class="weight-row">
+          <div class="weight-name">退款</div>
+          <div class="weight-track"><div class="weight-fill" style="width:64%;"></div></div>
+          <div class="weight-value">+3</div>
+        </div>
+        <div class="weight-row">
+          <div class="weight-name">没人回</div>
+          <div class="weight-track"><div class="weight-fill" style="width:42%;"></div></div>
+          <div class="weight-value">+2</div>
+        </div>
+      </div>
+      <div class="score-gauge">
+        <div class="gauge-top">
+          <div class="gauge-label">总分</div>
+          <div class="gauge-number">7 分</div>
+        </div>
+        <div class="gauge-track">
+          <div class="gauge-marker"></div>
+        </div>
+        <div class="gauge-note">
+          分数越往右，越像 <code>negative</code>。
+          逻辑回归的直觉不是“哪个词最多”，而是“这些线索加起来有多危险”。
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mini-note" style="margin-top:0.9em; text-align:left; font-size:0.62em; color:var(--gray-600);">
+    逻辑回归的直觉不是“哪个词最常见”，而是“哪些线索一起出现后，总体会把评论推向负面”。
+  </div>
+</section>
+
+<section>
+  <h2>逻辑回归作为基线模型的原因</h2>
+  <p class="slide-note">做文本分类时，逻辑回归经常是一个很好的起点。</p>
+  <div class="card-grid cols-3">
+    <div class="card">
+      <div class="kicker">WHY 1</div>
+      <div class="title">好解释</div>
+      <div class="desc">
+        每个线索的方向和权重都比较直观，<br>
+        容易向别人解释模型在看什么。
+      </div>
+    </div>
+    <div class="card">
+      <div class="kicker">WHY 2</div>
+      <div class="title">好扩展</div>
+      <div class="desc">
+        既能吃词袋特征，<br>
+        也能接更多结构化特征或 embedding。
+      </div>
+    </div>
+    <div class="card">
+      <div class="kicker">WHY 3</div>
+      <div class="title">好比较</div>
+      <div class="desc">
+        很适合拿来做课程里的 baseline，<br>
+        再和其他算法比较错误类型。
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>算法三：决策树的递归划分机制</h2>
+  <p class="slide-note">它更像一个判断流程：每走一步，就把评论分到更细的一类。</p>
+  <div class="flow" style="margin-top:1.1em;">
+    <div class="flow-node" style="min-width:160px;">
+      <strong>有没有退款词？</strong><br>
+      有 / 没有
+    </div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node outline" style="min-width:170px;">
+      <strong>有没有客服失联？</strong><br>
+      有 / 没有
+    </div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node accent" style="min-width:175px;">
+      <strong>如果两者都有</strong><br>
+      很可能是负面
+    </div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node success" style="min-width:175px;">
+      <strong>如果只有轻微抱怨</strong><br>
+      可能是非负面
+    </div>
+  </div>
+  <div class="highlight-box">
+    <strong style="color:var(--accent);">决策树最擅长的，</strong>
+    是把“如果 A 又 B，就更像负面”这种组合条件直接写进判断过程。
+  </div>
+</section>
+
+<section>
+  <h2>决策树的优势与风险</h2>
+  <p class="slide-note">它直观、像流程图，但也最容易把局部规律学得太死。</p>
+  <div class="vs-layout">
+    <div class="vs-panel left">
+      <h3>优势</h3>
+      <div class="vs-items">
+        <div><strong>直观：</strong>很像人工在脑中走的判断流程。</div>
+        <div><strong>会抓交互：</strong>“退款 + 失联”这类组合条件表达得很自然。</div>
+        <div><strong>好展示：</strong>课堂上容易把判断路径讲给学生看。</div>
+      </div>
+    </div>
+    <div class="vs-divider">vs</div>
+    <div class="vs-panel right">
+      <h3>风险</h3>
+      <div class="vs-items">
+        <div><strong>容易过拟合：</strong>树开得太深，就会把训练样本记得太细。</div>
+        <div><strong>不够稳定：</strong>样本稍有变化，树结构可能就改很多。</div>
+        <div><strong>要剪枝：</strong>否则很容易看起来很懂，实际泛化很差。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>算法的综合比较</h2>
+  <p class="slide-note">它们都能做文本分类，但各自擅长的地方并不一样。</p>
+  <div class="algo-map">
+    <div class="axis-y">解释性更强</div>
+    <div class="axis-x">对复杂关系的表达更强</div>
+    <div class="algo-dot nb">
+      <strong>朴素贝叶斯</strong>
+      快，轻，适合看强词信号。
+    </div>
+    <div class="algo-dot lr">
+      <strong>逻辑回归</strong>
+      平衡，稳妥，适合做基线模型。
+    </div>
+    <div class="algo-dot tree">
+      <strong>决策树</strong>
+      规则直观，但最容易过拟合。
+    </div>
+  </div>
+  <table class="example-table" style="font-size:0.5em;">
+    <thead>
+      <tr>
+        <th style="width:18%;">算法</th>
+        <th style="width:20%;">直觉</th>
+        <th style="width:28%;">更适合</th>
+        <th style="width:34%;">短板</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>朴素贝叶斯</strong></td>
+        <td>看词证据</td>
+        <td>关键词很强、先跑快速基线时</td>
+        <td>不看词序，上下文能力弱</td>
+      </tr>
+      <tr>
+        <td><strong>逻辑回归</strong></td>
+        <td>做加权打分</td>
+        <td>文本分类 baseline、需要解释时</td>
+        <td>复杂交互要靠额外特征</td>
+      </tr>
+      <tr>
+        <td><strong>决策树</strong></td>
+        <td>走判断流程</td>
+        <td>规则型任务、组合条件很多时</td>
+        <td>容易过拟合，结构不稳定</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="section-title">
+  <h2><span class="section-num">Part 1</span>课程作业中的算法比较方案</h2>
+</section>
+
+<section>
+  <h2>课程作业的建议实施流程</h2>
+  <p class="slide-note">先把这几类算法都跑起来，再去看它们各自错在哪一类评论上。</p>
+  <div class="flow" style="margin-top:1.1em;">
+    <div class="flow-node fragment" data-fragment-index="1" style="min-width:165px;">
+      <strong>准备训练数据</strong><br>
+      评论 + 标签
+    </div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node outline fragment" data-fragment-index="2" style="min-width:165px;">
+      <strong>分别跑各类算法</strong><br>
+      NB / LR / Tree
+    </div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node accent fragment" data-fragment-index="3" style="min-width:165px;">
+      <strong>比较错误样本</strong><br>
+      谁更容易误判
+    </div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node success fragment" data-fragment-index="4" style="min-width:165px;">
+      <strong>再做优化</strong><br>
+      调特征或换 prompt
+    </div>
+  </div>
+  <div class="question-box">
+    <strong>课堂问题：</strong>
+    如果几类算法都在“轻微抱怨但整体还能接受”这类评论上出错，问题更可能出在算法，还是标签定义？
+  </div>
+</section>
+
+<section>
+  <h2>本部分小结</h2>
+  <p class="slide-note">这些算法都能做文本分类，但它们处理“线索”的方式并不一样。</p>
+  <div class="card-grid cols-3">
+    <div class="card">
+      <div class="kicker">NB</div>
+      <div class="title">看词证据</div>
+      <div class="desc">适合关键词很强的任务，跑得快，适合先做基线。</div>
+    </div>
+    <div class="card">
+      <div class="kicker">LR</div>
+      <div class="title">做加权打分</div>
+      <div class="desc">是课程里最稳妥的第一版 baseline，也最容易解释。</div>
+    </div>
+    <div class="card">
+      <div class="kicker">TREE</div>
+      <div class="title">走判断流程</div>
+      <div class="desc">适合讲“如果 A 又 B”这类组合规则，但更容易过拟合。</div>
+    </div>
+  </div>
+</section>
+
+<section class="section-title">
+  <h2><span class="section-num">Part 2</span>提示词工程（Prompt Engineering）</h2>
+</section>
+
+<section>
+  <h2>少样本学习（Few-shot Learning）</h2>
+  <p class="slide-note">对文本分类任务来说，最常见也最有效的输入提示方法之一，就是先给模型几个带标签的例子。</p>
+  <div class="card-grid cols-3">
+    <div class="card">
+      <div class="kicker">WHAT</div>
+      <div class="title">先给示例</div>
+      <div class="desc">把几条已经标好标签的评论放进输入 prompt，让模型先看到任务长什么样。</div>
+    </div>
+    <div class="card">
+      <div class="kicker">WHY</div>
+      <div class="title">再校边界</div>
+      <div class="desc">真正有用的 few-shot，不是最明显的正负例，而是最容易分歧的边界样本。</div>
+    </div>
+    <div class="card">
+      <div class="kicker">GOAL</div>
+      <div class="title">最后再做泛化</div>
+      <div class="desc">模型不是在背答案，而是在从这些例子里学会这次分类任务的口径。</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>输入 Prompt 的六段骨架</h2>
+  <p class="slide-note">现在更实用的写法，不是只写一句任务，而是把输入 prompt 拆成几个稳定的段落。</p>
+  <div class="card-grid cols-3">
+    <div class="card">
+      <div class="kicker">1</div>
+      <div class="title">身份</div>
+      <div class="desc">你是谁，负责什么类型的文本判断。</div>
+    </div>
+    <div class="card">
+      <div class="kicker">2</div>
+      <div class="title">任务</div>
+      <div class="desc">明确是分类、抽取、排序，还是生成解释。</div>
+    </div>
+    <div class="card">
+      <div class="kicker">3</div>
+      <div class="title">标签定义</div>
+      <div class="desc">`negative` 和 `non_negative` 分别是什么意思。</div>
+    </div>
+    <div class="card">
+      <div class="kicker">4</div>
+      <div class="title">边界规则</div>
+      <div class="desc">轻微抱怨、补偿后接受、混合情绪怎么算。</div>
+    </div>
+    <div class="card">
+      <div class="kicker">5</div>
+      <div class="title">示例</div>
+      <div class="desc">优先放最容易分歧的 few-shot 边界样本。</div>
+    </div>
+    <div class="card">
+      <div class="kicker">6</div>
+      <div class="title">当前输入</div>
+      <div class="desc">把这一次要分类的评论单独放在最后。</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>零样本 Prompt 示例</h2>
+  <p class="slide-note">先不给例子，只把任务和规则写清楚，这就叫 zero-shot prompt。</p>
+  <div class="cols">
+    <div class="col">
+      <div class="raw-review" style="font-family:'JetBrains Mono', monospace; font-size:0.72em;">
+        你是中文评论分类助手。<br><br>
+        任务：把评论标成 `negative`<br>
+        或 `non_negative`。<br><br>
+        规则：<br>
+        1. 退款、异味、失联，判 `negative`。<br>
+        2. 轻微不满但总体接受，判 `non_negative`。<br>
+        3. 输出 JSON：<br>
+        {"label": "...", "reason": "..."}
+      </div>
+    </div>
+    <div class="col">
+      <div class="raw-review">
+        评论：<br>
+        “位置方便，但早餐普通，整体还能接受。”
+      </div>
+      <div class="raw-review" style="margin-top:0.7em; font-family:'JetBrains Mono', monospace; font-size:0.72em;">
+        {<br>
+        &nbsp;&nbsp;"label": "non_negative",<br>
+        &nbsp;&nbsp;"reason": "有轻微抱怨，但总体仍可接受"<br>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Few-shot 示例的边界校准作用</h2>
+  <p class="slide-note">真正该补进 prompt 的，不是最明显的样本，而是最容易分歧的样本。</p>
+  <table class="example-table" style="font-size:0.5em;">
+    <thead>
+      <tr>
+        <th style="width:46%;">边界评论</th>
+        <th style="width:18%;">标签</th>
+        <th style="width:36%;">为什么值得放进 prompt</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>位置方便，但早餐普通，整体还能接受。</td>
+        <td><span class="label-chip positive">non_negative</span></td>
+        <td>提醒模型：轻微抱怨不自动等于负面。</td>
+      </tr>
+      <tr>
+        <td>外卖送到时已经凉了，不过客服马上补送了。</td>
+        <td><span class="label-chip negative">negative</span></td>
+        <td>提醒模型：即使有补救，也可能仍然是负面体验。</td>
+      </tr>
+      <tr>
+        <td>隔音一般，这个价位也就这样吧。</td>
+        <td><span class="label-chip positive">non_negative</span></td>
+        <td>提醒模型：模糊表达最容易误判，需要提前定规则。</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>Prompt 设计中的歧义表达问题</h2>
+  <p class="slide-note">像“情绪不好”“体验一般”这种写法，模型和人都可能理解得不一样。</p>
+  <div class="vs-layout">
+    <div class="vs-panel left">
+      <h3>歧义表达</h3>
+      <div class="vs-items">
+        <div><strong>例子：</strong>“帮我判断哪些评论比较差。”</div>
+        <div><strong>问题：</strong>“比较差”到底指强烈差评、轻微抱怨，还是需要人工复核？</div>
+        <div><strong>结果：</strong>模型每次都可能抓不一样的边界。</div>
+      </div>
+    </div>
+    <div class="vs-divider">vs</div>
+    <div class="vs-panel right">
+      <h3>可执行表达</h3>
+      <div class="vs-items">
+        <div><strong>例子：</strong>“明确抱怨退款、异味、客服失联，标成 `negative`。”</div>
+        <div><strong>补充：</strong>“轻微不满但总体接受，标成 `non_negative`。”</div>
+        <div><strong>结果：</strong>同一个任务会更稳定，也更容易检查。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>长上下文输入的组织原则</h2>
+  <p class="slide-note">最新的主流做法都强调：把输入 prompt 分区，而且把静态规则放前面，把本次文本放后面。</p>
+  <div class="flow" style="margin-top:1.1em;">
+    <div class="flow-node" style="min-width:170px;">
+      <strong>前面放静态内容</strong><br>
+      角色、任务、标签定义
+    </div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node outline" style="min-width:180px;">
+      <strong>中间放规则与示例</strong><br>
+      边界规则、few-shot 样本
+    </div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node accent" style="min-width:180px;">
+      <strong>最后放当前输入</strong><br>
+      本次待分类的评论文本
+    </div>
+  </div>
+  <div class="highlight-box">
+    <strong style="color:var(--accent);">写法上也要分区：</strong>
+    可以用 Markdown 标题、编号步骤，或 XML 标签把
+    <code>&lt;instructions&gt;</code>、<code>&lt;examples&gt;</code>、<code>&lt;input&gt;</code>
+    分开，这样模型更不容易把规则和样本混在一起。
+  </div>
+</section>
+
+<section>
+  <h2>复杂任务的 Prompt Chaining</h2>
+  <p class="slide-note">当任务太复杂时，不要把所有动作塞进一个输入 prompt；拆成两到三步通常更稳。</p>
+  <div class="card-grid cols-3">
+    <div class="card">
+      <div class="kicker">STEP 1</div>
+      <div class="title">先抽取关键信号</div>
+      <div class="desc">
+        先让模型找出抱怨点、关键词、问题类型，不急着给最终标签。
+      </div>
+    </div>
+    <div class="card">
+      <div class="kicker">STEP 2</div>
+      <div class="title">再做标签判断</div>
+      <div class="desc">
+        根据前一步抽取出的线索，再判断 `negative` 或 `non_negative`。
+      </div>
+    </div>
+    <div class="card">
+      <div class="kicker">STEP 3</div>
+      <div class="title">最后生成简短理由</div>
+      <div class="desc">
+        只在最后补一句解释，避免模型一边判断一边把任务做散。
+      </div>
+    </div>
+  </div>
+  <div class="mini-note" style="margin-top:0.8em; text-align:left;">
+    对分类、抽取、证据定位这类任务，这种“抽取 → 判断 → 解释”的链式提示，往往比一条 prompt 包打天下更稳定。
+  </div>
+</section>
+
+<section>
+  <h2>主流模型的输入提示偏好差异</h2>
+  <p class="slide-note">现在市面上的共识越来越清楚，但不同平台对输入 prompt 的偏好并不完全一样。</p>
+  <div class="card-grid cols-3">
+    <div class="card">
+      <div class="kicker">OPENAI</div>
+      <div class="title">清楚分角色，提示要直接</div>
+      <div class="desc">
+        整体角色放在 system / developer，任务细节和示例放在 user；对推理模型，提示越清楚直接越好，不必反复要求“请一步一步思考”。
+      </div>
+    </div>
+    <div class="card">
+      <div class="kicker">ANTHROPIC</div>
+      <div class="title">强调 XML 标签和多样示例</div>
+      <div class="desc">
+        官方文档反复强调用 XML 标签分开 instructions、examples、input；few-shot 最好放 3-5 个相关且多样的示例。
+      </div>
+    </div>
+    <div class="card">
+      <div class="kicker">GEMINI</div>
+      <div class="title">强调分区和格式示范</div>
+      <div class="desc">
+        官方指南强调用 tags 或 Markdown 区分 instructions、context、task；few-shot 的一个重要作用，是先把目标格式教给模型。
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>本讲总结</h2>
+  <p class="slide-note">前半段讲算法，后半段讲怎么把分类任务写给大模型。</p>
+  <div class="card-grid cols-2" style="grid-template-columns: repeat(2, 1fr);">
+    <div class="card">
+      <div class="kicker">PART 1</div>
+      <div class="title">有监督学习算法</div>
+      <div class="desc">
+        朴素贝叶斯看词证据，逻辑回归做加权打分，决策树走判断流程。
+      </div>
+    </div>
+    <div class="card">
+      <div class="kicker">PART 2</div>
+      <div class="title">Prompt Engineering</div>
+      <div class="desc">
+        输入 prompt 要有骨架、有顺序；复杂任务要拆链；不同平台的输入偏好也不完全一样。
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box">
+    <strong style="color:var(--accent);">一句话总结：</strong>
+    前半段是在学“模型怎么做分类”，后半段是在学“怎么把分类标准写成一个更稳定的输入 prompt”。
+  </div>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    width: 1280,
+    height: 720,
+    margin: 0.08,
+    transition: 'none',
+    backgroundTransition: 'none',
+    center: true,
+  });
+</script>
+</body>
+</html>
