@@ -1437,6 +1437,34 @@
 </section>
 
 <section>
+  <h2>一个基本原理：先定标准，再写 Prompt</h2>
+  <p class="slide-note">在这个评论二分类任务里，prompt engineering 不是“想一句更厉害的话”，而是先把 <code>negative</code> / <code>non_negative</code> 的判别标准固定下来，再把它稳定地写进输入。</p>
+  <div class="card-grid cols-3">
+    <div class="card">
+      <div class="kicker">PRINCIPLE 1</div>
+      <div class="title">先固定标签含义</div>
+      <div class="desc">
+        先想清楚什么叫 <code>negative</code>，什么叫 <code>non_negative</code>，不要一边写 prompt 一边改标准。
+      </div>
+    </div>
+    <div class="card">
+      <div class="kicker">PRINCIPLE 2</div>
+      <div class="title">再补边界规则</div>
+      <div class="desc">
+        像“早餐普通但还能接受”这种边界评论，要提前写清楚，否则模型很容易漂。
+      </div>
+    </div>
+    <div class="card">
+      <div class="kicker">PRINCIPLE 3</div>
+      <div class="title">最后组织输入结构</div>
+      <div class="desc">
+        示例、规则、当前评论怎么排，决定了模型能不能稳定复现同一套分类口径。
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
   <h2>少样本学习（Few-shot Learning）</h2>
   <p class="slide-note">继续用前面的评论二分类任务为例：few-shot 的作用，就是先拿几条已经标好 <code>negative</code> / <code>non_negative</code> 的评论，把分类口径喂给模型。</p>
   <div class="card-grid cols-3">
