@@ -289,7 +289,7 @@
   </div>
   <div class="highlight-box" style="margin-top:1em;">
     <p style="font-size:0.78em; margin:0;">今天的方法<strong>不会告诉你“正确答案”</strong><br>
-    它只会从数据里找出<strong>有用的结构</strong>——<br>
+    它只会从数据里找出<strong>有用的结构</strong>。<br>
     你负责判断这个结构对你的业务有没有意义</p>
   </div>
 </section>
@@ -449,7 +449,7 @@
       <div class="highlight-box">
         <p style="font-size:0.8em; margin:0 0 0.4em 0;"><strong>狄利克雷分布</strong>的直觉</p>
         <p style="font-size:0.7em; margin:0; line-height:1.8; color:var(--gray-700);">
-          就是描述“骰子的形状”——<br>
+          就是描述“骰子的形状”：<br>
           一篇文章里各话题比例的<strong>先验分布</strong><br><br>
           参数 α 小 → 话题集中（纯粹型文章）<br>
           参数 α 大 → 话题分散（混合型文章）
@@ -473,7 +473,7 @@
   </div>
   <div class="paper-fig">
     <img src="images/grimmer_topic_dist.png" alt="Grimmer 2010 话题分布">
-    <p class="caption">农业州议员在“农业法案”话题权重明显更高；民主党在“批评政府”话题高于共和党——<strong>模型自己发现的，无需人工标注</strong></p>
+    <p class="caption">农业州议员在“农业法案”话题权重明显更高；民主党在“批评政府”话题高于共和党。<strong>模型自己发现的，无需人工标注</strong></p>
   </div>
   <p class="paper-cite">Grimmer, J. (2010). A Bayesian hierarchical topic model for political texts. <em>Political Analysis</em>, 18(1), 1–35.</p>
 </section>
@@ -529,9 +529,9 @@ lda.fit(X)
         <p style="font-size:0.78em; margin:0 0 0.5em;"><strong>① 话题数 k 靠人设定</strong></p>
         <p style="font-size:0.68em; margin:0; color:var(--gray-700); line-height:1.6;">设 k=6 和 k=12，结果完全不同。没有“正确答案”，只有“对你有用”的答案</p>
         <p style="font-size:0.78em; margin:0.8em 0 0.4em;"><strong>② 忽略词序</strong></p>
-        <p style="font-size:0.68em; margin:0; color:var(--gray-700); line-height:1.6;">“感谢医生，不满意收费”与“不满意医生，感谢收费”被视为<strong>完全一样</strong>的文档——顺序和语气消失了</p>
+        <p style="font-size:0.68em; margin:0; color:var(--gray-700); line-height:1.6;">“感谢医生，不满意收费”与“不满意医生，感谢收费”被视为<strong>完全一样</strong>的文档，顺序和语气消失了</p>
         <p style="font-size:0.78em; margin:0.8em 0 0.4em;"><strong>③ 不理解词义</strong></p>
-        <p style="font-size:0.68em; margin:0; color:var(--gray-700); line-height:1.6;">“苹果”在科技与饮食语境被视为同一词——这是下节课词嵌入要解决的问题</p>
+        <p style="font-size:0.68em; margin:0; color:var(--gray-700); line-height:1.6;">“苹果”在科技与饮食语境被视为同一词。这是下节课词嵌入要解决的问题</p>
       </div>
     </div>
     <div class="col">
@@ -547,7 +547,7 @@ lda.fit(X)
         All models are wrong —<br>
         你的判断是让它变得 useful 的关键
       </p>
-      <p style="font-size:0.68em; color:var(--gray-600); margin-top:0.8em; font-style:italic; text-align:center;">如果你要追踪话题随时间的变化，<br>还需要对齐每次运行的话题编号——这是额外工作</p>
+      <p style="font-size:0.68em; color:var(--gray-600); margin-top:0.8em; font-style:italic; text-align:center;">如果你要追踪话题随时间的变化，<br>还需要对齐每次运行的话题编号，这是额外工作</p>
     </div>
   </div>
 </section>
@@ -602,11 +602,11 @@ lda.fit(X)
   </div>
 </section>
 
-<!-- Slide 16: 平行四边形——核心直觉 -->
+<!-- Slide 16: 平行四边形：核心直觉 -->
 <section class="paper-slide">
   <h2>一张图说清楚词嵌入</h2>
   <div class="paper-context">
-    把词画在二维语义空间里——你立刻就能“看见”关系
+    把词画在二维语义空间里，你立刻就能“看见”关系
   </div>
   <div class="paper-fig">
     <img src="images/word2vec_parallelogram.png" alt="word2vec 平行四边形直觉图">
@@ -618,23 +618,23 @@ lda.fit(X)
   </div>
 </section>
 
-<!-- Slide 17: 换场景再看——同一结构 -->
+<!-- Slide 17: 换场景再看，同一结构 -->
 <section class="paper-slide">
   <h2>换个场景，结构完全一样</h2>
   <div class="paper-context">
-    无论什么领域，只要存在“相同的关系”，向量方向就相同——这是词嵌入最强大的性质
+    无论什么领域，只要存在“相同的关系”，向量方向就相同，这是词嵌入最强大的性质
   </div>
   <div class="paper-fig">
     <img src="images/word2vec_more_examples.png" alt="更多平行四边形例子">
     <p class="caption">
       左：地理关系（首都方向）&nbsp;&nbsp;右：职业×性别关系（性别方向）<br>
-      右图的“医生−男+女≈护士”揭示了训练数据里的<strong>性别刻板印象</strong>——这正是 Garg et al. (2018) 追踪 100 年的研究对象
+      右图的“医生−男+女≈护士”揭示了训练数据里的<strong>性别刻板印象</strong>。这正是 Garg et al. (2018) 追踪 100 年的研究对象
     </p>
   </div>
   <p style="font-size:0.68em; color:var(--accent); text-align:center; margin-top:0.6em; font-style:italic;">最后那个例子让你感到意外吗？<strong>语言里还藏着哪些类似的偏见？</strong></p>
 </section>
 
-<!-- Slide 18: 算术方程——现在才出公式 -->
+<!-- Slide 18: 算术方程 -->
 <section>
   <h2>用数学写出来就是这样</h2>
   <p style="font-size:0.78em; color:var(--gray-600); margin-bottom:0.8em; text-align:center;">图里的平行四边形，用向量算术表达就是：</p>
@@ -648,7 +648,7 @@ lda.fit(X)
     <span class="blue">医生</span> <span class="gray">−</span> <span class="blue">男</span> <span class="gray">+</span> <span class="blue">女</span> <span class="gray">≈</span> <span class="blue">护士</span>
   </div>
   <div class="highlight-box" style="margin-top:1em;">
-    <p style="font-size:0.78em; margin:0;">这不是魔法——这是因为模型在训练时<strong>把相同语境下出现的词学到了相近的位置</strong>。图里的平行四边形，就是训练的结果在空间里的投影。</p>
+    <p style="font-size:0.78em; margin:0;">这是因为模型在训练时<strong>把相同语境下出现的词学到了相近的位置</strong>。图里的平行四边形，就是训练的结果在空间里的投影。</p>
   </div>
 </section>
 
@@ -666,7 +666,7 @@ lda.fit(X)
     <div class="flow-arrow accent-arrow"></div>
     <div class="flow-node">语义空间<br><span style="font-size:0.75em; color:var(--gray-500);">平行四边形自然涌现</span></div>
   </div>
-  <p style="font-size:0.72em; color:var(--gray-600); text-align:center; margin-top:0.5em;">训练完全无监督——模型从来没人告诉它“king 和 queen 的关系类似 man 和 woman”，它自己学会的</p>
+  <p style="font-size:0.72em; color:var(--gray-600); text-align:center; margin-top:0.5em;">训练完全无监督。模型从来没人告诉它“king 和 queen 的关系类似 man 和 woman”，它自己学会的</p>
 </section>
 
 <!-- Slide 19: Garg 案例 介绍 -->
@@ -763,7 +763,7 @@ lda.fit(X)
   </div>
   <div class="paper-fig">
     <img src="images/garg_ethnic_bias.png" alt="Garg et al. 族裔刻板印象趋势图">
-    <p class="caption">Asian 与“数学”的关联在 1960 年代以后才显著上升——刻板印象并非一直存在，它是历史建构的产物<br><span style="font-size:0.85em; color:var(--gray-500);">[注] 示意图：依据 Garg et al. (2018) 结论重建，趋势方向忠实于原文，具体数值为近似</span></p>
+    <p class="caption">Asian 与“数学”的关联在 1960 年代以后才显著上升。刻板印象并非一直存在，它是历史建构的产物<br><span style="font-size:0.85em; color:var(--gray-500);">[注] 示意图：依据 Garg et al. (2018) 结论重建，趋势方向忠实于原文，具体数值为近似</span></p>
   </div>
   <p class="paper-cite">Garg et al. (2018), PNAS</p>
   <p style="font-size:0.68em; color:var(--accent); text-align:center; margin-top:0.6em; font-style:italic;">你的行业里，有没有类似的刻板印象<strong>藏在数据里</strong>？</p>
@@ -836,7 +836,7 @@ model.similarity(<span class="st">"doctor"</span>, <span class="st">"apple"</spa
     <p style="font-size:0.78em; margin:0 0 0.5em;"><strong>② 刻板印象被放大</strong></p>
     <p style="font-size:0.7em; margin:0 0 0.8em; line-height:1.7; color:var(--gray-700);">如 Garg 所示：语料中有什么偏见，模型就学进什么。用词嵌入筛选简历可能系统性歧视某类群体</p>
     <p style="font-size:0.78em; margin:0 0 0.5em;"><strong>③ 专业术语效果差</strong></p>
-    <p style="font-size:0.7em; margin:0; line-height:1.7; color:var(--gray-700);">通用模型不认识“肠系膜”“窦性心律”等专业词——医疗/法律等场景需要领域专用预训练模型</p>
+    <p style="font-size:0.7em; margin:0; line-height:1.7; color:var(--gray-700);">通用模型不认识“肠系膜”“窦性心律”等专业词，医疗/法律等场景需要领域专用预训练模型</p>
   </div>
   <div class="highlight-box" style="margin-top:0.8em;">
     <p style="font-size:0.78em; margin:0;"><strong>领域知识仍不可替代</strong>：你需要判断哪些“相似”在你的场景里有意义</p>
@@ -985,7 +985,7 @@ model.similarity(<span class="st">"doctor"</span>, <span class="st">"apple"</spa
     <p style="font-size:0.72em; margin:0;"><strong>人工解读是最关键的一步</strong> — 模型找出结构，你来判断“这个话题叫什么”、“这个结果有没有意义”</p>
   </div>
   <div class="highlight-box" style="margin-top:0.6em;">
-    <p style="font-size:0.72em; margin:0;">这套流程<strong>可以无标签冷启动</strong>——但落地高风险业务（医疗、金融）仍需人工抽检和合规评估</p>
+    <p style="font-size:0.72em; margin:0;">这套流程<strong>可以无标签冷启动</strong>，落地高风险业务（医疗、金融）仍需人工抽检和合规评估</p>
   </div>
 </section>
 
