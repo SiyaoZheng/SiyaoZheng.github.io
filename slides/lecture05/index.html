@@ -578,106 +578,66 @@ lda.fit(X)
   </h2>
 </section>
 
-<!-- Slide 15: 问题引入 -->
+<!-- Slide 15: 问题引入（简化版） -->
 <section>
-  <h2>LDA 之后，剩下的问题</h2>
+  <h2>LDA 留下了一个缺口</h2>
   <div class="vs-layout" style="margin-top:1.2em;">
     <div class="vs-panel left">
-      <h3>LDA 的处理方式</h3>
+      <h3>LDA 对词的认知</h3>
       <div class="vs-items">
-        "医院"和"医生"是两个无关的词<br>
-        "苹果"不知道是水果还是品牌<br>
-        词与词之间没有关系
+        "医院"和"医生"= 两个无关符号<br>
+        "苹果"（水果）和"苹果"（品牌）= 完全相同<br>
+        词与词之间<strong>没有距离、没有关系</strong>
       </div>
     </div>
     <div class="vs-divider">→</div>
     <div class="vs-panel right">
-      <h3>我们真正想要的</h3>
+      <h3>我们想要的</h3>
       <div class="vs-items">
-        "医院"和"医生"应该很相近<br>
-        "国王"减"男"加"女"= "女王"<br>
-        让机器<strong>理解词的含义</strong>
-      </div>
-    </div>
-  </div>
-  <div class="highlight-box" style="margin-top:1em;">
-    <p style="font-size:0.8em; margin:0;"><strong>词嵌入的核心思想</strong>：把每个词变成一个向量（一排数字），让语义相近的词在空间中靠得更近</p>
-  </div>
-</section>
-
-<!-- Slide 16: 词是向量 直觉 -->
-<section>
-  <h2>词是向量是什么意思？</h2>
-  <div class="cols" style="margin-top:1em; align-items:center; gap:2.5em;">
-    <div class="col">
-      <p style="font-size:0.75em; color:var(--gray-700);">把每个词想成一张"地图上的坐标"：</p>
-      <div class="highlight-box" style="margin-top:0.8em;">
-        <p style="font-size:0.7em; margin:0; line-height:1.9; font-family:'JetBrains Mono', monospace;">
-          医生  → [0.82, 0.91, 0.23, ...]<br>
-          护士  → [0.79, 0.88, 0.25, ...]<br>
-          律师  → [0.45, 0.92, 0.67, ...]<br>
-          苹果  → [0.12, 0.08, 0.94, ...]<br>
-          橘子  → [0.11, 0.06, 0.95, ...]
-        </p>
-      </div>
-      <p style="font-size:0.65em; color:var(--gray-600); margin-top:0.6em;">
-        维度通常是 100~300 维<br>
-        每一维捕捉语义的某个方面
-      </p>
-    </div>
-    <div class="col">
-      <div class="highlight-box">
-        <p style="font-size:0.8em; margin:0 0 0.5em 0;"><strong>夹角越小 = 语义越相近</strong></p>
-        <p style="font-size:0.72em; margin:0; line-height:1.8; color:var(--gray-700);">
-          医生 ↔ 护士 → 方向相近，相似度高<br>
-          医生 ↔ 苹果 → 方向差异大，相似度低<br>
-          苹果 ↔ 橘子 → 方向相近，相似度高<br><br>
-          <strong>相似的用法 → 相近的向量方向</strong><br>
-          <span style="font-size:0.85em; color:var(--gray-500);">（技术上用余弦相似度，不是直线距离）</span>
-        </p>
+        语义相近的词，在空间中<strong>靠得更近</strong><br>
+        语义关系可以<strong>计算、可以测量</strong><br>
+        词嵌入：把每个词变成一个向量
       </div>
     </div>
   </div>
 </section>
 
-<!-- Slide 17: Word2Vec 怎么训练 -->
-<section>
-  <h2>模型怎么"学会"词的意思？</h2>
-  <div class="highlight-box" style="margin-top:0.8em;">
-    <p style="font-size:0.82em; margin:0 0 0.3em;"><strong>Word2Vec 的核心任务（CBOW 架构）</strong></p>
-    <p style="font-size:0.75em; margin:0; color:var(--gray-700);">给定一个词的<strong>上下文（周围词）</strong>，预测这个词本身——反复做这个任务，词向量就学好了</p>
+<!-- Slide 16: 平行四边形——核心直觉 -->
+<section class="paper-slide">
+  <h2>一张图说清楚词嵌入</h2>
+  <div class="paper-context">
+    把词画在二维语义空间里——你立刻就能"看见"关系
   </div>
-  <div class="flow" style="margin:1.2em 0;">
-    <div class="flow-node">大量原始文本<br><span style="font-size:0.75em; color:var(--gray-500);">无需标注</span></div>
-    <div class="flow-arrow accent-arrow"></div>
-    <div class="flow-node accent">给出上下文<br><span style="font-size:0.75em;">预测空缺词</span></div>
-    <div class="flow-arrow accent-arrow"></div>
-    <div class="flow-node">词向量<br><span style="font-size:0.75em; color:var(--gray-500);">捕捉语义</span></div>
-  </div>
-  <div class="cols" style="margin-top:0.8em;">
-    <div class="col">
-      <div class="highlight-box">
-        <p style="font-size:0.7em; margin:0; line-height:1.8; color:var(--gray-700);">
-          "患者 <strong>[?]</strong> 反映 床位 紧张"<br>
-          → 根据前后词，预测 [?] 是"家属"？"代表"？<br>
-          → 反复练习数十亿次，向量逐渐收敛
-        </p>
-      </div>
-    </div>
-    <div class="col">
-      <p style="font-size:0.68em; color:var(--gray-600); line-height:1.7; margin-top:0.3em;">
-        上百亿词的文本 + 不断迭代<br>
-        → 模型"读"出了语言的规律<br>
-        → <strong>训练完全无监督</strong>，不需要任何标签
-      </p>
-    </div>
+  <div class="paper-fig">
+    <img src="images/word2vec_parallelogram.png" alt="word2vec 平行四边形直觉图">
+    <p class="caption">
+      红色箭头（性别方向）：man→woman 与 king→queen <strong>完全平行、完全等长</strong><br>
+      绿色箭头（皇室方向）：man→king 与 woman→queen <strong>完全平行、完全等长</strong><br>
+      <strong>核心洞见：相同的语义关系 = 相同的向量方向</strong>
+    </p>
   </div>
 </section>
 
-<!-- Slide 18: 神奇类比 king - man + woman = queen -->
+<!-- Slide 17: 换场景再看——同一结构 -->
+<section class="paper-slide">
+  <h2>换个场景，结构完全一样</h2>
+  <div class="paper-context">
+    无论什么领域，只要存在"相同的关系"，向量方向就相同——这是词嵌入最强大的性质
+  </div>
+  <div class="paper-fig">
+    <img src="images/word2vec_more_examples.png" alt="更多平行四边形例子">
+    <p class="caption">
+      左：地理关系（首都方向）&nbsp;&nbsp;右：职业×性别关系（性别方向）<br>
+      右图的"医生−男+女≈护士"揭示了训练数据里的<strong>性别刻板印象</strong>——这正是 Garg et al. (2018) 追踪 100 年的研究对象
+    </p>
+  </div>
+  <p style="font-size:0.68em; color:var(--accent); text-align:center; margin-top:0.6em; font-style:italic;">💬 最后那个例子让你感到意外吗？<strong>语言里还藏着哪些类似的偏见？</strong></p>
+</section>
+
+<!-- Slide 18: 算术方程——现在才出公式 -->
 <section>
-  <h2>词向量最神奇的发现</h2>
-  <p style="font-size:0.75em; color:var(--gray-600); margin-bottom:0.8em;">向量之间可以做算术——语义关系变成了数字关系</p>
+  <h2>用数学写出来就是这样</h2>
+  <p style="font-size:0.78em; color:var(--gray-600); margin-bottom:0.8em; text-align:center;">图里的平行四边形，用向量算术表达就是：</p>
   <div class="analogy-eq">
     <span class="blue">king</span> <span class="gray">−</span> <span class="blue">man</span> <span class="gray">+</span> <span class="blue">woman</span> <span class="gray">≈</span> <span class="blue">queen</span>
   </div>
@@ -687,10 +647,26 @@ lda.fit(X)
   <div class="analogy-eq" style="margin-top:0.4em;">
     <span class="blue">医生</span> <span class="gray">−</span> <span class="blue">男</span> <span class="gray">+</span> <span class="blue">女</span> <span class="gray">≈</span> <span class="blue">护士</span>
   </div>
-  <div class="warning-box" style="margin-top:1em;">
-    <p style="font-size:0.72em; margin:0;">最后一个例子揭示了一个<strong>社会偏见</strong>——模型从大量文本中学习，也学进了人类的刻板印象。这正是 Garg et al. (2018) 的核心研究问题。</p>
+  <div class="highlight-box" style="margin-top:1em;">
+    <p style="font-size:0.78em; margin:0;">这不是魔法——这是因为模型在训练时<strong>把相同语境下出现的词学到了相近的位置</strong>。图里的平行四边形，就是训练的结果在空间里的投影。</p>
   </div>
-  <p style="font-size:0.68em; color:var(--accent); text-align:center; margin-top:0.8em; font-style:italic;">💬 最后那个例子让你感到意外吗？<strong>为什么"医生 − 男 + 女 ≈ 护士"？</strong></p>
+</section>
+
+<!-- Slide 19: 模型怎么训练（压缩版） -->
+<section>
+  <h2>模型怎么学会这个空间？</h2>
+  <div class="highlight-box" style="margin-top:0.8em;">
+    <p style="font-size:0.82em; margin:0 0 0.3em;"><strong>Word2Vec（CBOW）：给定上下文，预测空缺词</strong></p>
+    <p style="font-size:0.75em; margin:0; color:var(--gray-700);">"患者 <strong>[?]</strong> 反映 床位 紧张" → 预测 [?] → 反复数十亿次 → 空间逐渐成形</p>
+  </div>
+  <div class="flow" style="margin:1.2em 0;">
+    <div class="flow-node">海量文本<br><span style="font-size:0.75em; color:var(--gray-500);">无需标注</span></div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node accent">预测上下文<br><span style="font-size:0.75em;">反复迭代</span></div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node">语义空间<br><span style="font-size:0.75em; color:var(--gray-500);">平行四边形自然涌现</span></div>
+  </div>
+  <p style="font-size:0.72em; color:var(--gray-600); text-align:center; margin-top:0.5em;">训练完全无监督——模型从来没人告诉它"king 和 queen 的关系类似 man 和 woman"，它自己学会的</p>
 </section>
 
 <!-- Slide 19: Garg 案例 介绍 -->
