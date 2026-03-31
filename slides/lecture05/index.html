@@ -284,11 +284,11 @@
 <section>
   <h2>一个贯穿本课的信念</h2>
   <div class="quote-box" style="margin-top:1.2em;">
-    <p class="quote-text">"All models are wrong,<br>but some are useful."</p>
+    <p class="quote-text">“All models are wrong,<br>but some are useful.“</p>
     <p class="quote-source">— George Box，统计学家，1976</p>
   </div>
   <div class="highlight-box" style="margin-top:1em;">
-    <p style="font-size:0.78em; margin:0;">今天的方法<strong>不会告诉你"正确答案"</strong><br>
+    <p style="font-size:0.78em; margin:0;">今天的方法<strong>不会告诉你“正确答案”</strong><br>
     它只会从数据里找出<strong>有用的结构</strong>——<br>
     你负责判断这个结构对你的业务有没有意义</p>
   </div>
@@ -302,7 +302,7 @@
       <h3>有监督学习<span class="tag gray">第四课</span></h3>
       <div class="vs-items">
         需要大量标注样本<br>
-        "好的内容"由人来定义<br>
+        “好的内容”由人来定义<br>
         标注成本高、覆盖有限
       </div>
     </div>
@@ -326,17 +326,17 @@
   <h2>今天的路线图</h2>
   <div class="card-grid cols-3" style="margin-top:1.2em;">
     <div class="card">
-      <div class="card-icon">🗂️</div>
+      <div class="card-icon" style="font-size:1.6em; font-weight:700; color:var(--accent);">LDA</div>
       <div class="card-label">Part 1</div>
       <div class="card-desc">主题模型 LDA<br><span style="color:var(--gray-400); font-size:0.85em;">文档里藏着什么话题？</span></div>
     </div>
     <div class="card accent-card">
-      <div class="card-icon">📍</div>
+      <div class="card-icon" style="font-size:1.6em; font-weight:700; color:var(--accent);">向量</div>
       <div class="card-label">Part 2</div>
       <div class="card-desc">词嵌入<br><span style="color:var(--gray-600); font-size:0.85em;">词是向量，语义是距离</span></div>
     </div>
     <div class="card">
-      <div class="card-icon">💡</div>
+      <div class="card-icon" style="font-size:1.6em; font-weight:700; color:var(--accent);">应用</div>
       <div class="card-label">Part 3</div>
       <div class="card-desc">行业应用设计<br><span style="color:var(--gray-400); font-size:0.85em;">你能用这些做什么？</span></div>
     </div>
@@ -413,7 +413,7 @@
         </p>
       </div>
       <p style="font-size:0.65em; color:var(--gray-600); margin-top:0.8em; text-align:center;">
-        模型不知道"医疗"这个名字<br>
+        模型不知道“医疗”这个名字<br>
         <strong>你读到词就知道了</strong>
       </p>
     </div>
@@ -425,7 +425,7 @@
   <h2>LDA 的核心机制：掷骰子</h2>
   <div class="cols" style="margin-top:1em; gap:2.5em;">
     <div class="col">
-      <p style="font-size:0.75em; color:var(--gray-700);">每篇文章都像一个人，口袋里揣着几枚"话题骰子"：</p>
+      <p style="font-size:0.75em; color:var(--gray-700);">每篇文章都像一个人，口袋里揣着几枚“话题骰子”：</p>
       <div class="prob-bar-wrap" style="margin-top:0.8em;">
         <div class="prob-bar-label">某篇政务微博</div>
         <div style="display:flex; gap:0.5em; margin-top:0.4em;">
@@ -443,13 +443,13 @@
           </div>
         </div>
       </div>
-      <p style="font-size:0.65em; color:var(--gray-600); margin-top:0.6em;">每一个词，都是"掷骰子"决定来自哪个话题</p>
+      <p style="font-size:0.65em; color:var(--gray-600); margin-top:0.6em;">每一个词，都是“掷骰子”决定来自哪个话题</p>
     </div>
     <div class="col">
       <div class="highlight-box">
         <p style="font-size:0.8em; margin:0 0 0.4em 0;"><strong>狄利克雷分布</strong>的直觉</p>
         <p style="font-size:0.7em; margin:0; line-height:1.8; color:var(--gray-700);">
-          就是描述"骰子的形状"——<br>
+          就是描述“骰子的形状”——<br>
           一篇文章里各话题比例的<strong>先验分布</strong><br><br>
           参数 α 小 → 话题集中（纯粹型文章）<br>
           参数 α 大 → 话题分散（混合型文章）
@@ -460,7 +460,7 @@
       </p>
     </div>
   </div>
-  <p style="font-size:0.68em; color:var(--accent); text-align:center; margin-top:1em; font-style:italic;">💬 想想看：如果你的工作文本有 6 个话题，<strong>第 7 个话题会是什么？</strong></p>
+  <p style="font-size:0.68em; color:var(--accent); text-align:center; margin-top:1em; font-style:italic;">想想看：如果你的工作文本有 6 个话题，<strong>第 7 个话题会是什么？</strong></p>
 </section>
 
 <!-- Slide 9: Grimmer 案例 -->
@@ -473,7 +473,7 @@
   </div>
   <div class="paper-fig">
     <img src="images/grimmer_topic_dist.png" alt="Grimmer 2010 话题分布">
-    <p class="caption">农业州议员在"农业法案"话题权重明显更高；民主党在"批评政府"话题高于共和党——<strong>模型自己发现的，无需人工标注</strong></p>
+    <p class="caption">农业州议员在“农业法案”话题权重明显更高；民主党在“批评政府”话题高于共和党——<strong>模型自己发现的，无需人工标注</strong></p>
   </div>
   <p class="paper-cite">Grimmer, J. (2010). A Bayesian hierarchical topic model for political texts. <em>Political Analysis</em>, 18(1), 1–35.</p>
 </section>
@@ -496,7 +496,7 @@ vectorizer = CountVectorizer(max_df=<span class="num">0.9</span>, min_df=<span c
 X = vectorizer.fit_transform(texts)         <span class="cm"># texts = 分词后的字符串列表</span>
 vocab = vectorizer.get_feature_names_out()
 
-<span class="cm"># 2. 训练 LDA，指定话题数 k — ⚠ k 由你来定，模型无法自行决定最佳值</span>
+<span class="cm"># 2. 训练 LDA，指定话题数 k — [注] k 由你来定，模型无法自行决定最佳值</span>
 lda = LatentDirichletAllocation(n_components=<span class="num">4</span>, random_state=<span class="num">42</span>)
 lda.fit(X)
 
@@ -514,7 +514,7 @@ lda.fit(X)
   </div>
   <div class="paper-fig">
     <img src="images/lda_topic_words.png" alt="LDA话题词图">
-    <p class="caption">话题1（医生/住院/患者/手术）→ 你命名为"医疗"｜话题4（检测/下架/抽检/超市）→ 你命名为"食品安全"<br>
+    <p class="caption">话题1（医生/住院/患者/手术）→ 你命名为“医疗”｜话题4（检测/下架/抽检/超市）→ 你命名为“食品安全”<br>
     模型自动发现了这 4 个结构，<strong>命名工作由你来完成</strong></p>
   </div>
   <p class="paper-cite">使用 sklearn.decomposition.LatentDirichletAllocation，n_components=4，random_state=42</p>
@@ -527,11 +527,11 @@ lda.fit(X)
     <div class="col">
       <div class="warning-box">
         <p style="font-size:0.78em; margin:0 0 0.5em;"><strong>① 话题数 k 靠人设定</strong></p>
-        <p style="font-size:0.68em; margin:0; color:var(--gray-700); line-height:1.6;">设 k=6 和 k=12，结果完全不同。没有"正确答案"，只有"对你有用"的答案</p>
+        <p style="font-size:0.68em; margin:0; color:var(--gray-700); line-height:1.6;">设 k=6 和 k=12，结果完全不同。没有“正确答案”，只有“对你有用”的答案</p>
         <p style="font-size:0.78em; margin:0.8em 0 0.4em;"><strong>② 忽略词序</strong></p>
-        <p style="font-size:0.68em; margin:0; color:var(--gray-700); line-height:1.6;">"感谢医生，不满意收费"与"不满意医生，感谢收费"被视为<strong>完全一样</strong>的文档——顺序和语气消失了</p>
+        <p style="font-size:0.68em; margin:0; color:var(--gray-700); line-height:1.6;">“感谢医生，不满意收费”与“不满意医生，感谢收费”被视为<strong>完全一样</strong>的文档——顺序和语气消失了</p>
         <p style="font-size:0.78em; margin:0.8em 0 0.4em;"><strong>③ 不理解词义</strong></p>
-        <p style="font-size:0.68em; margin:0; color:var(--gray-700); line-height:1.6;">"苹果"在科技与饮食语境被视为同一词——这是下节课词嵌入要解决的问题</p>
+        <p style="font-size:0.68em; margin:0; color:var(--gray-700); line-height:1.6;">“苹果”在科技与饮食语境被视为同一词——这是下节课词嵌入要解决的问题</p>
       </div>
     </div>
     <div class="col">
@@ -539,7 +539,7 @@ lda.fit(X)
         <p style="font-size:0.78em; margin:0 0 0.4em;"><strong>解读必须靠领域知识</strong></p>
         <p style="font-size:0.68em; margin:0; color:var(--gray-700); line-height:1.6;">
           模型输出一堆词<br>
-          <strong>你才知道</strong>这个话题叫"医疗投诉"还是"卫生监管"<br><br>
+          <strong>你才知道</strong>这个话题叫“医疗投诉”还是“卫生监管”<br><br>
           没有领域知识，模型是失效的
         </p>
       </div>
@@ -559,7 +559,7 @@ lda.fit(X)
     <p class="main-text">LDA：从一堆文本里<br>自动找出话题结构</p>
     <p class="sub-text">
       不需要标签，不需要预设分类<br>
-      输入文本 → 输出"哪些词属于哪些话题"<br>
+      输入文本 → 输出“哪些词属于哪些话题”<br>
       <strong>你来解读，你来命名</strong>
     </p>
     <p class="hint">PART 2 → 如果词本身也能变成数字，会发生什么？</p>
@@ -585,8 +585,8 @@ lda.fit(X)
     <div class="vs-panel left">
       <h3>LDA 对词的认知</h3>
       <div class="vs-items">
-        "医院"和"医生"= 两个无关符号<br>
-        "苹果"（水果）和"苹果"（品牌）= 完全相同<br>
+        “医院”和“医生”= 两个无关符号<br>
+        “苹果”（水果）和“苹果”（品牌）= 完全相同<br>
         词与词之间<strong>没有距离、没有关系</strong>
       </div>
     </div>
@@ -606,7 +606,7 @@ lda.fit(X)
 <section class="paper-slide">
   <h2>一张图说清楚词嵌入</h2>
   <div class="paper-context">
-    把词画在二维语义空间里——你立刻就能"看见"关系
+    把词画在二维语义空间里——你立刻就能“看见”关系
   </div>
   <div class="paper-fig">
     <img src="images/word2vec_parallelogram.png" alt="word2vec 平行四边形直觉图">
@@ -622,16 +622,16 @@ lda.fit(X)
 <section class="paper-slide">
   <h2>换个场景，结构完全一样</h2>
   <div class="paper-context">
-    无论什么领域，只要存在"相同的关系"，向量方向就相同——这是词嵌入最强大的性质
+    无论什么领域，只要存在“相同的关系”，向量方向就相同——这是词嵌入最强大的性质
   </div>
   <div class="paper-fig">
     <img src="images/word2vec_more_examples.png" alt="更多平行四边形例子">
     <p class="caption">
       左：地理关系（首都方向）&nbsp;&nbsp;右：职业×性别关系（性别方向）<br>
-      右图的"医生−男+女≈护士"揭示了训练数据里的<strong>性别刻板印象</strong>——这正是 Garg et al. (2018) 追踪 100 年的研究对象
+      右图的“医生−男+女≈护士”揭示了训练数据里的<strong>性别刻板印象</strong>——这正是 Garg et al. (2018) 追踪 100 年的研究对象
     </p>
   </div>
-  <p style="font-size:0.68em; color:var(--accent); text-align:center; margin-top:0.6em; font-style:italic;">💬 最后那个例子让你感到意外吗？<strong>语言里还藏着哪些类似的偏见？</strong></p>
+  <p style="font-size:0.68em; color:var(--accent); text-align:center; margin-top:0.6em; font-style:italic;">最后那个例子让你感到意外吗？<strong>语言里还藏着哪些类似的偏见？</strong></p>
 </section>
 
 <!-- Slide 18: 算术方程——现在才出公式 -->
@@ -657,7 +657,7 @@ lda.fit(X)
   <h2>模型怎么学会这个空间？</h2>
   <div class="highlight-box" style="margin-top:0.8em;">
     <p style="font-size:0.82em; margin:0 0 0.3em;"><strong>Word2Vec（CBOW）：给定上下文，预测空缺词</strong></p>
-    <p style="font-size:0.75em; margin:0; color:var(--gray-700);">"患者 <strong>[?]</strong> 反映 床位 紧张" → 预测 [?] → 反复数十亿次 → 空间逐渐成形</p>
+    <p style="font-size:0.75em; margin:0; color:var(--gray-700);">“患者 <strong>[?]</strong> 反映 床位 紧张“ → 预测 [?] → 反复数十亿次 → 空间逐渐成形</p>
   </div>
   <div class="flow" style="margin:1.2em 0;">
     <div class="flow-node">海量文本<br><span style="font-size:0.75em; color:var(--gray-500);">无需标注</span></div>
@@ -666,7 +666,7 @@ lda.fit(X)
     <div class="flow-arrow accent-arrow"></div>
     <div class="flow-node">语义空间<br><span style="font-size:0.75em; color:var(--gray-500);">平行四边形自然涌现</span></div>
   </div>
-  <p style="font-size:0.72em; color:var(--gray-600); text-align:center; margin-top:0.5em;">训练完全无监督——模型从来没人告诉它"king 和 queen 的关系类似 man 和 woman"，它自己学会的</p>
+  <p style="font-size:0.72em; color:var(--gray-600); text-align:center; margin-top:0.5em;">训练完全无监督——模型从来没人告诉它“king 和 queen 的关系类似 man 和 woman”，它自己学会的</p>
 </section>
 
 <!-- Slide 19: Garg 案例 介绍 -->
@@ -682,7 +682,7 @@ lda.fit(X)
       <div class="highlight-box">
         <p style="font-size:0.75em; margin:0 0 0.4em;"><strong>核心方法</strong></p>
         <p style="font-size:0.68em; margin:0; line-height:1.8; color:var(--gray-700);">
-          1. 构建"性别轴"：male 词 vs female 词的向量差<br>
+          1. 构建“性别轴”：male 词 vs female 词的向量差<br>
           2. 计算职业词（如 doctor, nurse, engineer）在这个轴上的投影<br>
           3. 看投影如何在 1900–2000 年间变化
         </p>
@@ -692,9 +692,9 @@ lda.fit(X)
       <div class="highlight-box">
         <p style="font-size:0.75em; margin:0 0 0.4em;"><strong>发现</strong></p>
         <p style="font-size:0.68em; margin:0; line-height:1.8; color:var(--gray-700);">
-          1960 年代前：doctor 强烈偏向"男性"<br>
+          1960 年代前：doctor 强烈偏向“男性”<br>
           二战后：职业词的性别偏见逐渐减弱<br>
-          亚裔相关词：与"数学"关联在近代才出现<br>
+          亚裔相关词：与“数学”关联在近代才出现<br>
           <strong>刻板印象在词向量里留下了历史痕迹</strong>
         </p>
       </div>
@@ -707,12 +707,12 @@ lda.fit(X)
 <section class="paper-slide">
   <h2>图表解读：职业词的性别偏见如何变化</h2>
   <div class="paper-context">
-    横轴 = 年代（1900–2000）&nbsp;|&nbsp; 纵轴 = 职业词在"男性-女性"语义轴上的偏移方向<br>
-    越靠近正值 = 越偏向"男性职业"，越靠近负值 = 越偏向"女性职业"
+    横轴 = 年代（1900–2000）&nbsp;|&nbsp; 纵轴 = 职业词在“男性-女性”语义轴上的偏移方向<br>
+    越靠近正值 = 越偏向“男性职业”，越靠近负值 = 越偏向“女性职业”
   </div>
   <div class="paper-fig">
     <img src="images/garg_gender_drift.png" alt="Garg et al. 职业词性别偏见趋势图">
-    <p class="caption">1960 年代以前，几乎所有"高技能职业"词都偏向男性；二战后 doctor 的男性偏见显著收窄，但 housekeeper 的女性化关联在部分时期仍维持或加强<br><span style="font-size:0.85em; color:var(--gray-500);">⚠ 示意图：数据依据 Garg et al. (2018) 图1公布数值重建，非原图</span></p>
+    <p class="caption">1960 年代以前，几乎所有“高技能职业”词都偏向男性；二战后 doctor 的男性偏见显著收窄，但 housekeeper 的女性化关联在部分时期仍维持或加强<br><span style="font-size:0.85em; color:var(--gray-500);">[注] 示意图：数据依据 Garg et al. (2018) 图1公布数值重建，非原图</span></p>
   </div>
   <p class="paper-cite">Garg et al. (2018), PNAS</p>
 </section>
@@ -721,7 +721,7 @@ lda.fit(X)
 <section class="paper-slide">
   <h2>图表解读：最近邻居如何随时代变化</h2>
   <div class="paper-context">
-    <strong>示例词：doctor</strong> — 1900 年代 vs 1990 年代，词向量空间里"最近的邻居"是谁？
+    <strong>示例词：doctor</strong> — 1900 年代 vs 1990 年代，词向量空间里“最近的邻居”是谁？
   </div>
   <div class="cols" style="margin-top:1em;">
     <div class="col">
@@ -752,21 +752,21 @@ lda.fit(X)
   <div class="highlight-box" style="margin-top:0.8em;">
     <p style="font-size:0.72em; margin:0;"><strong>社会变迁在语言里留下了痕迹</strong> — 词嵌入把这些痕迹变成了可量化的数字</p>
   </div>
-  <p style="font-size:0.55em; color:var(--gray-500); text-align:center; margin-top:0.4em;">⚠ 示意输出：最近邻词和相似度数值为教学示意，参考 Garg et al. (2018) Table 1 的定性规律</p>
+  <p style="font-size:0.55em; color:var(--gray-500); text-align:center; margin-top:0.4em;">[注] 示意输出：最近邻词和相似度数值为教学示意，参考 Garg et al. (2018) Table 1 的定性规律</p>
 </section>
 
 <!-- Slide 22: Garg 族裔偏见趋势 -->
 <section class="paper-slide">
   <h2>图表解读：族裔刻板印象的百年变迁</h2>
   <div class="paper-context">
-    用同样的方法追踪族裔偏见：Asian 与"数学"的关联度、Jewish 与"商业"的关联度、Black 与"贫困"的关联度随年代的变化
+    用同样的方法追踪族裔偏见：Asian 与“数学”的关联度、Jewish 与“商业”的关联度、Black 与“贫困”的关联度随年代的变化
   </div>
   <div class="paper-fig">
     <img src="images/garg_ethnic_bias.png" alt="Garg et al. 族裔刻板印象趋势图">
-    <p class="caption">Asian 与"数学"的关联在 1960 年代以后才显著上升——刻板印象并非一直存在，它是历史建构的产物<br><span style="font-size:0.85em; color:var(--gray-500);">⚠ 示意图：依据 Garg et al. (2018) 结论重建，趋势方向忠实于原文，具体数值为近似</span></p>
+    <p class="caption">Asian 与“数学”的关联在 1960 年代以后才显著上升——刻板印象并非一直存在，它是历史建构的产物<br><span style="font-size:0.85em; color:var(--gray-500);">[注] 示意图：依据 Garg et al. (2018) 结论重建，趋势方向忠实于原文，具体数值为近似</span></p>
   </div>
   <p class="paper-cite">Garg et al. (2018), PNAS</p>
-  <p style="font-size:0.68em; color:var(--accent); text-align:center; margin-top:0.6em; font-style:italic;">💬 你的行业里，有没有类似的刻板印象<strong>藏在数据里</strong>？</p>
+  <p style="font-size:0.68em; color:var(--accent); text-align:center; margin-top:0.6em; font-style:italic;">你的行业里，有没有类似的刻板印象<strong>藏在数据里</strong>？</p>
 </section>
 
 <!-- Slide 23: 实操：gensim 词嵌入 -->
@@ -804,24 +804,24 @@ model.similarity(<span class="st">"doctor"</span>, <span class="st">"apple"</spa
   <h2>词嵌入的可视化：t-SNE</h2>
   <div class="cols" style="margin-top:0.8em; align-items:flex-start;">
     <div class="col-40">
-    <p style="font-size:0.72em; margin:0;">把高维词向量（如 50 维或 300 维）压缩到 2 维，让你能"看见"语义空间：</p>
+    <p style="font-size:0.72em; margin:0;">把高维词向量（如 50 维或 300 维）压缩到 2 维，让你能“看见”语义空间：</p>
       <div class="highlight-box" style="margin-top:0.8em;">
         <p style="font-size:0.68em; margin:0; line-height:1.8; color:var(--gray-700);">
           医疗类词聚在一起<br>
           政治类词聚在一起<br>
           数字类词聚在一起<br><br>
-          <strong>相似的词自动形成"星座"</strong>
+          <strong>相似的词自动形成“星座”</strong>
         </p>
       </div>
       <p style="font-size:0.62em; color:var(--gray-500); margin-top:0.8em;">
-        t-SNE 只是用来"看"的<br>
+        t-SNE 只是用来“看”的<br>
         真正的语义是在高维空间里
       </p>
     </div>
     <div class="col-60">
       <div class="paper-fig" style="min-height:280px;">
         <img src="images/tsne_word_embeddings.png" alt="词嵌入 t-SNE 可视化">
-        <p class="caption">t-SNE 把 300 维词向量降到 2 维，语义相近的词聚在一起<br><span style="font-size:0.85em; color:var(--gray-500);">⚠ 示意图：基于合成向量生成，展示 t-SNE 聚类原理，非预训练模型实际输出</span></p>
+        <p class="caption">t-SNE 把 300 维词向量降到 2 维，语义相近的词聚在一起<br><span style="font-size:0.85em; color:var(--gray-500);">[注] 示意图：基于合成向量生成，展示 t-SNE 聚类原理，非预训练模型实际输出</span></p>
       </div>
     </div>
   </div>
@@ -832,14 +832,14 @@ model.similarity(<span class="st">"doctor"</span>, <span class="st">"apple"</spa
   <h2>词嵌入的核心局限</h2>
   <div class="warning-box" style="margin-top:1em;">
     <p style="font-size:0.78em; margin:0 0 0.5em;"><strong>① 一词一义：无法处理多义词</strong></p>
-    <p style="font-size:0.7em; margin:0 0 0.8em; line-height:1.7; color:var(--gray-700);">"苹果"在 Word2Vec 里只有一个向量，但在"苹果公司发布会"和"苹果树上结满苹果"里含义完全不同</p>
+    <p style="font-size:0.7em; margin:0 0 0.8em; line-height:1.7; color:var(--gray-700);">“苹果”在 Word2Vec 里只有一个向量，但在“苹果公司发布会”和“苹果树上结满苹果”里含义完全不同</p>
     <p style="font-size:0.78em; margin:0 0 0.5em;"><strong>② 刻板印象被放大</strong></p>
     <p style="font-size:0.7em; margin:0 0 0.8em; line-height:1.7; color:var(--gray-700);">如 Garg 所示：语料中有什么偏见，模型就学进什么。用词嵌入筛选简历可能系统性歧视某类群体</p>
     <p style="font-size:0.78em; margin:0 0 0.5em;"><strong>③ 专业术语效果差</strong></p>
-    <p style="font-size:0.7em; margin:0; line-height:1.7; color:var(--gray-700);">通用模型不认识"肠系膜""窦性心律"等专业词——医疗/法律等场景需要领域专用预训练模型</p>
+    <p style="font-size:0.7em; margin:0; line-height:1.7; color:var(--gray-700);">通用模型不认识“肠系膜”“窦性心律”等专业词——医疗/法律等场景需要领域专用预训练模型</p>
   </div>
   <div class="highlight-box" style="margin-top:0.8em;">
-    <p style="font-size:0.78em; margin:0;"><strong>领域知识仍不可替代</strong>：你需要判断哪些"相似"在你的场景里有意义</p>
+    <p style="font-size:0.78em; margin:0;"><strong>领域知识仍不可替代</strong>：你需要判断哪些“相似”在你的场景里有意义</p>
   </div>
 </section>
 
@@ -914,8 +914,8 @@ model.similarity(<span class="st">"doctor"</span>, <span class="st">"apple"</spa
       <div class="ic-sector">词嵌入应用</div>
       <div class="ic-task">构建医疗领域语义搜索</div>
       <div class="ic-method">
-        患者输入"肚子痛"<br>
-        系统自动匹配"腹痛、消化道、胃部不适"等相关词<br>
+        患者输入“肚子痛”<br>
+        系统自动匹配“腹痛、消化道、胃部不适”等相关词<br>
         提升病历检索和导诊准确率
       </div>
     </div>
@@ -923,7 +923,7 @@ model.similarity(<span class="st">"doctor"</span>, <span class="st">"apple"</spa
       <div class="ic-sector">结合使用</div>
       <div class="ic-task">监测不良事件报告的话题漂移</div>
       <div class="ic-method">
-        词嵌入捕捉"疫苗""副作用"等词的语义<br>
+        词嵌入捕捉“疫苗”“副作用”等词的语义<br>
         LDA 追踪不同时期报告的话题分布变化
       </div>
     </div>
@@ -931,7 +931,7 @@ model.similarity(<span class="st">"doctor"</span>, <span class="st">"apple"</spa
       <div class="ic-sector">注意事项</div>
       <div class="ic-task">需要领域词表支撑</div>
       <div class="ic-method">
-        通用词向量不懂"肠系膜""窦性心律"<br>
+        通用词向量不懂“肠系膜”“窦性心律”<br>
         最好训练<strong>领域专用词向量</strong>，或使用医疗预训练模型
       </div>
     </div>
@@ -950,7 +950,7 @@ model.similarity(<span class="st">"doctor"</span>, <span class="st">"apple"</spa
     <div class="industry-card">
       <div class="ic-sector">政府</div>
       <div class="ic-task">政策文本语义搜索</div>
-      <div class="ic-method">词嵌入让工作人员用自然语言检索相关政策，"民生保障"能匹配到"低保"、"救助"、"补贴"等相关文件</div>
+      <div class="ic-method">词嵌入让工作人员用自然语言检索相关政策，“民生保障”能匹配到“低保”、“救助”、“补贴”等相关文件</div>
     </div>
     <div class="industry-card">
       <div class="ic-sector">金融</div>
@@ -960,7 +960,7 @@ model.similarity(<span class="st">"doctor"</span>, <span class="st">"apple"</spa
     <div class="industry-card">
       <div class="ic-sector">教育</div>
       <div class="ic-task">课程评价质量分析</div>
-      <div class="ic-method">LDA 从学生课程评价中提取核心投诉话题；词嵌入辅助识别"难度大""听不懂""进度太快"等同义表达</div>
+      <div class="ic-method">LDA 从学生课程评价中提取核心投诉话题；词嵌入辅助识别“难度大”“听不懂”“进度太快”等同义表达</div>
     </div>
   </div>
 </section>
@@ -982,7 +982,7 @@ model.similarity(<span class="st">"doctor"</span>, <span class="st">"apple"</spa
     <div class="flow-node outline" style="min-width:105px; font-size:0.68em; padding:0.7em 0.8em;">业务决策<br><span style="color:var(--accent);">资源/策略</span></div>
   </div>
   <div class="warning-box" style="margin-top:0.5em;">
-    <p style="font-size:0.72em; margin:0;"><strong>人工解读是最关键的一步</strong> — 模型找出结构，你来判断"这个话题叫什么"、"这个结果有没有意义"</p>
+    <p style="font-size:0.72em; margin:0;"><strong>人工解读是最关键的一步</strong> — 模型找出结构，你来判断“这个话题叫什么”、“这个结果有没有意义”</p>
   </div>
   <div class="highlight-box" style="margin-top:0.6em;">
     <p style="font-size:0.72em; margin:0;">这套流程<strong>可以无标签冷启动</strong>——但落地高风险业务（医疗、金融）仍需人工抽检和合规评估</p>
@@ -1001,7 +1001,7 @@ model.similarity(<span class="st">"doctor"</span>, <span class="st">"apple"</spa
     <p style="font-size:0.8em; margin:0; line-height:2; color:var(--gray-700);">
       1. 你手上有哪类文本数据？（问卷 / 报告 / 热线 / 评价 / 其他）<br>
       2. 你更想用 LDA 还是词嵌入？为什么？<br>
-      3. "All models are wrong" — 你觉得模型的哪个输出你最不放心，需要人工把关？
+      3. “All models are wrong” — 你觉得模型的哪个输出你最不放心，需要人工把关？
     </p>
   </div>
   <div class="cols" style="margin-top:1.2em; gap:1.5em;">
