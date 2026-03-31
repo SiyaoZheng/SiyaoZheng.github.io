@@ -324,7 +324,7 @@
 <!-- Slide 4: 今天的路线图 -->
 <section>
   <h2>今天的路线图</h2>
-  <div class="card-grid cols-3" style="margin-top:1.2em;">
+  <div class="card-grid cols-2" style="margin-top:1.2em;">
     <div class="card">
       <div class="card-icon" style="font-size:1.6em; font-weight:700; color:var(--accent);">LDA</div>
       <div class="card-label">Part 1</div>
@@ -340,8 +340,13 @@
       <div class="card-label">Part 3</div>
       <div class="card-desc">行业应用设计<br><span style="color:var(--gray-400); font-size:0.85em;">你能用这些做什么？</span></div>
     </div>
+    <div class="card" style="border-color:#93c5fd;">
+      <div class="card-icon" style="font-size:1.6em; font-weight:700; color:var(--accent);">Agent</div>
+      <div class="card-label">Part 4</div>
+      <div class="card-desc">AI 智能体<br><span style="color:var(--gray-400); font-size:0.85em;">让 NLP 自主行动</span></div>
+    </div>
   </div>
-  <p class="hint" style="font-size:0.6em; color:var(--gray-500); margin-top:1em; text-align:center;">贯穿全课的问题：<strong>无监督 = 发现隐藏结构</strong></p>
+  <p class="hint" style="font-size:0.6em; color:var(--gray-500); margin-top:1em; text-align:center;">贯穿全课的问题：<strong>无监督 = 发现隐藏结构</strong> &nbsp;|&nbsp; 压轴：<strong>智能体如何整合所有 NLP 技术</strong></p>
 </section>
 
 <!-- ============================================================ -->
@@ -853,7 +858,7 @@ model.similarity(<span class="st">"doctor"</span>, <span class="st">"apple"</spa
       语义关系 → 向量运算<br>
       <strong>无监督训练，捕捉人类语言的深层规律</strong>
     </p>
-    <p class="hint">PART 3 → 这两个工具能帮你解决什么业务问题？</p>
+    <p class="hint">PART 3 → 行业应用 &nbsp;|&nbsp; PART 4 → AI 智能体</p>
   </div>
 </section>
 
@@ -864,7 +869,7 @@ model.similarity(<span class="st">"doctor"</span>, <span class="st">"apple"</spa
 <!-- Slide 26 -->
 <section class="section-title">
   <h2>
-    <span class="section-num">Part 3 / 3</span>
+    <span class="section-num">Part 3 / 4</span>
     行业应用：<br>你会用这些做什么？
   </h2>
 </section>
@@ -990,18 +995,295 @@ model.similarity(<span class="st">"doctor"</span>, <span class="st">"apple"</spa
 </section>
 
 <!-- ============================================================ -->
+<!-- PART 4: AI 智能体                                              -->
+<!-- ============================================================ -->
+
+<!-- Section Title -->
+<section class="section-title">
+  <h2>
+    <span class="section-num">Part 4 / 4</span>
+    AI 智能体：<br>让 NLP 自主行动
+  </h2>
+</section>
+
+<!-- Slide: 从工具到智能体 -->
+<section>
+  <h2>从工具到智能体：关键的一跃</h2>
+  <div class="vs-layout" style="margin-top:1.2em;">
+    <div class="vs-panel left">
+      <h3>传统 AI 工具</h3>
+      <div class="vs-items">
+        收到指令 → 执行一次 → 返回结果<br>
+        每次任务彼此独立<br>
+        被动响应，不主动规划<br>
+        <span style="color:var(--gray-500); font-size:0.9em;">例：情感分类器、翻译 API</span>
+      </div>
+    </div>
+    <div class="vs-divider">→</div>
+    <div class="vs-panel right">
+      <h3>AI 智能体（Agent）</h3>
+      <div class="vs-items">
+        理解目标 → 自主规划多步骤<br>
+        调用工具、执行操作、观察反馈<br>
+        根据结果动态调整策略<br>
+        <strong>主动行动，直到目标完成</strong>
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box" style="margin-top:1em;">
+    <p style="font-size:0.78em; margin:0;">智能体不只是"升级版聊天机器人"——它能<strong>分解任务、调用外部工具、多轮迭代修正</strong>，就像能独立工作的助理</p>
+  </div>
+</section>
+
+<!-- Slide: ReAct 工作循环 -->
+<section>
+  <h2>智能体的工作循环：ReAct 模式</h2>
+  <div class="flow" style="margin:1.2em 0; justify-content:center;">
+    <div class="flow-node outline" style="font-size:0.72em; padding:0.9em 1em; min-width:120px; text-align:center;">
+      <strong>感知</strong><br>
+      <span style="color:var(--accent); font-size:0.85em;">读取输入<br>检索记忆</span>
+    </div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node accent" style="font-size:0.72em; padding:0.9em 1em; min-width:120px; text-align:center;">
+      <strong>思考</strong><br>
+      <span style="font-size:0.85em;">LLM 推理<br>规划下一步</span>
+    </div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node outline" style="font-size:0.72em; padding:0.9em 1em; min-width:120px; text-align:center;">
+      <strong>行动</strong><br>
+      <span style="color:var(--accent); font-size:0.85em;">调用工具<br>写入/输出</span>
+    </div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node" style="font-size:0.72em; padding:0.9em 1em; min-width:115px; text-align:center; border:2px dashed var(--gray-300);">
+      <strong>观察</strong><br>
+      <span style="color:var(--gray-500); font-size:0.85em;">检查结果<br>↩ 继续循环</span>
+    </div>
+  </div>
+  <div class="card-grid cols-3" style="margin-top:0.8em;">
+    <div class="industry-card">
+      <div class="ic-sector">感知</div>
+      <div class="ic-task">"帮我分析 500 条投诉"</div>
+      <div class="ic-method">读取指令，检索记忆：有没有处理过类似任务？</div>
+    </div>
+    <div class="industry-card">
+      <div class="ic-sector">思考</div>
+      <div class="ic-task">拆解：清洗→分词→LDA→报告</div>
+      <div class="ic-method">判断要几步、每步用什么工具</div>
+    </div>
+    <div class="industry-card">
+      <div class="ic-sector">行动 + 观察</div>
+      <div class="ic-task">调用 Python 跑 LDA</div>
+      <div class="ic-method">主题不合理？调参 → 再跑 → 输出最终报告</div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide: 四个核心组件 -->
+<section>
+  <h2>智能体的四个核心组件</h2>
+  <div class="card-grid cols-2" style="margin-top:1em;">
+    <div class="card accent-card" style="text-align:left; padding:1.2em 1.5em;">
+      <div class="card-label" style="font-size:0.8em; margin-bottom:0.5em; text-align:left;">🧠 LLM 大脑</div>
+      <div class="card-desc" style="font-size:0.7em; line-height:1.9; text-align:left;">
+        语言理解 + 逻辑推理 + 任务规划<br>
+        GPT / Claude / DeepSeek 等大模型<br>
+        <strong style="color:var(--r-main-color);">今天学的所有 NLP 技术在这里汇聚</strong>
+      </div>
+    </div>
+    <div class="card" style="text-align:left; padding:1.2em 1.5em;">
+      <div class="card-label" style="font-size:0.8em; margin-bottom:0.5em; text-align:left;">🔧 工具调用</div>
+      <div class="card-desc" style="font-size:0.7em; line-height:1.9; text-align:left;">
+        搜索引擎 / 代码执行 / 数据库 / API<br>
+        让智能体能读写外部系统<br>
+        <strong style="color:var(--r-main-color);">突破"只会说话"的根本限制</strong>
+      </div>
+    </div>
+    <div class="card" style="text-align:left; padding:1.2em 1.5em;">
+      <div class="card-label" style="font-size:0.8em; margin-bottom:0.5em; text-align:left;">💾 上下文记忆</div>
+      <div class="card-desc" style="font-size:0.7em; line-height:1.9; text-align:left;">
+        短期：当前对话历史（Context Window）<br>
+        长期：<strong style="color:var(--r-main-color);">向量数据库</strong>（存的正是词向量！）<br>
+        语义检索：找到最相关的历史信息
+      </div>
+    </div>
+    <div class="card" style="text-align:left; padding:1.2em 1.5em;">
+      <div class="card-label" style="font-size:0.8em; margin-bottom:0.5em; text-align:left;">📋 规划与协调</div>
+      <div class="card-desc" style="font-size:0.7em; line-height:1.9; text-align:left;">
+        把复杂目标分解为可执行子任务<br>
+        管理依赖 / 错误恢复 / 并行执行<br>
+        <strong style="color:var(--r-main-color);">多智能体：不同专长的 Agent 分工合作</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide: OpenClaw 案例 -->
+<section>
+  <h2>真实案例：OpenClaw 智能体平台</h2>
+  <div class="cols" style="margin-top:1em; align-items:flex-start;">
+    <div class="col-40">
+      <div class="highlight-box">
+        <p style="font-size:0.75em; margin:0 0 0.5em;"><strong>OpenClaw 是什么？</strong></p>
+        <p style="font-size:0.68em; margin:0; line-height:2; color:var(--gray-700);">
+          对话智能体构建平台<br>
+          支持创建有<strong>性格、记忆、工具</strong>的 AI 角色<br>
+          底层：LLM + 向量记忆 + 工具调用<br>
+          场景：AI 伴侣 / 客服 / 领域助手
+        </p>
+      </div>
+      <div class="highlight-box" style="margin-top:0.8em;">
+        <p style="font-size:0.75em; margin:0 0 0.4em;"><strong>实例：王一博 Bot</strong></p>
+        <p style="font-size:0.68em; margin:0; line-height:2; color:var(--gray-700);">
+          部署在 OpenClaw 的对话 Agent<br>
+          有固定的<strong>性格设定</strong>和<strong>长期记忆</strong><br>
+          记住用户偏好，跨对话持续交互
+        </p>
+      </div>
+    </div>
+    <div class="col-60">
+      <div class="highlight-box">
+        <p style="font-size:0.75em; margin:0 0 0.5em;"><strong>底层 NLP 技术如何运作</strong></p>
+        <div style="font-size:0.68em; line-height:2.3; color:var(--gray-700);">
+          <div style="display:flex; gap:0.8em; align-items:baseline; margin-bottom:0.1em;">
+            <span style="color:var(--accent); font-weight:700; flex-shrink:0; min-width:3.8em;">词嵌入</span>
+            <span>→ 向量 DB 存储历史对话，语义检索"上次聊了什么"</span>
+          </div>
+          <div style="display:flex; gap:0.8em; align-items:baseline; margin-bottom:0.1em;">
+            <span style="color:var(--accent); font-weight:700; flex-shrink:0; min-width:3.8em;">主题模型</span>
+            <span>→ 从对话历史发现用户关注的话题，支撑个性化回应</span>
+          </div>
+          <div style="display:flex; gap:0.8em; align-items:baseline; margin-bottom:0.1em;">
+            <span style="color:var(--accent); font-weight:700; flex-shrink:0; min-width:3.8em;">情感分类</span>
+            <span>→ 检测用户情绪，自动调整 Agent 的语气和回应策略</span>
+          </div>
+          <div style="display:flex; gap:0.8em; align-items:baseline;">
+            <span style="color:var(--accent); font-weight:700; flex-shrink:0; min-width:3.8em;">意图识别</span>
+            <span>→ 判断是在闲聊、提问，还是需要执行工具调用</span>
+          </div>
+        </div>
+      </div>
+      <div class="warning-box" style="margin-top:0.6em;">
+        <p style="font-size:0.68em; margin:0;"><strong>核心挑战</strong>：让 Agent 记住用户，同时不越过隐私边界</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide: NLP 技术 → 智能体能力映射 -->
+<section>
+  <h2>NLP 技术如何支撑智能体</h2>
+  <div class="industry-grid" style="margin-top:1em;">
+    <div class="industry-card">
+      <div class="ic-sector">第三课 · 有监督分类</div>
+      <div class="ic-task">意图识别 · 情感判断</div>
+      <div class="ic-method">判断用户想做什么（查信息？下单？情绪宣泄？），决定 Agent 的下一步行动</div>
+    </div>
+    <div class="industry-card">
+      <div class="ic-sector">第四课 · 大语言模型</div>
+      <div class="ic-task">核心推理引擎</div>
+      <div class="ic-method">理解上下文、生成回答、规划多步骤——LLM 是 Agent 的"大脑"，没有它智能体只是个空壳</div>
+    </div>
+    <div class="industry-card">
+      <div class="ic-sector">第五课 · LDA 主题模型</div>
+      <div class="ic-task">用户画像 · 话题追踪</div>
+      <div class="ic-method">从用户历史对话中发现其关注的主题群，支撑个性化推荐和主动引导</div>
+    </div>
+    <div class="industry-card">
+      <div class="ic-sector">第五课 · 词嵌入</div>
+      <div class="ic-task">长期记忆检索（RAG）</div>
+      <div class="ic-method">历史对话 → 词向量 → 存入向量 DB → 语义检索找到相关记忆，注入 LLM 上下文</div>
+    </div>
+  </div>
+  <div class="highlight-box" style="margin-top:0.8em;">
+    <p style="font-size:0.75em; margin:0;"><strong>RAG（检索增强生成）</strong> = 词嵌入检索相关文档 → 填入 LLM 上下文 → 生成准确回答<br>目前企业部署 AI 客服和知识库问答最主流的方案</p>
+  </div>
+</section>
+
+<!-- Slide: 多智能体系统 -->
+<section>
+  <h2>多智能体系统：分工合作</h2>
+  <div class="cols" style="margin-top:1em; align-items:flex-start; gap:1.5em;">
+    <div class="col">
+      <div class="highlight-box">
+        <p style="font-size:0.75em; margin:0 0 0.5em;"><strong>为什么需要多个 Agent？</strong></p>
+        <p style="font-size:0.7em; margin:0; line-height:1.9; color:var(--gray-700);">
+          单一 Agent 能力有限<br>
+          复杂任务需要专业分工<br>
+          并行执行大幅提升效率<br>
+          一个 Agent 的输出是另一个的输入
+        </p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="highlight-box">
+        <p style="font-size:0.75em; margin:0 0 0.5em;"><strong>本课使用的 OpenMAIC 平台</strong></p>
+        <p style="font-size:0.7em; margin:0; line-height:1.9; color:var(--gray-700);">
+          Multi-Agent Interactive Classroom<br>
+          多个教学 Agent 协作：<br>
+          讲解 Agent + 提问 Agent + 评估 Agent<br>
+          <strong>你正在用多智能体系统上课</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="flow" style="margin:1em 0; justify-content:center;">
+    <div class="flow-node outline" style="font-size:0.7em; min-width:100px; text-align:center; padding:0.7em 0.8em;">协调器<br><span style="font-size:0.85em; color:var(--gray-500);">任务分配</span></div>
+    <div class="flow-arrow accent-arrow" style="width:24px;"></div>
+    <div class="flow-node" style="font-size:0.7em; min-width:100px; text-align:center; padding:0.7em 0.8em;">检索 Agent<br><span style="font-size:0.85em; color:var(--gray-500);">RAG 知识库</span></div>
+    <div class="flow-arrow accent-arrow" style="width:24px;"></div>
+    <div class="flow-node accent" style="font-size:0.7em; min-width:100px; text-align:center; padding:0.7em 0.8em;">推理 Agent<br><span style="font-size:0.85em;">生成回答</span></div>
+    <div class="flow-arrow accent-arrow" style="width:24px;"></div>
+    <div class="flow-node outline" style="font-size:0.7em; min-width:100px; text-align:center; padding:0.7em 0.8em;">评估 Agent<br><span style="font-size:0.85em; color:var(--accent);">质量把关</span></div>
+    <div class="flow-arrow accent-arrow" style="width:24px;"></div>
+    <div class="flow-node" style="font-size:0.7em; min-width:100px; text-align:center; padding:0.7em 0.8em;">用户<br><span style="font-size:0.85em; color:var(--gray-500);">最终输出</span></div>
+  </div>
+</section>
+
+<!-- Slide: 智能体的现实挑战 -->
+<section>
+  <h2>智能体的现实挑战</h2>
+  <div class="warning-box" style="margin-top:1em;">
+    <p style="font-size:0.78em; margin:0 0 0.6em;"><strong>① 幻觉（Hallucination）未解决</strong></p>
+    <p style="font-size:0.7em; margin:0 0 0.8em; line-height:1.7; color:var(--gray-700);">LLM 会自信地编造不存在的信息。智能体多步骤操作会让幻觉累积放大——金融、医疗等高风险场景必须保留人工核查</p>
+    <p style="font-size:0.78em; margin:0 0 0.6em;"><strong>② 工具失败与不可预测性</strong></p>
+    <p style="font-size:0.7em; margin:0 0 0.8em; line-height:1.7; color:var(--gray-700);">外部 API 超时、代码执行报错、工具返回意外结果……智能体的鲁棒性远不如人类助理，业务部署前必须大量测试</p>
+    <p style="font-size:0.78em; margin:0 0 0.6em;"><strong>③ 成本与延迟</strong></p>
+    <p style="font-size:0.7em; margin:0; line-height:1.7; color:var(--gray-700);">多轮 LLM 调用叠加工具调用，成本高、响应慢。一个复杂任务可能触发十几次 API 调用，费用快速累积</p>
+  </div>
+  <div class="highlight-box" style="margin-top:0.6em;">
+    <p style="font-size:0.75em; margin:0;"><strong>结论</strong>：智能体是强大的新工具，但"All models are wrong"依然适用——<strong>人工监督和业务验证不可缺少</strong></p>
+  </div>
+</section>
+
+<!-- Slide: Part 4 Takeaway -->
+<section>
+  <div class="takeaway">
+    <div class="divider"></div>
+    <p class="main-text">智能体：<br>NLP 技术的集大成者</p>
+    <p class="sub-text">
+      LDA + 词嵌入 → 记忆与检索（RAG）<br>
+      分类器 → 意图识别与情感感知<br>
+      LLM → 推理、规划、生成<br><br>
+      <strong>你学的每一项 NLP 技术，都是智能体能力的一块拼图</strong>
+    </p>
+    <p class="hint">下节课：文本处理基础 — 把原始文字变成机器读懂的数字</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
 <!-- 课堂讨论                                                      -->
 <!-- ============================================================ -->
 
 <!-- Slide 31: 讨论 -->
 <section>
   <h2>课堂讨论</h2>
-  <div class="highlight-box" style="margin-top:1.2em;">
-    <p style="font-size:0.85em; margin:0 0 0.5em; font-weight:600;">在你的工作场景里：</p>
-    <p style="font-size:0.8em; margin:0; line-height:2; color:var(--gray-700);">
+  <div class=”highlight-box” style=”margin-top:1.2em;”>
+    <p style=”font-size:0.85em; margin:0 0 0.5em; font-weight:600;”>在你的工作场景里：</p>
+    <p style=”font-size:0.8em; margin:0; line-height:2; color:var(--gray-700);”>
       1. 你手上有哪类文本数据？（问卷 / 报告 / 热线 / 评价 / 其他）<br>
       2. 你更想用 LDA 还是词嵌入？为什么？<br>
-      3. “All models are wrong” — 你觉得模型的哪个输出你最不放心，需要人工把关？
+      3. “All models are wrong” — 你觉得模型的哪个输出你最不放心，需要人工把关？<br>
+      4. 如果给你的工作场景配一个 AI 智能体，它应该能做什么？需要调用哪些工具？
     </p>
   </div>
   <div class="cols" style="margin-top:1.2em; gap:1.5em;">
@@ -1024,11 +1306,11 @@ model.similarity(<span class="st">"doctor"</span>, <span class="st">"apple"</spa
 <section>
   <div class="takeaway">
     <div class="divider"></div>
-    <p class="main-text">无监督 = 发现隐藏结构</p>
+    <p class="main-text">无监督 = 发现隐藏结构<br>智能体 = 让结构自主行动</p>
     <p class="sub-text">
       LDA 发现话题结构<br>
       词嵌入建立语义空间<br>
-      两者都不需要标注，都依赖你的领域知识解读<br><br>
+      智能体整合所有 NLP 能力，自主完成复杂任务<br><br>
       <strong>All models are wrong, but some are useful.</strong>
     </p>
     <p class="hint">下节课：文本处理基础 — 把原始文字变成机器读懂的数字</p>
