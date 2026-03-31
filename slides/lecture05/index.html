@@ -1,0 +1,1085 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第五课 无监督机器学习技术 — 机器学习与自然语言处理</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    :root {
+      --r-background-color: #fff;
+      --r-main-font: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+      --r-main-font-size: 32px;
+      --r-main-color: #1a1a2e;
+      --r-heading-font: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+      --r-heading-color: #0f0f1a;
+      --r-heading-font-weight: 700;
+      --r-link-color: #2563eb;
+      --accent: #2563eb;
+      --accent-light: #dbeafe;
+      --gray-50: #f8f9fa;
+      --gray-100: #f1f3f5;
+      --gray-200: #e9ecef;
+      --gray-400: #adb5bd;
+      --gray-500: #868e96;
+      --gray-600: #6c757d;
+      --gray-700: #495057;
+      --gray-800: #343a40;
+    }
+
+    .reveal { font-weight: 400; }
+    .reveal h1 { font-size: 2.2em; letter-spacing: -0.02em; }
+    .reveal h2 { font-size: 1.6em; letter-spacing: -0.01em; color: var(--accent); text-transform: none; }
+    .reveal h3 { font-size: 1.2em; color: var(--gray-800); }
+    .reveal p, .reveal li { line-height: 1.6; }
+    .reveal ul { list-style: none; padding-left: 0; }
+    .reveal ul li { padding-left: 1.5em; position: relative; margin-bottom: 0.4em; }
+    .reveal ul li::before {
+      content: '';
+      position: absolute; left: 0; top: 0.55em;
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    .reveal code {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--gray-100);
+      padding: 0.1em 0.4em;
+      border-radius: 4px;
+      font-size: 0.85em;
+    }
+    .reveal pre code {
+      font-family: 'JetBrains Mono', monospace;
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 1em 1.4em;
+      border-radius: 8px;
+      font-size: 0.72em;
+      line-height: 1.7;
+      display: block;
+      text-align: left;
+    }
+    .reveal pre { box-shadow: none; width: 100%; margin: 0.6em 0; }
+    .kw { color: #cba6f7; }
+    .fn { color: #89b4fa; }
+    .st { color: #a6e3a1; }
+    .cm { color: #6c7086; font-style: italic; }
+    .num { color: #fab387; }
+
+    /* Section title */
+    .section-title { background: var(--r-background-color) !important; }
+    .section-title h2 {
+      font-size: 2.4em;
+      color: var(--r-main-color);
+      border-left: 6px solid var(--accent);
+      padding-left: 0.6em;
+      text-align: left;
+    }
+    .section-title .section-num {
+      font-size: 0.5em;
+      color: var(--gray-400);
+      font-weight: 400;
+      display: block;
+      margin-bottom: 0.2em;
+    }
+
+    /* Cover */
+    .cover h1 { font-size: 2.6em; margin-bottom: 0.1em; }
+    .cover .subtitle { font-size: 1.1em; color: var(--accent); font-weight: 500; margin-bottom: 2em; }
+    .cover .meta { font-size: 0.7em; color: var(--gray-600); line-height: 1.8; }
+
+    /* Highlight box */
+    .highlight-box {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-left: 4px solid var(--accent);
+      padding: 1em 1.5em;
+      border-radius: 4px;
+      text-align: left;
+      margin: 1em 0;
+    }
+
+    /* Quote box */
+    .quote-box {
+      background: var(--accent-light);
+      border: 1px solid #bfdbfe;
+      border-left: 4px solid var(--accent);
+      padding: 1.2em 1.8em;
+      border-radius: 4px;
+      text-align: left;
+      margin: 1em 0;
+    }
+    .quote-box .quote-text {
+      font-size: 1.1em;
+      font-weight: 600;
+      color: var(--r-main-color);
+      line-height: 1.5;
+      font-style: italic;
+    }
+    .quote-box .quote-source {
+      font-size: 0.65em;
+      color: var(--gray-600);
+      margin-top: 0.6em;
+    }
+
+    /* Two column */
+    .cols { display: flex; gap: 2em; align-items: flex-start; }
+    .cols .col { flex: 1; text-align: left; }
+    .cols .col-40 { flex: 0 0 40%; text-align: left; }
+    .cols .col-60 { flex: 0 0 58%; text-align: left; }
+
+    /* Flow */
+    .flow { display: flex; align-items: center; justify-content: center; gap: 0; margin: 1em 0; }
+    .flow-node {
+      background: var(--gray-50);
+      border: 2px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.8em 1.2em;
+      font-size: 0.75em;
+      font-weight: 500;
+      text-align: center;
+      min-width: 110px;
+    }
+    .flow-node.accent { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .flow-node.outline { background: #fff; border-color: var(--accent); color: var(--accent); }
+    .flow-arrow {
+      width: 40px; height: 2px;
+      background: var(--gray-400);
+      position: relative; flex-shrink: 0;
+    }
+    .flow-arrow::after {
+      content: '';
+      position: absolute;
+      right: -1px; top: -5px;
+      border: 6px solid transparent;
+      border-left: 8px solid var(--gray-400);
+    }
+    .flow-arrow.accent-arrow { background: var(--accent); }
+    .flow-arrow.accent-arrow::after { border-left-color: var(--accent); }
+
+    /* Card grid */
+    .card-grid { display: grid; gap: 1em; margin: 1em 0; }
+    .card-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .card-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+    .card-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 1.2em;
+      text-align: center;
+    }
+    .card.accent-card { background: var(--accent-light); border-color: #93c5fd; }
+    .card .card-icon { font-size: 2em; margin-bottom: 0.3em; line-height: 1; }
+    .card .card-label { font-size: 0.7em; font-weight: 600; color: var(--r-main-color); margin-bottom: 0.2em; }
+    .card .card-desc { font-size: 0.65em; color: var(--gray-600); line-height: 1.4; }
+
+    /* VS layout */
+    .vs-layout { display: flex; align-items: stretch; gap: 0; margin: 0.8em 0; }
+    .vs-panel { flex: 1; padding: 1.2em 1.5em; border-radius: 8px; text-align: left; }
+    .vs-panel.left { background: var(--gray-50); border: 1px solid var(--gray-200); margin-right: -1px; border-radius: 8px 0 0 8px; }
+    .vs-panel.right { background: var(--accent-light); border: 1px solid #bfdbfe; border-radius: 0 8px 8px 0; }
+    .vs-divider { width: 48px; display: flex; align-items: center; justify-content: center; font-size: 1.4em; font-weight: 700; color: var(--gray-400); flex-shrink: 0; }
+    .vs-panel h3 { font-size: 0.85em; margin-bottom: 0.6em; }
+    .vs-panel .vs-items { font-size: 0.75em; color: var(--gray-800); line-height: 2; }
+
+    /* Paper slide */
+    .paper-slide h2 { font-size: 1.2em; margin-bottom: 0.2em; }
+    .paper-slide .paper-context { font-size: 0.6em; color: var(--gray-600); line-height: 1.6; margin: 0 auto 0.4em; max-width: 90%; text-align: left; }
+    .paper-slide .paper-context strong { color: var(--r-main-color); }
+    .paper-slide .paper-fig { margin: 0 auto; max-width: 90%; background: #fff; border: 1px solid var(--gray-200); border-radius: 8px; padding: 0.8em 1em; text-align: center; display: flex; flex-direction: column; align-items: center; }
+    .paper-slide .paper-fig img { max-height: 320px; max-width: 100%; object-fit: contain; border-radius: 4px; }
+    .paper-slide .paper-fig .caption { font-size: 0.75em; color: var(--gray-600); margin-top: 0.5em; line-height: 1.4; }
+    .paper-slide .paper-figs { display: flex; gap: 0.8em; margin: 0 auto; max-width: 92%; }
+    .paper-slide .paper-figs .paper-fig { flex: 1; margin: 0; max-width: none; }
+    .paper-slide .paper-figs .paper-fig img { max-height: 240px; }
+    .paper-slide .paper-cite { font-size: 0.5em; color: var(--gray-400); text-align: center; margin-top: 0.3em; }
+
+    /* Takeaway */
+    .takeaway { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 2em; text-align: center; }
+    .takeaway .divider { width: 3em; height: 3px; background: var(--accent); border-radius: 2px; margin-bottom: 1.8em; }
+    .takeaway .main-text { font-size: 1.5em; font-weight: 700; color: var(--accent); line-height: 1.45; margin: 0 0 1.2em 0; max-width: 15em; }
+    .takeaway .sub-text { font-size: 0.82em; color: var(--gray-600); line-height: 1.8; margin: 0 0 2em 0; max-width: 28em; }
+    .takeaway .hint { font-size: 0.6em; color: var(--gray-400); letter-spacing: 0.04em; }
+
+    /* Warning box */
+    .warning-box { background: #fef2f2; border: 1px solid #fca5a5; border-left: 4px solid #dc2626; padding: 0.8em 1.2em; border-radius: 4px; text-align: left; margin: 0.5em 0; }
+
+    /* Tag / badge */
+    .tag { display: inline-block; background: var(--accent); color: #fff; font-size: 0.55em; font-weight: 600; padding: 0.2em 0.7em; border-radius: 20px; vertical-align: middle; margin-left: 0.4em; letter-spacing: 0.03em; }
+    .tag.gray { background: var(--gray-400); }
+    .tag.green { background: #16a34a; }
+
+    /* Probability bar visualization */
+    .prob-bar-wrap { margin: 0.5em 0; text-align: left; }
+    .prob-bar-label { font-size: 0.65em; color: var(--gray-700); margin-bottom: 0.15em; font-weight: 500; }
+    .prob-bar-track { background: var(--gray-100); border-radius: 4px; height: 20px; overflow: hidden; }
+    .prob-bar-fill { height: 100%; background: var(--accent); border-radius: 4px; display: flex; align-items: center; padding-left: 0.5em; }
+    .prob-bar-pct { font-size: 0.6em; color: #fff; font-weight: 600; }
+    .prob-bar-fill.muted { background: var(--gray-400); }
+
+    /* Analogy box */
+    .analogy-eq {
+      font-size: 1.1em;
+      font-weight: 700;
+      text-align: center;
+      color: var(--r-main-color);
+      padding: 0.8em 1em;
+      background: var(--gray-50);
+      border: 2px solid var(--gray-200);
+      border-radius: 8px;
+      margin: 0.6em 0;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .analogy-eq .blue { color: var(--accent); }
+    .analogy-eq .gray { color: var(--gray-500); }
+
+    /* Industry grid */
+    .industry-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8em; margin: 0.8em 0; }
+    .industry-card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 1em 1.2em;
+      text-align: left;
+    }
+    .industry-card .ic-sector { font-size: 0.6em; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.3em; }
+    .industry-card .ic-task { font-size: 0.75em; font-weight: 600; color: var(--r-main-color); margin-bottom: 0.3em; }
+    .industry-card .ic-method { font-size: 0.65em; color: var(--gray-600); }
+
+    /* Slide number & progress */
+    .reveal .slide-number { font-family: 'Inter', sans-serif; font-size: 14px; color: var(--gray-400); }
+    .reveal .progress span { background: var(--accent); }
+    .reveal .highlight-blue { color: var(--accent); }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- ============================================================ -->
+<!-- COVER                                                         -->
+<!-- ============================================================ -->
+
+<!-- Slide 1 -->
+<section class="cover">
+  <h1>无监督机器学习技术</h1>
+  <p class="subtitle">让数据自己说话</p>
+  <p class="meta">
+    第五课<br>
+    郑思尧<br>
+    上海交通大学 国际与公共事务学院
+  </p>
+</section>
+
+<!-- ============================================================ -->
+<!-- 开场：All models are wrong                                    -->
+<!-- ============================================================ -->
+
+<!-- Slide 2 -->
+<section>
+  <h2>一个贯穿本课的信念</h2>
+  <div class="quote-box" style="margin-top:1.2em;">
+    <p class="quote-text">"All models are wrong,<br>but some are useful."</p>
+    <p class="quote-source">— George Box，统计学家，1976</p>
+  </div>
+  <div class="highlight-box" style="margin-top:1em;">
+    <p style="font-size:0.78em; margin:0;">今天的方法<strong>不会告诉你"正确答案"</strong><br>
+    它只会从数据里找出<strong>有用的结构</strong>——<br>
+    你负责判断这个结构对你的业务有没有意义</p>
+  </div>
+</section>
+
+<!-- Slide 3: 上节课回顾 + 今天的问题 -->
+<section>
+  <h2>上节课遗留的问题</h2>
+  <div class="vs-layout" style="margin-top:1.2em;">
+    <div class="vs-panel left">
+      <h3>有监督学习<span class="tag gray">第四课</span></h3>
+      <div class="vs-items">
+        需要大量标注样本<br>
+        "好的内容"由人来定义<br>
+        标注成本高、覆盖有限
+      </div>
+    </div>
+    <div class="vs-divider">→</div>
+    <div class="vs-panel right">
+      <h3>现实业务难题</h3>
+      <div class="vs-items">
+        10 万条患者反馈，没有标签<br>
+        海量政策文件，没人读完<br>
+        几十万微博，谁来打标签？
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box" style="margin-top:1em;">
+    <p style="font-size:0.8em; margin:0;"><strong>今天的核心问题</strong>：没有标签，机器能发现什么？</p>
+  </div>
+</section>
+
+<!-- Slide 4: 今天的路线图 -->
+<section>
+  <h2>今天的路线图</h2>
+  <div class="card-grid cols-3" style="margin-top:1.2em;">
+    <div class="card">
+      <div class="card-icon">🗂️</div>
+      <div class="card-label">Part 1</div>
+      <div class="card-desc">主题模型 LDA<br><span style="color:var(--gray-400); font-size:0.85em;">文档里藏着什么话题？</span></div>
+    </div>
+    <div class="card accent-card">
+      <div class="card-icon">📍</div>
+      <div class="card-label">Part 2</div>
+      <div class="card-desc">词嵌入<br><span style="color:var(--gray-600); font-size:0.85em;">词是向量，语义是距离</span></div>
+    </div>
+    <div class="card">
+      <div class="card-icon">💡</div>
+      <div class="card-label">Part 3</div>
+      <div class="card-desc">行业应用设计<br><span style="color:var(--gray-400); font-size:0.85em;">你能用这些做什么？</span></div>
+    </div>
+  </div>
+  <p class="hint" style="font-size:0.6em; color:var(--gray-500); margin-top:1em; text-align:center;">贯穿全课的问题：<strong>无监督 = 发现隐藏结构</strong></p>
+</section>
+
+<!-- ============================================================ -->
+<!-- PART 1: 主题模型 LDA                                           -->
+<!-- ============================================================ -->
+
+<!-- Slide 5 -->
+<section class="section-title">
+  <h2>
+    <span class="section-num">Part 1 / 3</span>
+    主题模型：<br>发现文本的话题结构
+  </h2>
+</section>
+
+<!-- Slide 6: 动机场景 -->
+<section>
+  <h2>你面对的真实场景</h2>
+  <div class="card-grid cols-2" style="margin-top:1em;">
+    <div class="industry-card">
+      <div class="ic-sector">医疗</div>
+      <div class="ic-task">5 万条患者满意度问卷</div>
+      <div class="ic-method">问题反映了哪几类诉求？</div>
+    </div>
+    <div class="industry-card">
+      <div class="ic-sector">政府</div>
+      <div class="ic-task">近 3 年政务热线记录</div>
+      <div class="ic-method">市民主要关注哪些议题？</div>
+    </div>
+    <div class="industry-card">
+      <div class="ic-sector">金融</div>
+      <div class="ic-task">投研报告 / 分析师评论</div>
+      <div class="ic-method">本季度讨论的核心风险是什么？</div>
+    </div>
+    <div class="industry-card">
+      <div class="ic-sector">教育</div>
+      <div class="ic-task">学生课程评价 2000 条</div>
+      <div class="ic-method">学生不满意的点集中在哪？</div>
+    </div>
+  </div>
+  <div class="highlight-box">
+    <p style="font-size:0.8em; margin:0;">共同困境：<strong>文本太多，人工无法逐条阅读</strong>，但又没有预设的分类标签</p>
+  </div>
+</section>
+
+<!-- Slide 7: 直觉解释 LDA -->
+<section>
+  <h2>主题模型的直觉</h2>
+  <div class="cols" style="margin-top:1em; align-items:center;">
+    <div class="col">
+      <p style="font-size:0.78em;">想象你在看 100 篇微博：</p>
+      <div class="highlight-box" style="margin-top:0.8em;">
+        <p style="font-size:0.75em; margin:0;">
+          <strong style="color:var(--accent);">话题 A：医疗</strong><br>
+          高频词：挂号、医生、检查、费用、等待<br><br>
+          <strong style="color:#16a34a;">话题 B：教育</strong><br>
+          高频词：作业、考试、补课、老师、成绩<br><br>
+          <strong style="color:#9333ea;">话题 C：交通</strong><br>
+          高频词：堵车、地铁、限行、停车、违章
+        </p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="highlight-box">
+        <p style="font-size:0.78em; margin:0 0 0.5em 0;"><strong>LDA 的工作</strong></p>
+        <p style="font-size:0.72em; margin:0; line-height:1.8;">
+          1. 你告诉它：找 <strong>k 个话题</strong><br>
+          2. 它自动发现：每个话题由哪些词构成<br>
+          3. 以及：每篇文章讲了多少比例的每个话题
+        </p>
+      </div>
+      <p style="font-size:0.65em; color:var(--gray-600); margin-top:0.8em; text-align:center;">
+        模型不知道"医疗"这个名字<br>
+        <strong>你读到词就知道了</strong>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 8: 狄利克雷分布直觉 -->
+<section>
+  <h2>LDA 的核心机制：掷骰子</h2>
+  <div class="cols" style="margin-top:1em; gap:2.5em;">
+    <div class="col">
+      <p style="font-size:0.75em; color:var(--gray-700);">每篇文章都像一个人，口袋里揣着几枚"话题骰子"：</p>
+      <div class="prob-bar-wrap" style="margin-top:0.8em;">
+        <div class="prob-bar-label">某篇政务微博</div>
+        <div style="display:flex; gap:0.5em; margin-top:0.4em;">
+          <div style="flex:1;">
+            <div class="prob-bar-label" style="color:var(--accent);">话题 A 医疗</div>
+            <div class="prob-bar-track"><div class="prob-bar-fill" style="width:60%;"><span class="prob-bar-pct">60%</span></div></div>
+          </div>
+          <div style="flex:1;">
+            <div class="prob-bar-label" style="color:#16a34a;">话题 B 教育</div>
+            <div class="prob-bar-track"><div class="prob-bar-fill muted" style="width:25%;"><span class="prob-bar-pct">25%</span></div></div>
+          </div>
+          <div style="flex:1;">
+            <div class="prob-bar-label" style="color:#9333ea;">话题 C 交通</div>
+            <div class="prob-bar-track"><div class="prob-bar-fill muted" style="width:15%;"><span class="prob-bar-pct">15%</span></div></div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:0.65em; color:var(--gray-600); margin-top:0.6em;">每一个词，都是"掷骰子"决定来自哪个话题</p>
+    </div>
+    <div class="col">
+      <div class="highlight-box">
+        <p style="font-size:0.8em; margin:0 0 0.4em 0;"><strong>狄利克雷分布</strong>的直觉</p>
+        <p style="font-size:0.7em; margin:0; line-height:1.8; color:var(--gray-700);">
+          就是描述"骰子的形状"——<br>
+          一篇文章里各话题比例的<strong>先验分布</strong><br><br>
+          参数 α 小 → 话题集中（纯粹型文章）<br>
+          参数 α 大 → 话题分散（混合型文章）
+        </p>
+      </div>
+      <p style="font-size:0.6em; color:var(--gray-500); margin-top:0.8em; text-align:center;">
+        模型通过反复调整每个词的话题归属，<br>逐渐找到最符合所有文章的那套话题分配
+      </p>
+    </div>
+  </div>
+  <p style="font-size:0.68em; color:var(--accent); text-align:center; margin-top:1em; font-style:italic;">💬 想想看：如果你的工作文本有 6 个话题，<strong>第 7 个话题会是什么？</strong></p>
+</section>
+
+<!-- Slide 9: Grimmer 案例 -->
+<section class="paper-slide">
+  <h2>案例：国会演讲里藏着什么话题？</h2>
+  <div class="paper-context">
+    <strong>Grimmer (2010)</strong> — <em>Political Analysis</em><br>
+    对第 109 届国会（2005–2007 年）美国参议员的所有新闻稿运行 LDA，<strong>无需人工预设分类</strong><br>
+    语料：约 24,000 份文件 | 方法：LDA（贝叶斯主题模型）
+  </div>
+  <div class="paper-fig">
+    <img src="images/grimmer_topic_dist.png" alt="Grimmer 2010 话题分布">
+    <p class="caption">农业州议员在"农业法案"话题权重明显更高；民主党在"批评政府"话题高于共和党——<strong>模型自己发现的，无需人工标注</strong></p>
+  </div>
+  <p class="paper-cite">Grimmer, J. (2010). A Bayesian hierarchical topic model for political texts. <em>Political Analysis</em>, 18(1), 1–35.</p>
+</section>
+
+<!-- Slide 10: LDA 的实操 -->
+<section>
+  <h2>实操：sklearn 三步走</h2>
+  <div class="flow" style="margin: 0.8em 0;">
+    <div class="flow-node">准备文本<br><span style="font-size:0.8em; color:var(--gray-500);">分词 / 构建词矩阵</span></div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node accent">运行 LDA<br><span style="font-size:0.8em;">设定 k 个话题</span></div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node">解读结果<br><span style="font-size:0.8em; color:var(--gray-500);">读词 / 给话题命名</span></div>
+  </div>
+  <pre><code><span class="kw">from</span> sklearn.feature_extraction.text <span class="kw">import</span> CountVectorizer
+<span class="kw">from</span> sklearn.decomposition <span class="kw">import</span> LatentDirichletAllocation
+
+<span class="cm"># 1. 构建词频矩阵</span>
+vectorizer = CountVectorizer(max_df=<span class="num">0.9</span>, min_df=<span class="num">2</span>)
+X = vectorizer.fit_transform(texts)         <span class="cm"># texts = 分词后的字符串列表</span>
+vocab = vectorizer.get_feature_names_out()
+
+<span class="cm"># 2. 训练 LDA，指定话题数 k — ⚠ k 由你来定，模型无法自行决定最佳值</span>
+lda = LatentDirichletAllocation(n_components=<span class="num">4</span>, random_state=<span class="num">42</span>)
+lda.fit(X)
+
+<span class="cm"># 3. 查看每个话题的前 10 个词（不需要手写此代码，理解每步做什么即可）</span>
+<span class="kw">for</span> i, comp <span class="kw">in</span> enumerate(lda.components_):
+    top_words = vocab[comp.argsort()[::<span class="num">-1</span>][:<span class="num">10</span>]]
+    <span class="fn">print</span>(<span class="st">f"话题 {i}: {' | '.join(top_words)}"</span>)</code></pre>
+</section>
+
+<!-- Slide 11: 微博演示结果 -->
+<section class="paper-slide">
+  <h2>演示结果：政务新闻语料 LDA（k=4）</h2>
+  <div class="paper-context">
+    语料：<strong>合成教学语料</strong>（80 篇，模拟政务新闻摘要，医疗/教育/社会保障/食品安全各 20 篇）| 工具：sklearn LDA | 模型事先不知道这 4 个类别
+  </div>
+  <div class="paper-fig">
+    <img src="images/lda_topic_words.png" alt="LDA话题词图">
+    <p class="caption">话题1（医生/住院/患者/手术）→ 你命名为"医疗"｜话题4（检测/下架/抽检/超市）→ 你命名为"食品安全"<br>
+    模型自动发现了这 4 个结构，<strong>命名工作由你来完成</strong></p>
+  </div>
+  <p class="paper-cite">使用 sklearn.decomposition.LatentDirichletAllocation，n_components=4，random_state=42</p>
+</section>
+
+<!-- Slide 12: LDA 的局限 -->
+<section>
+  <h2>LDA 的核心局限</h2>
+  <div class="cols" style="margin-top:1em; gap:2em;">
+    <div class="col">
+      <div class="warning-box">
+        <p style="font-size:0.78em; margin:0 0 0.5em;"><strong>① 话题数 k 靠人设定</strong></p>
+        <p style="font-size:0.68em; margin:0; color:var(--gray-700); line-height:1.6;">设 k=6 和 k=12，结果完全不同。没有"正确答案"，只有"对你有用"的答案</p>
+        <p style="font-size:0.78em; margin:0.8em 0 0.4em;"><strong>② 忽略词序</strong></p>
+        <p style="font-size:0.68em; margin:0; color:var(--gray-700); line-height:1.6;">"感谢医生，不满意收费"与"不满意医生，感谢收费"被视为<strong>完全一样</strong>的文档——顺序和语气消失了</p>
+        <p style="font-size:0.78em; margin:0.8em 0 0.4em;"><strong>③ 不理解词义</strong></p>
+        <p style="font-size:0.68em; margin:0; color:var(--gray-700); line-height:1.6;">"苹果"在科技与饮食语境被视为同一词——这是下节课词嵌入要解决的问题</p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="highlight-box">
+        <p style="font-size:0.78em; margin:0 0 0.4em;"><strong>解读必须靠领域知识</strong></p>
+        <p style="font-size:0.68em; margin:0; color:var(--gray-700); line-height:1.6;">
+          模型输出一堆词<br>
+          <strong>你才知道</strong>这个话题叫"医疗投诉"还是"卫生监管"<br><br>
+          没有领域知识，模型是失效的
+        </p>
+      </div>
+      <p style="font-size:0.65em; color:var(--gray-500); margin-top:0.8em; text-align:center;">
+        All models are wrong —<br>
+        你的判断是让它变得 useful 的关键
+      </p>
+      <p style="font-size:0.68em; color:var(--gray-600); margin-top:0.8em; font-style:italic; text-align:center;">如果你要追踪话题随时间的变化，<br>还需要对齐每次运行的话题编号——这是额外工作</p>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 13: Part 1 Takeaway -->
+<section>
+  <div class="takeaway">
+    <div class="divider"></div>
+    <p class="main-text">LDA：从一堆文本里<br>自动找出话题结构</p>
+    <p class="sub-text">
+      不需要标签，不需要预设分类<br>
+      输入文本 → 输出"哪些词属于哪些话题"<br>
+      <strong>你来解读，你来命名</strong>
+    </p>
+    <p class="hint">PART 2 → 如果词本身也能变成数字，会发生什么？</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PART 2: 词嵌入                                                -->
+<!-- ============================================================ -->
+
+<!-- Slide 14 -->
+<section class="section-title">
+  <h2>
+    <span class="section-num">Part 2 / 3</span>
+    词嵌入：<br>词是向量，语义是距离
+  </h2>
+</section>
+
+<!-- Slide 15: 问题引入 -->
+<section>
+  <h2>LDA 之后，剩下的问题</h2>
+  <div class="vs-layout" style="margin-top:1.2em;">
+    <div class="vs-panel left">
+      <h3>LDA 的处理方式</h3>
+      <div class="vs-items">
+        "医院"和"医生"是两个无关的词<br>
+        "苹果"不知道是水果还是品牌<br>
+        词与词之间没有关系
+      </div>
+    </div>
+    <div class="vs-divider">→</div>
+    <div class="vs-panel right">
+      <h3>我们真正想要的</h3>
+      <div class="vs-items">
+        "医院"和"医生"应该很相近<br>
+        "国王"减"男"加"女"= "女王"<br>
+        让机器<strong>理解词的含义</strong>
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box" style="margin-top:1em;">
+    <p style="font-size:0.8em; margin:0;"><strong>词嵌入的核心思想</strong>：把每个词变成一个向量（一排数字），让语义相近的词在空间中靠得更近</p>
+  </div>
+</section>
+
+<!-- Slide 16: 词是向量 直觉 -->
+<section>
+  <h2>词是向量是什么意思？</h2>
+  <div class="cols" style="margin-top:1em; align-items:center; gap:2.5em;">
+    <div class="col">
+      <p style="font-size:0.75em; color:var(--gray-700);">把每个词想成一张"地图上的坐标"：</p>
+      <div class="highlight-box" style="margin-top:0.8em;">
+        <p style="font-size:0.7em; margin:0; line-height:1.9; font-family:'JetBrains Mono', monospace;">
+          医生  → [0.82, 0.91, 0.23, ...]<br>
+          护士  → [0.79, 0.88, 0.25, ...]<br>
+          律师  → [0.45, 0.92, 0.67, ...]<br>
+          苹果  → [0.12, 0.08, 0.94, ...]<br>
+          橘子  → [0.11, 0.06, 0.95, ...]
+        </p>
+      </div>
+      <p style="font-size:0.65em; color:var(--gray-600); margin-top:0.6em;">
+        维度通常是 100~300 维<br>
+        每一维捕捉语义的某个方面
+      </p>
+    </div>
+    <div class="col">
+      <div class="highlight-box">
+        <p style="font-size:0.8em; margin:0 0 0.5em 0;"><strong>夹角越小 = 语义越相近</strong></p>
+        <p style="font-size:0.72em; margin:0; line-height:1.8; color:var(--gray-700);">
+          医生 ↔ 护士 → 方向相近，相似度高<br>
+          医生 ↔ 苹果 → 方向差异大，相似度低<br>
+          苹果 ↔ 橘子 → 方向相近，相似度高<br><br>
+          <strong>相似的用法 → 相近的向量方向</strong><br>
+          <span style="font-size:0.85em; color:var(--gray-500);">（技术上用余弦相似度，不是直线距离）</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 17: Word2Vec 怎么训练 -->
+<section>
+  <h2>模型怎么"学会"词的意思？</h2>
+  <div class="highlight-box" style="margin-top:0.8em;">
+    <p style="font-size:0.82em; margin:0 0 0.3em;"><strong>Word2Vec 的核心任务（CBOW 架构）</strong></p>
+    <p style="font-size:0.75em; margin:0; color:var(--gray-700);">给定一个词的<strong>上下文（周围词）</strong>，预测这个词本身——反复做这个任务，词向量就学好了</p>
+  </div>
+  <div class="flow" style="margin:1.2em 0;">
+    <div class="flow-node">大量原始文本<br><span style="font-size:0.75em; color:var(--gray-500);">无需标注</span></div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node accent">给出上下文<br><span style="font-size:0.75em;">预测空缺词</span></div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node">词向量<br><span style="font-size:0.75em; color:var(--gray-500);">捕捉语义</span></div>
+  </div>
+  <div class="cols" style="margin-top:0.8em;">
+    <div class="col">
+      <div class="highlight-box">
+        <p style="font-size:0.7em; margin:0; line-height:1.8; color:var(--gray-700);">
+          "患者 <strong>[?]</strong> 反映 床位 紧张"<br>
+          → 根据前后词，预测 [?] 是"家属"？"代表"？<br>
+          → 反复练习数十亿次，向量逐渐收敛
+        </p>
+      </div>
+    </div>
+    <div class="col">
+      <p style="font-size:0.68em; color:var(--gray-600); line-height:1.7; margin-top:0.3em;">
+        上百亿词的文本 + 不断迭代<br>
+        → 模型"读"出了语言的规律<br>
+        → <strong>训练完全无监督</strong>，不需要任何标签
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 18: 神奇类比 king - man + woman = queen -->
+<section>
+  <h2>词向量最神奇的发现</h2>
+  <p style="font-size:0.75em; color:var(--gray-600); margin-bottom:0.8em;">向量之间可以做算术——语义关系变成了数字关系</p>
+  <div class="analogy-eq">
+    <span class="blue">king</span> <span class="gray">−</span> <span class="blue">man</span> <span class="gray">+</span> <span class="blue">woman</span> <span class="gray">≈</span> <span class="blue">queen</span>
+  </div>
+  <div class="analogy-eq" style="margin-top:0.4em;">
+    <span class="blue">北京</span> <span class="gray">−</span> <span class="blue">中国</span> <span class="gray">+</span> <span class="blue">日本</span> <span class="gray">≈</span> <span class="blue">东京</span>
+  </div>
+  <div class="analogy-eq" style="margin-top:0.4em;">
+    <span class="blue">医生</span> <span class="gray">−</span> <span class="blue">男</span> <span class="gray">+</span> <span class="blue">女</span> <span class="gray">≈</span> <span class="blue">护士</span>
+  </div>
+  <div class="warning-box" style="margin-top:1em;">
+    <p style="font-size:0.72em; margin:0;">最后一个例子揭示了一个<strong>社会偏见</strong>——模型从大量文本中学习，也学进了人类的刻板印象。这正是 Garg et al. (2018) 的核心研究问题。</p>
+  </div>
+  <p style="font-size:0.68em; color:var(--accent); text-align:center; margin-top:0.8em; font-style:italic;">💬 最后那个例子让你感到意外吗？<strong>为什么"医生 − 男 + 女 ≈ 护士"？</strong></p>
+</section>
+
+<!-- Slide 19: Garg 案例 介绍 -->
+<section class="paper-slide">
+  <h2>案例：词向量如何追踪 100 年偏见？</h2>
+  <div class="paper-context">
+    <strong>Garg, Schiebinger, Jurafsky & Zou (2018)</strong> — <em>PNAS</em><br>
+    训练 1900–2000 年每十年的词向量，追踪性别与种族刻板印象如何随历史演变<br>
+    语料：美国历史十亿词语料（Google Books + Corpus of Historical American English）
+  </div>
+  <div class="cols" style="margin-top:0.8em;">
+    <div class="col">
+      <div class="highlight-box">
+        <p style="font-size:0.75em; margin:0 0 0.4em;"><strong>核心方法</strong></p>
+        <p style="font-size:0.68em; margin:0; line-height:1.8; color:var(--gray-700);">
+          1. 构建"性别轴"：male 词 vs female 词的向量差<br>
+          2. 计算职业词（如 doctor, nurse, engineer）在这个轴上的投影<br>
+          3. 看投影如何在 1900–2000 年间变化
+        </p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="highlight-box">
+        <p style="font-size:0.75em; margin:0 0 0.4em;"><strong>发现</strong></p>
+        <p style="font-size:0.68em; margin:0; line-height:1.8; color:var(--gray-700);">
+          1960 年代前：doctor 强烈偏向"男性"<br>
+          二战后：职业词的性别偏见逐渐减弱<br>
+          亚裔相关词：与"数学"关联在近代才出现<br>
+          <strong>刻板印象在词向量里留下了历史痕迹</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+  <p class="paper-cite">Garg, N., Schiebinger, L., Jurafsky, D., & Zou, J. (2018). Word embeddings quantify 100 years of gender and ethnic stereotypes. PNAS, 115(16), E3635–E3644.</p>
+</section>
+
+<!-- Slide 20: Garg 图一：语义轴漂移 -->
+<section class="paper-slide">
+  <h2>图表解读：职业词的性别偏见如何变化</h2>
+  <div class="paper-context">
+    横轴 = 年代（1900–2000）&nbsp;|&nbsp; 纵轴 = 职业词在"男性-女性"语义轴上的偏移方向<br>
+    越靠近正值 = 越偏向"男性职业"，越靠近负值 = 越偏向"女性职业"
+  </div>
+  <div class="paper-fig">
+    <img src="images/garg_gender_drift.png" alt="Garg et al. 职业词性别偏见趋势图">
+    <p class="caption">1960 年代以前，几乎所有"高技能职业"词都偏向男性；二战后 doctor 的男性偏见显著收窄，但 housekeeper 的女性化关联在部分时期仍维持或加强<br><span style="font-size:0.85em; color:var(--gray-500);">⚠ 示意图：数据依据 Garg et al. (2018) 图1公布数值重建，非原图</span></p>
+  </div>
+  <p class="paper-cite">Garg et al. (2018), PNAS</p>
+</section>
+
+<!-- Slide 21: Garg 图二：偏见随时间 -->
+<section class="paper-slide">
+  <h2>图表解读：最近邻居如何随时代变化</h2>
+  <div class="paper-context">
+    <strong>示例词：doctor</strong> — 1900 年代 vs 1990 年代，词向量空间里"最近的邻居"是谁？
+  </div>
+  <div class="cols" style="margin-top:1em;">
+    <div class="col">
+      <div class="highlight-box">
+        <p style="font-size:0.72em; margin:0 0 0.3em;"><strong>1900 年代最近邻</strong></p>
+        <p style="font-size:0.65em; margin:0; line-height:1.9; font-family:'JetBrains Mono', monospace; color:var(--gray-700);">
+          physician (0.96)<br>
+          surgeon (0.94)<br>
+          gentleman (0.81)<br>
+          <strong style="color:var(--accent);">his_office (0.79)</strong><br>
+          <strong style="color:var(--accent);">he (0.76)</strong>
+        </p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="highlight-box">
+        <p style="font-size:0.72em; margin:0 0 0.3em;"><strong>1990 年代最近邻</strong></p>
+        <p style="font-size:0.65em; margin:0; line-height:1.9; font-family:'JetBrains Mono', monospace; color:var(--gray-700);">
+          physician (0.97)<br>
+          surgeon (0.95)<br>
+          <strong style="color:#16a34a;">nurse (0.83)</strong><br>
+          <strong style="color:#16a34a;">she (0.78)</strong><br>
+          patient (0.77)
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box" style="margin-top:0.8em;">
+    <p style="font-size:0.72em; margin:0;"><strong>社会变迁在语言里留下了痕迹</strong> — 词嵌入把这些痕迹变成了可量化的数字</p>
+  </div>
+  <p style="font-size:0.55em; color:var(--gray-500); text-align:center; margin-top:0.4em;">⚠ 示意输出：最近邻词和相似度数值为教学示意，参考 Garg et al. (2018) Table 1 的定性规律</p>
+</section>
+
+<!-- Slide 22: Garg 族裔偏见趋势 -->
+<section class="paper-slide">
+  <h2>图表解读：族裔刻板印象的百年变迁</h2>
+  <div class="paper-context">
+    用同样的方法追踪族裔偏见：Asian 与"数学"的关联度、Jewish 与"商业"的关联度、Black 与"贫困"的关联度随年代的变化
+  </div>
+  <div class="paper-fig">
+    <img src="images/garg_ethnic_bias.png" alt="Garg et al. 族裔刻板印象趋势图">
+    <p class="caption">Asian 与"数学"的关联在 1960 年代以后才显著上升——刻板印象并非一直存在，它是历史建构的产物<br><span style="font-size:0.85em; color:var(--gray-500);">⚠ 示意图：依据 Garg et al. (2018) 结论重建，趋势方向忠实于原文，具体数值为近似</span></p>
+  </div>
+  <p class="paper-cite">Garg et al. (2018), PNAS</p>
+  <p style="font-size:0.68em; color:var(--accent); text-align:center; margin-top:0.6em; font-style:italic;">💬 你的行业里，有没有类似的刻板印象<strong>藏在数据里</strong>？</p>
+</section>
+
+<!-- Slide 23: 实操：gensim 词嵌入 -->
+<section>
+  <h2>实操：加载词向量（gensim）</h2>
+  <pre><code><span class="cm"># 安装：pip install gensim</span>
+<span class="kw">import</span> gensim.downloader <span class="kw">as</span> api
+
+<span class="cm"># 课堂演示推荐轻量模型（50 维，解压约 66 MB）</span>
+model = api.load(<span class="st">"glove-wiki-gigaword-50"</span>)
+
+<span class="cm"># 加载大模型时用（300 维，解压约 3.6 GB，课堂网速需确认）</span>
+<span class="cm"># model = api.load("word2vec-google-news-300")</span>
+
+<span class="cm"># ① 查询最相似的词（先检查词是否存在）</span>
+<span class="kw">if</span> <span class="st">"doctor"</span> <span class="kw">in</span> model:
+    model.most_similar(<span class="st">"doctor"</span>, topn=<span class="num">5</span>)
+    <span class="cm"># → [('physician', 0.83), ('nurse', 0.79), ...]</span>
+
+<span class="cm"># ② 词向量算术</span>
+model.most_similar(positive=[<span class="st">"king"</span>, <span class="st">"woman"</span>], negative=[<span class="st">"man"</span>], topn=<span class="num">1</span>)
+<span class="cm"># → [('queen', 0.71)]</span>
+
+<span class="cm"># ③ 语义相似度</span>
+model.similarity(<span class="st">"doctor"</span>, <span class="st">"nurse"</span>)    <span class="cm"># → 0.79</span>
+model.similarity(<span class="st">"doctor"</span>, <span class="st">"apple"</span>)    <span class="cm"># → 0.09</span></code></pre>
+  <div class="highlight-box" style="margin-top:0.6em;">
+    <p style="font-size:0.72em; margin:0;">此处加载的是 <strong>GloVe</strong> 向量（基于全局词共现统计），与 Word2Vec（基于局部预测）属同类静态词嵌入，<code>most_similar</code> / <code>similarity</code> 用法相同。<br>
+    <span style="color:var(--gray-500);">50 = 向量维度；glove-wiki-gigaword-50 约 66MB，课堂演示推荐；不需要手写，理解每步做什么即可</span></p>
+  </div>
+</section>
+
+<!-- Slide 23: t-SNE 可视化 -->
+<section>
+  <h2>词嵌入的可视化：t-SNE</h2>
+  <div class="cols" style="margin-top:0.8em; align-items:flex-start;">
+    <div class="col-40">
+    <p style="font-size:0.72em; margin:0;">把高维词向量（如 50 维或 300 维）压缩到 2 维，让你能"看见"语义空间：</p>
+      <div class="highlight-box" style="margin-top:0.8em;">
+        <p style="font-size:0.68em; margin:0; line-height:1.8; color:var(--gray-700);">
+          医疗类词聚在一起<br>
+          政治类词聚在一起<br>
+          数字类词聚在一起<br><br>
+          <strong>相似的词自动形成"星座"</strong>
+        </p>
+      </div>
+      <p style="font-size:0.62em; color:var(--gray-500); margin-top:0.8em;">
+        t-SNE 只是用来"看"的<br>
+        真正的语义是在高维空间里
+      </p>
+    </div>
+    <div class="col-60">
+      <div class="paper-fig" style="min-height:280px;">
+        <img src="images/tsne_word_embeddings.png" alt="词嵌入 t-SNE 可视化">
+        <p class="caption">t-SNE 把 300 维词向量降到 2 维，语义相近的词聚在一起<br><span style="font-size:0.85em; color:var(--gray-500);">⚠ 示意图：基于合成向量生成，展示 t-SNE 聚类原理，非预训练模型实际输出</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 24: 词嵌入的局限 -->
+<section>
+  <h2>词嵌入的核心局限</h2>
+  <div class="warning-box" style="margin-top:1em;">
+    <p style="font-size:0.78em; margin:0 0 0.5em;"><strong>① 一词一义：无法处理多义词</strong></p>
+    <p style="font-size:0.7em; margin:0 0 0.8em; line-height:1.7; color:var(--gray-700);">"苹果"在 Word2Vec 里只有一个向量，但在"苹果公司发布会"和"苹果树上结满苹果"里含义完全不同</p>
+    <p style="font-size:0.78em; margin:0 0 0.5em;"><strong>② 刻板印象被放大</strong></p>
+    <p style="font-size:0.7em; margin:0 0 0.8em; line-height:1.7; color:var(--gray-700);">如 Garg 所示：语料中有什么偏见，模型就学进什么。用词嵌入筛选简历可能系统性歧视某类群体</p>
+    <p style="font-size:0.78em; margin:0 0 0.5em;"><strong>③ 专业术语效果差</strong></p>
+    <p style="font-size:0.7em; margin:0; line-height:1.7; color:var(--gray-700);">通用模型不认识"肠系膜""窦性心律"等专业词——医疗/法律等场景需要领域专用预训练模型</p>
+  </div>
+  <div class="highlight-box" style="margin-top:0.8em;">
+    <p style="font-size:0.78em; margin:0;"><strong>领域知识仍不可替代</strong>：你需要判断哪些"相似"在你的场景里有意义</p>
+  </div>
+</section>
+
+<!-- Slide 25: Part 2 Takeaway -->
+<section>
+  <div class="takeaway">
+    <div class="divider"></div>
+    <p class="main-text">词嵌入：<br>把语言变成可计算的几何空间</p>
+    <p class="sub-text">
+      相似的词 → 空间中相近的点<br>
+      语义关系 → 向量运算<br>
+      <strong>无监督训练，捕捉人类语言的深层规律</strong>
+    </p>
+    <p class="hint">PART 3 → 这两个工具能帮你解决什么业务问题？</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PART 3: 行业应用设计                                          -->
+<!-- ============================================================ -->
+
+<!-- Slide 26 -->
+<section class="section-title">
+  <h2>
+    <span class="section-num">Part 3 / 3</span>
+    行业应用：<br>你会用这些做什么？
+  </h2>
+</section>
+
+<!-- Slide 27: LDA vs 词嵌入 适用场景 -->
+<section>
+  <h2>两个工具，各有所长</h2>
+  <div class="vs-layout" style="margin-top:1.2em;">
+    <div class="vs-panel left">
+      <h3>LDA 主题模型</h3>
+      <div class="vs-items">
+        大量文档 → 找话题结构<br>
+        不需要标注，输入即可跑<br>
+        <strong>适合：舆情分类、议题分析<br>
+        文本聚类、政策归档</strong>
+      </div>
+    </div>
+    <div class="vs-divider">vs</div>
+    <div class="vs-panel right">
+      <h3>词嵌入</h3>
+      <div class="vs-items">
+        理解词与词的语义关系<br>
+        支持相似词查找、语义搜索<br>
+        <strong>适合：智能搜索、用语分析<br>
+        偏见检测、语义对比</strong>
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box" style="margin-top:1em;">
+    <p style="font-size:0.8em; margin:0;">很多真实项目会<strong>两个一起用</strong>：词嵌入提升文本表示质量，LDA 对话题做结构化发现</p>
+  </div>
+</section>
+
+<!-- Slide 28: 医疗应用 -->
+<section>
+  <h2>行业应用：医疗</h2>
+  <div class="card-grid cols-2" style="margin-top:1em;">
+    <div class="industry-card">
+      <div class="ic-sector">LDA 应用</div>
+      <div class="ic-task">对患者满意度问卷做主题分析</div>
+      <div class="ic-method">
+        自动发现：就医流程 / 医生态度 / 费用问题 / 环境设施 四类主话题<br>
+        管理层无需逐条阅读，即可掌握主要投诉分布
+      </div>
+    </div>
+    <div class="industry-card">
+      <div class="ic-sector">词嵌入应用</div>
+      <div class="ic-task">构建医疗领域语义搜索</div>
+      <div class="ic-method">
+        患者输入"肚子痛"<br>
+        系统自动匹配"腹痛、消化道、胃部不适"等相关词<br>
+        提升病历检索和导诊准确率
+      </div>
+    </div>
+    <div class="industry-card">
+      <div class="ic-sector">结合使用</div>
+      <div class="ic-task">监测不良事件报告的话题漂移</div>
+      <div class="ic-method">
+        词嵌入捕捉"疫苗""副作用"等词的语义<br>
+        LDA 追踪不同时期报告的话题分布变化
+      </div>
+    </div>
+    <div class="industry-card">
+      <div class="ic-sector">注意事项</div>
+      <div class="ic-task">需要领域词表支撑</div>
+      <div class="ic-method">
+        通用词向量不懂"肠系膜""窦性心律"<br>
+        最好训练<strong>领域专用词向量</strong>，或使用医疗预训练模型
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 29: 政府/金融/教育应用 -->
+<section>
+  <h2>行业应用：政府 · 金融 · 教育</h2>
+  <div class="industry-grid" style="margin-top:1em;">
+    <div class="industry-card">
+      <div class="ic-sector">政府</div>
+      <div class="ic-task">政务热线话题自动分类</div>
+      <div class="ic-method">LDA 将每日来电自动归为 N 个话题，实时追踪哪类诉求在上升，辅助资源调配</div>
+    </div>
+    <div class="industry-card">
+      <div class="ic-sector">政府</div>
+      <div class="ic-task">政策文本语义搜索</div>
+      <div class="ic-method">词嵌入让工作人员用自然语言检索相关政策，"民生保障"能匹配到"低保"、"救助"、"补贴"等相关文件</div>
+    </div>
+    <div class="industry-card">
+      <div class="ic-sector">金融</div>
+      <div class="ic-task">分析师报告话题追踪</div>
+      <div class="ic-method">LDA 提取本季度分析师报告的主要议题，自动对比上季度话题权重变化，识别新兴风险信号</div>
+    </div>
+    <div class="industry-card">
+      <div class="ic-sector">教育</div>
+      <div class="ic-task">课程评价质量分析</div>
+      <div class="ic-method">LDA 从学生课程评价中提取核心投诉话题；词嵌入辅助识别"难度大""听不懂""进度太快"等同义表达</div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 30: 完整的无监督分析流水线 -->
+<section>
+  <h2>一个完整的无监督分析流水线</h2>
+  <div class="flow" style="margin:1.2em 0; flex-wrap:nowrap; gap:0;">
+    <div class="flow-node" style="min-width:105px; font-size:0.68em; padding:0.7em 0.8em;">收集文本<br><span style="color:var(--gray-500);">问卷/热线/报告</span></div>
+    <div class="flow-arrow accent-arrow" style="width:28px;"></div>
+    <div class="flow-node" style="min-width:105px; font-size:0.68em; padding:0.7em 0.8em;">清洗分词<br><span style="color:var(--gray-500);">去停词/标准化</span></div>
+    <div class="flow-arrow accent-arrow" style="width:28px;"></div>
+    <div class="flow-node accent" style="min-width:105px; font-size:0.68em; padding:0.7em 0.8em;">LDA 主题<br><span>发现话题结构</span></div>
+    <div class="flow-arrow accent-arrow" style="width:28px;"></div>
+    <div class="flow-node accent" style="min-width:105px; font-size:0.68em; padding:0.7em 0.8em;">词嵌入<br><span>理解语义关系</span></div>
+    <div class="flow-arrow accent-arrow" style="width:28px;"></div>
+    <div class="flow-node outline" style="min-width:105px; font-size:0.68em; padding:0.7em 0.8em;">人工解读<br><span style="color:var(--accent);">命名 / 验证</span></div>
+    <div class="flow-arrow accent-arrow" style="width:28px;"></div>
+    <div class="flow-node outline" style="min-width:105px; font-size:0.68em; padding:0.7em 0.8em;">业务决策<br><span style="color:var(--accent);">资源/策略</span></div>
+  </div>
+  <div class="warning-box" style="margin-top:0.5em;">
+    <p style="font-size:0.72em; margin:0;"><strong>人工解读是最关键的一步</strong> — 模型找出结构，你来判断"这个话题叫什么"、"这个结果有没有意义"</p>
+  </div>
+  <div class="highlight-box" style="margin-top:0.6em;">
+    <p style="font-size:0.72em; margin:0;">这套流程<strong>可以无标签冷启动</strong>——但落地高风险业务（医疗、金融）仍需人工抽检和合规评估</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 课堂讨论                                                      -->
+<!-- ============================================================ -->
+
+<!-- Slide 31: 讨论 -->
+<section>
+  <h2>课堂讨论</h2>
+  <div class="highlight-box" style="margin-top:1.2em;">
+    <p style="font-size:0.85em; margin:0 0 0.5em; font-weight:600;">在你的工作场景里：</p>
+    <p style="font-size:0.8em; margin:0; line-height:2; color:var(--gray-700);">
+      1. 你手上有哪类文本数据？（问卷 / 报告 / 热线 / 评价 / 其他）<br>
+      2. 你更想用 LDA 还是词嵌入？为什么？<br>
+      3. "All models are wrong" — 你觉得模型的哪个输出你最不放心，需要人工把关？
+    </p>
+  </div>
+  <div class="cols" style="margin-top:1.2em; gap:1.5em;">
+    <div class="col">
+      <div class="card accent-card" style="text-align:center;">
+        <div class="card-label" style="font-size:0.75em;">设计一个分析方案</div>
+        <div class="card-desc" style="font-size:0.7em; margin-top:0.3em;">选一个你真实面对的文本问题，说明你会如何使用今天学的方法</div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card" style="text-align:center;">
+        <div class="card-label" style="font-size:0.75em;">预告：下节课</div>
+        <div class="card-desc" style="font-size:0.7em; margin-top:0.3em;">文本处理基础 — 如何把原始文字清洗成模型能理解的输入</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 32: 总结 -->
+<section>
+  <div class="takeaway">
+    <div class="divider"></div>
+    <p class="main-text">无监督 = 发现隐藏结构</p>
+    <p class="sub-text">
+      LDA 发现话题结构<br>
+      词嵌入建立语义空间<br>
+      两者都不需要标注，都依赖你的领域知识解读<br><br>
+      <strong>All models are wrong, but some are useful.</strong>
+    </p>
+    <p class="hint">下节课：文本处理基础 — 把原始文字变成机器读懂的数字</p>
+  </div>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: true,
+    progress: true,
+    transition: 'slide',
+    transitionSpeed: 'fast',
+    backgroundTransition: 'none',
+    controls: true,
+    controlsTutorial: false,
+    width: 1280,
+    height: 720,
+    margin: 0.04,
+    minScale: 0.2,
+    maxScale: 2.0,
+    plugins: []
+  });
+</script>
+</body>
+</html>
