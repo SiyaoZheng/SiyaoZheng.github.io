@@ -249,37 +249,31 @@
 <section>
   <h2>两组本来就不一样</h2>
   <svg class="did-chart" viewBox="0 0 700 280" style="width:100%; max-width:640px;">
-    <!-- Axes -->
-    <line x1="80" y1="240" x2="620" y2="240" stroke="#e5e7eb" stroke-width="1.5"/>
-    <line x1="80" y1="240" x2="80" y2="20" stroke="#e5e7eb" stroke-width="1.5"/>
-    <text x="230" y="268" text-anchor="middle" font-size="13" fill="#4b5563">政策前</text>
-    <text x="470" y="268" text-anchor="middle" font-size="13" fill="#4b5563">政策后</text>
-    <!-- Pre-policy bars -->
-    <rect x="180" y="162" width="45" height="78" rx="3" fill="var(--c-blue)" opacity="0.8"/>
-    <text x="202" y="155" text-anchor="middle" font-size="11" fill="var(--c-blue)" class="mono">3,500</text>
-    <rect x="235" y="184" width="45" height="56" rx="3" fill="var(--c-red)" opacity="0.8"/>
-    <text x="258" y="177" text-anchor="middle" font-size="11" fill="var(--c-red)" class="mono">2,500</text>
-    <!-- Pre gap brace -->
-    <line x1="290" y1="162" x2="300" y2="162" stroke="#9ca3af" stroke-width="1"/>
-    <line x1="290" y1="184" x2="300" y2="184" stroke="#9ca3af" stroke-width="1"/>
-    <line x1="300" y1="162" x2="300" y2="184" stroke="#9ca3af" stroke-width="1"/>
-    <text x="310" y="177" font-size="11" fill="#4b5563">差 1,000</text>
-    <!-- Post-policy bars -->
-    <rect x="420" y="48" width="45" height="192" rx="3" fill="var(--c-blue)" opacity="0.8"/>
-    <text x="442" y="41" text-anchor="middle" font-size="11" fill="var(--c-blue)" class="mono">9,000</text>
-    <rect x="475" y="132" width="45" height="108" rx="3" fill="var(--c-red)" opacity="0.8"/>
-    <text x="498" y="125" text-anchor="middle" font-size="11" fill="var(--c-red)" class="mono">5,000</text>
-    <!-- Post gap brace -->
-    <line x1="530" y1="48" x2="540" y2="48" stroke="var(--c-orange)" stroke-width="1.5"/>
-    <line x1="530" y1="132" x2="540" y2="132" stroke="var(--c-orange)" stroke-width="1.5"/>
-    <line x1="540" y1="48" x2="540" y2="132" stroke="var(--c-orange)" stroke-width="1.5"/>
-    <text x="550" y="85" font-size="12" fill="var(--c-orange)" font-weight="700">差 4,000</text>
-    <text x="550" y="102" font-size="11" fill="#4b5563" font-style="italic">全是政策效果吗？</text>
-    <!-- Legend -->
-    <rect x="100" y="12" width="12" height="12" rx="2" fill="var(--c-blue)" opacity="0.8"/>
-    <text x="118" y="22" font-size="12" fill="var(--c-blue)" font-weight="700">上海</text>
-    <rect x="170" y="12" width="12" height="12" rx="2" fill="var(--c-red)" opacity="0.8"/>
-    <text x="188" y="22" font-size="12" fill="var(--c-red)" font-weight="700">苏州</text>
+    <line x1="100" y1="230" x2="600" y2="230" stroke="#e5e7eb" stroke-width="1.5"/>
+    <line x1="100" y1="230" x2="100" y2="15" stroke="#e5e7eb" stroke-width="1.5"/>
+    <text x="200" y="252" text-anchor="middle" font-size="13" fill="#4b5563">政策前</text>
+    <text x="500" y="252" text-anchor="middle" font-size="13" fill="#4b5563">政策后</text>
+    <line x1="350" y1="15" x2="350" y2="230" stroke="#9ca3af" stroke-width="1" stroke-dasharray="4,4" opacity="0.3"/>
+    <!-- Shanghai (blue) -->
+    <line x1="200" y1="155" x2="500" y2="38" stroke="var(--c-blue)" stroke-width="3"/>
+    <circle cx="200" cy="155" r="5" fill="var(--c-blue)"/>
+    <circle cx="500" cy="38" r="5" fill="var(--c-blue)"/>
+    <text x="175" y="150" text-anchor="end" font-size="12" fill="var(--c-blue)" class="mono">3,500</text>
+    <text x="518" y="33" font-size="12" fill="var(--c-blue)" class="mono">9,000</text>
+    <text x="518" y="50" font-size="12" fill="var(--c-blue)" font-weight="700">上海</text>
+    <!-- Suzhou (red) -->
+    <line x1="200" y1="185" x2="500" y2="125" stroke="var(--c-red)" stroke-width="3"/>
+    <circle cx="200" cy="185" r="5" fill="var(--c-red)"/>
+    <circle cx="500" cy="125" r="5" fill="var(--c-red)"/>
+    <text x="175" y="200" text-anchor="end" font-size="12" fill="var(--c-red)" class="mono">2,500</text>
+    <text x="518" y="120" font-size="12" fill="var(--c-red)" class="mono">5,000</text>
+    <text x="518" y="140" font-size="12" fill="var(--c-red)" font-weight="700">苏州</text>
+    <!-- Post-policy gap annotation -->
+    <line x1="570" y1="42" x2="570" y2="121" stroke="var(--c-orange)" stroke-width="2.5"/>
+    <polygon points="570,42 566,51 574,51" fill="var(--c-orange)"/>
+    <polygon points="570,121 566,112 574,112" fill="var(--c-orange)"/>
+    <text x="583" y="75" font-size="12" fill="var(--c-orange)" font-weight="700">差 4,000</text>
+    <text x="583" y="92" font-size="11" fill="#4b5563" font-style="italic">全是政策效果吗？</text>
   </svg>
   <div class="warning-box" style="margin-top:0.3em;">
     政策前上海就比苏州高 1,000 吨。政策后差距扩大到 4,000，但其中包含了<span class="bold">固有差异</span>。<br>
