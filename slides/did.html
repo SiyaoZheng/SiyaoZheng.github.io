@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>政策有没有效？——双重差分法的逻辑</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;700&display=swap');
+
+  :root {
+    --c-bg: #ffffff;
+    --c-text: #1a1a2e;
+    --c-muted: #4b5563;
+    --c-blue: #0066cc;
+    --c-blue-light: #e8f0fe;
+    --c-red: #dc3545;
+    --c-red-light: #fde8ea;
+    --c-green: #16a34a;
+    --c-orange: #ea580c;
+    --c-border: #e5e7eb;
+  }
+
+  .reveal {
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+    color: var(--c-text);
+  }
+  .reveal .slides { text-align: left; }
+
+  .reveal h1, .reveal h2, .reveal h3 {
+    font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+    font-weight: 700; color: var(--c-text); text-transform: none; letter-spacing: -0.01em;
+  }
+  .reveal h1 { font-size: 2.2em; line-height: 1.2; }
+  .reveal h2 { font-size: 1.6em; line-height: 1.3; }
+  .reveal p, .reveal li { font-size: 0.88em; line-height: 1.7; }
+
+  .muted { color: var(--c-muted); }
+  .blue { color: var(--c-blue); }
+  .red { color: var(--c-red); }
+  .green { color: var(--c-green); }
+  .orange { color: var(--c-orange); }
+  .bold { font-weight: 700; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  .ybar { text-decoration: overline; }
+
+  /* Title */
+  .title-slide { text-align: center !important; }
+  .title-slide h1 { font-size: 2.4em; margin-bottom: 0.1em; }
+  .title-slide .subtitle { font-size: 1.1em; color: var(--c-muted); margin-bottom: 2em; }
+  .title-slide .course-tag {
+    display: inline-block; background: var(--c-blue-light); color: var(--c-blue);
+    padding: 0.3em 1em; border-radius: 6px; font-size: 0.85em; font-weight: 700; margin-bottom: 1.5em;
+  }
+  .title-slide .author { font-size: 0.85em; color: var(--c-muted); margin-top: 0.5em; }
+
+  /* Section header */
+  .section-header {
+    text-align: center !important; display: flex !important;
+    flex-direction: column; align-items: center; justify-content: center;
+  }
+
+  /* Question */
+  .question-slide h2 { color: var(--c-blue); font-size: 1.8em; text-align: center; margin-bottom: 0.5em; }
+  .question-box {
+    background: var(--c-blue-light); border-left: 4px solid var(--c-blue);
+    padding: 1.2em 1.5em; border-radius: 0 8px 8px 0; margin: 1em 0; font-size: 1.05em;
+  }
+  .answer-box {
+    background: #f0fdf4; border-left: 4px solid var(--c-green);
+    padding: 1em 1.5em; border-radius: 0 8px 8px 0; margin: 1em 0;
+  }
+  .warning-box {
+    background: #fff7ed; border-left: 4px solid var(--c-orange);
+    padding: 1em 1.5em; border-radius: 0 8px 8px 0; margin: 1em 0;
+  }
+
+  /* Conflict cards */
+  .conflict-cards { display: flex; gap: 1em; margin: 1.5em 0; }
+  .conflict-card {
+    flex: 1; background: #f8f9fa; border: 1px solid var(--c-border);
+    border-radius: 8px; padding: 1.2em; text-align: center;
+  }
+  .conflict-card .label { font-size: 0.8em; color: var(--c-muted); margin-bottom: 0.5em; }
+  .conflict-card .idea { font-size: 1em; font-weight: 700; margin-bottom: 0.5em; }
+  .conflict-card .verdict { font-size: 0.85em; color: var(--c-red); font-weight: 700; }
+  .conflict-card.success .verdict { color: var(--c-green); }
+
+  /* Formula */
+  .formula-block {
+    background: #f8f9fa; border: 1px solid var(--c-border); border-radius: 8px;
+    padding: 1em 1.5em; text-align: center; margin: 0.8em 0;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.9em; line-height: 2;
+  }
+
+  /* Quiz */
+  .quiz-box {
+    background: #faf5ff; border: 2px solid #a855f7; border-radius: 8px; padding: 1.5em; margin: 1em 0;
+  }
+  .quiz-box .quiz-label {
+    color: #a855f7; font-weight: 700; font-size: 0.85em; margin-bottom: 0.8em;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+
+  /* Takeaway */
+  .takeaway {
+    text-align: center !important; font-size: 1.1em; font-weight: 500; color: var(--c-blue);
+    line-height: 1.8; padding: 1em 2em; border: 2px solid var(--c-blue);
+    border-radius: 12px; margin: 0.8em auto; max-width: 85%;
+  }
+
+  /* SVG */
+  .did-chart { margin: 0.5em auto; display: block; }
+  .did-chart text { font-family: 'Noto Sans SC', 'PingFang SC', system-ui, sans-serif; fill: var(--c-text); }
+
+  .reveal .slide-number { font-family: 'JetBrains Mono', monospace; font-size: 0.6em; color: var(--c-muted); }
+
+  .reveal ul { list-style: none; padding-left: 0; }
+  .reveal ul li::before {
+    content: ''; display: inline-block; width: 6px; height: 6px;
+    background: var(--c-blue); border-radius: 50%; margin-right: 0.8em; vertical-align: 0.15em;
+  }
+
+  .num { font-family: 'JetBrains Mono', monospace; font-weight: 700; padding: 0.1em 0.3em; border-radius: 4px; }
+  .num-blue { background: var(--c-blue-light); color: var(--c-blue); }
+  .num-red { background: var(--c-red-light); color: var(--c-red); }
+  .num-green { background: #dcfce7; color: var(--c-green); }
+
+  /* Review list for summary */
+  .review-list { list-style: none; padding: 0; margin: 0.8em 0; }
+  .review-list li {
+    padding: 0.5em 0.8em; margin: 0.4em 0; border-radius: 6px; font-size: 0.88em;
+  }
+  .review-list li::before { display: none; }
+  .review-list .r1 { background: var(--c-blue-light); }
+  .review-list .r2 { background: var(--c-red-light); }
+  .review-list .r3 { background: #dcfce7; }
+</style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- ==================== 1. TITLE ==================== -->
+<section class="title-slide">
+  <div class="course-tag">公共政策分析</div>
+  <h1>政策有没有效？</h1>
+  <div class="subtitle">双重差分法 Difference-in-Differences 的逻辑</div>
+  <div class="author">
+    郑思尧<br>
+    <span class="muted">上海交通大学 国际与公共事务学院</span>
+  </div>
+</section>
+
+<!-- ==================== 2. S 情景 ==================== -->
+<section>
+  <h2>一个真实的故事</h2>
+  <p style="font-size:1em; margin-top:0.8em;">
+    2019 年 7 月，上海实施<span class="bold">《生活垃圾管理条例》</span>，<br>
+    扔错垃圾要罚款，你的朋友是不是突然都会分类了？
+  </p>
+  <div style="display:flex; gap:2em; margin:1.2em 0; align-items:center;">
+    <div style="flex:1; text-align:center;">
+      <div class="muted" style="font-size:0.75em;">政策前</div>
+      <div class="mono" style="font-size:2.5em; font-weight:700; color:var(--c-muted);">3,500</div>
+      <div class="muted" style="font-size:0.75em;">吨/日 湿垃圾分出量</div>
+    </div>
+    <div style="font-size:2em; color:var(--c-green);">&#10132;</div>
+    <div style="flex:1; text-align:center;">
+      <div class="muted" style="font-size:0.75em;">政策后一年</div>
+      <div class="mono" style="font-size:2.5em; font-weight:700; color:var(--c-green);">9,000</div>
+      <div class="muted" style="font-size:0.75em;">吨/日 湿垃圾分出量</div>
+    </div>
+  </div>
+  <div class="question-box" style="text-align:center; font-weight:700; font-size:1.1em;">
+    这个变化是垃圾分类政策带来的吗？
+  </div>
+  <p style="text-align:right; font-size:0.6em; color:var(--c-muted); margin-top:0.5em;">* 数据为教学示意，非官方精确统计</p>
+</section>
+
+<!-- ==================== 3. C 冲突 ==================== -->
+<section>
+  <h2>三种直觉</h2>
+  <div class="conflict-cards">
+    <div class="conflict-card">
+      <div class="label">思路一</div>
+      <div class="idea">看上海的前后变化</div>
+      <div class="verdict">&#10007; 不够</div>
+    </div>
+    <div class="conflict-card">
+      <div class="label">思路二</div>
+      <div class="idea">比较上海和其他城市</div>
+      <div class="verdict">&#10007; 也不够</div>
+    </div>
+    <div class="conflict-card success">
+      <div class="label">思路三</div>
+      <div class="idea">把两者结合？</div>
+      <div class="verdict">&#10003; 先别急，往下看</div>
+    </div>
+  </div>
+  <p class="fragment" style="text-align:center; margin-top:1.2em; font-size:1em;">
+    为什么前两种不行？我们一个一个看。
+  </p>
+</section>
+
+<!-- ==================== 4. Q1 ==================== -->
+<section class="question-slide">
+  <div class="question-box" style="font-size:1.15em; margin-top:2em;">
+    只看上海自己政策前 vs 政策后的变化，<br>
+    能说明政策有效吗？<br><br>
+    <span class="muted" style="font-size:0.8em;">想一想，即使没有这个政策，上海的回收量会不会变？</span>
+  </div>
+</section>
+
+<!-- ==================== 5. A1 ==================== -->
+<section>
+  <h2>时间趋势的干扰</h2>
+  <svg class="did-chart" viewBox="0 0 700 300" style="width:100%; max-width:700px;">
+    <defs><marker id="arrowGray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#4b5563"/></marker></defs>
+    <line x1="80" y1="250" x2="620" y2="250" stroke="#e5e7eb" stroke-width="1.5"/>
+    <line x1="80" y1="250" x2="80" y2="30" stroke="#e5e7eb" stroke-width="1.5"/>
+    <text x="200" y="275" text-anchor="middle" font-size="13" fill="#4b5563">2018</text>
+    <text x="350" y="275" text-anchor="middle" font-size="13" fill="#1a1a2e" font-weight="700">2019.7 政策</text>
+    <text x="520" y="275" text-anchor="middle" font-size="13" fill="#4b5563">2020</text>
+    <line x1="350" y1="30" x2="350" y2="250" stroke="#dc3545" stroke-width="1" stroke-dasharray="6,4" opacity="0.3"/>
+    <polyline points="200,203 350,175 520,58" fill="none" stroke="#0066cc" stroke-width="3"/>
+    <circle cx="200" cy="203" r="5" fill="#0066cc"/><circle cx="350" cy="175" r="5" fill="#0066cc"/><circle cx="520" cy="58" r="5" fill="#0066cc"/>
+    <text x="200" y="223" text-anchor="middle" font-size="12" fill="#0066cc" class="mono">3,000</text>
+    <text x="350" y="195" text-anchor="middle" font-size="12" fill="#0066cc" class="mono">3,500</text>
+    <text x="520" y="48" text-anchor="middle" font-size="12" fill="#0066cc" font-weight="700" class="mono">9,000</text>
+    <text x="545" y="70" font-size="13" fill="#0066cc" font-weight="700">上海</text>
+    <text x="400" y="110" font-size="13" fill="#4b5563" font-style="italic">全国环保意识提升</text>
+    <text x="400" y="128" font-size="13" fill="#4b5563" font-style="italic">即使没有政策也在涨</text>
+    <path d="M 470 135 C 480 150, 490 165, 490 175" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arrowGray)"/>
+  </svg>
+  <div class="warning-box">
+    前后变化 &#8800; 政策效果。经济发展、环保意识提升等<span class="bold">时间趋势</span>混入了变化之中。
+  </div>
+</section>
+
+<!-- ==================== 6. Q2 ==================== -->
+<section class="question-slide">
+  <div class="question-box" style="font-size:1.15em; margin-top:2em;">
+    那我们找一个没实施政策的城市（比如苏州）做对比，<br>
+    政策后上海比苏州回收率高，能说明政策有效吗？<br><br>
+    <span class="muted" style="font-size:0.8em;">上海和苏州本来就一样吗？</span>
+  </div>
+</section>
+
+<!-- ==================== 7. A2 ==================== -->
+<section>
+  <h2>两组本来就不一样</h2>
+  <div style="display:flex; gap:1em; margin:0.4em 0;">
+    <div style="flex:1; background:#f8f9fa; border-radius:8px; padding:0.8em; text-align:center;">
+      <div style="font-size:0.85em; color:var(--c-blue); font-weight:700;">上海（实施政策）</div>
+      <div style="font-size:0.78em; color:var(--c-muted); margin-top:0.3em;">2,400 万人口<br>GDP 3.8 万亿<br>基础设施完善</div>
+    </div>
+    <div style="flex:0 0 auto; display:flex; align-items:center; font-size:1.5em; color:var(--c-red);">&#8800;</div>
+    <div style="flex:1; background:#f8f9fa; border-radius:8px; padding:0.8em; text-align:center;">
+      <div style="font-size:0.85em; color:var(--c-red); font-weight:700;">苏州（未实施政策）</div>
+      <div style="font-size:0.78em; color:var(--c-muted); margin-top:0.3em;">1,070 万人口<br>GDP 2.3 万亿<br>城市结构不同</div>
+    </div>
+  </div>
+  <p style="text-align:center; margin:0.4em 0; font-size:0.88em;">
+    两座城市本来就不一样，政策后的差异可能是<span class="bold">固有差异</span>的延续。
+  </p>
+  <div class="warning-box">
+    横截面差异 &#8800; 政策效果。人口、经济等<span class="bold">组间差异</span>被混入了比较之中。
+  </div>
+</section>
+
+<!-- ==================== 8. Q3 (NEW) ==================== -->
+<section class="question-slide">
+  <div class="question-box" style="font-size:1.15em; margin-top:2em;">
+    只看前后 &#10132; <span class="red">时间趋势干扰</span><br>
+    只比两地 &#10132; <span class="red">组间差异干扰</span><br><br>
+    <span class="bold" style="font-size:1.1em;">
+      有没有一种方法，能同时消除这两种偏差？
+    </span><br><br>
+    <span class="muted" style="font-size:0.8em;">试着把这两种思路结合起来。</span>
+  </div>
+</section>
+
+<!-- ==================== 9. A3: DiD CORE (merged with formula) ==================== -->
+<section>
+  <h2>双重差分 <span class="muted" style="font-size:0.55em;">Difference-in-Differences</span></h2>
+  <svg class="did-chart" viewBox="0 0 720 280" style="width:100%; max-width:640px;">
+    <line x1="100" y1="230" x2="620" y2="230" stroke="#e5e7eb" stroke-width="1.5"/>
+    <line x1="100" y1="230" x2="100" y2="15" stroke="#e5e7eb" stroke-width="1.5"/>
+    <text x="200" y="252" text-anchor="middle" font-size="13" fill="#4b5563">政策前</text>
+    <text x="520" y="252" text-anchor="middle" font-size="13" fill="#4b5563">政策后</text>
+    <line x1="360" y1="15" x2="360" y2="230" stroke="#9ca3af" stroke-width="1" stroke-dasharray="4,4" opacity="0.3"/>
+
+    <!-- Control (Suzhou) - red -->
+    <line x1="200" y1="180" x2="520" y2="130" stroke="var(--c-red)" stroke-width="3"/>
+    <circle cx="200" cy="180" r="5" fill="var(--c-red)"/>
+    <circle cx="520" cy="130" r="5" fill="var(--c-red)"/>
+    <text x="175" y="194" text-anchor="end" font-size="12" fill="var(--c-red)" class="mono">2,500</text>
+    <text x="538" y="146" font-size="12" fill="var(--c-red)" class="mono">5,000</text>
+    <text x="160" y="210" text-anchor="end" font-size="12" fill="var(--c-red)" font-weight="700">苏州（对照组）</text>
+
+    <!-- Treated (Shanghai) - blue -->
+    <line x1="200" y1="155" x2="520" y2="38" stroke="var(--c-blue)" stroke-width="3"/>
+    <circle cx="200" cy="155" r="5" fill="var(--c-blue)"/>
+    <circle cx="520" cy="38" r="5" fill="var(--c-blue)"/>
+    <text x="175" y="150" text-anchor="end" font-size="12" fill="var(--c-blue)" class="mono">3,500</text>
+    <text x="538" y="33" font-size="12" fill="var(--c-blue)" class="mono">9,000</text>
+    <text x="160" y="140" text-anchor="end" font-size="12" fill="var(--c-blue)" font-weight="700">上海（处理组）</text>
+
+    <!-- Step 1: Counterfactual (fragment) -->
+    <g class="fragment" data-fragment-index="1">
+      <line x1="200" y1="155" x2="520" y2="105" stroke="var(--c-blue)" stroke-width="2.5" stroke-dasharray="8,6" opacity="0.7"/>
+      <circle cx="520" cy="105" r="4" fill="none" stroke="var(--c-blue)" stroke-width="2" stroke-dasharray="4,3" opacity="0.7"/>
+      <text x="538" y="100" font-size="11" fill="#4b5563" font-style="italic">反事实</text>
+      <text x="538" y="115" font-size="11" fill="#4b5563" class="mono">6,000</text>
+    </g>
+
+    <!-- Step 2: Treatment effect (fragment) -->
+    <g class="fragment" data-fragment-index="2">
+      <line x1="570" y1="42" x2="570" y2="101" stroke="var(--c-green)" stroke-width="3"/>
+      <polygon points="570,42 566,51 574,51" fill="var(--c-green)"/>
+      <polygon points="570,101 566,92 574,92" fill="var(--c-green)"/>
+      <rect x="580" y="55" width="108" height="30" rx="4" fill="var(--c-green)" opacity="0.12"/>
+      <text x="634" y="72" text-anchor="middle" font-size="13" fill="var(--c-green)" font-weight="700">政策效果</text>
+      <text x="634" y="88" text-anchor="middle" font-size="12" fill="var(--c-green)" font-weight="700" class="mono">= 3,000</text>
+    </g>
+  </svg>
+
+  <!-- Calculation block (appears with treatment effect) -->
+  <div class="fragment" data-fragment-index="2">
+    <div class="formula-block" style="font-size:0.82em; padding:0.5em 1em; line-height:1.8;">
+      <span class="blue">上海变化 9,000 − 3,500 = <strong>+5,500</strong></span><br>
+      <span class="red">苏州变化 5,000 − 2,500 = <strong>+2,500</strong></span><br>
+      <span class="green bold" style="font-size:1.15em;">&#948; = 5,500 − 2,500 = 3,000</span>
+      <span class="muted" style="font-size:0.7em;">← 两次做差</span>
+    </div>
+  </div>
+  <p style="text-align:right; font-size:0.55em; color:var(--c-muted); margin-top:0.2em;">* 数据为教学示意</p>
+</section>
+
+<!-- ==================== 10. FORMULA DECOMPOSITION ==================== -->
+<section>
+  <h2>两次做差</h2>
+  <div style="display:flex; gap:1.2em; margin:1.2em 0;">
+    <div style="flex:1; text-align:center; padding:1em; background:var(--c-blue-light); border-radius:8px;">
+      <div style="font-size:0.85em; color:var(--c-blue); font-weight:700;">第一差</div>
+      <div style="font-size:0.8em; margin-top:0.5em;">处理组的前后变化<br><span class="muted">= 政策效果 + 时间趋势</span></div>
+    </div>
+    <div style="flex:0 0 auto; display:flex; align-items:center; font-size:1.8em; font-weight:700;">&minus;</div>
+    <div style="flex:1; text-align:center; padding:1em; background:var(--c-red-light); border-radius:8px;">
+      <div style="font-size:0.85em; color:var(--c-red); font-weight:700;">第二差</div>
+      <div style="font-size:0.8em; margin-top:0.5em;">对照组的前后变化<br><span class="muted">= 只有时间趋势</span></div>
+    </div>
+    <div style="flex:0 0 auto; display:flex; align-items:center; font-size:1.8em; font-weight:700;">=</div>
+    <div style="flex:1; text-align:center; padding:1em; background:#dcfce7; border-radius:8px;">
+      <div style="font-size:0.85em; color:var(--c-green); font-weight:700;">净效果</div>
+      <div style="font-size:0.8em; margin-top:0.5em;">纯粹的政策效果<br><span class="muted">时间趋势被消掉了</span></div>
+    </div>
+  </div>
+  <p class="fragment" style="text-align:center; font-size:0.95em; margin-top:1em;">
+    双重差分的名字就是这么来的，做两次差，同时消除两种偏差。<br>
+    <span class="muted" style="font-size:0.85em;">前提：两组面临相同的时间趋势（见下一页）</span>
+  </p>
+</section>
+
+<!-- ==================== 11. REGRESSION EQUATION ==================== -->
+<section>
+  <h2>回归方程</h2>
+  <div class="formula-block" style="font-size:0.82em; padding:0.5em 0.6em; margin:0.5em 0;">
+    <span style="font-size:1.05em;">
+      Y<sub>it</sub> = &#946;<sub>0</sub>
+      + <span class="blue">&#946;<sub>1</sub></span>Post<sub>t</sub>
+      + <span class="red">&#946;<sub>2</sub></span>Treat<sub>i</sub>
+      + <span class="green bold">&#948;</span>(Post<sub>t</sub>&times;Treat<sub>i</sub>)
+      + &#949;<sub>it</sub>
+    </span>
+  </div>
+  <div style="display:grid; grid-template-columns:auto 1fr; gap:0.2em 0.8em; font-size:0.78em; margin:0.4em 0 0.4em 0.5em;">
+    <span class="mono muted">&#946;<sub>0</sub></span><span>基准水平（苏州，政策前）</span>
+    <span class="mono blue">&#946;<sub>1</sub> Post</span><span>时间趋势（两组共同的变化）</span>
+    <span class="mono red">&#946;<sub>2</sub> Treat</span><span>组间固有差异（上海本来就不同）</span>
+    <span class="mono green bold">&#948; Post &times; Treat</span><span class="bold">政策的净效果，也就是我们要找的</span>
+  </div>
+  <div class="answer-box" style="margin-top:0.5em; padding:0.7em 1.2em;">
+    <span class="bold green">&#948;</span> 就是双重差分估计量，即交互项的系数。<br>
+    <span class="muted" style="font-size:0.8em;">这个方程把两次做差的直觉翻译成了可以用数据估计的回归模型。</span>
+  </div>
+</section>
+
+<!-- ==================== 12. PARALLEL TRENDS ==================== -->
+<section>
+  <h2>平行趋势假设</h2>
+  <svg class="did-chart" viewBox="0 0 700 260" style="width:100%; max-width:700px;">
+    <line x1="100" y1="220" x2="600" y2="220" stroke="#e5e7eb" stroke-width="1.5"/>
+    <text x="200" y="248" text-anchor="middle" font-size="13" fill="#4b5563">政策前</text>
+    <text x="500" y="248" text-anchor="middle" font-size="13" fill="#4b5563">政策后</text>
+    <line x1="350" y1="20" x2="350" y2="220" stroke="#9ca3af" stroke-width="1" stroke-dasharray="4,4" opacity="0.3"/>
+    <!-- Control -->
+    <line x1="200" y1="165" x2="500" y2="115" stroke="var(--c-red)" stroke-width="2.5"/>
+    <circle cx="200" cy="165" r="5" fill="var(--c-red)"/>
+    <circle cx="500" cy="115" r="5" fill="var(--c-red)"/>
+    <text x="520" y="120" font-size="12" fill="var(--c-red)" font-weight="700">对照组</text>
+    <!-- Treated -->
+    <line x1="200" y1="135" x2="500" y2="45" stroke="var(--c-blue)" stroke-width="2.5"/>
+    <circle cx="200" cy="135" r="5" fill="var(--c-blue)"/>
+    <circle cx="500" cy="45" r="5" fill="var(--c-blue)"/>
+    <text x="520" y="50" font-size="12" fill="var(--c-blue)" font-weight="700">处理组</text>
+    <!-- Counterfactual -->
+    <line x1="200" y1="135" x2="500" y2="85" stroke="var(--c-blue)" stroke-width="2" stroke-dasharray="8,6" opacity="0.5"/>
+    <circle cx="500" cy="85" r="4" fill="none" stroke="var(--c-blue)" stroke-width="2" stroke-dasharray="4,3" opacity="0.5"/>
+    <text x="520" y="88" font-size="11" fill="#4b5563" font-style="italic">反事实</text>
+    <!-- Parallel gap annotations -->
+    <line x1="145" y1="135" x2="145" y2="165" stroke="var(--c-green)" stroke-width="2"/>
+    <text x="130" y="154" text-anchor="end" font-size="12" fill="var(--c-green)" font-weight="700">gap</text>
+    <line x1="555" y1="85" x2="555" y2="115" stroke="var(--c-green)" stroke-width="2"/>
+    <text x="575" y="104" font-size="12" fill="var(--c-green)" font-weight="700">same gap</text>
+    <!-- Treatment effect -->
+    <line x1="530" y1="48" x2="530" y2="82" stroke="var(--c-green)" stroke-width="2.5"/>
+    <polygon points="530,48 526,56 534,56" fill="var(--c-green)"/>
+    <polygon points="530,82 526,74 534,74" fill="var(--c-green)"/>
+    <text x="543" y="69" font-size="13" fill="var(--c-green)" font-weight="700">&#948;</text>
+  </svg>
+  <div class="answer-box">
+    如果没有政策，处理组和对照组的变化轨迹应当<span class="bold">平行</span>。<br>
+    <span class="muted" style="font-size:0.82em;">这个假设是否合理，需要靠政策前的历史数据来评估，不能直接证明。</span>
+  </div>
+</section>
+
+<!-- ==================== 12. SUMMARY REVIEW ==================== -->
+<section>
+  <h2>回顾</h2>
+  <ul class="review-list">
+    <li class="r1"><span class="blue bold">问题一</span> 只看前后变化 &#8594; 时间趋势混入</li>
+    <li class="r2"><span class="red bold">问题二</span> 只做横截面比较 &#8594; 组间差异混入</li>
+    <li class="r3"><span class="green bold">解法</span> 双重差分 = 两次做差 &#8594; 同时消除两种偏差</li>
+    <li style="background:#faf5ff; margin-top:0.2em;"><span class="bold" style="color:#a855f7;">前提</span> 平行趋势假设 &#8594; 两组在无政策时轨迹平行</li>
+  </ul>
+</section>
+
+<!-- ==================== 11. QUIZ ==================== -->
+<section>
+  <h2>学以致用</h2>
+  <div class="quiz-box">
+    <div class="quiz-label">课堂练习</div>
+    <p style="font-size:0.95em; line-height:1.8;">
+      某高校在 <span class="bold">A 校区</span>推行了课前预习打卡制度，<span class="bold">B 校区</span>没有。<br>
+      一学期后，A 校区期末均分比 B 校区高 <span class="num num-blue">5 分</span>。
+    </p>
+    <p style="font-size:1em; font-weight:700; margin-top:1em;">
+      如果你来评估打卡制度的效果，你需要哪些额外数据？
+    </p>
+  </div>
+  <div class="fragment answer-box" style="margin-top:0.8em;">
+    用 DiD 的思路，需要知道<span class="bold">政策之前</span> A、B 校区的成绩差距。<br>
+    如果之前 A 就比 B 高 3 分 &#8594; 打卡的净效果 = 5 − 3 = <span class="num num-green">2 分</span><br>
+    <span class="muted" style="font-size:0.82em;">当然，这还依赖平行趋势假设，即两校区的成绩增长趋势本应相同。</span>
+  </div>
+</section>
+
+<!-- ==================== 12. CLOSING ==================== -->
+<section class="section-header">
+  <div class="takeaway">
+    好的政策评估不是问<br>
+    政策之后发生了什么<br><br>
+    而是问<br>
+    <span class="bold" style="font-size:1.15em;">如果没有政策，会发生什么</span><br><br>
+    <span class="muted" style="font-size:0.75em;">这就是反事实思维的力量，也是双重差分法的优美之处。</span>
+  </div>
+  <p style="text-align:center; margin-top:1.5em; font-size:0.72em; color:var(--c-muted);">
+    延伸阅读：Card & Krueger (1994) "Minimum Wages and Employment"<br>
+    David Card 因自然实验方法获 2021 年诺贝尔经济学奖
+  </p>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+Reveal.initialize({
+  hash: true,
+  slideNumber: 'c/t',
+  width: 960,
+  height: 700,
+  margin: 0.08,
+  transition: 'fade',
+  transitionSpeed: 'default',
+  center: false,
+  controls: true,
+  progress: true,
+  history: true,
+});
+</script>
+</body>
+</html>
