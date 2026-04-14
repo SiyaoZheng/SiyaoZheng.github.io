@@ -600,21 +600,21 @@
 <!-- Slide 4 -->
 <section>
   <h2>今天的路线图</h2>
-  <div class="card-grid cols-5" style="margin-top:1.1em; gap:0.8em;">
+  <div class="card-grid cols-5" style="margin-top:1.05em; gap:0.62em;">
     <div class="card" style="padding:1em 0.8em;">
       <div class="card-icon" style="color:var(--accent); font-weight:700;">字</div>
       <div class="card-label">Part 1</div>
-      <div class="card-desc">文字不是数字<br><span style="color:var(--gray-400);">歧义、语境与中文特殊性</span></div>
+      <div class="card-desc">文本为什么难<br><span style="color:var(--gray-400);">歧义、语境、中文</span></div>
     </div>
     <div class="card accent-card" style="padding:1em 0.8em;">
       <div class="card-icon" style="color:var(--accent); font-weight:700;">切</div>
       <div class="card-label">Part 2</div>
-      <div class="card-desc">分词与预处理<br><span style="color:var(--gray-600);">第一个不可避免的选择</span></div>
+      <div class="card-desc">Tokenization<br><span style="color:var(--gray-600);">模型如何读文本</span></div>
     </div>
     <div class="card" style="padding:1em 0.8em;">
       <div class="card-icon" style="color:var(--accent); font-weight:700;">表</div>
       <div class="card-label">Part 3</div>
-      <div class="card-desc">从文本到矩阵<br><span style="color:var(--gray-400);">BoW、TF-IDF、DTM</span></div>
+      <div class="card-desc">稀疏表示<br><span style="color:var(--gray-400);">BoW、TF-IDF、DTM</span></div>
     </div>
     <div class="card" style="padding:1em 0.8em; border-color:#93c5fd;">
       <div class="card-icon" style="color:var(--accent); font-weight:700;">模</div>
@@ -624,11 +624,11 @@
     <div class="card" style="padding:1em 0.8em;">
       <div class="card-icon" style="color:var(--accent); font-weight:700;">思</div>
       <div class="card-label">Part 5</div>
-      <div class="card-desc">文本作为数据<br><span style="color:var(--gray-400);">方法论反思与研究设计</span></div>
+      <div class="card-desc">AI 文本系统<br><span style="color:var(--gray-400);">RAG、评估、应用</span></div>
     </div>
   </div>
   <p class="hint" style="text-align:center; margin-top:0.9em;">
-    今天的核心句：<strong>从 BoW 到 BERT / LLM，表示在升级，但研究设计责任没有消失。</strong>
+    今天的核心句：<strong>AI 时代的关键，是选对表示、模型和上下文接口。</strong>
   </p>
 </section>
 
@@ -766,14 +766,14 @@ U+5E02 U+6C11 U+62B1 U+6028 ...
 <section>
   <div class="takeaway">
     <div class="divider"></div>
-    <p class="main-text">把文字变成数字，不是“翻译”<br>而是“建模”</p>
+    <p class="main-text">把文字变成模型输入，不只是切词<br>而是在定义表示接口</p>
     <p class="sub-text">
       文本的难点来自三件事：<br>
       歧义性、语境依赖性、中文的边界模糊性。<br><br>
-      你不是在清扫噪音，而是在决定<br>
-      <strong>什么算作一个“可分析的单位”</strong>。
+      AI 模型虽然更强，但依然要先决定<br>
+      <strong>模型读入的是字、词、子词，还是一段上下文</strong>。
     </p>
-    <p class="hint">这也是为什么预处理会直接影响研究结论。</p>
+    <p class="hint">这也是为什么 AI 时代更关心 tokenizer、embedding 和 context window。</p>
   </div>
 </section>
 
@@ -781,7 +781,7 @@ U+5E02 U+6C11 U+62B1 U+6028 ...
 <section class="section-title">
   <h2>
     <span class="section-num">Part 2 / 5</span>
-    分词与预处理：<br>第一个不可避免的选择
+    Tokenization 与输入接口：<br>模型从哪里开始读文本
   </h2>
 </section>
 
@@ -809,7 +809,7 @@ U+5E02 U+6C11 U+62B1 U+6028 ...
       <span class="token-chip">发展</span>
     </div>
     <p style="font-size:0.72em; margin:0.6em 0 0 0; color:var(--gray-700);">
-      只有切成单位之后，机器才能继续做词频、权重、向量、分类、聚类。
+      只有先组织成单位，机器才能继续做稀疏表示、embedding、分类、检索或生成。
     </p>
   </div>
 </section>
@@ -840,7 +840,7 @@ U+5E02 U+6C11 U+62B1 U+6028 ...
     </div>
   </div>
   <p class="hint" style="text-align:center; margin-top:0.8em;">
-    分词从来不是纯技术动作，它总是在为某个下游任务服务。
+    切分从来不是目的本身，它是在替下游模型定义输入接口。
   </p>
 </section>
 
@@ -921,7 +921,7 @@ U+5E02 U+6C11 U+62B1 U+6028 ...
 
 <!-- Slide 16 -->
 <section>
-  <h2>粒度选择，本质上是研究假设</h2>
+  <h2>粒度选择，本质上是输入接口选择</h2>
   <div class="card-grid cols-3" style="margin-top:1em;">
     <div class="card">
       <div class="card-icon" style="font-size:1.2em;">字粒度</div>
@@ -958,10 +958,10 @@ U+5E02 U+6C11 U+62B1 U+6028 ...
 
 <!-- Slide 17 -->
 <section>
-  <h2>停用词：你删除的，就是你认为“不重要”的</h2>
+  <h2>现代模型通常不先删停用词</h2>
   <div class="vs-layout" style="margin-top:1em;">
     <div class="vs-panel left">
-      <h3>为什么很多人会删除停用词</h3>
+      <h3>传统稀疏表示</h3>
       <div class="vs-items">
         的、了、是 过于常见<br>
         容易淹没主题词<br>
@@ -969,52 +969,52 @@ U+5E02 U+6C11 U+62B1 U+6028 ...
       </div>
     </div>
     <div class="vs-panel right">
-      <h3>但有些任务不能轻易删</h3>
+      <h3>BERT / LLM</h3>
       <div class="vs-items">
-        “应该 / 必须 / 可以”反映态度强弱<br>
-        否定词会改写情绪方向<br>
-        语气词有时反映身份与风格
+        功能词帮助建句法关系<br>
+        否定词会改写语义方向<br>
+        生成任务依赖完整上下文
       </div>
     </div>
   </div>
   <div class="warning-box">
     <p style="font-size:0.74em; margin:0;">
-      如果你研究的是 <strong>立场、语气、意识形态、政策强度</strong>，很多“功能词”反而是有信息量的。
+      AI 时代更常见的做法：先保留 token，让模型自己学权重。
     </p>
   </div>
 </section>
 
 <!-- Slide 18 -->
 <section>
-  <h2>同一批文本，不同预处理，可能导向不同结论</h2>
+  <h2>不同接口，不同能力</h2>
   <table class="example-table" style="margin-top:1em;">
     <thead>
       <tr>
-        <th>处理方案</th>
-        <th>示意 Top Terms</th>
-        <th>你更可能讲出的故事</th>
+        <th>接口</th>
+        <th>更擅长</th>
+        <th>代价</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td class="row-label">词级分词 + 去停用词</td>
-        <td>就业、企业、创新、发展</td>
-        <td>宏观经济与产业政策是主轴。</td>
+        <td class="row-label">TF-IDF</td>
+        <td>关键词、主题</td>
+        <td>不看顺序</td>
       </tr>
       <tr>
-        <td class="row-label">保留双词短语</td>
-        <td>高质量发展、共同富裕、人工智能</td>
-        <td>政策口号与成套议题更突出。</td>
+        <td class="row-label">BERT</td>
+        <td>语义相似、词义</td>
+        <td>更慢、更黑箱</td>
       </tr>
       <tr>
-        <td class="row-label">字粒度 / 噪音较多</td>
-        <td>发、展、高、质、量</td>
-        <td>解释性变差，概念边界开始模糊。</td>
+        <td class="row-label">LLM + RAG</td>
+        <td>问答、摘要、解释</td>
+        <td>更贵，也会幻觉</td>
       </tr>
     </tbody>
   </table>
   <p class="hint" style="margin-top:0.8em;">
-    这不是“谁更客观”的问题，而是 <strong>哪种表示更适合你的研究问题</strong>。
+    关键不是步骤多不多，而是 <strong>你的任务需要哪种表示能力</strong>。
   </p>
 </section>
 
@@ -1190,7 +1190,7 @@ U+5E02 U+6C11 U+62B1 U+6028 ...
   <div class="flow" style="margin-top:1.1em;">
     <div class="flow-node outline">原始文本</div>
     <div class="flow-arrow"></div>
-    <div class="flow-node soft">分词 / 清洗</div>
+    <div class="flow-node soft">tokenization / indexing</div>
     <div class="flow-arrow"></div>
     <div class="flow-node accent">DTM / TF-IDF</div>
     <div class="flow-arrow accent-arrow"></div>
@@ -1329,7 +1329,7 @@ U+5E02 U+6C11 U+62B1 U+6028 ...
 
 <!-- Slide 29 -->
 <section>
-  <h2>BERT 没取消预处理：tokenizer 接管</h2>
+  <h2>BERT 时代：tokenizer 成为输入接口</h2>
   <div class="vs-layout" style="margin-top:1em;">
     <div class="vs-panel left">
       <h3>传统表示时代</h3>
@@ -1360,9 +1360,9 @@ U+5E02 U+6C11 U+62B1 U+6028 ...
   </div>
   <div class="highlight-box">
     <p style="font-size:0.74em; margin:0;">
-      重点不是“预处理消失了”，而是重点迁移了。<br>
-      英文常见 WordPiece；中文常见字级 / 子词级和 whole-word masking 变体。<br>
-      <strong>tokenizer 的选择，也是模型选择的一部分。</strong>
+      AI 时代，最先要问的不是“删哪些词”，而是：<br>
+      模型的 tokenizer 怎样切、窗口能装多长、领域词会不会被拆坏。<br>
+      <strong>tokenizer 的设计，直接影响表示质量和下游任务。</strong>
     </p>
   </div>
 </section>
@@ -1453,9 +1453,9 @@ U+5E02 U+6C11 U+62B1 U+6028 ...
   </div>
   <div class="highlight-box">
     <p style="font-size:0.74em; margin:0;">
-      LLM 时代并不意味着文本处理结束了。<br>
-      它只是把问题从“要不要 TF-IDF”变成了：<br>
-      <strong>怎么 chunk、怎么检索、怎么写 prompt、怎么做评估。</strong>
+      LLM 让文本处理更像系统设计。<br>
+      真正的关键问题变成了：<br>
+      <strong>怎么 chunk、怎么检索、怎么约束 prompt、怎么做评估与对照实验。</strong>
     </p>
   </div>
 </section>
@@ -1464,7 +1464,7 @@ U+5E02 U+6C11 U+62B1 U+6028 ...
 <section class="section-title">
   <h2>
     <span class="section-num">Part 5 / 5</span>
-    文本作为数据：<br>方法论反思
+    AI 时代的文本研究：<br>方法选择与评估
   </h2>
 </section>
 
@@ -1494,73 +1494,61 @@ U+5E02 U+6C11 U+62B1 U+6028 ...
 
 <!-- Slide 35 -->
 <section>
-  <h2>预处理里的 garden of forking paths</h2>
-  <div class="fork-grid" style="margin-top:1em;">
-    <div class="fork-step">
-      <div class="fork-title">切分</div>
-      <div class="fork-choices">
-        字 / 词 / 子词<br>
-        自定义词典 or 默认词典
-      </div>
+  <h2>AI 时代的四个设计点</h2>
+  <div class="card-grid cols-2" style="margin-top:1em; gap:0.8em;">
+    <div class="card">
+      <div class="card-label">输入窗口</div>
+      <div class="card-desc">整篇 / 段落 / 句子 / chunk<br>多长才不丢语义？</div>
     </div>
-    <div class="fork-step">
-      <div class="fork-title">过滤</div>
-      <div class="fork-choices">
-        去不去停用词？<br>
-        标点、数字、表情要不要保留？
-      </div>
+    <div class="card accent-card">
+      <div class="card-label">表示层</div>
+      <div class="card-desc">TF-IDF / BERT / LLM<br>baseline 和上限分别是什么？</div>
     </div>
-    <div class="fork-step">
-      <div class="fork-title">表示</div>
-      <div class="fork-choices">
-        词频 / TF-IDF / BERT embeddings / prompting<br>
-        单词、短语，还是上下文向量？
-      </div>
+    <div class="card">
+      <div class="card-label">检索层</div>
+      <div class="card-desc">要不要 RAG？<br>top-k、rerank 怎么配？</div>
     </div>
-    <div class="fork-step">
-      <div class="fork-title">验证</div>
-      <div class="fork-choices">
-        人工抽样检查？<br>
-        外部基准？<br>
-        稳健性比较？
-      </div>
+    <div class="card">
+      <div class="card-label">评估层</div>
+      <div class="card-desc">人工标注 / benchmark / error analysis<br>失败案例怎么报？</div>
     </div>
   </div>
   <div class="warning-box" style="margin-top:1em;">
     <p style="font-size:0.73em; margin:0;">
-      每一步都可能改变你的结果。<br>
-      所以好的研究实践不是“找一个默认脚本”，而是 <strong>把 tokenizer、prompt、chunking 等选择写下来、给出理由、做稳健性检验</strong>。
+      真正会改变结果的，是 <strong>窗口切法、表示模型、检索策略和评估标准</strong>。
     </p>
   </div>
 </section>
 
 <!-- Slide 36 -->
 <section>
-  <h2>案例：Fightin' Words 为什么值得记住？</h2>
-  <div class="compare-grid" style="margin-top:1em;">
-    <div class="compare-box">
-      <div class="compare-title">Monroe et al. (2008) 的关键想法</div>
-      <div class="compare-text">
-        不是简单看谁“说得多”，而是看谁 <strong>相对更偏好某些词</strong>。<br><br>
-        这样做能避免高频常见词主导结果，也更接近“区分性话语”的概念。
+  <h2>三条 AI 路线怎么选？</h2>
+  <div class="card-grid cols-3" style="margin-top:1em;">
+    <div class="card">
+      <div class="card-label">TF-IDF</div>
+      <div class="card-desc">
+        标签清楚、解释性要求高时很好用。<br>
+        适合 baseline、快速分类。
       </div>
     </div>
-    <div class="compare-box accent">
-      <div class="compare-title">为什么它和预处理直接相关</div>
-      <div class="compare-text">
-        你如何分词、是否保留短语、怎么处理稀有词，都会改变“区分词”名单。<br><br>
-        也就是说：<strong>方法结论不是脱离预处理独立存在的。</strong>
+    <div class="card accent-card">
+      <div class="card-label">BERT</div>
+      <div class="card-desc">
+        想抓语义相似和上下文词义时更强。<br>
+        适合分类、检索、reranking。
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">LLM + RAG</div>
+      <div class="card-desc">
+        开放任务、问答和解释生成更灵活。<br>
+        适合摘要、抽取、代理工作流。
       </div>
     </div>
   </div>
-  <div class="chip-row" style="margin-top:0.9em;">
-    <span class="token-chip soft">health care</span>
-    <span class="token-chip soft">minimum wage</span>
-    <span class="token-chip soft">tax relief</span>
-    <span class="token-chip soft">homeland security</span>
-    <span class="token-chip soft">示意性的区分词</span>
-  </div>
-  <p class="hint">这类方法特别适合提醒我们：文本特征从来不是“自然地冒出来”的。</p>
+  <p class="hint" style="margin-top:0.85em;">
+    先判断任务、成本、标注条件，再选路线。
+  </p>
 </section>
 
 <!-- Slide 37 -->
@@ -1579,8 +1567,8 @@ U+5E02 U+6C11 U+62B1 U+6028 ...
     <div class="vs-panel right">
       <h3>但你要小心什么</h3>
       <div class="vs-items">
-        分词错误会直接改写概念边界<br>
-        中文 BERT / LLM 的 tokenizer 与词表也会影响结果<br>
+        tokenizer 和领域词表会影响召回与语义匹配<br>
+        中文 BERT / LLM 的词表覆盖仍然不完全均匀<br>
         新词、简称、缩写、口号不断变化<br>
         OCR 噪音、繁简转换、同义替换都很常见<br>
         政治语境里的委婉表达，常常比字面更重要
@@ -1589,9 +1577,9 @@ U+5E02 U+6C11 U+62B1 U+6028 ...
   </div>
   <div class="highlight-box">
     <p style="font-size:0.74em; margin:0;">
-      中文文本的机会，不在于“数据多”；<br>
-      而在于它能让我们观察到 <strong>制度、话语、认知与治理</strong> 的细微变化。<br>
-      但前提是：你不能把预处理当成黑箱。
+      中文文本的机会，不只在于“数据多”；<br>
+      而在于它能让 BERT / LLM 观察到 <strong>制度、话语、认知与治理</strong> 的细微变化。<br>
+      真正要做好的，是领域适配、评估集和错误分析。
     </p>
   </div>
 </section>
@@ -1604,17 +1592,17 @@ U+5E02 U+6C11 U+62B1 U+6028 ...
       如果你要分析政府工作报告里的政策优先级变化：
     </p>
     <p style="font-size:0.76em; margin:0; line-height:2; color:var(--gray-700);">
-      1. 你会用词袋、BERT embedding，还是直接用 LLM 做表示？为什么？<br>
-      2. 哪些停用词你不敢删？为什么？<br>
-      3. 你会怎样验证“模型真的抓到了政策优先级”，而不是只抓到高频口号或生成幻觉？<br>
-      4. 如果结论对 tokenizer、prompt 或分词方案敏感，你准备如何向读者交代？
+      1. 你会用 TF-IDF baseline、BERT embedding，还是 LLM + RAG？为什么？<br>
+      2. 如果文本很长，你的 chunking 单位会是句子、段落，还是整篇？<br>
+      3. 你会怎样验证“模型真的抓到了政策优先级”，而不是只抓到口号频率或生成幻觉？<br>
+      4. 如果不同模型给出不同结论，你准备怎么比较、报告和解释？
     </p>
   </div>
   <div class="card-grid cols-2" style="margin-top:1em;">
     <div class="card accent-card">
       <div class="card-label" style="font-size:0.76em;">目标</div>
       <div class="card-desc" style="font-size:0.7em;">
-        把“预处理”从技术细节，转成一个可以被讨论和辩护的研究设计问题。
+        把文本处理升级成“表示、检索与评估”的系统设计。
       </div>
     </div>
     <div class="card">
@@ -1631,14 +1619,14 @@ U+5E02 U+6C11 U+62B1 U+6028 ...
 <section>
   <div class="takeaway">
     <div class="divider"></div>
-    <p class="main-text">从 BoW 到 BERT / LLM<br>预处理仍然是研究设计</p>
+    <p class="main-text">从 BoW 到 BERT / LLM<br>关键是选对表示与系统接口</p>
     <p class="sub-text">
       文本之所以难，不是因为它脏，<br>
       而是因为它本来就充满歧义、语境和选择。<br><br>
-      分词、tokenizer、停用词、chunking、prompt、表示方式，每一步都在定义<br>
-      <strong>什么算作一个“可被分析的文本对象”</strong>。<br><br>
-      现代模型帮你减少了一部分手工特征工程，<br>
-      但没有替你取消研究设计的责任。<br><br>
+      在 AI 时代，真正重要的是：<br>
+      <strong>选择合适的 tokenizer、embedding、模型、chunking 与评估方式</strong>。<br><br>
+      传统稀疏表示仍然有用，但 BERT 与 LLM 已经把重心推进到<br>
+      上下文建模、检索增强和系统级设计。<br><br>
       下节课我们继续：从 TF-IDF 到 BERT，机器怎样开始做分类与判断？
     </p>
     <p class="hint">lecture07 预告：文本分类 — 从 TF-IDF 到 BERT</p>
