@@ -1,0 +1,1671 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第六课 文本处理基础 — 机器学习与自然语言处理</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    :root {
+      --r-background-color: #fff;
+      --r-main-font: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+      --r-main-font-size: 32px;
+      --r-main-color: #1a1a2e;
+      --r-heading-font: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+      --r-heading-color: #0f0f1a;
+      --r-heading-font-weight: 700;
+      --r-link-color: #2563eb;
+      --accent: #2563eb;
+      --accent-light: #dbeafe;
+      --accent-soft: #eef4ff;
+      --gray-50: #f8f9fa;
+      --gray-100: #f1f3f5;
+      --gray-200: #e9ecef;
+      --gray-300: #dee2e6;
+      --gray-400: #adb5bd;
+      --gray-500: #868e96;
+      --gray-600: #6c757d;
+      --gray-700: #495057;
+      --gray-800: #343a40;
+      --green: #16a34a;
+      --green-light: #dcfce7;
+      --amber: #d97706;
+      --amber-light: #fef3c7;
+      --red: #dc2626;
+      --red-light: #fee2e2;
+    }
+
+    .reveal { font-weight: 400; }
+    .reveal h1 { font-size: 2.2em; letter-spacing: -0.02em; }
+    .reveal h2 {
+      font-size: 1.6em;
+      letter-spacing: -0.01em;
+      color: var(--accent);
+      text-transform: none;
+      margin-bottom: 0.25em;
+    }
+    .reveal h3 { font-size: 1.05em; color: var(--gray-800); }
+    .reveal p,
+    .reveal li { line-height: 1.6; }
+    .reveal ul { list-style: none; padding-left: 0; }
+    .reveal ul li { padding-left: 1.5em; position: relative; margin-bottom: 0.4em; }
+    .reveal ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    .reveal code {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--gray-100);
+      padding: 0.1em 0.4em;
+      border-radius: 4px;
+      font-size: 0.85em;
+    }
+    .reveal pre code {
+      font-family: 'JetBrains Mono', monospace;
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 1em 1.4em;
+      border-radius: 8px;
+      font-size: 0.72em;
+      line-height: 1.7;
+      display: block;
+      text-align: left;
+    }
+    .reveal pre { box-shadow: none; width: 100%; margin: 0.6em 0; }
+
+    .cover h1 { font-size: 2.6em; margin-bottom: 0.1em; }
+    .cover .subtitle {
+      font-size: 1.1em;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 2em;
+    }
+    .cover .meta {
+      font-size: 0.7em;
+      color: var(--gray-600);
+      line-height: 1.8;
+    }
+
+    .section-title { background: var(--r-background-color) !important; }
+    .section-title h2 {
+      font-size: 2.4em;
+      color: var(--r-main-color);
+      border-left: 6px solid var(--accent);
+      padding-left: 0.6em;
+      text-align: left;
+    }
+    .section-title .section-num {
+      font-size: 0.5em;
+      color: var(--gray-400);
+      font-weight: 400;
+      display: block;
+      margin-bottom: 0.2em;
+    }
+
+    .highlight-box {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-left: 4px solid var(--accent);
+      padding: 1em 1.5em;
+      border-radius: 4px;
+      text-align: left;
+      margin: 1em 0;
+    }
+
+    .quote-box {
+      background: var(--accent-light);
+      border: 1px solid #bfdbfe;
+      border-left: 4px solid var(--accent);
+      padding: 1.2em 1.8em;
+      border-radius: 4px;
+      text-align: left;
+      margin: 1em 0;
+    }
+    .quote-box .quote-text {
+      font-size: 1.05em;
+      font-weight: 600;
+      color: var(--r-main-color);
+      line-height: 1.5;
+      font-style: italic;
+    }
+    .quote-box .quote-source {
+      font-size: 0.65em;
+      color: var(--gray-600);
+      margin-top: 0.6em;
+    }
+
+    .cols { display: flex; gap: 2em; align-items: flex-start; }
+    .cols .col { flex: 1; text-align: left; }
+    .cols .col-40 { flex: 0 0 40%; text-align: left; }
+    .cols .col-60 { flex: 0 0 58%; text-align: left; }
+
+    .flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin: 1em 0;
+      flex-wrap: nowrap;
+    }
+    .flow-node {
+      background: var(--gray-50);
+      border: 2px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.8em 1.2em;
+      font-size: 0.72em;
+      font-weight: 500;
+      text-align: center;
+      min-width: 118px;
+      line-height: 1.5;
+    }
+    .flow-node.accent { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .flow-node.outline { background: #fff; border-color: var(--accent); color: var(--accent); }
+    .flow-node.soft { background: var(--accent-soft); border-color: #bfdbfe; }
+    .flow-arrow {
+      width: 40px;
+      height: 2px;
+      background: var(--gray-400);
+      position: relative;
+      flex-shrink: 0;
+    }
+    .flow-arrow::after {
+      content: '';
+      position: absolute;
+      right: -1px;
+      top: -5px;
+      border: 6px solid transparent;
+      border-left: 8px solid var(--gray-400);
+    }
+    .flow-arrow.accent-arrow { background: var(--accent); }
+    .flow-arrow.accent-arrow::after { border-left-color: var(--accent); }
+
+    .card-grid { display: grid; gap: 1em; margin: 1em 0; }
+    .card-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .card-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .card-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+    .card-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
+    .card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 1.2em;
+      text-align: center;
+    }
+    .card.accent-card { background: var(--accent-light); border-color: #93c5fd; }
+    .card .card-icon { font-size: 1.9em; margin-bottom: 0.3em; line-height: 1; }
+    .card .card-label { font-size: 0.7em; font-weight: 600; color: var(--r-main-color); margin-bottom: 0.2em; }
+    .card .card-desc { font-size: 0.65em; color: var(--gray-600); line-height: 1.5; }
+
+    .vs-layout { display: flex; align-items: stretch; gap: 0; margin: 0.8em 0; }
+    .vs-panel { flex: 1; padding: 1.2em 1.5em; border-radius: 8px; text-align: left; }
+    .vs-panel.left {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      margin-right: -1px;
+      border-radius: 8px 0 0 8px;
+    }
+    .vs-panel.right {
+      background: var(--accent-light);
+      border: 1px solid #bfdbfe;
+      border-radius: 0 8px 8px 0;
+    }
+    .vs-divider {
+      width: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4em;
+      font-weight: 700;
+      color: var(--gray-400);
+      flex-shrink: 0;
+    }
+    .vs-panel h3 { font-size: 0.85em; margin-bottom: 0.6em; }
+    .vs-panel .vs-items { font-size: 0.75em; color: var(--gray-800); line-height: 2; }
+
+    .takeaway {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      padding: 2em;
+      text-align: center;
+    }
+    .takeaway .divider {
+      width: 3em;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 1.8em;
+    }
+    .takeaway .main-text {
+      font-size: 1.45em;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1.45;
+      margin: 0 0 1.2em 0;
+      max-width: 16em;
+    }
+    .takeaway .sub-text {
+      font-size: 0.82em;
+      color: var(--gray-600);
+      line-height: 1.8;
+      margin: 0 0 2em 0;
+      max-width: 30em;
+    }
+    .takeaway .hint { font-size: 0.6em; color: var(--gray-400); letter-spacing: 0.04em; }
+
+    .warning-box {
+      background: #fef2f2;
+      border: 1px solid #fca5a5;
+      border-left: 4px solid var(--red);
+      padding: 0.8em 1.2em;
+      border-radius: 4px;
+      text-align: left;
+      margin: 0.8em 0;
+    }
+
+    .tag {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.55em;
+      font-weight: 600;
+      padding: 0.2em 0.7em;
+      border-radius: 20px;
+      vertical-align: middle;
+      margin-left: 0.4em;
+      letter-spacing: 0.03em;
+    }
+    .tag.gray { background: var(--gray-400); }
+    .tag.green { background: var(--green); }
+
+    .prob-bar-wrap { margin: 0.55em 0; text-align: left; }
+    .prob-bar-label {
+      font-size: 0.65em;
+      color: var(--gray-700);
+      margin-bottom: 0.15em;
+      font-weight: 500;
+    }
+    .prob-bar-track {
+      background: var(--gray-100);
+      border-radius: 4px;
+      height: 20px;
+      overflow: hidden;
+    }
+    .prob-bar-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      padding-left: 0.5em;
+    }
+    .prob-bar-fill.green { background: var(--green); }
+    .prob-bar-fill.amber { background: var(--amber); }
+    .prob-bar-fill.muted { background: var(--gray-400); }
+    .prob-bar-pct { font-size: 0.6em; color: #fff; font-weight: 600; }
+
+    .analogy-eq {
+      font-size: 1.05em;
+      font-weight: 700;
+      text-align: center;
+      color: var(--r-main-color);
+      padding: 0.8em 1em;
+      background: var(--gray-50);
+      border: 2px solid var(--gray-200);
+      border-radius: 8px;
+      margin: 0.6em 0;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .analogy-eq .blue { color: var(--accent); }
+    .analogy-eq .gray { color: var(--gray-500); }
+
+    .hint {
+      font-size: 0.6em;
+      color: var(--gray-500);
+      letter-spacing: 0.02em;
+    }
+
+    .mono-panel {
+      font-family: 'JetBrains Mono', monospace;
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 0.9em 1.1em;
+      border-radius: 8px;
+      font-size: 0.64em;
+      line-height: 1.75;
+      text-align: left;
+      margin: 0.8em 0;
+      white-space: pre-wrap;
+    }
+
+    .chip-row { display: flex; flex-wrap: wrap; gap: 0.45em; margin: 0.8em 0; }
+    .token-chip {
+      display: inline-flex;
+      align-items: center;
+      background: var(--accent-light);
+      color: var(--accent);
+      border: 1px solid #bfdbfe;
+      border-radius: 999px;
+      padding: 0.22em 0.7em;
+      font-size: 0.62em;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+    .token-chip.soft {
+      background: var(--gray-50);
+      color: var(--gray-700);
+      border-color: var(--gray-200);
+    }
+    .token-chip.green {
+      background: var(--green-light);
+      color: #166534;
+      border-color: #86efac;
+    }
+    .token-chip.amber {
+      background: var(--amber-light);
+      color: #92400e;
+      border-color: #fcd34d;
+    }
+
+    .compare-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1em; margin-top: 1em; }
+    .compare-box {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 1em 1.2em;
+      text-align: left;
+    }
+    .compare-box.accent {
+      background: var(--accent-light);
+      border-color: #bfdbfe;
+    }
+    .compare-box .compare-title {
+      font-size: 0.7em;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      margin-bottom: 0.45em;
+    }
+    .compare-box .compare-text {
+      font-size: 0.72em;
+      color: var(--gray-700);
+      line-height: 1.7;
+    }
+
+    .example-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.6em;
+      line-height: 1.6;
+      margin-top: 0.6em;
+    }
+    .example-table th,
+    .example-table td {
+      border: 1px solid var(--gray-200);
+      padding: 0.55em 0.65em;
+      vertical-align: top;
+      text-align: left;
+    }
+    .example-table th {
+      background: var(--gray-50);
+      color: var(--gray-700);
+      font-weight: 600;
+    }
+    .example-table .row-label {
+      font-weight: 600;
+      color: var(--r-main-color);
+      background: #fff;
+    }
+    .example-table .accent-cell { background: var(--accent-light); }
+
+    .principle-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.9em; margin-top: 1em; }
+    .principle-card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 1.05em 1.2em;
+      text-align: left;
+    }
+    .principle-card .principle-title {
+      font-size: 0.75em;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.35em;
+    }
+    .principle-card .principle-text {
+      font-size: 0.68em;
+      color: var(--gray-700);
+      line-height: 1.7;
+    }
+
+    .fork-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8em; margin-top: 1em; }
+    .fork-step {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.9em 1em;
+      text-align: left;
+    }
+    .fork-step .fork-title {
+      font-size: 0.7em;
+      font-weight: 700;
+      color: var(--r-main-color);
+      margin-bottom: 0.35em;
+    }
+    .fork-step .fork-choices {
+      font-size: 0.62em;
+      color: var(--gray-600);
+      line-height: 1.7;
+    }
+
+    .big-stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8em; margin: 1em 0; }
+    .big-stat {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 1em 0.8em;
+      text-align: center;
+    }
+    .big-stat .num {
+      font-size: 1.65em;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1.1;
+      display: block;
+      margin-bottom: 0.25em;
+    }
+    .big-stat .label {
+      font-size: 0.62em;
+      color: var(--gray-600);
+      line-height: 1.6;
+    }
+
+    .stage-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.8em; margin-top: 1em; }
+    .stage-card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.95em 0.8em;
+      text-align: center;
+    }
+    .stage-card .stage-level {
+      font-size: 0.55em;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gray-500);
+      margin-bottom: 0.45em;
+    }
+    .stage-card .stage-name {
+      font-size: 0.72em;
+      font-weight: 700;
+      color: var(--r-main-color);
+      margin-bottom: 0.35em;
+    }
+    .stage-card .stage-desc {
+      font-size: 0.58em;
+      color: var(--gray-600);
+      line-height: 1.55;
+    }
+
+    .reveal .slide-number {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: var(--gray-500);
+      right: 58px !important;
+      bottom: 16px !important;
+      background: rgba(255, 255, 255, 0.88);
+      padding: 0.18em 0.45em !important;
+      border-radius: 999px;
+      box-shadow: 0 1px 3px rgba(15, 15, 26, 0.08);
+    }
+    .reveal .progress span { background: var(--accent); }
+    .reveal .highlight-blue { color: var(--accent); }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- Slide 1 -->
+<section class="cover">
+  <h1>文本处理基础</h1>
+  <p class="subtitle">当文字遇见算法</p>
+  <p class="meta">
+    第六课<br>
+    郑思尧<br>
+    上海交通大学 国际与公共事务学院
+  </p>
+</section>
+
+<!-- Slide 2 -->
+<section>
+  <h2>一个转场：从“模型能做什么”到“文字到底是什么”</h2>
+  <div class="quote-box" style="margin-top:1.2em;">
+    <p class="quote-text">"All quantitative models of language are wrong, but some are useful."</p>
+    <p class="quote-source">Grimmer &amp; Stewart, 2013</p>
+  </div>
+  <div class="highlight-box" style="margin-top:1em;">
+    <p style="font-size:0.78em; margin:0;">
+      上节课我们已经看到了主题模型、词向量和智能体。<br>
+      今天往回走一步：在任何模型开始之前，你都要先回答一个更基础的问题。<br>
+      <strong>怎样把“文字”变成“可以计算的数据”，以及 BERT / LLM 为什么改写了这件事?</strong>
+    </p>
+  </div>
+</section>
+
+<!-- Slide 3 -->
+<section>
+  <h2>上节课留下的接口问题</h2>
+  <div class="vs-layout" style="margin-top:1.1em;">
+    <div class="vs-panel left">
+      <h3>lecture05 已经讲到的能力<span class="tag gray">模型端</span></h3>
+      <div class="vs-items">
+        词向量表示语义距离<br>
+        LDA 发现隐藏话题<br>
+        Agent 调用工具执行任务
+      </div>
+    </div>
+    <div class="vs-divider">→</div>
+    <div class="vs-panel right">
+      <h3>现实世界交给你的输入<span class="tag green">文本端</span></h3>
+      <div class="vs-items">
+        原始句子没有特征表格<br>
+        中文没有天然空格<br>
+        同一个词可能有多个意思
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box">
+    <p style="font-size:0.79em; margin:0;">
+      机器学习喜欢的是 <code>X</code> 矩阵。<br>
+      现实世界给你的是 <strong>报告、评论、政策文本、聊天记录</strong>。<br>
+      第六课讲的就是中间这层 <strong>接口工程</strong>，以及它在 BERT / LLM 时代如何被重写。
+    </p>
+  </div>
+</section>
+
+<!-- Slide 4 -->
+<section>
+  <h2>今天的路线图</h2>
+  <div class="card-grid cols-5" style="margin-top:1.1em; gap:0.8em;">
+    <div class="card" style="padding:1em 0.8em;">
+      <div class="card-icon" style="color:var(--accent); font-weight:700;">字</div>
+      <div class="card-label">Part 1</div>
+      <div class="card-desc">文字不是数字<br><span style="color:var(--gray-400);">歧义、语境与中文特殊性</span></div>
+    </div>
+    <div class="card accent-card" style="padding:1em 0.8em;">
+      <div class="card-icon" style="color:var(--accent); font-weight:700;">切</div>
+      <div class="card-label">Part 2</div>
+      <div class="card-desc">分词与预处理<br><span style="color:var(--gray-600);">第一个不可避免的选择</span></div>
+    </div>
+    <div class="card" style="padding:1em 0.8em;">
+      <div class="card-icon" style="color:var(--accent); font-weight:700;">表</div>
+      <div class="card-label">Part 3</div>
+      <div class="card-desc">从文本到矩阵<br><span style="color:var(--gray-400);">BoW、TF-IDF、DTM</span></div>
+    </div>
+    <div class="card" style="padding:1em 0.8em; border-color:#93c5fd;">
+      <div class="card-icon" style="color:var(--accent); font-weight:700;">模</div>
+      <div class="card-label">Part 4</div>
+      <div class="card-desc">BERT 与 LLM<br><span style="color:var(--gray-400);">上下文表示</span></div>
+    </div>
+    <div class="card" style="padding:1em 0.8em;">
+      <div class="card-icon" style="color:var(--accent); font-weight:700;">思</div>
+      <div class="card-label">Part 5</div>
+      <div class="card-desc">文本作为数据<br><span style="color:var(--gray-400);">方法论反思与研究设计</span></div>
+    </div>
+  </div>
+  <p class="hint" style="text-align:center; margin-top:0.9em;">
+    今天的核心句：<strong>从 BoW 到 BERT / LLM，表示在升级，但研究设计责任没有消失。</strong>
+  </p>
+</section>
+
+<!-- Slide 5 -->
+<section class="section-title">
+  <h2>
+    <span class="section-num">Part 1 / 5</span>
+    文字不是数字：<br>文本为什么特殊？
+  </h2>
+</section>
+
+<!-- Slide 6 -->
+<section>
+  <h2>同一句话，人和机器看到的不是同一个东西</h2>
+  <div class="compare-grid" style="margin-top:1em;">
+    <div class="compare-box">
+      <div class="compare-title">人类读到的是</div>
+      <div class="compare-text">
+        “市民抱怨地铁太挤了。”<br><br>
+        你会立刻联想到：<br>
+        通勤高峰、公共服务评价、负面情绪、城市治理问题。
+      </div>
+      <div class="chip-row">
+        <span class="token-chip soft">语境</span>
+        <span class="token-chip soft">常识</span>
+        <span class="token-chip soft">隐含情绪</span>
+      </div>
+    </div>
+    <div class="compare-box accent">
+      <div class="compare-title">机器最开始拿到的是</div>
+      <div class="mono-panel">市 / 民 / 抱 / 怨 / 地 / 铁 / 太 / 挤 / 了
+
+U+5E02 U+6C11 U+62B1 U+6028 ...
+
+或者：["市民","抱怨","地铁","太","挤","了"]</div>
+      <div class="compare-text">字符、编码、位置、频次。<strong>“抱怨”</strong> 这个概念不是天然存在的。</div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 7 -->
+<section>
+  <h2>语言的第一个麻烦：同词异义，不同词也能同义</h2>
+  <div class="compare-grid" style="margin-top:1em;">
+    <div class="compare-box">
+      <div class="compare-title">Polysemy: 一个词，不止一个意思</div>
+      <div class="compare-text">
+        <strong>苹果</strong>：水果 / 公司<br>
+        <strong>模型</strong>：统计模型 / 展示模型<br>
+        <strong>银行</strong>：金融机构 / 河岸（在英文更常见）<br>
+        <strong>打</strong>：打电话 / 打分 / 打车 / 打工
+      </div>
+      <div class="chip-row">
+        <span class="token-chip">上下文决定意思</span>
+      </div>
+    </div>
+    <div class="compare-box accent">
+      <div class="compare-title">Synonymy: 不同说法，可以指向同一件事</div>
+      <div class="compare-text">
+        支持 / 赞成 / 拥护<br>
+        失业 / 找不到工作 / 待业<br>
+        不满意 / 体验差 / 差评<br>
+        就业压力大 / 找工作困难
+      </div>
+      <div class="chip-row">
+        <span class="token-chip green">表述不同</span>
+        <span class="token-chip green">语义接近</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 8 -->
+<section>
+  <h2>语序和上下文，都会改变你读到的东西</h2>
+  <div class="vs-layout" style="margin-top:1em;">
+    <div class="vs-panel left">
+      <h3>同样的词，不同顺序</h3>
+      <div class="analogy-eq" style="font-size:0.8em; margin-top:0.8em;">
+        狗 咬 人 <span class="gray">≠</span> 人 咬 狗
+      </div>
+      <div class="vs-items" style="margin-top:0.8em;">
+        词没变，角色变了<br>
+        责任归属变了<br>
+        新闻价值甚至也变了
+      </div>
+    </div>
+    <div class="vs-panel right">
+      <h3>同样的词，不同上下文</h3>
+      <div class="vs-items" style="margin-top:0.8em;">
+        苹果很好吃 → 水果<br>
+        苹果发布新品 → 公司<br><br>
+        “模型很好” 也可能指：<br>
+        统计效果、3D 模型、商业模型
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box">
+    <p style="font-size:0.77em; margin:0;">
+      这意味着：文本分析不是简单地“识别单词”。<br>
+      你还要决定 <strong>哪些上下文信息要保留，哪些可以丢掉</strong>。
+    </p>
+  </div>
+</section>
+
+<!-- Slide 9 -->
+<section>
+  <h2>中文文本有自己独特的难点</h2>
+  <div class="card-grid cols-3" style="margin-top:1em;">
+    <div class="card">
+      <div class="card-icon">空格</div>
+      <div class="card-label">没有天然词边界</div>
+      <div class="card-desc">英文句子里空格天然帮你切词。中文没有这一层“免费标注”。</div>
+    </div>
+    <div class="card accent-card">
+      <div class="card-icon">新词</div>
+      <div class="card-label">专有名词和热词变化快</div>
+      <div class="card-desc">平台术语、政策口号、人名机构名，经常比词典更新得更快。</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">变体</div>
+      <div class="card-label">简称、隐喻、委婉表达多</div>
+      <div class="card-desc">同一个议题可能被写成多种说法，政治文本里尤其如此。</div>
+    </div>
+  </div>
+  <div class="warning-box" style="margin-top:1em;">
+    <p style="font-size:0.74em; margin:0;">
+      经典例子：<strong>南京市长江大桥</strong>。<br>
+      你到底该切成 <code>南京市 / 长江大桥</code>，还是别的东西？这个问题没有机器自己就能“天然知道”的答案。
+    </p>
+  </div>
+</section>
+
+<!-- Slide 10 -->
+<section>
+  <div class="takeaway">
+    <div class="divider"></div>
+    <p class="main-text">把文字变成数字，不是“翻译”<br>而是“建模”</p>
+    <p class="sub-text">
+      文本的难点来自三件事：<br>
+      歧义性、语境依赖性、中文的边界模糊性。<br><br>
+      你不是在清扫噪音，而是在决定<br>
+      <strong>什么算作一个“可分析的单位”</strong>。
+    </p>
+    <p class="hint">这也是为什么预处理会直接影响研究结论。</p>
+  </div>
+</section>
+
+<!-- Slide 11 -->
+<section class="section-title">
+  <h2>
+    <span class="section-num">Part 2 / 5</span>
+    分词与预处理：<br>第一个不可避免的选择
+  </h2>
+</section>
+
+<!-- Slide 12 -->
+<section>
+  <h2>Tokenization 到底在做什么？</h2>
+  <div class="flow" style="margin-top:1.1em;">
+    <div class="flow-node outline">原始文本</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node soft">切成单位</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node accent">建立索引</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node">计算特征</div>
+  </div>
+  <div class="highlight-box">
+    <p style="font-size:0.76em; margin:0 0 0.45em 0;">
+      例子：<code>政府支持人工智能产业发展</code>
+    </p>
+    <div class="chip-row">
+      <span class="token-chip">政府</span>
+      <span class="token-chip">支持</span>
+      <span class="token-chip">人工智能</span>
+      <span class="token-chip">产业</span>
+      <span class="token-chip">发展</span>
+    </div>
+    <p style="font-size:0.72em; margin:0.6em 0 0 0; color:var(--gray-700);">
+      只有切成单位之后，机器才能继续做词频、权重、向量、分类、聚类。
+    </p>
+  </div>
+</section>
+
+<!-- Slide 13 -->
+<section>
+  <h2>英文分词看起来简单，其实也不完全简单</h2>
+  <div class="card-grid cols-4" style="margin-top:1em;">
+    <div class="card">
+      <div class="card-icon" style="font-size:1em;">New York</div>
+      <div class="card-label">专有名词</div>
+      <div class="card-desc">一个地点名，还是两个普通词？</div>
+    </div>
+    <div class="card accent-card">
+      <div class="card-icon" style="font-size:1em;">can't</div>
+      <div class="card-label">缩写</div>
+      <div class="card-desc">一个 token，还是 <code>ca</code> + <code>n't</code>？</div>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="font-size:0.9em;">state-of-the-art</div>
+      <div class="card-label">连字符表达</div>
+      <div class="card-desc">拆开会丢失一个固定短语。</div>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="font-size:0.95em;">#BlackLivesMatter</div>
+      <div class="card-label">社交媒体文本</div>
+      <div class="card-desc">标签、表情、提及符号，都不一定是“噪音”。</div>
+    </div>
+  </div>
+  <p class="hint" style="text-align:center; margin-top:0.8em;">
+    分词从来不是纯技术动作，它总是在为某个下游任务服务。
+  </p>
+</section>
+
+<!-- Slide 14 -->
+<section>
+  <h2>中文分词：边界本来就不“天然”</h2>
+  <table class="example-table" style="margin-top:1em;">
+    <thead>
+      <tr>
+        <th>原始字符串</th>
+        <th>切分方案 A</th>
+        <th>切分方案 B</th>
+        <th>含义变化</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="row-label">南京市长江大桥</td>
+        <td>南京市 / 长江大桥</td>
+        <td>南京 / 市长 / 江大桥</td>
+        <td>后者几乎把地名结构完全切坏了。</td>
+      </tr>
+      <tr>
+        <td class="row-label">研究生命起源</td>
+        <td>研究 / 生命 / 起源</td>
+        <td>研究生 / 命 / 起源</td>
+        <td>同样的字串，可以变成完全不同的句法结构。</td>
+      </tr>
+      <tr>
+        <td class="row-label">乒乓球拍卖完了</td>
+        <td>乒乓球拍 / 卖完了</td>
+        <td>乒乓球 / 拍卖完了</td>
+        <td>一个是“球拍卖完”，一个是“球被拍卖”。</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="highlight-box">
+    <p style="font-size:0.73em; margin:0;">
+      <strong>关键点</strong>：中文分词不是把已经存在的边界“找出来”，而是在多个可能的切分里做选择。
+    </p>
+  </div>
+</section>
+
+<!-- Slide 15 -->
+<section>
+  <h2>jieba 的直觉：词典 + 概率 + 最优路径</h2>
+  <div class="flow" style="margin-top:1.1em;">
+    <div class="flow-node outline">原句</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node soft">所有可切分路径</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node soft">词典频率 / 统计概率</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node accent">最可能的一条</div>
+  </div>
+  <div class="cols" style="margin-top:1em;">
+    <div class="col">
+      <div class="mono-panel">南京市长江大桥
+
+候选路径：
+1) 南京市 / 长江大桥
+2) 南京 / 市长 / 江大桥
+3) 南京 / 市 / 长江 / 大桥</div>
+    </div>
+    <div class="col">
+      <div class="highlight-box" style="margin-top:0;">
+        <p style="font-size:0.74em; margin:0;">
+          jieba 并不是“真正理解”了长江大桥。<br>
+          它只是依据词典和统计规律，挑出一条<strong>更像人类会使用的路径</strong>。
+        </p>
+      </div>
+      <p class="hint" style="margin-top:0.9em;">
+        所以一旦新词很多、领域术语很多、文本风格变了，你就可能需要自定义词典或改策略。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 16 -->
+<section>
+  <h2>粒度选择，本质上是研究假设</h2>
+  <div class="card-grid cols-3" style="margin-top:1em;">
+    <div class="card">
+      <div class="card-icon" style="font-size:1.2em;">字粒度</div>
+      <div class="card-label">保守，不怕分错</div>
+      <div class="card-desc">
+        例：中 / 华 / 人 / 民 / 共 / 和 / 国<br>
+        好处：对分词错误更鲁棒<br>
+        风险：语义被切得太碎
+      </div>
+    </div>
+    <div class="card accent-card">
+      <div class="card-icon" style="font-size:1.2em;">词粒度</div>
+      <div class="card-label">最常见的默认方案</div>
+      <div class="card-desc">
+        例：中华人民共和国<br>
+        好处：解释性强<br>
+        风险：受分词质量影响很大
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="font-size:1.2em;">子词粒度</div>
+      <div class="card-label">现代模型常用</div>
+      <div class="card-desc">
+        例：中华 / 人民 / 共和国<br>
+        好处：兼顾稀有词与泛化<br>
+        风险：可解释性下降
+      </div>
+    </div>
+  </div>
+  <p class="hint" style="text-align:center;">
+    你选择的粒度，决定了模型“看到”的语言单位是什么。
+  </p>
+</section>
+
+<!-- Slide 17 -->
+<section>
+  <h2>停用词：你删除的，就是你认为“不重要”的</h2>
+  <div class="vs-layout" style="margin-top:1em;">
+    <div class="vs-panel left">
+      <h3>为什么很多人会删除停用词</h3>
+      <div class="vs-items">
+        的、了、是 过于常见<br>
+        容易淹没主题词<br>
+        对主题模型 / 检索经常有帮助
+      </div>
+    </div>
+    <div class="vs-panel right">
+      <h3>但有些任务不能轻易删</h3>
+      <div class="vs-items">
+        “应该 / 必须 / 可以”反映态度强弱<br>
+        否定词会改写情绪方向<br>
+        语气词有时反映身份与风格
+      </div>
+    </div>
+  </div>
+  <div class="warning-box">
+    <p style="font-size:0.74em; margin:0;">
+      如果你研究的是 <strong>立场、语气、意识形态、政策强度</strong>，很多“功能词”反而是有信息量的。
+    </p>
+  </div>
+</section>
+
+<!-- Slide 18 -->
+<section>
+  <h2>同一批文本，不同预处理，可能导向不同结论</h2>
+  <table class="example-table" style="margin-top:1em;">
+    <thead>
+      <tr>
+        <th>处理方案</th>
+        <th>示意 Top Terms</th>
+        <th>你更可能讲出的故事</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="row-label">词级分词 + 去停用词</td>
+        <td>就业、企业、创新、发展</td>
+        <td>宏观经济与产业政策是主轴。</td>
+      </tr>
+      <tr>
+        <td class="row-label">保留双词短语</td>
+        <td>高质量发展、共同富裕、人工智能</td>
+        <td>政策口号与成套议题更突出。</td>
+      </tr>
+      <tr>
+        <td class="row-label">字粒度 / 噪音较多</td>
+        <td>发、展、高、质、量</td>
+        <td>解释性变差，概念边界开始模糊。</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="hint" style="margin-top:0.8em;">
+    这不是“谁更客观”的问题，而是 <strong>哪种表示更适合你的研究问题</strong>。
+  </p>
+</section>
+
+<!-- Slide 19 -->
+<section class="section-title">
+  <h2>
+    <span class="section-num">Part 3 / 5</span>
+    从文本到矩阵：<br>表示的哲学
+  </h2>
+</section>
+
+<!-- Slide 20 -->
+<section>
+  <h2>Bag of Words 的哲学前提：词序不重要</h2>
+  <div class="compare-grid" style="margin-top:1em;">
+    <div class="compare-box">
+      <div class="compare-title">原句 A</div>
+      <div class="analogy-eq" style="font-size:0.82em;">人 咬 狗</div>
+      <div class="compare-text">一个极少见、带冲击力的事件。</div>
+    </div>
+    <div class="compare-box accent">
+      <div class="compare-title">原句 B</div>
+      <div class="analogy-eq" style="font-size:0.82em;">狗 咬 人</div>
+      <div class="compare-text">更符合常识的叙述。</div>
+    </div>
+  </div>
+  <div class="highlight-box">
+    <p style="font-size:0.76em; margin:0;">
+      在 BoW 里，这两句的词袋向量都是：<br>
+      <code>{人: 1, 咬: 1, 狗: 1}</code><br><br>
+      也就是说，BoW 默认相信：<strong>“出现了什么词” 比 “词怎么排” 更重要。</strong>
+    </p>
+  </div>
+</section>
+
+<!-- Slide 21 -->
+<section>
+  <h2>手工演示：把一段政策文本变成词袋</h2>
+  <div class="cols" style="margin-top:1em;">
+    <div class="col-60">
+      <div class="quote-box" style="margin-top:0;">
+        <p class="quote-text" style="font-size:0.88em; font-style:normal;">
+          “今年要扩大就业，稳定预期，支持民营经济发展，推动人工智能与制造业深度融合。”
+        </p>
+      </div>
+      <div class="chip-row">
+        <span class="token-chip">扩大</span>
+        <span class="token-chip">就业</span>
+        <span class="token-chip">稳定</span>
+        <span class="token-chip">预期</span>
+        <span class="token-chip">支持</span>
+        <span class="token-chip">民营经济</span>
+        <span class="token-chip">发展</span>
+        <span class="token-chip">人工智能</span>
+        <span class="token-chip">制造业</span>
+        <span class="token-chip">融合</span>
+      </div>
+    </div>
+    <div class="col-40">
+      <table class="example-table" style="margin-top:0;">
+        <thead>
+          <tr>
+            <th>词</th>
+            <th>计数</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="row-label">就业</td><td>1</td></tr>
+          <tr><td class="row-label">民营经济</td><td>1</td></tr>
+          <tr><td class="row-label">人工智能</td><td>1</td></tr>
+          <tr><td class="row-label">发展</td><td>1</td></tr>
+          <tr><td class="row-label">支持</td><td>1</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p class="hint">
+    一旦你完成这一步，文本就第一次变成了“表格里的行和列”。
+  </p>
+</section>
+
+<!-- Slide 22 -->
+<section>
+  <h2>TF-IDF：不是所有词都一样重要</h2>
+  <div class="cols" style="margin-top:1em;">
+    <div class="col">
+      <div class="highlight-box" style="margin-top:0;">
+        <p style="font-size:0.72em; margin:0 0 0.5em 0;"><strong>词频高，但区分度低</strong></p>
+        <div class="prob-bar-wrap">
+          <div class="prob-bar-label">“的”</div>
+          <div class="prob-bar-track"><div class="prob-bar-fill muted" style="width:18%;"><span class="prob-bar-pct">低权重</span></div></div>
+        </div>
+        <div class="prob-bar-wrap">
+          <div class="prob-bar-label">“发展”</div>
+          <div class="prob-bar-track"><div class="prob-bar-fill amber" style="width:42%;"><span class="prob-bar-pct">中等</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="highlight-box" style="margin-top:0;">
+        <p style="font-size:0.72em; margin:0 0 0.5em 0;"><strong>未必最常见，但更有信息量</strong></p>
+        <div class="prob-bar-wrap">
+          <div class="prob-bar-label">“碳中和”</div>
+          <div class="prob-bar-track"><div class="prob-bar-fill" style="width:82%;"><span class="prob-bar-pct">高权重</span></div></div>
+        </div>
+        <div class="prob-bar-wrap">
+          <div class="prob-bar-label">“算力”</div>
+          <div class="prob-bar-track"><div class="prob-bar-fill green" style="width:70%;"><span class="prob-bar-pct">高权重</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box">
+    <p style="font-size:0.74em; margin:0;">
+      TF-IDF 在问一个简单问题：<br>
+      <strong>这个词不仅在这篇文档里重要，而且相对其他文档也更能区分它吗？</strong>
+    </p>
+  </div>
+</section>
+
+<!-- Slide 23 -->
+<section>
+  <h2>DTM：文本世界的“电子表格”</h2>
+  <table class="example-table" style="margin-top:1em;">
+    <thead>
+      <tr>
+        <th>文档</th>
+        <th>就业</th>
+        <th>人工智能</th>
+        <th>民营经济</th>
+        <th>社保</th>
+        <th>教育</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="row-label">政府工作报告 A</td>
+        <td>4</td>
+        <td>2</td>
+        <td>3</td>
+        <td>0</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td class="row-label">政府工作报告 B</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>3</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td class="row-label">地方政策新闻</td>
+        <td>0</td>
+        <td>4</td>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="highlight-box">
+    <p style="font-size:0.73em; margin:0;">
+      行是文档，列是词。每个单元格是出现次数、TF-IDF 权重，或者别的数值表示。<br>
+      <strong>从这一刻开始，文本分析正式接入机器学习的标准接口。</strong>
+    </p>
+  </div>
+</section>
+
+<!-- Slide 24 -->
+<section>
+  <h2>从 DTM 到 ML：你其实已经见过这张表了</h2>
+  <div class="flow" style="margin-top:1.1em;">
+    <div class="flow-node outline">原始文本</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node soft">分词 / 清洗</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node accent">DTM / TF-IDF</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node">分类 / 聚类 / 主题</div>
+  </div>
+  <div class="card-grid cols-2" style="margin-top:1em;">
+    <div class="card">
+      <div class="card-label" style="font-size:0.76em;">回到 lecture04</div>
+      <div class="card-desc" style="font-size:0.7em;">
+        有监督学习要的就是一张 <code>X</code> 特征矩阵。<br>
+        DTM 正是在给文本造这张表。
+      </div>
+    </div>
+    <div class="card accent-card">
+      <div class="card-label" style="font-size:0.76em;">回到 lecture05</div>
+      <div class="card-desc" style="font-size:0.7em;">
+        主题模型、词向量、检索系统，本质上也都在建立文本表示。<br>
+        只是表示能力越来越强。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 25 -->
+<section>
+  <h2>维度灾难的直觉：矩阵极大，但几乎全是 0</h2>
+  <div class="big-stat-grid" style="margin-top:1em;">
+    <div class="big-stat">
+      <span class="num">100k</span>
+      <div class="label">文档数</div>
+    </div>
+    <div class="big-stat">
+      <span class="num">300k</span>
+      <div class="label">词汇表大小</div>
+    </div>
+    <div class="big-stat">
+      <span class="num">30B</span>
+      <div class="label">矩阵总单元格</div>
+    </div>
+    <div class="big-stat">
+      <span class="num">0.13%</span>
+      <div class="label">若每篇仅 400 个非零词项，非零占比也只有这么多</div>
+    </div>
+  </div>
+  <div class="highlight-box">
+    <p style="font-size:0.75em; margin:0;">
+      这就是为什么文本矩阵常常被称为 <strong>稀疏矩阵</strong>。<br>
+      它解释了两个现实：<br>
+      1. 文本特征工程会非常吃内存；<br>
+      2. 维度控制、稀疏表示和降维技巧会很重要。
+    </p>
+  </div>
+</section>
+
+<!-- Slide 26 -->
+<section>
+  <h2>Beyond BoW：表示能力是一条连续光谱</h2>
+  <div class="stage-grid" style="margin-top:1em;">
+    <div class="stage-card">
+      <div class="stage-level">Level 1</div>
+      <div class="stage-name">字符</div>
+      <div class="stage-desc">稳，但碎。<br>对中文切词错误更鲁棒。</div>
+    </div>
+    <div class="stage-card">
+      <div class="stage-level">Level 2</div>
+      <div class="stage-name">词</div>
+      <div class="stage-desc">解释性好。<br>依赖分词质量。</div>
+    </div>
+    <div class="stage-card">
+      <div class="stage-level">Level 3</div>
+      <div class="stage-name">BoW / TF-IDF</div>
+      <div class="stage-desc">简单、高效、可解释。<br>忽略顺序与长程依赖。</div>
+    </div>
+    <div class="stage-card">
+      <div class="stage-level">Level 4</div>
+      <div class="stage-name">词向量</div>
+      <div class="stage-desc">开始刻画语义接近。<br>lecture05 已经见过。</div>
+    </div>
+    <div class="stage-card">
+      <div class="stage-level">Level 5</div>
+      <div class="stage-name">BERT / LLM</div>
+      <div class="stage-desc">根据上下文动态表示词义。<br>下一部分专门展开。</div>
+    </div>
+  </div>
+  <p class="hint" style="text-align:center; margin-top:0.9em;">
+    表示越强，通常越能保留语义；但解释性、成本和可控性也会一起变化。
+  </p>
+</section>
+
+<!-- Slide 27 -->
+<section class="section-title">
+  <h2>
+    <span class="section-num">Part 4 / 5</span>
+    BERT / LLM：<br>上下文表示
+  </h2>
+</section>
+
+<!-- Slide 28 -->
+<section>
+  <h2>BERT 改变了什么？同一个词，不再只有一个向量</h2>
+  <div class="compare-grid" style="margin-top:1em;">
+    <div class="compare-box">
+      <div class="compare-title">上下文 A：苹果 = 公司</div>
+      <div class="compare-text">
+        苹果发布新品，市场关注它的芯片设计。<br><br>
+        在 BERT 里，句子中的“苹果”向量会更靠近<br>
+        <strong>华为、小米、手机、发布会</strong> 这一类语境。
+      </div>
+      <div class="chip-row">
+        <span class="token-chip soft">发布新品</span>
+        <span class="token-chip soft">芯片</span>
+        <span class="token-chip soft">市场</span>
+      </div>
+    </div>
+    <div class="compare-box accent">
+      <div class="compare-title">上下文 B：苹果 = 水果</div>
+      <div class="compare-text">
+        这个苹果很甜，适合做水果沙拉。<br><br>
+        在 BERT 里，这里的“苹果”会更靠近<br>
+        <strong>香蕉、梨、果汁、甜味</strong> 这样的语境。
+      </div>
+      <div class="chip-row">
+        <span class="token-chip green">很甜</span>
+        <span class="token-chip green">水果</span>
+        <span class="token-chip green">沙拉</span>
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box">
+    <p style="font-size:0.75em; margin:0;">
+      传统词向量通常给“苹果”一个固定向量。<br>
+      <strong>BERT 的关键跃迁</strong>是：同一个词在不同句子里，可以有不同的表示。
+    </p>
+  </div>
+</section>
+
+<!-- Slide 29 -->
+<section>
+  <h2>BERT 没取消预处理：tokenizer 接管</h2>
+  <div class="vs-layout" style="margin-top:1em;">
+    <div class="vs-panel left">
+      <h3>传统表示时代</h3>
+      <div class="vs-items">
+        人工分词 / 停用词表<br>
+        词频 / TF-IDF / 短语规则<br>
+        手工定义特征空间
+      </div>
+      <div class="chip-row" style="margin-top:0.8em;">
+        <span class="token-chip soft">分词词典</span>
+        <span class="token-chip soft">停用词表</span>
+        <span class="token-chip soft">n-gram</span>
+      </div>
+    </div>
+    <div class="vs-panel right">
+      <h3>BERT / LLM 时代</h3>
+      <div class="vs-items">
+        tokenizer 切成字 / 子词单元<br>
+        自动学习上下文表示<br>
+        少做一部分手工特征工程
+      </div>
+      <div class="chip-row" style="margin-top:0.8em;">
+        <span class="token-chip">tokenizer</span>
+        <span class="token-chip">max length</span>
+        <span class="token-chip">truncation</span>
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box">
+    <p style="font-size:0.74em; margin:0;">
+      重点不是“预处理消失了”，而是重点迁移了。<br>
+      英文常见 WordPiece；中文常见字级 / 子词级和 whole-word masking 变体。<br>
+      <strong>tokenizer 的选择，也是模型选择的一部分。</strong>
+    </p>
+  </div>
+</section>
+
+<!-- Slide 30 -->
+<section>
+  <h2>BERT 的学习直觉：用上下文补全 [MASK]</h2>
+  <div class="mono-panel" style="margin-top:1em;">[CLS] 市民 抱怨 地铁 太 [MASK] 了 [SEP]</div>
+  <div class="flow" style="margin-top:1em;">
+    <div class="flow-node outline" style="min-width:94px; font-size:0.68em;">tokenize</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node soft" style="min-width:110px; font-size:0.68em;">读上下文</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node accent" style="min-width:104px; font-size:0.68em;">猜 [MASK]</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node" style="min-width:104px; font-size:0.68em;">得到表示</div>
+  </div>
+  <div class="card-grid cols-3" style="margin-top:1em; gap:0.8em;">
+    <div class="card">
+      <div class="card-label" style="font-size:0.75em;">关键机制</div>
+      <div class="card-desc">MLM：把一部分遮住，让模型靠上下文补出来。</div>
+    </div>
+    <div class="card accent-card">
+      <div class="card-label" style="font-size:0.75em;">关键能力</div>
+      <div class="card-desc">左右文一起看，更适合理解句子里的词义和角色。</div>
+    </div>
+    <div class="card">
+      <div class="card-label" style="font-size:0.75em;">关键产物</div>
+      <div class="card-desc">每个 token 都得到一个与当前句子绑定的表示。</div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 31 -->
+<section>
+  <h2>从 BERT 到任务：一个编码器，多种输出方式</h2>
+  <div class="flow" style="margin-top:1.1em;">
+    <div class="flow-node outline">文本</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node soft">tokenizer + input ids</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node accent">BERT Encoder</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node">任务头 / 向量</div>
+  </div>
+  <div class="card-grid cols-4" style="margin-top:1em;">
+    <div class="card">
+      <div class="card-label">[CLS] 向量</div>
+      <div class="card-desc">文本分类<br>情感分析、立场判断、主题判别</div>
+    </div>
+    <div class="card accent-card">
+      <div class="card-label">逐 token 向量</div>
+      <div class="card-desc">序列标注<br>实体识别、关键词抽取、槽位填充</div>
+    </div>
+    <div class="card">
+      <div class="card-label">句向量 / pooling</div>
+      <div class="card-desc">语义检索<br>相似文本匹配、reranking、去重</div>
+    </div>
+    <div class="card">
+      <div class="card-label">句对输入</div>
+      <div class="card-desc">文本匹配<br>问答对齐、蕴含判断、相关性排序</div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 32 -->
+<section>
+  <h2>BERT vs LLM：不同分工</h2>
+  <div class="vs-layout" style="margin-top:1em;">
+    <div class="vs-panel left">
+      <h3>BERT：更像“读者”</h3>
+      <div class="vs-items">
+        Encoder 为主<br>
+        双向读上下文<br>
+        强项：分类、匹配、检索<br>
+        典型输出：标签、向量、span
+      </div>
+    </div>
+    <div class="vs-panel right">
+      <h3>LLM：更像“写作者 + 代理”</h3>
+      <div class="vs-items">
+        autoregressive 为主<br>
+        顺序生成下一个 token<br>
+        强项：生成、问答、工具调用<br>
+        典型输出：一段新文本或行动计划
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box">
+    <p style="font-size:0.74em; margin:0;">
+      LLM 时代并不意味着文本处理结束了。<br>
+      它只是把问题从“要不要 TF-IDF”变成了：<br>
+      <strong>怎么 chunk、怎么检索、怎么写 prompt、怎么做评估。</strong>
+    </p>
+  </div>
+</section>
+
+<!-- Slide 33 -->
+<section class="section-title">
+  <h2>
+    <span class="section-num">Part 5 / 5</span>
+    文本作为数据：<br>方法论反思
+  </h2>
+</section>
+
+<!-- Slide 34 -->
+<section>
+  <h2>Grimmer &amp; Stewart 给文本研究者的四个提醒</h2>
+  <div class="principle-grid" style="margin-top:1em;">
+    <div class="principle-card">
+      <div class="principle-title">1. 先定义研究目标，再选方法</div>
+      <div class="principle-text">你是在做分类、测量、发现议题，还是做预测？不同问题需要不同表示。</div>
+    </div>
+    <div class="principle-card">
+      <div class="principle-title">2. 自动方法一定要验证</div>
+      <div class="principle-text">机器输出看起来“合理”，不代表它真的测到了你关心的概念。</div>
+    </div>
+    <div class="principle-card">
+      <div class="principle-title">3. 没有一种方法对所有任务都最好</div>
+      <div class="principle-text">词袋、TF-IDF、BERT、LLM，各有适用边界，不存在万能流水线。</div>
+    </div>
+    <div class="principle-card">
+      <div class="principle-title">4. 研究者不能把解释责任外包给模型</div>
+      <div class="principle-text">模型可以帮你压缩文本，但概念界定、理论解释和有效性判断，仍然要由研究者负责。</div>
+    </div>
+  </div>
+  <p class="hint" style="text-align:center; margin-top:0.8em;">Grimmer &amp; Stewart (2013), Text as Data.</p>
+</section>
+
+<!-- Slide 35 -->
+<section>
+  <h2>预处理里的 garden of forking paths</h2>
+  <div class="fork-grid" style="margin-top:1em;">
+    <div class="fork-step">
+      <div class="fork-title">切分</div>
+      <div class="fork-choices">
+        字 / 词 / 子词<br>
+        自定义词典 or 默认词典
+      </div>
+    </div>
+    <div class="fork-step">
+      <div class="fork-title">过滤</div>
+      <div class="fork-choices">
+        去不去停用词？<br>
+        标点、数字、表情要不要保留？
+      </div>
+    </div>
+    <div class="fork-step">
+      <div class="fork-title">表示</div>
+      <div class="fork-choices">
+        词频 / TF-IDF / BERT embeddings / prompting<br>
+        单词、短语，还是上下文向量？
+      </div>
+    </div>
+    <div class="fork-step">
+      <div class="fork-title">验证</div>
+      <div class="fork-choices">
+        人工抽样检查？<br>
+        外部基准？<br>
+        稳健性比较？
+      </div>
+    </div>
+  </div>
+  <div class="warning-box" style="margin-top:1em;">
+    <p style="font-size:0.73em; margin:0;">
+      每一步都可能改变你的结果。<br>
+      所以好的研究实践不是“找一个默认脚本”，而是 <strong>把 tokenizer、prompt、chunking 等选择写下来、给出理由、做稳健性检验</strong>。
+    </p>
+  </div>
+</section>
+
+<!-- Slide 36 -->
+<section>
+  <h2>案例：Fightin' Words 为什么值得记住？</h2>
+  <div class="compare-grid" style="margin-top:1em;">
+    <div class="compare-box">
+      <div class="compare-title">Monroe et al. (2008) 的关键想法</div>
+      <div class="compare-text">
+        不是简单看谁“说得多”，而是看谁 <strong>相对更偏好某些词</strong>。<br><br>
+        这样做能避免高频常见词主导结果，也更接近“区分性话语”的概念。
+      </div>
+    </div>
+    <div class="compare-box accent">
+      <div class="compare-title">为什么它和预处理直接相关</div>
+      <div class="compare-text">
+        你如何分词、是否保留短语、怎么处理稀有词，都会改变“区分词”名单。<br><br>
+        也就是说：<strong>方法结论不是脱离预处理独立存在的。</strong>
+      </div>
+    </div>
+  </div>
+  <div class="chip-row" style="margin-top:0.9em;">
+    <span class="token-chip soft">health care</span>
+    <span class="token-chip soft">minimum wage</span>
+    <span class="token-chip soft">tax relief</span>
+    <span class="token-chip soft">homeland security</span>
+    <span class="token-chip soft">示意性的区分词</span>
+  </div>
+  <p class="hint">这类方法特别适合提醒我们：文本特征从来不是“自然地冒出来”的。</p>
+</section>
+
+<!-- Slide 37 -->
+<section>
+  <h2>中文文本做社科研究：优势很大，陷阱也很实在</h2>
+  <div class="vs-layout" style="margin-top:1em;">
+    <div class="vs-panel left">
+      <h3>为什么中文文本很有价值</h3>
+      <div class="vs-items">
+        政策文件、新闻、公告、平台内容丰富<br>
+        时间跨度长，适合追踪议题变化<br>
+        正式文本的话语风格高度制度化<br>
+        很多研究问题天然就以中文表达出现
+      </div>
+    </div>
+    <div class="vs-panel right">
+      <h3>但你要小心什么</h3>
+      <div class="vs-items">
+        分词错误会直接改写概念边界<br>
+        中文 BERT / LLM 的 tokenizer 与词表也会影响结果<br>
+        新词、简称、缩写、口号不断变化<br>
+        OCR 噪音、繁简转换、同义替换都很常见<br>
+        政治语境里的委婉表达，常常比字面更重要
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box">
+    <p style="font-size:0.74em; margin:0;">
+      中文文本的机会，不在于“数据多”；<br>
+      而在于它能让我们观察到 <strong>制度、话语、认知与治理</strong> 的细微变化。<br>
+      但前提是：你不能把预处理当成黑箱。
+    </p>
+  </div>
+</section>
+
+<!-- Slide 38 -->
+<section>
+  <h2>课堂讨论</h2>
+  <div class="highlight-box" style="margin-top:1.1em;">
+    <p style="font-size:0.82em; margin:0 0 0.55em 0; font-weight:600;">
+      如果你要分析政府工作报告里的政策优先级变化：
+    </p>
+    <p style="font-size:0.76em; margin:0; line-height:2; color:var(--gray-700);">
+      1. 你会用词袋、BERT embedding，还是直接用 LLM 做表示？为什么？<br>
+      2. 哪些停用词你不敢删？为什么？<br>
+      3. 你会怎样验证“模型真的抓到了政策优先级”，而不是只抓到高频口号或生成幻觉？<br>
+      4. 如果结论对 tokenizer、prompt 或分词方案敏感，你准备如何向读者交代？
+    </p>
+  </div>
+  <div class="card-grid cols-2" style="margin-top:1em;">
+    <div class="card accent-card">
+      <div class="card-label" style="font-size:0.76em;">目标</div>
+      <div class="card-desc" style="font-size:0.7em;">
+        把“预处理”从技术细节，转成一个可以被讨论和辩护的研究设计问题。
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label" style="font-size:0.76em;">预告</div>
+      <div class="card-desc" style="font-size:0.7em;">
+        下节课：文本分类。<br>
+        从 TF-IDF 到 BERT，机器怎样开始学会“判断”文本。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 39 -->
+<section>
+  <div class="takeaway">
+    <div class="divider"></div>
+    <p class="main-text">从 BoW 到 BERT / LLM<br>预处理仍然是研究设计</p>
+    <p class="sub-text">
+      文本之所以难，不是因为它脏，<br>
+      而是因为它本来就充满歧义、语境和选择。<br><br>
+      分词、tokenizer、停用词、chunking、prompt、表示方式，每一步都在定义<br>
+      <strong>什么算作一个“可被分析的文本对象”</strong>。<br><br>
+      现代模型帮你减少了一部分手工特征工程，<br>
+      但没有替你取消研究设计的责任。<br><br>
+      下节课我们继续：从 TF-IDF 到 BERT，机器怎样开始做分类与判断？
+    </p>
+    <p class="hint">lecture07 预告：文本分类 — 从 TF-IDF 到 BERT</p>
+  </div>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: true,
+    progress: true,
+    transition: 'slide',
+    transitionSpeed: 'fast',
+    backgroundTransition: 'none',
+    controls: true,
+    controlsTutorial: false,
+    width: 1280,
+    height: 720,
+    margin: 0.04,
+    minScale: 0.2,
+    maxScale: 2.0,
+    plugins: []
+  });
+</script>
+</body>
+</html>
