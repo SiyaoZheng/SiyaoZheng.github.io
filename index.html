@@ -397,6 +397,81 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
 
+        .course-featured {
+            grid-column: 1 / -1;
+            padding: 2.5rem;
+            border: 1px solid var(--border);
+            background: white;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-featured::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--accent);
+        }
+
+        .course-featured:hover {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .course-featured h3 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .course-meta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent);
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .course-featured p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1.2rem;
+            max-width: 700px;
+        }
+
+        .course-slides {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .slides-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-right: 0.2rem;
+        }
+
+        .course-slides a {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.25rem 0.6rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .course-slides a:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
         .course-level {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.7rem;
@@ -742,8 +817,13 @@
                 padding: 1.5rem;
             }
 
-            .course-card h3 {
+            .course-card h3,
+            .course-featured h3 {
                 font-size: 1.3rem;
+            }
+
+            .course-featured {
+                padding: 1.5rem;
             }
 
             .cv-timeline {
@@ -885,6 +965,21 @@
                 <h2 class="section-title">Teaching</h2>
             </div>
             <div class="teaching-grid">
+                <div class="course-featured fade-in">
+                    <div class="course-level">Micro-Major · Spring 2026</div>
+                    <h3>Machine Learning & Natural Language Processing</h3>
+                    <div class="course-meta">45 students · 16 weeks · Per-student AI Agent</div>
+                    <p>Each of the 45 students has their own OpenClaw AI Agent instance deployed on SJTU's Zhiyuan-1 supercomputer (1024 Ascend 910B GPUs), used throughout the semester for research, coding, and analysis.</p>
+                    <div class="course-slides">
+                        <span class="slides-label">Slides:</span>
+                        <a href="/slides/lecture01/">L01</a>
+                        <a href="/slides/lecture02/">L02</a>
+                        <a href="/slides/lecture03/">L03</a>
+                        <a href="/slides/lecture04/">L04</a>
+                        <a href="/slides/lecture05/">L05</a>
+                        <a href="/slides/lecture06/">L06</a>
+                    </div>
+                </div>
                 <div class="course-card fade-in">
                     <div class="course-level">Undergraduate</div>
                     <h3>Multivariate Statistical Analysis</h3>
