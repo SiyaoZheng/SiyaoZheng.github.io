@@ -1,0 +1,1271 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第八课 主题模型 — 机器学习与自然语言处理</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    :root {
+      --r-background-color: #fff;
+      --r-main-font: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+      --r-main-font-size: 32px;
+      --r-main-color: #1a1a2e;
+      --r-heading-font: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+      --r-heading-color: #0f0f1a;
+      --r-heading-font-weight: 700;
+      --r-link-color: #2563eb;
+      --accent: #2563eb;
+      --accent-light: #dbeafe;
+      --orange: #f97316;
+      --orange-light: #fff7ed;
+      --green: #16a34a;
+      --green-light: #f0fdf4;
+      --red: #dc2626;
+      --purple: #9333ea;
+      --gray-50: #f8f9fa;
+      --gray-100: #f1f3f5;
+      --gray-200: #e9ecef;
+      --gray-400: #adb5bd;
+      --gray-500: #868e96;
+      --gray-600: #6c757d;
+      --gray-700: #495057;
+      --gray-800: #343a40;
+    }
+
+    .reveal { font-weight: 400; }
+    .reveal h1 { font-size: 2.2em; letter-spacing: -0.02em; }
+    .reveal h2 { font-size: 1.6em; letter-spacing: -0.01em; color: var(--accent); text-transform: none; }
+    .reveal h3 { font-size: 1.2em; color: var(--gray-800); }
+    .reveal p, .reveal li { line-height: 1.6; }
+    .reveal ul { list-style: none; padding-left: 0; }
+    .reveal ul li { padding-left: 1.5em; position: relative; margin-bottom: 0.4em; }
+    .reveal ul li::before {
+      content: '';
+      position: absolute; left: 0; top: 0.55em;
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    .reveal code {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--gray-100);
+      padding: 0.1em 0.4em;
+      border-radius: 4px;
+      font-size: 0.85em;
+    }
+    .reveal pre code {
+      font-family: 'JetBrains Mono', monospace;
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 1em 1.4em;
+      border-radius: 8px;
+      font-size: 0.72em;
+      line-height: 1.7;
+      display: block;
+      text-align: left;
+    }
+    .reveal pre { box-shadow: none; width: 100%; margin: 0.6em 0; }
+    .kw { color: #cba6f7; }
+    .fn { color: #89b4fa; }
+    .st { color: #a6e3a1; }
+    .cm { color: #6c7086; font-style: italic; }
+    .num { color: #fab387; }
+
+    .section-title { background: var(--r-background-color) !important; }
+    .section-title h2 {
+      font-size: 2.4em;
+      color: var(--r-main-color);
+      border-left: 6px solid var(--accent);
+      padding-left: 0.6em;
+      text-align: left;
+    }
+    .section-title .section-num {
+      font-size: 0.5em;
+      color: var(--gray-400);
+      font-weight: 400;
+      display: block;
+      margin-bottom: 0.2em;
+    }
+
+    .cover h1 { font-size: 2.6em; margin-bottom: 0.1em; }
+    .cover .subtitle { font-size: 1.1em; color: var(--accent); font-weight: 500; margin-bottom: 2em; }
+    .cover .meta { font-size: 0.7em; color: var(--gray-600); line-height: 1.8; }
+
+    .highlight-box {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-left: 4px solid var(--accent);
+      padding: 1em 1.5em;
+      border-radius: 4px;
+      text-align: left;
+      margin: 1em 0;
+    }
+
+    .quote-box {
+      background: var(--accent-light);
+      border: 1px solid #bfdbfe;
+      border-left: 4px solid var(--accent);
+      padding: 1.2em 1.8em;
+      border-radius: 4px;
+      text-align: left;
+      margin: 1em 0;
+    }
+    .quote-box .quote-text {
+      font-size: 1.1em;
+      font-weight: 600;
+      color: var(--r-main-color);
+      line-height: 1.5;
+      font-style: italic;
+    }
+    .quote-box .quote-source {
+      font-size: 0.65em;
+      color: var(--gray-600);
+      margin-top: 0.6em;
+    }
+
+    .cols { display: flex; gap: 2em; align-items: flex-start; }
+    .cols .col { flex: 1; text-align: left; }
+    .cols .col-40 { flex: 0 0 40%; text-align: left; }
+    .cols .col-60 { flex: 0 0 58%; text-align: left; }
+
+    .flow { display: flex; align-items: center; justify-content: center; gap: 0; margin: 1em 0; }
+    .flow-node {
+      background: var(--gray-50);
+      border: 2px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.8em 1.2em;
+      font-size: 0.75em;
+      font-weight: 500;
+      text-align: center;
+      min-width: 110px;
+    }
+    .flow-node.accent { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .flow-node.orange { background: var(--orange); color: #fff; border-color: var(--orange); }
+    .flow-node.outline { background: #fff; border-color: var(--accent); color: var(--accent); }
+    .flow-arrow {
+      width: 40px; height: 2px;
+      background: var(--gray-400);
+      position: relative; flex-shrink: 0;
+    }
+    .flow-arrow::after {
+      content: '';
+      position: absolute;
+      right: -1px; top: -5px;
+      border: 6px solid transparent;
+      border-left: 8px solid var(--gray-400);
+    }
+    .flow-arrow.accent-arrow { background: var(--accent); }
+    .flow-arrow.accent-arrow::after { border-left-color: var(--accent); }
+    .flow-arrow.orange-arrow { background: var(--orange); }
+    .flow-arrow.orange-arrow::after { border-left-color: var(--orange); }
+
+    .card-grid { display: grid; gap: 1em; margin: 1em 0; }
+    .card-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .card-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+    .card-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 1.2em;
+      text-align: center;
+    }
+    .card.accent-card { background: var(--accent-light); border-color: #93c5fd; }
+    .card .card-icon { font-size: 2em; margin-bottom: 0.3em; line-height: 1; }
+    .card .card-label { font-size: 0.7em; font-weight: 600; color: var(--r-main-color); margin-bottom: 0.2em; }
+    .card .card-desc { font-size: 0.65em; color: var(--gray-600); line-height: 1.4; }
+
+    .vs-layout { display: flex; align-items: stretch; gap: 0; margin: 0.8em 0; }
+    .vs-panel { flex: 1; padding: 1.2em 1.5em; border-radius: 8px; text-align: left; }
+    .vs-panel.left { background: var(--gray-50); border: 1px solid var(--gray-200); margin-right: -1px; border-radius: 8px 0 0 8px; }
+    .vs-panel.right { background: var(--accent-light); border: 1px solid #bfdbfe; border-radius: 0 8px 8px 0; }
+    .vs-divider { width: 48px; display: flex; align-items: center; justify-content: center; font-size: 1.4em; font-weight: 700; color: var(--gray-400); flex-shrink: 0; }
+    .vs-panel h3 { font-size: 0.85em; margin-bottom: 0.6em; }
+    .vs-panel .vs-items { font-size: 0.75em; color: var(--gray-800); line-height: 2; }
+
+    .takeaway { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 2em; text-align: center; }
+    .takeaway .divider { width: 3em; height: 3px; background: var(--accent); border-radius: 2px; margin-bottom: 1.8em; }
+    .takeaway .main-text { font-size: 1.5em; font-weight: 700; color: var(--accent); line-height: 1.45; margin: 0 0 1.2em 0; max-width: 15em; }
+    .takeaway .sub-text { font-size: 0.82em; color: var(--gray-600); line-height: 1.8; margin: 0 0 2em 0; max-width: 28em; }
+    .takeaway .hint { font-size: 0.6em; color: var(--gray-400); letter-spacing: 0.04em; }
+
+    .warning-box { background: #fef2f2; border: 1px solid #fca5a5; border-left: 4px solid #dc2626; padding: 0.8em 1.2em; border-radius: 4px; text-align: left; margin: 0.5em 0; }
+
+    .tag { display: inline-block; background: var(--accent); color: #fff; font-size: 0.55em; font-weight: 600; padding: 0.2em 0.7em; border-radius: 20px; vertical-align: middle; margin-left: 0.4em; letter-spacing: 0.03em; }
+    .tag.gray { background: var(--gray-400); }
+    .tag.green { background: #16a34a; }
+    .tag.orange { background: #f97316; }
+    .tag.purple { background: #9333ea; }
+
+    .reveal .slide-number { font-family: 'Inter', sans-serif; font-size: 14px; color: var(--gray-400); }
+    .reveal .progress span { background: var(--accent); }
+
+    .prompt-box {
+      background: #1e1e2e;
+      border: 1px solid #45475a;
+      border-left: 4px solid #f97316;
+      padding: 0.8em 1.2em;
+      border-radius: 8px;
+      text-align: left;
+      margin: 0.8em 0;
+      color: #cdd6f4;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68em;
+      line-height: 1.8;
+    }
+    .prompt-box .prompt-label {
+      color: #f97316;
+      font-weight: 700;
+      font-size: 0.9em;
+      margin-bottom: 0.4em;
+    }
+    .prompt-box .prompt-out {
+      color: #a6e3a1;
+      border-top: 1px dashed #585b70;
+      padding-top: 0.5em;
+      margin-top: 0.5em;
+    }
+    .prompt-box .prompt-out .out-label {
+      color: #a6e3a1;
+      font-weight: 700;
+    }
+
+    .industry-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8em; margin: 0.8em 0; }
+    .industry-card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 1em 1.2em;
+      text-align: left;
+    }
+    .industry-card .ic-sector { font-size: 0.6em; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.3em; }
+    .industry-card .ic-task { font-size: 0.75em; font-weight: 600; color: var(--r-main-color); margin-bottom: 0.3em; }
+    .industry-card .ic-method { font-size: 0.65em; color: var(--gray-600); }
+
+    .openclaw-box {
+      background: linear-gradient(135deg, #111827 0%, #1e1e2e 100%);
+      border: 1px solid #374151;
+      border-left: 4px solid #00d2ff;
+      padding: 1em 1.5em;
+      border-radius: 8px;
+      text-align: left;
+      margin: 0.8em 0;
+      color: #e5e7eb;
+    }
+    .openclaw-box .oc-label {
+      color: #00d2ff;
+      font-weight: 700;
+      font-size: 0.75em;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 0.5em;
+    }
+    .openclaw-box .oc-content {
+      font-size: 0.72em;
+      line-height: 1.8;
+      color: #d1d5db;
+    }
+
+    .loop-step {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+      margin: 0.5em 0;
+      text-align: left;
+    }
+    .loop-step .step-num {
+      flex-shrink: 0;
+      width: 2.2em;
+      height: 2.2em;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85em;
+    }
+    .loop-step .step-body {
+      flex: 1;
+    }
+    .loop-step .step-title {
+      font-weight: 600;
+      font-size: 0.75em;
+    }
+    .loop-step .step-desc {
+      font-size: 0.62em;
+      color: var(--gray-600);
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- ============================================================ -->
+<!-- COVER                                                         -->
+<!-- ============================================================ -->
+
+<section class="cover">
+  <h1>主题模型：<br>用 AI Agent 发现文本结构</h1>
+  <p class="subtitle">从 Prompt 到 OpenClaw，实战主题分析</p>
+  <p class="meta">
+    第八课<br>
+    郑思尧<br>
+    上海交通大学 国际与公共事务学院
+  </p>
+</section>
+
+<!-- ============================================================ -->
+<!-- 开场                                                          -->
+<!-- ============================================================ -->
+
+<!-- Slide 2 -->
+<section>
+  <h2>为什么今天不聊 LDA？</h2>
+
+  <div class="vs-layout" style="margin-top:1.2em;">
+    <div class="vs-panel left" style="background:var(--gray-50);">
+      <h3>2020 年的做法</h3>
+      <div class="vs-items">
+        清洗文本 → 构建 DTM → 跑 LDA → 读词表 → 命名话题<br>
+        全程手写 Python，半天起步<br>
+        <span style="color:var(--gray-400);">Grimmer 2010 用的是这套</span>
+      </div>
+    </div>
+    <div class="vs-divider">→</div>
+    <div class="vs-panel right" style="background:var(--orange-light); border-color:#fed7aa;">
+      <h3 style="color:#f97316;">2026 年的做法</h3>
+      <div class="vs-items">
+        把文本给 AI Agent → 它帮你发现话题、命名、生成报告<br>
+        你负责验证和判断<br>
+        <span style="color:var(--gray-500);">你现在用 OpenClaw 就能做到</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-box" style="margin-top:1em;">
+    <p style="font-size:0.8em; margin:0;">
+      LDA 的统计原理你在 L05 已经学过。今天：<strong>直接用 AI Agent 做主题分析，实战落地</strong>。
+    </p>
+  </div>
+</section>
+
+<!-- Slide 3: 路线图 -->
+<section>
+  <h2>今天的路线图</h2>
+
+  <div class="card-grid cols-2" style="margin-top:1.2em;">
+    <div class="card" style="border-color:#f97316;">
+      <div class="card-icon" style="font-size:1.6em; font-weight:700; color:#f97316;">Prompt</div>
+      <div class="card-label">Part 1</div>
+      <div class="card-desc">
+        用 Prompt 做主题分析<br>
+        <span style="color:var(--gray-400); font-size:0.85em;">对话即分析，但陷阱在哪？</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-icon" style="font-size:1.6em; font-weight:700; color:var(--accent);">Agent</div>
+      <div class="card-label">Part 2</div>
+      <div class="card-desc">
+        AI Agent 做主题分析<br>
+        <span style="color:var(--gray-400); font-size:0.85em;">OpenClaw 如何让 Agent 自主完成全流程</span>
+      </div>
+    </div>
+
+    <div class="card accent-card">
+      <div class="card-icon" style="font-size:1.6em; font-weight:700; color:#16a34a;">验证</div>
+      <div class="card-label">Part 3</div>
+      <div class="card-desc">
+        输出可信吗？<br>
+        <span style="color:var(--gray-600); font-size:0.85em;">幻觉、一致性、人工校验</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-icon" style="font-size:1.6em; font-weight:700; color:var(--accent);">实战</div>
+      <div class="card-label">Part 4</div>
+      <div class="card-desc">
+        行业实战 + OpenClaw 实操<br>
+        <span style="color:var(--gray-400); font-size:0.85em;">从数据到决策的完整链路</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PART 1: 用 Prompt 做主题分析                                   -->
+<!-- ============================================================ -->
+
+<section class="section-title">
+  <h2>
+    <span class="section-num">Part 1 / 4</span>
+    用 Prompt 做主题分析：<br>对话即分析
+  </h2>
+</section>
+
+<!-- Slide 5: 最简单的主题分析 -->
+<section>
+  <h2>最简单的主题分析：三条消息搞定</h2>
+
+  <div class="prompt-box">
+    <div class="prompt-label">第 1 条消息 — 投喂文本</div>
+    以下是一批市民热线投诉的摘要，共 50 条：<br><br>
+    1. 挂号排队 3 小时，老人站着等不了<br>
+    2. 学校门口堵车严重，孩子上学不安全<br>
+    3. 小区门口烧烤摊油烟扰民<br>
+    ...<br><br>
+    <span style="color:#6c7086;">[第 4–50 条...]</span>
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-label">第 2 条消息 — 提取话题</div>
+    请从这些投诉中提取主要话题（不超过 6 个），每个话题给：名称、关键词、典型投诉示例、覆盖条数。输出 JSON。
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-label">第 3 条消息 — 深入分析</div>
+    "医疗等候"和"就医费用"是否应该合并？各话题之间的关联是什么？用一段话总结这些投诉的核心矛盾。
+  </div>
+</section>
+
+<!-- Slide 6: 输出样例 -->
+<section>
+  <h2>你得到了什么？</h2>
+
+  <div class="cols" style="margin-top:1em; gap:2em;">
+    <div class="col">
+      <div class="highlight-box" style="border-left-color:#f97316;">
+        <p style="font-size:0.78em; margin:0 0 0.3em;"><strong>AI 为你做的</strong></p>
+        <p style="font-size:0.68em; margin:0; line-height:1.8; color:var(--gray-700);">
+          发现了 5 个话题<br>
+          给每个话题命名 + 关键词 + 示例<br>
+          分析了话题间的关系<br>
+          生成了结构化 JSON + 可读摘要
+        </p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="warning-box">
+        <p style="font-size:0.78em; margin:0 0 0.3em;"><strong>但你要警惕的</strong></p>
+        <p style="font-size:0.68em; margin:0; line-height:1.8; color:var(--gray-700);">
+          换个 Prompt，话题可能完全不同<br>
+          跑两次，话题标签可能不一样<br>
+          没有概率分布——无法做回归<br>
+          AI 可能"幻觉"出文本里没有的话题
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-box" style="margin-top:1em;">
+    <p style="font-size:0.78em; margin:0;">
+      <strong>Prompt 就是 2026 年的代码</strong>——但代码需要测试，Prompt 也需要验证。
+    </p>
+  </div>
+</section>
+
+<!-- Slide 7: Prompt 设计原则 -->
+<section>
+  <h2>Prompt 设计：三条原则</h2>
+
+  <div class="card-grid cols-3" style="margin-top:1em;">
+    <div class="card">
+      <div class="card-label" style="color:var(--orange);">约束粒度</div>
+      <div class="card-desc" style="text-align:left; line-height:1.8;">
+        "提取主要话题" → 模糊<br>
+        "提取不超过 6 个话题，每个含名称、3-5 关键词、典型示例" → 精确<br>
+        <strong>越具体，输出越稳定</strong>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label" style="color:var(--orange);">格式约束</div>
+      <div class="card-desc" style="text-align:left; line-height:1.8;">
+        要求 JSON 输出<br>
+        指定字段名和类型<br>
+        <strong>结构化输出才能做下游处理</strong><br>
+        （回归、可视化、跨语料对比）
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label" style="color:var(--orange);">验证指令</div>
+      <div class="card-desc" style="text-align:left; line-height:1.8;">
+        "每个话题必须引用原文至少 1 条"<br>
+        "话题间不得重叠"<br>
+        <strong>强迫 AI 自检，减少幻觉</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-box" style="margin-top:1em;">
+    <p style="font-size:0.78em; margin:0;">
+      好的 Prompt = 好的研究设计。<strong>Prompt 越像研究方案，输出越像研究结果。</strong>
+    </p>
+  </div>
+</section>
+
+<!-- Slide 8: Part 1 Takeaway -->
+<section>
+  <div class="takeaway">
+    <div class="divider"></div>
+    <p class="main-text">Prompt 是 2026 年<br>最核心的分析接口</p>
+    <p class="sub-text">
+      三条消息就能做主题分析<br>
+      但输出质量完全取决于 Prompt 设计<br>
+      <strong>对话即分析，但对话需要设计</strong>
+    </p>
+    <p class="hint">PART 2 → 如果让 AI Agent 自主跑完全流程呢？</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PART 2: AI Agent 做主题分析                                     -->
+<!-- ============================================================ -->
+
+<section class="section-title">
+  <h2>
+    <span class="section-num">Part 2 / 4</span>
+    AI Agent 做主题分析：<br>从对话到自主行动
+  </h2>
+</section>
+
+<!-- Slide 10: 工具 vs Agent -->
+<section>
+  <h2>从"你问它答"到"它自己干"</h2>
+
+  <div class="vs-layout" style="margin-top:1.2em;">
+    <div class="vs-panel left">
+      <h3>聊天工具<span class="tag gray">传统</span></h3>
+      <div class="vs-items">
+        你：帮我分析这些投诉<br>
+        AI：好的，5 个话题是...<br>
+        你：按部门统计一下<br>
+        AI：好的，统计结果是...<br>
+        <strong>每一步都靠你驱动</strong>
+      </div>
+    </div>
+    <div class="vs-divider">→</div>
+    <div class="vs-panel right" style="background:var(--orange-light); border-color:#fed7aa;">
+      <h3 style="color:#f97316;">AI Agent<span class="tag orange">2026</span></h3>
+      <div class="vs-items">
+        你：分析这批投诉，给我报告<br>
+        Agent：我来分步执行——<br>
+        ① 读文件 ② 提取话题 ③ 统计分布<br>
+        ④ 生成图表 ⑤ 写报告<br>
+        <strong>自主规划，调用工具，多轮迭代</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-box" style="margin-top:1em;">
+    <p style="font-size:0.8em; margin:0;">
+      Agent = LLM + 工具调用 + 记忆 + 自主循环。你给它目标，它自己拆解执行。
+    </p>
+  </div>
+</section>
+
+<!-- Slide 11: Agent Loop -->
+<section>
+  <h2>Agent 的核心：感知→思考→行动→观察</h2>
+
+  <div style="margin-top:0.8em;">
+    <div class="loop-step">
+      <div class="step-num" style="background:var(--accent-light); color:var(--accent);">1</div>
+      <div class="step-body">
+        <div class="step-title">感知 (Intake)</div>
+        <div class="step-desc">收到你的指令："分析这 5000 条投诉"。加载记忆：之前做过类似任务吗？</div>
+      </div>
+    </div>
+    <div class="loop-step">
+      <div class="step-num" style="background:var(--accent); color:#fff;">2</div>
+      <div class="step-body">
+        <div class="step-title">思考 (Inference)</div>
+        <div class="step-desc">LLM 推理：需要分步——读取文件、提取话题、统计分布、生成报告。规划工具调用顺序。</div>
+      </div>
+    </div>
+    <div class="loop-step">
+      <div class="step-num" style="background:var(--orange); color:#fff;">3</div>
+      <div class="step-body">
+        <div class="step-title">行动 (Tool Use)</div>
+        <div class="step-desc">调用工具：读文件系统、执行 Python 脚本、搜索记忆、写入结果。每步都有实际操作。</div>
+      </div>
+    </div>
+    <div class="loop-step">
+      <div class="step-num" style="background:var(--green-light); color:var(--green);">4</div>
+      <div class="step-body">
+        <div class="step-title">观察 (Observe)</div>
+        <div class="step-desc">检查工具返回：话题分布合理吗？不够好？调参重跑。结果满意？进入下一步。循环直到完成。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="openclaw-box" style="margin-top:1em;">
+    <div class="oc-label">OpenClaw Agent Loop</div>
+    <div class="oc-content">
+      OpenClaw 的 Agent 循环就是这套 7 步管线：Intake → Queue → Context → Inference → Tool Use → Streaming → Persist<br>
+      每一轮都是一次完整的"感知→思考→行动→观察"，串行执行，自动循环
+    </div>
+  </div>
+</section>
+
+<!-- Slide 12: OpenClaw 简介 -->
+<section>
+  <h2>OpenClaw：你课堂上的 AI Agent 平台</h2>
+
+  <div class="cols" style="margin-top:1em; gap:2em;">
+    <div class="col">
+      <div class="openclaw-box">
+        <div class="oc-label">是什么</div>
+        <div class="oc-content">
+          开源自托管网关（MIT 协议）<br>
+          连接聊天应用 → AI 编程 Agent<br>
+          支持 WhatsApp / Telegram / Discord / iMessage / 企业微信<br>
+          一台服务器，所有平台统一接入
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="openclaw-box">
+        <div class="oc-label">核心能力</div>
+        <div class="oc-content">
+          多模型切换（GLM 5 / DeepSeek / Qwen3）<br>
+          Agent 工具调用（文件系统/Python/浏览器）<br>
+          长期记忆（MEMORY.md + 向量检索）<br>
+          多 Agent 路由（不同专长协作）
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-box" style="margin-top:1em;">
+    <p style="font-size:0.78em; margin:0;">
+      <strong>这学期你们用的就是这个</strong> — ailab.sjtu.edu.cn 上的 OpenClaw 实验环境，每个同学独立容器
+    </p>
+  </div>
+</section>
+
+<!-- Slide 13: OpenClaw 做主题分析 -->
+<section>
+  <h2>OpenClaw 做主题分析：你只需要一句话</h2>
+
+  <div class="openclaw-box" style="margin-top:0.5em;">
+    <div class="oc-label">你的指令</div>
+    <div class="oc-content">
+      "帮我分析 /workspace/data/complaints.csv 里的 5000 条市民投诉，提取主要话题，统计每个话题的投诉数和占比，生成可视化图表，最后写一份分析报告保存到 /workspace/output/"
+    </div>
+  </div>
+
+  <div style="margin-top:0.8em;">
+    <div class="loop-step">
+      <div class="step-num" style="background:var(--accent); color:#fff; font-size:0.75em;">①</div>
+      <div class="step-body">
+        <div class="step-title">读取 CSV</div>
+        <div class="step-desc">Agent 调用文件读取工具，加载数据，了解字段结构</div>
+      </div>
+    </div>
+    <div class="loop-step">
+      <div class="step-num" style="background:var(--accent); color:#fff; font-size:0.75em;">②</div>
+      <div class="step-body">
+        <div class="step-title">提取话题</div>
+        <div class="step-desc">Agent 用 LLM 逐批分析文本，提取话题标签和关键词，汇总去重</div>
+      </div>
+    </div>
+    <div class="loop-step">
+      <div class="step-num" style="background:var(--accent); color:#fff; font-size:0.75em;">③</div>
+      <div class="step-body">
+        <div class="step-title">统计 + 可视化</div>
+        <div class="step-desc">Agent 执行 Python 脚本，统计各话题投诉数占比，生成柱状图/饼图</div>
+      </div>
+    </div>
+    <div class="loop-step">
+      <div class="step-num" style="background:var(--accent); color:#fff; font-size:0.75em;">④</div>
+      <div class="step-body">
+        <div class="step-title">写报告</div>
+        <div class="step-desc">Agent 将分析结果、图表、核心发现写入 Markdown 报告，保存到指定路径</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 14: Agent 的记忆 -->
+<section>
+  <h2>Agent 的记忆：为什么它"认识"你</h2>
+
+  <div class="cols" style="margin-top:1em; gap:2em;">
+    <div class="col">
+      <div class="openclaw-box">
+        <div class="oc-label">短期记忆</div>
+        <div class="oc-content">
+          当前对话的上下文窗口<br>
+          你刚才说的、Agent 刚做的<br>
+          会话结束或窗口满了 → 自动压缩
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="openclaw-box">
+        <div class="oc-label">长期记忆</div>
+        <div class="oc-content">
+          MEMORY.md — 你让 Agent 记住的东西<br>
+          memory/YYYY-MM-DD.md — 每日日志<br>
+          <strong>向量索引</strong> — 语义检索"上次聊了什么"<br>
+          可跨会话持久保存
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-box" style="margin-top:1em;">
+    <p style="font-size:0.78em; margin:0;">
+      <strong>对主题分析的意义</strong>：你第一次让 Agent 分析投诉，它记住话题结构；下次你说"跟上次对比"，它直接从记忆调取上次结果，不用重跑。
+    </p>
+  </div>
+</section>
+
+<!-- Slide 15: 多 Agent 路由 -->
+<section>
+  <h2>多 Agent 协作：不同专长，分工干活</h2>
+
+  <div class="flow" style="margin:1.2em 0; flex-wrap:nowrap; gap:0;">
+    <div class="flow-node" style="min-width:100px; font-size:0.68em; padding:0.7em 0.8em;">
+      你的指令<br><span style="color:var(--gray-500);">分析投诉</span>
+    </div>
+    <div class="flow-arrow accent-arrow" style="width:28px;"></div>
+    <div class="flow-node accent" style="min-width:100px; font-size:0.68em; padding:0.7em 0.8em;">
+      协调器<br><span>任务分配</span>
+    </div>
+    <div class="flow-arrow accent-arrow" style="width:28px;"></div>
+    <div class="flow-node" style="min-width:100px; font-size:0.68em; padding:0.7em 0.8em; border-color:var(--orange); color:var(--orange);">
+      提取 Agent<br><span style="color:var(--orange);">话题发现</span>
+    </div>
+    <div class="flow-arrow orange-arrow" style="width:28px;"></div>
+    <div class="flow-node" style="min-width:100px; font-size:0.68em; padding:0.7em 0.8em; border-color:var(--green); color:var(--green);">
+      统计 Agent<br><span style="color:var(--green);">计算分布</span>
+    </div>
+    <div class="flow-arrow accent-arrow" style="width:28px;"></div>
+    <div class="flow-node outline" style="min-width:100px; font-size:0.68em; padding:0.7em 0.8em;">
+      报告 Agent<br><span style="color:var(--accent);">写成文档</span>
+    </div>
+  </div>
+
+  <div class="openclaw-box" style="margin-top:0.8em;">
+    <div class="oc-label">OpenClaw 多 Agent 路由</div>
+    <div class="oc-content">
+      OpenClaw 支持多个 Agent 绑定不同渠道和技能，通过路由规则自动分发任务<br>
+      例：微信群发来的消息 → 路由到"客服 Agent"；钉钉发来的 → 路由到"分析 Agent"<br>
+      不同 Agent 可以有不同的 system prompt、模型、工具权限和记忆空间
+    </div>
+  </div>
+</section>
+
+<!-- Slide 16: Part 2 Takeaway -->
+<section>
+  <div class="takeaway">
+    <div class="divider"></div>
+    <p class="main-text">Agent 让主题分析<br>从"你问它答"变成<br>"它自己干"</p>
+    <p class="sub-text">
+      一句话指令 → Agent 自主规划 4 步流程<br>
+      读数据、提取话题、统计可视化、写报告<br>
+      <strong>但你要检查——Agent 也会犯错</strong>
+    </p>
+    <p class="hint">PART 3 → 怎么验证 Agent 的输出？</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PART 3: 验证                                                   -->
+<!-- ============================================================ -->
+
+<section class="section-title">
+  <h2>
+    <span class="section-num">Part 3 / 4</span>
+    输出可信吗？<br>幻觉、一致性、人工校验
+  </h2>
+</section>
+
+<!-- Slide 18: 三种风险 -->
+<section>
+  <h2>Agent 做主题分析的三种风险</h2>
+
+  <div class="card-grid cols-3" style="margin-top:1em;">
+    <div class="card" style="border-color:#dc2626;">
+      <div class="card-label" style="color:#dc2626;">幻觉</div>
+      <div class="card-desc" style="text-align:left; line-height:1.8;">
+        Agent 可能"发明"<br>文本里没有的话题<br>
+        <strong>例：编造一个"城市绿化"话题，实际语料没有相关投诉</strong>
+      </div>
+    </div>
+
+    <div class="card" style="border-color:#dc2626;">
+      <div class="card-label" style="color:#dc2626;">不一致</div>
+      <div class="card-desc" style="text-align:left; line-height:1.8;">
+        同一语料跑两次<br>
+        话题数和标签不同<br>
+        <strong>无法复现 = 无法检验 = 不是科学</strong>
+      </div>
+    </div>
+
+    <div class="card" style="border-color:#dc2626;">
+      <div class="card-label" style="color:#dc2626;">偏见放大</div>
+      <div class="card-desc" style="text-align:left; line-height:1.8;">
+        模型训练数据有偏见<br>
+        话题命名可能带倾向性<br>
+        <strong>"闹事"vs"维权" — 同一话题，命名决定叙事</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 19: 验证方法 -->
+<section>
+  <h2>四步验证法</h2>
+
+  <div class="flow" style="margin:1em 0;">
+    <div class="flow-node orange" style="font-size:0.72em; padding:0.9em 1em; min-width:120px;">
+      <strong>源文抽检</strong><br>
+      <span style="font-size:0.85em;">话题与原文对齐</span>
+    </div>
+    <div class="flow-arrow orange-arrow"></div>
+    <div class="flow-node accent" style="font-size:0.72em; padding:0.9em 1em; min-width:120px;">
+      <strong>交叉验证</strong><br>
+      <span style="font-size:0.85em;">两种 Prompt 对比</span>
+    </div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node" style="font-size:0.72em; padding:0.9em 1em; min-width:120px;">
+      <strong>领域审读</strong><br>
+      <span style="font-size:0.85em; color:var(--gray-500);">专家判断合理性</span>
+    </div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node outline" style="font-size:0.72em; padding:0.9em 1em; min-width:120px;">
+      <strong>文档化</strong><br>
+      <span style="color:var(--accent); font-size:0.85em;">Prompt + 输出 + 验证记录</span>
+    </div>
+  </div>
+
+  <div class="cols" style="margin-top:1em; gap:2em;">
+    <div class="col">
+      <div class="highlight-box">
+        <p style="font-size:0.72em; margin:0; line-height:1.7;">
+          <strong>① 源文抽检</strong>：每个话题随机抽 5 条原文，检查是否真的属于该话题。准确率 &lt; 80% → Prompt 有问题，要改。
+        </p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="highlight-box">
+        <p style="font-size:0.72em; margin:0; line-height:1.7;">
+          <strong>② 交叉验证</strong>：用两种不同 Prompt 提取同一语料的话题，对比重叠度。重叠 &gt; 70% → 话题结构较稳定。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 20: 让 Agent 帮你验证 -->
+<section>
+  <h2>让 Agent 自己验证自己的输出</h2>
+
+  <div class="prompt-box">
+    <div class="prompt-label">VERIFICATION PROMPT</div>
+    以下是刚才提取的 5 个话题。请逐个验证：<br><br>
+    1. 随机抽取该话题下的 3 条原文，检查是否确实属于该话题<br>
+    2. 如果发现不属于，指出原因并建议是否需要拆分或合并<br>
+    3. 检查话题命名是否中立（不带倾向性措辞）<br>
+    4. 检查是否遗漏了重要但文本量少的话题
+  </div>
+
+  <div class="openclaw-box" style="margin-top:0.8em;">
+    <div class="oc-label">OpenClaw 实操</div>
+    <div class="oc-content">
+      你可以直接在 OpenClaw 对话中追加这条验证指令<br>
+      Agent 会读取刚才的输出、回溯原文、逐条检查——<br>
+      <strong>但它自己检查自己不能替代你的最终审读</strong>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 21: 统计模型作为验证手段 -->
+<section>
+  <h2>当需要"做统计"时</h2>
+
+  <div class="vs-layout" style="margin-top:1.2em;">
+    <div class="vs-panel left" style="background:var(--orange-light); border-color:#fed7aa;">
+      <h3 style="color:#f97316;">Agent 能做的</h3>
+      <div class="vs-items">
+        发现话题、命名、生成报告<br>
+        语义理解、跨语料对比<br>
+        <strong>快速、灵活、可对话</strong>
+      </div>
+    </div>
+    <div class="vs-divider">+</div>
+    <div class="vs-panel right">
+      <h3>统计模型补充的</h3>
+      <div class="vs-items">
+        概率分布（每篇文档的话题占比）<br>
+        假设检验（"党派效应显著吗？"）<br>
+        <strong>可复现、可量化、可审计</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-box" style="margin-top:1em;">
+    <p style="font-size:0.78em; margin:0;">
+      <strong>实操建议</strong>：先用 Agent 做探索（快），确认话题结构后再跑统计模型做正式推断（严谨）。<br>
+      Agent 的输出帮你确定 k 和话题命名 → 统计模型验证并给出量化结果
+    </p>
+  </div>
+</section>
+
+<!-- Slide 22: Part 3 Takeaway -->
+<section>
+  <div class="takeaway">
+    <div class="divider"></div>
+    <p class="main-text">信任但要验证<br>尤其当你用 AI</p>
+    <p class="sub-text">
+      幻觉、不一致、偏见 — 三种风险<br>
+      源文抽检、交叉验证、领域审读、文档化<br>
+      <strong>Agent 能帮你验证，但你负最终责任</strong>
+    </p>
+    <p class="hint">PART 4 → 行业实战 + OpenClaw 实操</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PART 4: 行业实战                                               -->
+<!-- ============================================================ -->
+
+<section class="section-title">
+  <h2>
+    <span class="section-num">Part 4 / 4</span>
+    行业实战：<br>从数据到决策的完整链路
+  </h2>
+</section>
+
+<!-- Slide 24: 完整流程 -->
+<section>
+  <h2>AI Agent 主题分析完整流程</h2>
+
+  <div class="flow" style="margin:1em 0; flex-wrap:nowrap; gap:0;">
+    <div class="flow-node" style="min-width:90px; font-size:0.68em; padding:0.7em 0.7em;">
+      上传文本<br><span style="color:var(--gray-500);">CSV/Excel</span>
+    </div>
+    <div class="flow-arrow orange-arrow" style="width:24px;"></div>
+    <div class="flow-node orange" style="min-width:90px; font-size:0.68em; padding:0.7em 0.7em;">
+      Agent<br><span>提取话题</span>
+    </div>
+    <div class="flow-arrow orange-arrow" style="width:24px;"></div>
+    <div class="flow-node orange" style="min-width:90px; font-size:0.68em; padding:0.7em 0.7em;">
+      Agent<br><span>统计+图</span>
+    </div>
+    <div class="flow-arrow accent-arrow" style="width:24px;"></div>
+    <div class="flow-node accent" style="min-width:90px; font-size:0.68em; padding:0.7em 0.7em;">
+      你审读<br><span>验证</span>
+    </div>
+    <div class="flow-arrow accent-arrow" style="width:24px;"></div>
+    <div class="flow-node" style="min-width:90px; font-size:0.68em; padding:0.7em 0.7em; border-color:var(--green); color:var(--green);">
+      Agent<br><span style="color:var(--green);">写报告</span>
+    </div>
+    <div class="flow-arrow accent-arrow" style="width:24px;"></div>
+    <div class="flow-node outline" style="min-width:90px; font-size:0.68em; padding:0.7em 0.7em;">
+      决策<br><span style="color:var(--accent);">行动</span>
+    </div>
+  </div>
+
+  <div class="openclaw-box" style="margin-top:0.5em;">
+    <div class="oc-label">今天实操环节</div>
+    <div class="oc-content">
+      登录 ailab.sjtu.edu.cn → 打开 OpenClaw → 配置模型（GLM 5）<br>
+      上传课堂提供的数据文件 → 让 Agent 分析 → 验证输出 → 生成报告
+    </div>
+  </div>
+</section>
+
+<!-- Slide 25: 医疗 -->
+<section>
+  <h2>行业实战：医疗</h2>
+
+  <div class="industry-grid" style="margin-top:1em;">
+    <div class="industry-card">
+      <div class="ic-sector">场景</div>
+      <div class="ic-task">5 万条患者满意度问卷开放题</div>
+      <div class="ic-method">Agent 指令：分析投诉话题，按科室统计分布，生成科室级改进建议报告</div>
+    </div>
+
+    <div class="industry-card">
+      <div class="ic-sector" style="color:#f97316;">Agent 执行</div>
+      <div class="ic-task">自动发现 6 个话题 + 生成科室对比图</div>
+      <div class="ic-method">
+        就医流程、医生态度、费用、环境、等待时间、治疗效果<br>
+        外科"等待时间"占比显著高于内科 → Agent 标注为高风险
+      </div>
+    </div>
+
+    <div class="industry-card">
+      <div class="ic-sector" style="color:var(--accent);">你的验证</div>
+      <div class="ic-task">抽检 + 话题命名确认</div>
+      <div class="ic-method">
+        每个 Agent 命名的话题，你确认是否符合临床语境<br>
+        "术后沟通不足" — 这种微妙话题 Agent 能发现，但你要确认不是幻觉
+      </div>
+    </div>
+
+    <div class="industry-card">
+      <div class="ic-sector" style="color:#16a34a;">注意事项</div>
+      <div class="ic-task">隐私合规 + 人工审读</div>
+      <div class="ic-method">
+        医疗数据脱敏后才能上传给 Agent<br>
+        高风险场景的 Agent 输出必须人工复核，不能直接用于决策
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 26: 政务 -->
+<section>
+  <h2>行业实战：政府</h2>
+
+  <div class="industry-grid" style="margin-top:1em;">
+    <div class="industry-card">
+      <div class="ic-sector">场景</div>
+      <div class="ic-task">政务热线 10 万条来电 + 3 年历史数据</div>
+      <div class="ic-method">Agent 指令：提取话题 + 对比年度变化 + 标注政策关联事件</div>
+    </div>
+
+    <div class="industry-card">
+      <div class="ic-sector" style="color:#f97316;">Agent 执行</div>
+      <div class="ic-task">8 个话题 + 年度趋势图 + 政策关联</div>
+      <div class="ic-method">
+        发现"环保"话题在某新规发布后占比翻倍<br>
+        Agent 自动写进报告："可能与 2025 年 X 政策相关"
+      </div>
+    </div>
+
+    <div class="industry-card">
+      <div class="ic-sector" style="color:var(--accent);">你的验证</div>
+      <div class="ic-task">因果推断 Agent 做不了</div>
+      <div class="ic-method">
+        Agent 能发现"相关性"（环保占比翻倍）<br>
+        但<strong>因果</strong>（是不是政策导致的）必须你来做研究设计<br>
+        <strong>Agent 发现现象，你解释因果</strong>
+      </div>
+    </div>
+
+    <div class="industry-card">
+      <div class="ic-sector" style="color:#16a34a;">决策输出</div>
+      <div class="ic-task">政策效果评估 + 资源调配建议</div>
+      <div class="ic-method">
+        Agent 生成的是描述性报告 → 你的因果研究才能回答"政策有效吗"<br>
+        两者结合 = 有据可依的政策建议
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 27: 金融 -->
+<section>
+  <h2>行业实战：金融</h2>
+
+  <div class="industry-grid" style="margin-top:1em;">
+    <div class="industry-card">
+      <div class="ic-sector">场景</div>
+      <div class="ic-task">2000 份分析师研报 + 财报电话会议纪要</div>
+      <div class="ic-method">Agent 指令：提取本季度核心风险话题，与上季度对比变化</div>
+    </div>
+
+    <div class="industry-card">
+      <div class="ic-sector" style="color:#f97316;">Agent 执行</div>
+      <div class="ic-task">话题提取 + 季度对比 + 风险信号</div>
+      <div class="ic-method">
+        "监管合规"话题从 12% 升至 21%<br>
+        Agent 细分为"反垄断""数据合规""跨境监管" — LDA 的 BoW 做不到这种语义区分
+      </div>
+    </div>
+
+    <div class="industry-card">
+      <div class="ic-sector" style="color:var(--accent);">你的验证</div>
+      <div class="ic-task">金融场景对幻觉零容忍</div>
+      <div class="ic-method">
+        每条风险信号必须追溯到原文出处<br>
+        Agent 的"数据合规"标签 → 你回去查那篇原文 → 确认真的是在讲数据合规
+      </div>
+    </div>
+
+    <div class="industry-card">
+      <div class="ic-sector" style="color:#16a34a;">决策输出</div>
+      <div class="ic-task">季度风险信号报告</div>
+      <div class="ic-method">
+        Agent 定量追踪 + 语义细分 → 投委会据此调整仓位<br>
+        <strong>关键是：每条结论都有原文追溯链</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 28: OpenClaw 实操指引 -->
+<section>
+  <h2>实操：OpenClaw 主题分析四步走</h2>
+
+  <div class="card-grid cols-2" style="margin-top:1em;">
+    <div class="card" style="text-align:left; padding:1.2em 1.5em; border-color:var(--orange);">
+      <div class="card-label" style="color:var(--orange); font-size:0.8em;">Step 1 — 登录 + 配置</div>
+      <div class="card-desc" style="text-align:left; line-height:1.8; font-size:0.7em;">
+        ailab.sjtu.edu.cn → 进入课程 → 开始连接<br>
+        打开 Web 终端 → 粘贴配置命令 → 获取 Token<br>
+        打开 Agent 网关 → 输入 Token → 设备配对<br>
+        <span style="color:var(--gray-500);">模型默认 sjtu/glm-5，可用 /model 切换</span>
+      </div>
+    </div>
+
+    <div class="card" style="text-align:left; padding:1.2em 1.5em; border-color:var(--orange);">
+      <div class="card-label" style="color:var(--orange); font-size:0.8em;">Step 2 — 上传数据</div>
+      <div class="card-desc" style="text-align:left; line-height:1.8; font-size:0.7em;">
+        在对话中粘贴文本，或上传 CSV 文件<br>
+        Agent 自动读取文件内容<br>
+        <span style="color:var(--gray-500);">支持 /workspace/ 目录下的文件操作</span>
+      </div>
+    </div>
+
+    <div class="card" style="text-align:left; padding:1.2em 1.5em; border-color:var(--orange);">
+      <div class="card-label" style="color:var(--orange); font-size:0.8em;">Step 3 — 发出分析指令</div>
+      <div class="card-desc" style="text-align:left; line-height:1.8; font-size:0.7em;">
+        "分析这些文本，提取主要话题，<br>
+        统计各话题占比，生成饼图和柱状图，<br>
+        写一份 Markdown 报告保存到 /workspace/output/"
+      </div>
+    </div>
+
+    <div class="card" style="text-align:left; padding:1.2em 1.5em; border-color:var(--orange);">
+      <div class="card-label" style="color:var(--orange); font-size:0.8em;">Step 4 — 验证 + 迭代</div>
+      <div class="card-desc" style="text-align:left; line-height:1.8; font-size:0.7em;">
+        抽检每个话题的原文归属<br>
+        让 Agent 验证自己的输出<br>
+        不满意？追加指令让它调整<br>
+        <span style="color:var(--gray-500);">对话式迭代，不用重写代码</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 29: AI 时代的研究者角色 -->
+<section>
+  <h2>AI 时代，研究者做什么？</h2>
+
+  <div class="card-grid cols-3" style="margin-top:1em;">
+    <div class="card accent-card">
+      <div class="card-label" style="color:var(--accent);">设计</div>
+      <div class="card-desc" style="text-align:left; line-height:1.8;">
+        研究问题 → 分析方案<br>
+        Prompt 就是你对 Agent 的研究设计<br>
+        设计不好 = 结果不好
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">判断</div>
+      <div class="card-desc" style="text-align:left; line-height:1.8;">
+        Agent 的话题命名合理吗？<br>
+        因果还是相关？<br>
+        遗漏了什么？
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">负责</div>
+      <div class="card-desc" style="text-align:left; line-height:1.8;">
+        对结果真实性负责<br>
+        对幻觉和偏见保持警觉<br>
+        对决策后果承担责任
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-box" style="margin-top:1em;">
+    <p style="font-size:0.78em; margin:0;">
+      <strong>AI 让分析更快，但让人的责任更重</strong>——Agent 出一版"完美"报告只要 5 分钟，但你要花 50 分钟检查它遗漏了什么。
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 课堂讨论 + 总结                                                -->
+<!-- ============================================================ -->
+
+<!-- Slide 30: 讨论 -->
+<section>
+  <h2>课堂讨论</h2>
+
+  <div class="highlight-box" style="margin-top:1.2em;">
+    <p style="font-size:0.85em; margin:0 0 0.5em; font-weight:600;">在你的工作场景里：</p>
+    <p style="font-size:0.8em; margin:0; line-height:2; color:var(--gray-700);">
+      1. 你手上有哪类文本数据？让 Agent 帮你分析，你会怎么写指令？<br>
+      2. Agent 发现的话题你不认同，怎么办？听 AI 的还是听自己的？<br>
+      3. 你的领域对 AI 分析的信任度如何？需要什么额外验证？<br>
+      4. 用 OpenClaw 试一下：上传数据 → 让 Agent 分析 → 抽检结果
+    </p>
+  </div>
+
+  <div class="cols" style="margin-top:1.2em; gap:1.5em;">
+    <div class="col">
+      <div class="card" style="text-align:center; border-color:var(--orange);">
+        <div class="card-label" style="font-size:0.75em; color:var(--orange);">动手练习</div>
+        <div class="card-desc" style="font-size:0.7em; margin-top:0.3em;">
+          用 OpenClaw 分析课堂数据，两种 Prompt 对比一致性
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card" style="text-align:center;">
+        <div class="card-label" style="font-size:0.75em;">进阶挑战</div>
+        <div class="card-desc" style="font-size:0.7em; margin-top:0.3em;">
+          让 Agent 对自己的输出做验证，记录抽检准确率
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 31: 总结 -->
+<section>
+  <div class="takeaway">
+    <div class="divider"></div>
+    <p class="main-text">Prompt 是代码<br>Agent 是工具<br>你是研究者</p>
+    <p class="sub-text">
+      一句话就能做主题分析<br>
+      但好结果 = 好 Prompt + 严验证 + 深判断<br><br>
+      <strong>AI 越强大，人的判断越不可替代</strong>
+    </p>
+    <p class="hint">All models are wrong, but some are useful — 人来决定哪个有用</p>
+  </div>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: true,
+    progress: true,
+    transition: 'slide',
+    transitionSpeed: 'fast',
+    backgroundTransition: 'none',
+    controls: true,
+    controlsTutorial: false,
+    width: 1280,
+    height: 720,
+    margin: 0.04,
+    minScale: 0.2,
+    maxScale: 2.0,
+    plugins: []
+  });
+</script>
+</body>
+</html>
