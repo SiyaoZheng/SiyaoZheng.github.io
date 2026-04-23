@@ -1,0 +1,238 @@
+# Instincts generated from https://github.com/SiyaoZheng/SiyaoZheng.github.io
+# Generated: 2026-04-23T04:31:36.213Z
+# Version: 2.0
+# NOTE: This file supplements (does not replace) any existing curated instincts.
+# High-confidence manually curated instincts should be preserved alongside these.
+
+---
+id: SiyaoZheng.github.io-commit-length
+trigger: "when writing a commit message"
+confidence: 0.6
+domain: git
+source: repo-analysis
+source_repo: https://github.com/SiyaoZheng/SiyaoZheng.github.io
+---
+
+# SiyaoZheng.github.io Commit Length
+
+## Action
+
+Keep commit messages concise (~26 characters)
+
+## Evidence
+
+- Average commit message length: 26 chars
+- Based on 1 commits
+
+---
+id: SiyaoZheng.github.io-naming-files
+trigger: "when creating a new file"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/SiyaoZheng/SiyaoZheng.github.io
+---
+
+# SiyaoZheng.github.io Naming Files
+
+## Action
+
+Use kebab-case naming convention
+
+## Evidence
+
+- Analyzed file naming patterns in repository
+- Dominant pattern: kebab-case
+
+---
+id: SiyaoZheng.github.io-export-style
+trigger: "when exporting from a module"
+confidence: 0.7
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/SiyaoZheng/SiyaoZheng.github.io
+---
+
+# SiyaoZheng.github.io Export Style
+
+## Action
+
+Prefer named exports
+
+## Evidence
+
+- Export pattern analysis
+- Dominant style: named
+
+---
+id: siyaozheng.github.io-instinct-file-naming
+trigger: "When creating a new file"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: SiyaoZheng/SiyaoZheng.github.io
+---
+
+# Siyaozheng.github.io Instinct File Naming
+
+## Action
+
+Name the file using kebab-case
+
+## Evidence
+
+- Pattern in namingConventions.files
+
+---
+id: siyaozheng.github.io-instinct-function-naming
+trigger: "When defining a new function"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: SiyaoZheng/SiyaoZheng.github.io
+---
+
+# Siyaozheng.github.io Instinct Function Naming
+
+## Action
+
+Use camelCase for the function name
+
+## Evidence
+
+- Pattern in namingConventions.functions
+
+---
+id: siyaozheng.github.io-instinct-class-naming
+trigger: "When defining a new class"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: SiyaoZheng/SiyaoZheng.github.io
+---
+
+# Siyaozheng.github.io Instinct Class Naming
+
+## Action
+
+Use PascalCase for the class name
+
+## Evidence
+
+- Pattern in namingConventions.classes
+
+---
+id: siyaozheng.github.io-instinct-constant-naming
+trigger: "When defining a constant"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: SiyaoZheng/SiyaoZheng.github.io
+---
+
+# Siyaozheng.github.io Instinct Constant Naming
+
+## Action
+
+Use SCREAMING_SNAKE_CASE for the constant name
+
+## Evidence
+
+- Pattern in namingConventions.constants
+
+---
+id: siyaozheng.github.io-instinct-import-style
+trigger: "When importing modules"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: SiyaoZheng/SiyaoZheng.github.io
+---
+
+# Siyaozheng.github.io Instinct Import Style
+
+## Action
+
+Use absolute import paths
+
+## Evidence
+
+- Pattern in importStyle
+
+---
+id: siyaozheng.github.io-instinct-export-style
+trigger: "When exporting modules or functions"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: SiyaoZheng/SiyaoZheng.github.io
+---
+
+# Siyaozheng.github.io Instinct Export Style
+
+## Action
+
+Use named exports
+
+## Evidence
+
+- Pattern in exportStyle
+
+---
+id: siyaozheng.github.io-instinct-commit-format
+trigger: "When writing a commit message"
+confidence: 0.7
+domain: git
+source: repo-analysis
+source_repo: SiyaoZheng/SiyaoZheng.github.io
+---
+
+# Siyaozheng.github.io Instinct Commit Format
+
+## Action
+
+Use a short, freeform message describing the change (no enforced prefix or format)
+
+## Evidence
+
+- Seen in commit: 'Add Linear PR issue linker'
+- Pattern in commits.prefixes (empty)
+
+---
+id: siyaozheng.github.io-instinct-test-location
+trigger: "When adding a test file"
+confidence: 0.7
+domain: testing
+source: repo-analysis
+source_repo: SiyaoZheng/SiyaoZheng.github.io
+---
+
+# Siyaozheng.github.io Instinct Test Location
+
+## Action
+
+Place test files mixed with source files (not in a dedicated test folder)
+
+## Evidence
+
+- Pattern in architecture.testLocation: mixed
+
+---
+id: siyaozheng.github.io-instinct-workflow-link-linear
+trigger: "When automating issue linking between GitHub and Linear"
+confidence: 0.8
+domain: workflow
+source: repo-analysis
+source_repo: SiyaoZheng/SiyaoZheng.github.io
+---
+
+# Siyaozheng.github.io Instinct Workflow Link Linear
+
+## Action
+
+Use the workflow defined in .github/workflows/link-linear-from-github-issue.yml
+
+## Evidence
+
+- Presence of .github/workflows/link-linear-from-github-issue.yml
+
