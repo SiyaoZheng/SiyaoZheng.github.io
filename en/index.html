@@ -3,716 +3,516 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siyao Zheng | Political Scientist</title>
+    <title>Siyao Zheng | Political Science</title>
+    <meta name="description" content="Siyao Zheng is an Assistant Professor at Shanghai Jiao Tong University. Research: AI for social science, digital politics, and state governance.">
     <script defer data-domain="siyaozheng.org" src="https://plausible.io/js/script.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #f6f8fa;
-            --paper: #ffffff;
-            --ink: #18212b;
-            --muted: #586673;
-            --quiet: #7a8994;
-            --line: #d8e0e6;
-            --line-strong: #c8d2da;
-            --accent: #2f6f73;
-            --soft: #edf2f5;
+            --text: #1a1a1a;
+            --muted: #555;
+            --light: #888;
+            --line: #ddd;
+            --link: #2563eb;
+            --link-hover: #1d4ed8;
+            --bg: #fff;
         }
 
-        * {
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
-            font-family: 'Geist', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: var(--bg);
-            color: var(--ink);
-            line-height: 1.58;
+            color: var(--text);
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        a {
+            color: var(--link);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Header */
+        header {
+            padding: 2.5rem 0 1.5rem;
+            border-bottom: 1px solid var(--line);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+        }
+
+        .site-name {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .site-name a {
+            color: var(--text);
+            text-decoration: none;
         }
 
         nav {
-            max-width: 1180px;
-            margin: 0 auto;
-            padding: 1.55rem 2rem;
             display: flex;
-            align-items: baseline;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--line);
-        }
-
-        .nav-name {
-            font-size: 1.12rem;
-            font-weight: 650;
-            letter-spacing: -0.02em;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 1.55rem;
+            gap: 1.2rem;
             flex-wrap: wrap;
         }
 
-        .nav-links a {
+        nav a {
             color: var(--muted);
             font-size: 0.9rem;
+        }
+
+        nav a:hover {
+            color: var(--text);
             text-decoration: none;
         }
 
-        .nav-links a:hover {
-            color: var(--ink);
-        }
-
-        .hero,
-        section,
-        footer {
-            max-width: 1180px;
-            margin: 0 auto;
-            padding-left: 2rem;
-            padding-right: 2rem;
-        }
-
+        /* Hero */
         .hero {
-            padding-top: 5.5rem;
-            padding-bottom: 5.5rem;
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) 320px;
-            gap: 5rem;
-            align-items: start;
+            padding: 2.5rem 0;
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
         }
 
-        .hero-label,
-        .section-number,
-        .course-level,
-        .course-meta,
-        .slides-label,
-        .cv-date,
-        .map-label {
-            font-family: 'IBM Plex Mono', monospace;
-            color: var(--accent);
-            letter-spacing: 0.08em;
+        .hero-photo {
+            flex-shrink: 0;
         }
 
-        .hero-label {
-            margin-bottom: 1.3rem;
-            font-size: 0.86rem;
+        .hero-photo img {
+            width: 140px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 4px;
+            display: block;
+        }
+
+        .hero-content {
+            flex: 1;
         }
 
         h1 {
-            margin: 0;
-            font-size: clamp(3.2rem, 8vw, 6.2rem);
-            line-height: 0.94;
-            font-weight: 540;
-            letter-spacing: -0.075em;
-        }
-
-        .hero-subtitle {
-            max-width: 580px;
-            margin: 1.65rem 0 2.4rem;
-            color: var(--muted);
-            font-size: 1.2rem;
-            line-height: 1.55;
-        }
-
-        .hero-subtitle strong {
-            color: var(--ink);
+            margin: 0 0 0.3rem;
+            font-size: 1.6rem;
             font-weight: 600;
+            line-height: 1.3;
         }
 
-        .hero-affiliation {
-            display: grid;
-            grid-template-columns: 46px minmax(0, 1fr);
+        .hero-title {
+            margin: 0 0 0.6rem;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .hero-bio {
+            margin: 0;
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .hero-links {
+            margin-top: 1rem;
+            display: flex;
             gap: 1rem;
-            align-items: start;
-            max-width: 520px;
-            padding-top: 1.4rem;
-            border-top: 1px solid var(--line);
+            flex-wrap: wrap;
+            font-size: 0.88rem;
         }
 
-        .affiliation-logo {
-            width: 46px;
-            height: 46px;
-            display: grid;
-            place-items: center;
-            background: var(--ink);
-            color: white;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.72rem;
-            letter-spacing: 0.08em;
-        }
-
-        .affiliation-text {
+        .hero-links a {
             color: var(--muted);
-            font-size: 0.96rem;
-            line-height: 1.45;
-        }
-
-        .affiliation-text strong {
-            display: block;
-            color: var(--ink);
-            font-weight: 650;
-        }
-
-        .hero-image {
-            padding-top: 0.25rem;
-        }
-
-        .hero-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border: 1px solid var(--line-strong);
-        }
-
-        section {
-            padding-top: 4.7rem;
-            padding-bottom: 4.7rem;
-            border-top: 1px solid var(--line);
-        }
-
-        #publications {
-            background: var(--paper);
-            max-width: none;
-            padding-left: max(2rem, calc((100vw - 1180px) / 2 + 2rem));
-            padding-right: max(2rem, calc((100vw - 1180px) / 2 + 2rem));
-        }
-
-        #teaching {
-            background: var(--soft);
-            max-width: none;
-            padding-left: max(2rem, calc((100vw - 1180px) / 2 + 2rem));
-            padding-right: max(2rem, calc((100vw - 1180px) / 2 + 2rem));
-        }
-
-        .section-header {
-            display: grid;
-            grid-template-columns: 54px minmax(0, 1fr);
-            gap: 1.6rem;
-            align-items: baseline;
-            margin-bottom: 2.4rem;
-        }
-
-        .section-number {
-            font-size: 0.82rem;
-        }
-
-        .section-title,
-        .contact-info h2 {
-            margin: 0;
-            font-size: clamp(2rem, 4.4vw, 4.25rem);
-            line-height: 1;
-            font-weight: 480;
-            letter-spacing: -0.06em;
-        }
-
-        .publications-list {
-            border-top: 1px solid var(--line-strong);
-        }
-
-        .publication-item {
-            display: grid;
-            grid-template-columns: 72px minmax(0, 1fr);
-            gap: 2rem;
-            padding: 1.55rem 0;
             border-bottom: 1px solid var(--line);
+            padding-bottom: 0.1rem;
         }
 
-        .pub-year {
-            font-family: 'IBM Plex Mono', monospace;
-            color: var(--accent);
-            font-size: 0.9rem;
-            letter-spacing: 0.04em;
+        .hero-links a:hover {
+            color: var(--text);
+            border-bottom-color: var(--text);
+            text-decoration: none;
         }
 
-        .pub-content h4 {
-            margin: 0;
-            max-width: 900px;
-            font-size: clamp(1.22rem, 2.2vw, 1.85rem);
-            line-height: 1.13;
+        /* Sections */
+        section {
+            padding: 2rem 0;
+            border-top: 1px solid var(--line);
+        }
+
+        h2 {
+            margin: 0 0 1.2rem;
+            font-size: 1.15rem;
             font-weight: 600;
-            letter-spacing: -0.035em;
+            color: var(--text);
         }
 
-        .pub-authors,
-        .pub-venue,
-        .course-featured p,
-        .course-card p,
-        .cv-item p,
-        .contact-text,
-        .map-address {
+        h3 {
+            margin: 0 0 0.2rem;
+            font-size: 1rem;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        /* Publications */
+        .pub-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .pub-item {
+            margin-bottom: 1.3rem;
+        }
+
+        .pub-title {
+            margin: 0 0 0.25rem;
+            font-size: 0.98rem;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        .pub-authors {
+            margin: 0;
             color: var(--muted);
-            font-size: 0.96rem;
-        }
-
-        .pub-authors,
-        .pub-venue {
-            margin: 0.42rem 0 0;
+            font-size: 0.9rem;
         }
 
         .pub-authors strong {
-            color: var(--ink);
-            font-weight: 650;
+            color: var(--text);
+            font-weight: 500;
         }
 
         .pub-venue {
+            margin: 0.15rem 0 0;
+            color: var(--light);
+            font-size: 0.88rem;
             font-style: italic;
         }
 
-        .content-wrapper {
-            max-width: 1180px;
-            margin: 0 auto;
-        }
-
-        .teaching-grid {
-            border-top: 1px solid var(--line-strong);
-        }
-
-        .course-featured,
-        .course-card {
-            display: grid;
-            grid-template-columns: 220px minmax(0, 1fr);
-            gap: 2rem;
-            padding: 1.65rem 0;
-            border-bottom: 1px solid var(--line);
-            background: transparent;
-        }
-
-        .course-level {
+        /* Teaching */
+        .course-list {
+            list-style: none;
             margin: 0;
-            font-size: 0.76rem;
-            line-height: 1.5;
+            padding: 0;
         }
 
-        .course-featured h3,
-        .course-card h3,
-        .cv-item h4 {
+        .course-item {
+            margin-bottom: 1.2rem;
+        }
+
+        .course-name {
             margin: 0;
-            font-size: clamp(1.28rem, 2.2vw, 1.95rem);
-            line-height: 1.12;
-            font-weight: 570;
-            letter-spacing: -0.04em;
+            font-size: 0.98rem;
+            font-weight: 500;
         }
 
         .course-meta {
-            margin-top: 0.85rem;
-            font-size: 0.82rem;
+            margin: 0.15rem 0 0;
+            color: var(--light);
+            font-size: 0.85rem;
+            font-family: 'IBM Plex Mono', monospace;
         }
 
-        .course-featured p,
-        .course-card p {
-            max-width: 760px;
-            margin: 0.9rem 0 0;
+        .course-desc {
+            margin: 0.3rem 0 0;
+            color: var(--muted);
+            font-size: 0.9rem;
         }
 
         .course-slides {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            align-items: center;
-            margin-top: 1rem;
-        }
-
-        .slides-label {
-            color: var(--quiet);
-            font-size: 0.76rem;
+            margin-top: 0.4rem;
+            font-size: 0.85rem;
         }
 
         .course-slides a {
-            color: var(--muted);
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.76rem;
-            text-decoration: none;
-            border-bottom: 1px solid var(--line-strong);
+            margin-right: 0.5rem;
         }
 
-        #cv {
-            background: var(--paper);
-            max-width: none;
-            padding-left: max(2rem, calc((100vw - 1180px) / 2 + 2rem));
-            padding-right: max(2rem, calc((100vw - 1180px) / 2 + 2rem));
-        }
-
-        .cv-timeline {
-            display: grid;
-            border-top: 1px solid var(--line-strong);
+        /* CV */
+        .cv-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
         }
 
         .cv-item {
-            display: grid;
-            grid-template-columns: 150px minmax(0, 1fr);
-            gap: 2rem;
-            padding: 1.35rem 0;
-            border-bottom: 1px solid var(--line);
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 0.9rem;
         }
 
         .cv-date {
-            font-size: 0.78rem;
-            line-height: 1.5;
-        }
-
-        .cv-item p {
-            margin: 0.35rem 0 0;
-        }
-
-        #contact {
-            background: #17222c;
-            color: white;
-            max-width: none;
-            padding-left: max(2rem, calc((100vw - 1180px) / 2 + 2rem));
-            padding-right: max(2rem, calc((100vw - 1180px) / 2 + 2rem));
-        }
-
-        #contact .content-wrapper {
-            display: grid;
-            grid-template-columns: minmax(0, 0.8fr) minmax(360px, 0.75fr);
-            gap: 5rem;
-        }
-
-        .contact-info h2 {
-            color: white;
-            margin-bottom: 2rem;
-        }
-
-        .contact-details {
-            display: grid;
-            gap: 1.3rem;
-        }
-
-        .contact-item {
-            display: grid;
-            grid-template-columns: 88px minmax(0, 1fr);
-            gap: 1.2rem;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(216, 224, 230, 0.18);
-        }
-
-        .contact-icon {
-            color: #a7b6bf;
-            font-size: 0.94rem;
-        }
-
-        .contact-text {
-            color: #c2cdd4;
-        }
-
-        .contact-text strong,
-        .map-label {
-            display: block;
-            color: #a7b6bf;
+            flex-shrink: 0;
+            width: 110px;
+            color: var(--light);
+            font-size: 0.88rem;
             font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.78rem;
-            letter-spacing: 0.08em;
-            font-weight: 400;
-            margin-bottom: 0.35rem;
         }
 
-        .contact-text a {
-            color: white;
-            text-decoration: none;
+        .cv-detail h4 {
+            margin: 0;
+            font-size: 0.95rem;
+            font-weight: 500;
         }
 
-        .contact-map {
-            padding-top: 1rem;
-            border-top: 1px solid rgba(216, 224, 230, 0.18);
+        .cv-detail p {
+            margin: 0.1rem 0 0;
+            color: var(--muted);
+            font-size: 0.9rem;
         }
 
-        .map-address {
-            color: white;
-            font-size: 1rem;
+        /* Contact */
+        .contact-grid {
+            display: grid;
+            gap: 0.8rem;
         }
 
+        .contact-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .contact-label {
+            width: 60px;
+            flex-shrink: 0;
+            color: var(--light);
+            font-size: 0.85rem;
+        }
+
+        .contact-value {
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .contact-value a {
+            color: var(--link);
+        }
+
+        /* Footer */
         footer {
-            max-width: none;
-            padding-top: 0;
-            padding-bottom: 2.5rem;
-            color: #a7b6bf;
-            background: #17222c;
-            padding-left: max(2rem, calc((100vw - 1180px) / 2 + 2rem));
-            padding-right: max(2rem, calc((100vw - 1180px) / 2 + 2rem));
+            padding: 1.5rem 0 3rem;
+            border-top: 1px solid var(--line);
+            color: var(--light);
+            font-size: 0.85rem;
         }
 
-        footer p {
-            max-width: 1180px;
-            margin: 0 auto;
-            padding-top: 1.6rem;
-            border-top: 1px solid rgba(216, 224, 230, 0.18);
+        footer a {
+            color: var(--light);
         }
 
-        @media (max-width: 980px) {
+        /* Responsive */
+        @media (max-width: 600px) {
             .hero {
-                grid-template-columns: minmax(0, 1fr) 280px;
-                gap: 3rem;
-            }
-
-            .course-featured,
-            .course-card {
-                grid-template-columns: 170px minmax(0, 1fr);
-            }
-        }
-
-        @media (max-width: 760px) {
-            nav {
-                align-items: flex-start;
-                gap: 1rem;
                 flex-direction: column;
+                align-items: center;
+                text-align: center;
             }
 
-            .nav-links {
-                gap: 1rem;
+            .hero-photo img {
+                width: 120px;
+                height: 120px;
             }
 
-            .hero,
-            #contact .content-wrapper {
-                grid-template-columns: 1fr;
+            .hero-links {
+                justify-content: center;
             }
 
-            .hero {
-                padding-top: 3.2rem;
-                padding-bottom: 3.5rem;
+            header .container {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.8rem;
             }
 
-            .hero-image {
-                max-width: 300px;
+            nav {
+                justify-content: center;
             }
 
-            .section-header,
-            .publication-item,
-            .course-featured,
-            .course-card,
-            .cv-item,
-            .contact-item {
-                grid-template-columns: 1fr;
-                gap: 0.65rem;
+            .cv-item {
+                flex-direction: column;
+                gap: 0.2rem;
             }
 
-            .section-header {
-                margin-bottom: 1.8rem;
-            }
-
-            section {
-                padding-top: 3.4rem;
-                padding-bottom: 3.4rem;
+            .cv-date {
+                width: auto;
             }
         }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="nav-name">Siyao Zheng</div>
-        <div class="nav-links">
-            <a href="/en/#publications">Publications</a>
-            <a href="/en/#teaching">Teaching</a>
-            <a href="/en/#cv">CV</a>
-            <a href="/en/blog/">Blog</a>
-            <a href="/en/#contact">Contact</a>
-            <a href="/">中文</a>
+    <header>
+        <div class="container">
+            <div class="site-name"><a href="/en/">Siyao Zheng</a></div>
+            <nav>
+                <a href="#publications">Publications</a>
+                <a href="#teaching">Teaching</a>
+                <a href="#cv">CV</a>
+                <a href="/en/blog/">Blog</a>
+                <a href="#contact">Contact</a>
+                <a href="/">中文</a>
+            </nav>
         </div>
-    </nav>
+    </header>
 
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-label">Chinese Politics & Computational Social Science</div>
-            <h1>Siyao Zheng</h1>
-            <p class="hero-subtitle">
-                My research focuses on <strong>AI for Social Science</strong> and <strong>Digital Politics</strong>.
-            </p>
-            <div class="hero-affiliation">
-                <div class="affiliation-logo">SJTU</div>
-                <div class="affiliation-text">
-                    <strong>Assistant Professor</strong>
-                    School of International and Public Affairs<br>
-                    Shanghai Jiao Tong University
+    <div class="container">
+        <section class="hero" style="border-top: none;">
+            <div class="hero-photo">
+                <img src="/images/profile.jpg" alt="Siyao Zheng">
+            </div>
+            <div class="hero-content">
+                <h1>Siyao Zheng</h1>
+                <p class="hero-title">Assistant Professor, School of International and Public Affairs, Shanghai Jiao Tong University</p>
+                <p class="hero-bio">
+                    My research focuses on artificial intelligence for social science research, digital politics, and state governance. I am currently based at Shanghai Jiao Tong University. Previously, I received my Ph.D. in Political Science from Tsinghua University and was a visiting student at Harvard University's Department of Government.
+                </p>
+                <div class="hero-links">
+                    <a href="https://scholar.google.com/citations?user=5HvIF_kAAAAJ&hl=en" target="_blank">Google Scholar</a>
+                    <a href="https://github.com/SiyaoZheng/" target="_blank">GitHub</a>
                 </div>
             </div>
-        </div>
-        <div class="hero-image">
-            <img src="/images/profile.jpg" alt="Siyao Zheng">
-        </div>
-    </section>
+        </section>
 
-    <section id="publications">
-        <div class="section-header">
-            <span class="section-number">01</span>
-            <h2 class="section-title">Selected Publications</h2>
-        </div>
-        <div class="publications-list">
-            <div class="publication-item">
-                <div class="pub-year">2023</div>
-                <div class="pub-content">
-                    <h4>The Informational Theory of State Governance: Perspectives from Information Politics</h4>
+        <section id="publications">
+            <h2>Publications</h2>
+            <ul class="pub-list">
+                <li class="pub-item">
+                    <p class="pub-title">The Informational Theory of State Governance: Perspectives from Information Politics</p>
                     <p class="pub-authors">Tiangang Meng & <strong>Siyao Zheng</strong></p>
-                    <p class="pub-venue">CASS Journal of Political Science (政治学研究)</p>
-                </div>
-            </div>
-            <div class="publication-item">
-                <div class="pub-year">2022</div>
-                <div class="pub-content">
-                    <h4>Government Information Disclosure and Governance Effectiveness in Public Crisis: A Survey Experiment</h4>
+                    <p class="pub-venue">CASS Journal of Political Science (政治学研究), 2023</p>
+                </li>
+                <li class="pub-item">
+                    <p class="pub-title">Government Information Disclosure and Governance Effectiveness in Public Crisis: A Survey Experiment</p>
                     <p class="pub-authors"><strong>Siyao Zheng</strong> & Tiangang Meng</p>
-                    <p class="pub-venue">Public Administration and Policy Review (公共管理与政策评论)</p>
-                </div>
-            </div>
-            <div class="publication-item">
-                <div class="pub-year">2021</div>
-                <div class="pub-content">
-                    <h4>Information Politics of Environmental Governance: How Central Environmental Inspection Drives Public Participation</h4>
+                    <p class="pub-venue">Public Administration and Policy Review (公共管理与政策评论), 2022</p>
+                </li>
+                <li class="pub-item">
+                    <p class="pub-title">Information Politics of Environmental Governance: How Central Environmental Inspection Drives Public Participation</p>
                     <p class="pub-authors"><strong>Siyao Zheng</strong> & Tiangang Meng</p>
-                    <p class="pub-venue">Comparative Economic & Social Systems (经济社会体制比较)</p>
-                </div>
-            </div>
-            <div class="publication-item">
-                <div class="pub-year">2020</div>
-                <div class="pub-content">
-                    <h4>The Paradox of Responsiveness and Social Protest in China</h4>
+                    <p class="pub-venue">Comparative Economic & Social Systems (经济社会体制比较), 2021</p>
+                </li>
+                <li class="pub-item">
+                    <p class="pub-title">The Paradox of Responsiveness and Social Protest in China</p>
                     <p class="pub-authors"><strong>Siyao Zheng</strong> & Tiangang Meng</p>
-                    <p class="pub-venue">Journal of Contemporary China</p>
-                </div>
-            </div>
-            <div class="publication-item">
-                <div class="pub-year">2017</div>
-                <div class="pub-content">
-                    <h4>Information, Communication, and Influence: Government New Media in Internet Governance</h4>
+                    <p class="pub-venue">Journal of Contemporary China, 2020</p>
+                </li>
+                <li class="pub-item">
+                    <p class="pub-title">Information, Communication, and Influence: Government New Media in Internet Governance</p>
                     <p class="pub-authors">Tiangang Meng & <strong>Siyao Zheng</strong></p>
-                    <p class="pub-venue">Journal of Public Administration (公共行政评论)</p>
-                </div>
-            </div>
-        </div>
-    </section>
+                    <p class="pub-venue">Journal of Public Administration (公共行政评论), 2017</p>
+                </li>
+            </ul>
+        </section>
 
-    <section id="teaching">
-        <div class="content-wrapper">
-            <div class="section-header">
-                <span class="section-number">02</span>
-                <h2 class="section-title">Teaching</h2>
-            </div>
-            <div class="teaching-grid">
-                <div class="course-featured">
-                    <div class="course-level">Micro-Major · Spring 2026</div>
-                    <div>
-                        <h3>Machine Learning & Natural Language Processing</h3>
-                        <div class="course-meta">45 students · 16 weeks · Per-student AI Agent</div>
-                        <p>Each of the 45 students has their own OpenClaw AI Agent instance deployed on SJTU's Zhiyuan-1 supercomputer (1024 Ascend 910B GPUs), used throughout the semester for research, coding, and analysis.</p>
-                        <div class="course-slides">
-                            <span class="slides-label">Slides:</span>
-                            <a href="/slides/lecture01/">L01</a>
-                            <a href="/slides/lecture02/">L02</a>
-                            <a href="/slides/lecture03/">L03</a>
-                            <a href="/slides/lecture04/">L04</a>
-                            <a href="/slides/lecture05/">L05</a>
-                            <a href="/slides/lecture06/">L06</a>
-                            <a href="/slides/lecture08/">L08</a>
-                        </div>
+        <section id="teaching">
+            <h2>Teaching</h2>
+            <ul class="course-list">
+                <li class="course-item">
+                    <p class="course-name">Machine Learning & Natural Language Processing</p>
+                    <p class="course-meta">Micro-Major · Spring 2026</p>
+                    <p class="course-desc">16-week course where 45 students use AI Agents deployed on SJTU's supercomputer for research, coding, and data analysis.</p>
+                    <div class="course-slides">
+                        <a href="/slides/lecture01/">L01</a>
+                        <a href="/slides/lecture02/">L02</a>
+                        <a href="/slides/lecture03/">L03</a>
+                        <a href="/slides/lecture04/">L04</a>
+                        <a href="/slides/lecture05/">L05</a>
+                        <a href="/slides/lecture06/">L06</a>
+                        <a href="/slides/lecture08/">L08</a>
                     </div>
-                </div>
-                <div class="course-card">
-                    <div class="course-level">Undergraduate</div>
-                    <div>
-                        <h3>Multivariate Statistical Analysis</h3>
-                        <p>Foundation course covering regression, factor analysis, and causal inference methods for social science research.</p>
-                    </div>
-                </div>
-                <div class="course-card">
-                    <div class="course-level">Undergraduate</div>
-                    <div>
-                        <h3>Social Computing in the AI Era</h3>
-                        <p>Exploring how artificial intelligence and computational methods transform social science research and practice.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+                </li>
+                <li class="course-item">
+                    <p class="course-name">Multivariate Statistical Analysis</p>
+                    <p class="course-meta">Undergraduate</p>
+                    <p class="course-desc">Foundation course on regression, factor analysis, and causal inference for social science research.</p>
+                </li>
+                <li class="course-item">
+                    <p class="course-name">Social Computing in the AI Era</p>
+                    <p class="course-meta">Undergraduate</p>
+                    <p class="course-desc">Exploring how artificial intelligence and computational methods transform social science research and practice.</p>
+                </li>
+            </ul>
+        </section>
 
-    <section id="cv">
-        <div class="section-header">
-            <span class="section-number">03</span>
-            <h2 class="section-title">Education & Career</h2>
-        </div>
-        <div class="cv-timeline">
-            <div class="cv-item">
-                <div class="cv-date">2024 – Present</div>
-                <div>
-                    <h4>Assistant Professor</h4>
-                    <p>Shanghai Jiao Tong University, School of International and Public Affairs</p>
-                </div>
-            </div>
-            <div class="cv-item">
-                <div class="cv-date">2020 – 2024</div>
-                <div>
-                    <h4>Ph.D. in Political Science</h4>
-                    <p>Tsinghua University, Department of Political Science</p>
-                </div>
-            </div>
-            <div class="cv-item">
-                <div class="cv-date">2022 – 2023</div>
-                <div>
-                    <h4>Visiting Doctoral Student</h4>
-                    <p>Harvard University, Department of Government</p>
-                </div>
-            </div>
-            <div class="cv-item">
-                <div class="cv-date">2017 – 2020</div>
-                <div>
-                    <h4>Master of Public Administration</h4>
-                    <p>Tsinghua University, School of Public Policy and Management</p>
-                </div>
-            </div>
-            <div class="cv-item">
-                <div class="cv-date">2013 – 2017</div>
-                <div>
-                    <h4>Bachelor of Laws</h4>
-                    <p>Peking University, School of Government</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact">
-        <div class="content-wrapper">
-            <div class="contact-info">
-                <h2>Contact</h2>
-                <div class="contact-details">
-                    <div class="contact-item">
-                        <div class="contact-icon">✉</div>
-                        <div class="contact-text">
-                            <strong>Email</strong>
-                            <a id="email-link" href="#" onclick="return false;">Loading...</a>
-                            <script>
-                            (function(){var u='zhengsy24',d='sjtu.edu.cn',e=u+'@'+d;
-                            var a=document.getElementById('email-link');
-                            a.href='mail'+'to:'+e;a.textContent=e;
-                            a.onclick=null;})();
-                            </script>
-                        </div>
+        <section id="cv">
+            <h2>Education & Career</h2>
+            <ul class="cv-list">
+                <li class="cv-item">
+                    <span class="cv-date">2024 – Present</span>
+                    <div class="cv-detail">
+                        <h4>Assistant Professor</h4>
+                        <p>Shanghai Jiao Tong University, School of International and Public Affairs</p>
                     </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">◎</div>
-                        <div class="contact-text">
-                            <strong>Profiles</strong>
-                            <a href="https://scholar.google.com/citations?user=5HvIF_kAAAAJ&hl=en" target="_blank">Google Scholar</a> · <a href="https://github.com/SiyaoZheng/" target="_blank">GitHub</a>
-                        </div>
+                </li>
+                <li class="cv-item">
+                    <span class="cv-date">2020 – 2024</span>
+                    <div class="cv-detail">
+                        <h4>Ph.D. in Political Science</h4>
+                        <p>Tsinghua University, Department of Political Science</p>
                     </div>
-                </div>
-            </div>
-            <div class="contact-map">
-                <div class="map-label">Office Address</div>
-                <div class="map-address">
-                    Room 113, Bao Zhaolong Library<br>
-                    Shanghai Jiao Tong University (Xuhui Campus)<br>
-                    1954 Huashan Road, Xuhui District<br>
-                    Shanghai 200030, China
-                </div>
-            </div>
-        </div>
-    </section>
+                </li>
+                <li class="cv-item">
+                    <span class="cv-date">2022 – 2023</span>
+                    <div class="cv-detail">
+                        <h4>Visiting Doctoral Student</h4>
+                        <p>Harvard University, Department of Government</p>
+                    </div>
+                </li>
+                <li class="cv-item">
+                    <span class="cv-date">2017 – 2020</span>
+                    <div class="cv-detail">
+                        <h4>Master of Public Administration</h4>
+                        <p>Tsinghua University, School of Public Policy and Management</p>
+                    </div>
+                </li>
+                <li class="cv-item">
+                    <span class="cv-date">2013 – 2017</span>
+                    <div class="cv-detail">
+                        <h4>Bachelor of Laws</h4>
+                        <p>Peking University, School of Government</p>
+                    </div>
+                </li>
+            </ul>
+        </section>
 
-    <footer>
-        <p>© 2026 Siyao Zheng &middot; <a href="/">中文</a></p>
-    </footer>
+        <section id="contact">
+            <h2>Contact</h2>
+            <div class="contact-grid">
+                <div class="contact-row">
+                    <span class="contact-label">Email</span>
+                    <span class="contact-value">
+                        <a id="email-link" href="#" onclick="return false;">Loading...</a>
+                        <script>
+                        (function(){var u='zhengsy24',d='sjtu.edu.cn',e=u+'@'+d;
+                        var a=document.getElementById('email-link');
+                        a.href='mail'+'to:'+e;a.textContent=e;a.onclick=null;})();
+                        </script>
+                    </span>
+                </div>
+                <div class="contact-row">
+                    <span class="contact-label">Office</span>
+                    <span class="contact-value">
+                        Room 113, Bao Zhaolong Library, SJTU (Xuhui Campus)<br>
+                        1954 Huashan Road, Shanghai 200030, China
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Siyao Zheng &middot; <a href="/">中文</a></p>
+        </footer>
+    </div>
 </body>
 </html>
