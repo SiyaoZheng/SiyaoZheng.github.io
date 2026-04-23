@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1,248 次 AI 编码会话的情绪成本 | 郑思尧</title>
-    <meta name="description" content="我把一个月里所有 AI 编码会话的负面情绪标注出来，三分之二是挫败感，触发场景也很熟悉。">
+    <title>The Emotional Cost of 1,248 AI Coding Sessions | Siyao Zheng</title>
+    <meta name="description" content="I classified every negative emotion from a month of AI coding sessions. Two-thirds were frustration. The triggers will look familiar.">
     <script defer data-domain="siyaozheng.org" src="https://plausible.io/js/script.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #fafafa;
@@ -24,7 +24,7 @@
         html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Noto Sans SC', 'Inter', sans-serif;
+            font-family: 'Inter', sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
@@ -418,18 +418,6 @@
 
         footer a { color: var(--accent); text-decoration: none; }
 
-        footer a.lang-switch {
-            color: var(--text-secondary);
-            font-size: 0.82rem;
-            letter-spacing: 0.04em;
-            opacity: 0.85;
-        }
-
-        footer a.lang-switch:hover {
-            color: var(--text);
-            opacity: 1;
-        }
-
         /* Responsive */
         @media (max-width: 1024px) {
             nav { padding: 1rem 2rem; }
@@ -454,59 +442,60 @@
 </head>
 <body>
     <nav>
-        <a class="nav-name" href="/">郑思尧</a>
+        <a class="nav-name" href="/en/">Siyao Zheng</a>
         <div class="nav-links">
-            <a href="/#publications">论文</a>
-            <a href="/#teaching">教学</a>
-            <a href="/#cv">简历</a>
-            <a href="/blog/">博客</a>
-            <a href="/#contact">联系</a>
+            <a href="/en/#publications">Publications</a>
+            <a href="/en/#teaching">Teaching</a>
+            <a href="/en/#cv">CV</a>
+            <a href="/en/blog/">Blog</a>
+            <a href="/en/#contact">Contact</a>
+            <a href="/">中文</a>
         </div>
     </nav>
 
     <header class="article-header">
-        <div class="article-meta">2026 年 2 月 12 日 · AI 与社会科学</div>
-        <h1>1,248 次 AI 编码会话的情绪成本</h1>
+        <div class="article-meta">February 12, 2026 &middot; AI for Social Science</div>
+        <h1>The Emotional Cost of 1,248 AI Coding Sessions</h1>
         <p class="article-subtitle">
-            我把一个月里所有 AI 编码会话的负面情绪标注出来，三分之二是挫败感，触发场景也很熟悉。
+            I classified every negative emotion from a month of AI coding sessions. Two-thirds were frustration. The triggers will look familiar.
         </p>
     </header>
 
     <article class="article-body">
 
         <p>
-            如果一个月前有人问我，每天和 AI 一起写代码是什么感觉，我大概会说：挫败，但不是糟糕到不能用的那种挫败，而是那种会让人频繁叹气的挫败。
+            If you asked me a month ago what it feels like to code with AI every day, I would have said "frustrating." Not terrible, not unusable, just... frustrating. The kind of frustrating that makes you sigh a lot.
         </p>
 
         <p>
-            后来我做了一件有点离谱的事。Claude Code 会把每一次会话完整记录下来：我说了什么、它回了什么、工具又做了什么。我手里正好攒了 1,248 份这样的转录，于是我把全部 10,065 条消息送进分类器，问它：哪些句子里，我已经明显不耐烦了？
+            Then I did something a little unhinged. Claude Code saves a full transcript of every session: every message I sent, every response, every tool call. I had 1,248 of these transcripts sitting around. So I sent all 10,065 of my messages through a classifier and asked it to tag every message where I sounded upset.
         </p>
 
         <p>
-            结果有 706 条消息被判成了非中性。它们拼出来的图景，和我原先想象的并不一样。
+            706 messages came back as non-neutral. And the picture they paint is not what I expected.
         </p>
 
         <div class="big-stat">
             <div class="big-stat-item">
                 <div class="big-stat-number">1,248</div>
-                <div class="big-stat-label">会话总数</div>
+                <div class="big-stat-label">Sessions Analyzed</div>
             </div>
             <div class="big-stat-item">
                 <div class="big-stat-number">706</div>
-                <div class="big-stat-label">情绪事件</div>
+                <div class="big-stat-label">Emotional Events</div>
             </div>
             <div class="big-stat-item">
                 <div class="big-stat-number">74%</div>
-                <div class="big-stat-label">无情绪波动的会话</div>
+                <div class="big-stat-label">Sessions Emotion-Free</div>
             </div>
         </div>
 
         <p>
-            四分之三的会话什么都没有发生。没有可检测的挫败、愤怒或失望。请它做一件事，它给出结果，我继续往下走。原先记忆里那种“总是在挫败”的体验，实际上只出现在 26% 的会话里。关于自己的感受，我记错了，糟糕的那几次只是更容易被记住。
+            Three out of four sessions: nothing. No detectable frustration, no anger, no disappointment. I ask for something, I get it, I move on. The "constantly frustrating" experience I would have described from memory turns out to be 26% of sessions. I was wrong about my own experience. The bad ones are just more memorable.
         </p>
 
         <p>
-            但这 26% 是真实存在的，而且样子大致如下：
+            But that 26% is real, and here is what it looks like:
         </p>
 
         <div class="emotion-bar-container">
@@ -518,223 +507,223 @@
                 <div class="emotion-bar-segment" style="width: 2%; background: #6b7280;"></div>
             </div>
             <div class="emotion-bar-legend">
-                <div class="emotion-bar-legend-item"><div class="legend-dot" style="background: #7c3aed;"></div> 挫败感 (452)</div>
-                <div class="emotion-bar-legend-item"><div class="legend-dot" style="background: #a78bfa;"></div> 失望 (163)</div>
-                <div class="emotion-bar-legend-item"><div class="legend-dot" style="background: #f59e0b;"></div> 焦虑 (58)</div>
-                <div class="emotion-bar-legend-item"><div class="legend-dot" style="background: #ef4444;"></div> 愤怒 (19)</div>
-                <div class="emotion-bar-legend-item"><div class="legend-dot" style="background: #6b7280;"></div> 悲伤 (14)</div>
+                <div class="emotion-bar-legend-item"><div class="legend-dot" style="background: #7c3aed;"></div> Frustration (452)</div>
+                <div class="emotion-bar-legend-item"><div class="legend-dot" style="background: #a78bfa;"></div> Disappointment (163)</div>
+                <div class="emotion-bar-legend-item"><div class="legend-dot" style="background: #f59e0b;"></div> Anxiety (58)</div>
+                <div class="emotion-bar-legend-item"><div class="legend-dot" style="background: #ef4444;"></div> Anger (19)</div>
+                <div class="emotion-bar-legend-item"><div class="legend-dot" style="background: #6b7280;"></div> Sadness (14)</div>
             </div>
         </div>
 
         <p>
-            三分之二都是挫败感。不是暴怒，也不是绝望，就是挫败。你知道应该发生什么，却眼看着它没有发生。下面这 706 条消息里，我最常用的词，大概也能说明这一点。
+            Two-thirds frustration. Not rage, not despair. Frustration. The feeling of knowing what should happen and watching it not happen. Here are the words I used most often in those 706 messages:
         </p>
 
         <div id="word-cloud" style="margin: 2rem 0;"></div>
 
         <p>
-            “问题”（problem）、“错误”（error）、“不行”（doesn't work）、“真的”（really）。这更像调试时的语言，而不是发火时的语言。听起来像一个在修打印机的人，而不是在和同事吵架的人。
+            "问题" (problem), "错误" (error), "不行" (doesn't work), "真的" (really). This is debugging language, not rage language. I sound like someone trying to fix a printer, not someone fighting a colleague.
         </p>
 
-        <h2>反复上演的三场冲突</h2>
+        <h2>The same three fights, over and over</h2>
 
         <p>
-            如果你经常用 AI 编码助手，你大概会认得这些场景。我们吵来吵去的，几乎总是同样几件事；转录文本把这一点写得很清楚。
+            If you use an AI coding assistant regularly, you will recognize these. I kept having the same arguments, and the transcripts prove it.
         </p>
 
         <p>
-            <strong>冲突一：我没让你改这些。</strong> 我请 AI 修一个 bug，它确实把 bug 修好了，同时却重构了三份我没提到的文件、重命名了一个变量，还重新整理了 import 块。现在我得分辨，哪些改动是修复，哪些只是它自作主张。信任一下子归零，于是我会发出这样的消息：
+            <strong>Fight 1: "I didn't ask you to do that."</strong> I ask the AI to fix a bug. It fixes the bug, and also refactors three files I didn't mention, renames a variable, and reorganizes an import block. Now I have to figure out which changes were the fix and which were unsolicited opinions. My trust in every edit drops to zero. And then I send a message like this:
         </p>
 
         <div class="quote-block">
-            <div class="quote-label">挫败感</div>
+            <div class="quote-label">Frustration</div>
             我没让你改这些呀，你都给我改回来。回到这个对话开始之前，就当我们的对话没有发生过。
-            <div class="quote-translation">“I didn't ask you to change those. Undo everything. Go back to before this conversation started. Pretend it never happened.”</div>
+            <div class="quote-translation">"I didn't ask you to change those. Undo everything. Go back to before this conversation started. Pretend it never happened."</div>
         </div>
 
         <p>
-            “当作没发生过”其实就是对整个协作关系的回滚。我不是在纠正一个错误，而是在撤回 AI 刚刚做的一切的授权。
+            "Pretend it never happened." That is a full rollback of the working relationship. I'm not correcting an error. I'm withdrawing consent for everything the AI did.
         </p>
 
         <p>
-            <strong>冲突二：我们已经说过很多次了。</strong> AI 编码助手在不同会话之间没有记忆。星期二费尽心思讲明白的限制，星期三就会被忘掉。我总是在第三次、第四次、第五次重复解释同一条约束。
+            <strong>Fight 2: "We already talked about this."</strong> AI coding assistants have no memory between sessions. A hard-won lesson from Tuesday is forgotten by Wednesday. I find myself explaining the same constraint for the third, fourth, fifth time.
         </p>
 
         <div class="quote-block">
-            <div class="quote-label">挫败感</div>
+            <div class="quote-label">Frustration</div>
             我们已经说过很多次了，不要 change EPS。
-            <div class="quote-translation">“We've already said this many times. Do not change EPS.”</div>
+            <div class="quote-translation">"We've already said this many times. Do not change EPS."</div>
         </div>
 
         <div class="quote-block">
-            <div class="quote-label">挫败感</div>
+            <div class="quote-label">Frustration</div>
             跑完了吗？你直接搞成一个阻塞的吧，不要让我一遍一遍问你了
-            <div class="quote-translation">“Is it done yet? Just make it blocking. Stop making me ask you over and over.”</div>
+            <div class="quote-translation">"Is it done yet? Just make it blocking. Stop making me ask you over and over."</div>
         </div>
 
         <p>
-            “已经说过很多次了”“一遍一遍”。这就是重复带来的挫败，不是 bug，而是一个没有闭合的反馈回路。
+            "已经说过很多次了" (we've already said this many times). "一遍一遍" (over and over). This is the frustration of repetition. Not a bug. A feedback loop that doesn't close.
         </p>
 
         <p>
-            <strong>冲突三：跑完了吗？</strong> AI 开始一段长计算，报了一点进度，然后就没声了。我开始追问：“跑完了吗？”“怎么还在跑？”“是不是卡住了？”它则用一些很乐观的更新回应我，但压根没碰到重点。
+            <strong>Fight 3: "Is it done yet?"</strong> The AI starts a long computation, reports partial progress, and goes quiet. I start polling. "Is it done?" "Why is it still running?" "Did it crash?" The AI responds with cheerful updates that miss the point.
         </p>
 
         <div class="quote-block">
-            <div class="quote-label">挫败感</div>
+            <div class="quote-label">Frustration</div>
             还是这么慢？
-            <div class="quote-translation">“Still this slow?”</div>
+            <div class="quote-translation">"Still this slow?"</div>
         </div>
 
         <div class="quote-block">
-            <div class="quote-label">挫败感</div>
+            <div class="quote-label">Frustration</div>
             你怎么卡死了
-            <div class="quote-translation">“Why are you frozen?”</div>
+            <div class="quote-translation">"Why are you frozen?"</div>
         </div>
 
         <p>
-            三个词，就是整条消息。挫败的时候，我会停止解释，开始压缩表达。706 条事件的数据也印证了这一点：
+            Three words. That is the whole message. When I'm frustrated, I stop explaining and start compressing. The data backs this up across all 706 events:
         </p>
 
         <div id="msg-length-chart" style="margin: 2rem 0;"></div>
 
         <p>
-            挫败感消息的中位长度是 35 个字符；愤怒 34 个；焦虑 65 个，均值 90 个。挫败时我会直接收缩，焦虑时我会解释更多。消息本身就能告诉你，这次会话到底坏到什么程度。
+            Frustration messages: median 35 characters. Anger: 34. Anxiety: 65, mean 90. When I'm frustrated, I snap. When I'm anxious, I explain. The message itself tells you what kind of bad session I'm having.
         </p>
 
-        <h2>凌晨一点的审稿</h2>
+        <h2>The 1 AM review</h2>
 
         <p>
-            挫败感是在实时发生的。哪里坏了，我立刻反应，然后继续推进。失望不一样。失望发生在我退后一步，回头看一批累积输出时，发现它还是不够好。失望的消息通常更长，因为我在努力解释“为什么不行”。
+            Frustration happens in real time. Something breaks, I react, I move on. Disappointment is different. Disappointment is what happens when I step back, look at the accumulated output, and realize it's not good enough. Disappointment messages tend to be longer because I'm trying to articulate <em>why</em>.
         </p>
 
         <div class="quote-block">
-            <div class="quote-label">失望</div>
+            <div class="quote-label">Disappointment</div>
             你的工作根本就没有到8个小时，实际上你只花了18到20分钟就把所有的工作完成了，且每一项工作都完成得非常潦草。
-            <div class="quote-translation">“Your work didn't take 8 hours at all. You actually spent 18 to 20 minutes on everything, and every task was done sloppily.”</div>
+            <div class="quote-translation">"Your work didn't take 8 hours at all. You actually spent 18 to 20 minutes on everything, and every task was done sloppily."</div>
         </div>
 
         <p>
-            我是在凌晨一点看完 AI 代理整夜工作后发出这条消息的。代理列了一串“已完成任务”。我检查结果时，所有诊断都失败了。代码跑了，输出也在，但方法论是空的。这是最危险的模式。AI 没有报错，却自信地宣告成功。
+            I sent this at 1 AM after reviewing an AI agent's overnight work. The agent had reported a list of completed tasks. When I checked the results, every diagnostic failed. The code ran. The output existed. The methodology was empty. This is the most dangerous pattern. The AI didn't error out. It <em>confidently reported success</em>.
         </p>
 
         <p>
-            焦虑（58 次，8%）又是另一种感觉。它不完全是冲着 AI 来的，而是因为截止时间在往后滑，AI 却把时间烧在了不该烧的地方：
+            Anxiety (58 events, 8%) feels different again. It's not about the AI. It's about a deadline that's slipping, and the AI burning time on the wrong thing:
         </p>
 
         <div class="quote-block">
-            <div class="quote-label">焦虑</div>
+            <div class="quote-label">Anxiety</div>
             不好意思，这个项目很急，现在进度已经严重拖后了。你不要在这些问题上浪费时间好吗？都拿下来，谢谢
-            <div class="quote-translation">“Sorry, this project is urgent, and we're seriously behind schedule. Can you stop wasting time on these issues? Just drop them all, thanks.”</div>
+            <div class="quote-translation">"Sorry, this project is urgent, and we're seriously behind schedule. Can you stop wasting time on these issues? Just drop them all, thanks."</div>
         </div>
 
         <p>
-            “不好意思”“谢谢”。就算慌了，我还是会很客气。这里的焦虑指向的是<em>时间</em>，不是 AI 的能力。
+            "不好意思" (sorry), "谢谢" (thanks). I'm polite even when panicking. The anxiety is about <em>time</em>, not the AI's competence.
         </p>
 
-        <h2>什么触发了什么</h2>
+        <h2>What triggers what</h2>
 
         <p>
-            知道自己“感觉怎样”是一回事，知道<em>为什么</em>会这样更有用。于是我回到这些转录里，给每个事件标上触发原因：是 AI 太慢了？代码崩了？还是它改了我没让它改的东西？
+            Knowing what I felt is one thing. Knowing <em>why</em> is more useful. I went back to the transcripts and tagged each event by what caused it: was the AI slow? Did the code crash? Did it change something I didn't ask for?
         </p>
 
         <div id="trigger-chart" style="margin: 2rem 0;"></div>
 
         <p>
-            最主要的触发因素是运行缓慢（约 220 次）。AI 开始做事，我就在等，等，等。第二类是报错（约 180 次）：代码崩了，运行失败了。两者合起来，占了所有事件的一半以上，而且几乎全都是挫败感。这一点并不意外。
+            The #1 trigger is slow performance (~220 events). The AI starts something, and I wait. And wait. The #2 is errors (~180): code crashed, something failed. Together they account for more than half of all events, and they are almost entirely frustration. No surprise there.
         </p>
 
         <p>
-            更有意思的是那些小类。未经授权的改动（约 45 次）是唯一一个还会带来<em>愤怒</em>的触发项。AI 一旦动了我没提到的文件，我就不只是叹气了，我会升级处理。共现数据也支持这一点：
+            The interesting part is the smaller categories. Unauthorized changes (~45 events) is the only trigger that also produces <em>anger</em>. When the AI touches files I didn't mention, I don't just sigh. I escalate. The co-occurrence data backs this up:
         </p>
 
         <div id="cooccurrence-chart" style="margin: 2rem auto; max-width: 440px;"></div>
 
         <p>
-            在 11 个出现愤怒的会话里，有 9 个也伴随着挫败感。愤怒不是冷启动的，它是在同一个会话里被反复挫败一点点堆出来的。未经授权改动正是把它推过线的那类触发项。
+            Of the 11 sessions that contained anger, 9 also had frustration. Anger doesn't start cold. It builds from repeated frustration within the same session. The unauthorized-changes pattern is one of the things that tips it over.
         </p>
 
         <p>
-            忘记指令（约 31 次）则 100% 是挫败感，没有任何失望、焦虑或愤怒。AI 第五次犯同样的错时，惊讶已经没有了，也谈不上害怕，只剩下反复对一个明天还会忘的人重复自己。
+            Forgotten instructions (~31 events) is 100% frustration. Not a single instance of disappointment, anxiety, or anger. When the AI makes the same mistake for the fifth time, there is no surprise left. No fear. Just the slow burn of repeating yourself to someone who will forget again tomorrow.
         </p>
 
         <p>
-            截止压力（约 13 次）是唯一一个焦虑压过挫败感的触发项。至于错误输出（约 115 次），它会根据发现时点在挫败和失望之间分流：当场发现就是挫败，几个小时后在审稿时才发现，就是失望。
+            Deadline pressure (~13 events) is the only trigger where anxiety dominates over frustration. And wrong output (~115 events) splits between frustration and disappointment depending on timing: catch it immediately and it's frustrating; discover it hours later during review and it's disappointing.
         </p>
 
-        <h2>长尾部分</h2>
+        <h2>The long tail</h2>
 
         <p>
-            大多数糟糕会话其实并没有那么糟。在 320 个出现过情绪的会话里，超过一半（176 个）只有一次事件：一阵很快就过去的挫败感。
+            Most bad sessions aren't that bad. Of the 320 sessions that had any emotion at all, more than half (176) had just one event: a flash of frustration that resolved itself.
         </p>
 
         <div id="intensity-chart" style="margin: 2rem 0;"></div>
 
         <p>
-            但还有尾部。一个会话里出现了 18 次情绪事件。那种会话就是马拉松式的：几小时的调试、复杂重构、通宵代理运行，小问题一个接一个叠加。还有 10 个会话出现了 7 次及以上事件。这些都是离群值，却会塑造我对整个体验的<em>记忆</em>。星期四的一次糟糕会话，足以让我忘掉前面十次顺手的会话。
+            Then there's the tail. One session had 18 emotional events. Those are the marathon sessions: multi-hour debugging, complex refactors, overnight agent runs where small failures compounded. Ten sessions had 7 or more events. These are outliers, but they're the ones that shape how I <em>remember</em> the experience. One terrible session on Thursday makes me forget the ten smooth ones before it.
         </p>
 
         <div class="callout">
-            <p>“差一点就够了”的陷阱</p>
-            <p>如果 AI 很差，我会停用它；如果它完美，就不会有挫败。真正的成本来自“几乎能用”和“真的能用”之间的缝隙。它把 90% 的东西写对，却漏掉一个变量名；它把一个模块重构得很漂亮，却忘了更新配置。每一次，前面的 90% 都会让人以为最后 10% 也应该没问题。可一旦不行，失望的强度就和它离“成功”有多近成正比。</p>
+            <p>The "almost good enough" trap</p>
+            <p>If the AI were bad, I'd stop using it. If it were perfect, there'd be no frustration. The cost comes from the gap between "almost works" and "actually works." The AI writes 90% of something correctly and misses one variable name. It restructures a module beautifully and forgets to update the config. Each time, the 90% creates the expectation that the last 10% will work too. When it doesn't, the disappointment is proportional to how close it got.</p>
         </div>
 
-        <h2>这些触发场景告诉我什么</h2>
+        <h2>What the triggers taught me</h2>
 
         <p>
-            这份触发拆分改变了我看待 AI 辅助编码的方式。做这次分析之前，我脑子里只有一个模型：“有时候 AI 会出错，然后我会挫败。”看完数据之后，我手里有了一张地图。不同触发项带来的情绪不同，对应的应对方式也不同。
+            The trigger breakdown changed how I think about AI-assisted coding. Before this analysis, I had one mental model: "sometimes the AI messes up and I get frustrated." After looking at the data, I have a map. Different triggers produce different emotions and need different responses.
         </p>
 
         <p>
-            运行缓慢和报错占了全部情绪事件的一半以上。这些都是“无聊”的触发项。它们当下很烦，但通常会自己收尾：计算结束了，错误修掉了，我就继续往下走。它们带来的几乎全是挫败感，而且这种情绪很快就过去。如果只能选，我反而愿意保留这些触发项。它们就是做这件事的成本。
+            Slow performance and errors account for over half of all emotional events. These are the boring triggers. They feel bad in the moment, but they resolve themselves: the computation finishes, the error gets fixed, I move on. The emotion they produce is almost entirely frustration, which is fleeting. If I had to choose, these are the triggers I'd keep. They're the cost of doing business.
         </p>
 
         <p>
-            真正损害工作流的是另外那些触发项。未经授权的改动不只是让我挫败，它还会侵蚀信任。AI 一旦悄悄改了我没提到的文件，我就会停止信任<em>它的任何改动</em>，只能从头检查。这也是它为什么会触发愤怒：这不只是一个错误，而是边界被越过了。代价也不在那次修改本身，而在于之后我还得花二十分钟去检查它可能碰过什么。
+            The triggers that actually damage the workflow are the other ones. Unauthorized changes don't just frustrate me, they erode trust. After the AI silently edits a file I didn't mention, I stop trusting <em>any</em> of its changes. I have to review everything from scratch. That's why it's the only trigger that produces anger: it's not a mistake, it's a boundary violation. And the cost isn't the edit itself. It's the twenty minutes I spend afterward checking what else it might have touched.
         </p>
 
         <p>
-            忘记指令是最隐蔽的。它们只会带来挫败感，所以并不戏剧化。但它们会累积。每次重复都不大，可一个月下来，我还是花了相当多时间去重新解释那些本该记住的限制。解决办法不是更有耐心，而是把限制写进一个 AI 每次会话开始都会读取的文件里。我这么做了，确实有效。“我们已经说过很多次了”这个模式明显少了。
+            Forgotten instructions are the most insidious. They produce nothing but frustration, which means they don't feel dramatic. But they are cumulative. Each repetition is small. Over a month, I spent a non-trivial amount of time re-explaining constraints the AI should have remembered. The fix isn't patience. It's writing the constraints into a file the AI reads at the start of every session. I did this. It works. The "we already talked about this" pattern dropped off.
         </p>
 
         <p>
-            错误输出是我最担心的，因为它最难被发现。运行缓慢是显眼的，报错会直接崩，未经授权的改动会出现在 <code>git diff</code> 里。但错误输出看起来像正确输出。它能跑，能出数，也不抱怨。唯一的办法是真正去读结果。触发数据也表明它会在挫败和失望之间分裂：当场抓到就是挫败，隔了几个小时才在审稿里发现就是失望。凌晨一点那次审阅代理整夜结果的消息，就是一个失望事件。现在我默认输出是错的，直到自己核实为止。
+            Wrong output is the one I worry about most, because it's the one that's hardest to catch. Slow performance is obvious. Errors crash. Unauthorized changes show up in <code>git diff</code>. But wrong output looks like right output. It runs, it produces numbers, it doesn't complain. The only way to catch it is to actually read the results. The trigger data shows it splits between frustration and disappointment: frustration when I catch it immediately, disappointment when I find it hours later. The 1 AM review from the overnight agent run was a disappointment event. I now assume the output is wrong until I've verified it myself.
         </p>
 
         <hr>
 
-        <h3>方法与局限</h3>
+        <h3>Methodology and caveats</h3>
 
         <p>
-            这个分类器用的是 GPT-4o-mini（<code>temperature=0</code>，JSON 返回格式），提示词是专门为人机编码对话调过的。负面类别有五种：挫败感、愤怒、失望、焦虑、悲伤，再加一个中性类。置信阈值设为 0.6。总成本不到 1 美元。提示词里也明确区分了真实情绪、技术性纠错、简单否定和话题转移。
+            The classifier is GPT-4o-mini (<code>temperature=0</code>, JSON response format) with a prompt calibrated for human-AI coding conversations. Five negative categories (frustration, anger, disappointment, anxiety, sadness) plus neutral. Confidence threshold: 0.6. Total cost: under $1. The prompt explicitly distinguishes genuine emotional expressions from technical corrections, simple negations, and redirections.
         </p>
 
         <p>
-            不是所有情绪都同样容易分类。下面是各类别高置信度分类（0.9 以上）的占比：
+            Not all emotions are equally easy to classify. Here's the share of high-confidence classifications (0.9+) for each:
         </p>
 
         <div id="confidence-chart" style="margin: 2rem 0;"></div>
 
         <p>
-            愤怒的高置信度占比是 95%。我一旦愤怒，文本几乎不会含糊。失望只有 9%，因为它看起来很像平静的批评，分类器并不总是能确定。那 19 次愤怒事件几乎肯定是真的，而 163 次失望事件里大概混进了一些误判。
+            Anger is 95% high-confidence. When I'm angry, the text is unambiguous. Disappointment is 9%. It reads a lot like calm criticism, and the classifier isn't always sure. The 19 anger events are almost certainly real. The 163 disappointment events probably include some false positives.
         </p>
 
         <p>
-            <em>这篇文章是<a href="/blog/ai-r-errors.html">《713 个 R 错误教会了我什么：AI 编码助手并不“聪明”在哪儿》</a>的姊妹篇。两篇都基于同一批 1,248 份会话转录。</em>
+            <em>This post is a companion to <a href="/en/blog/ai-r-errors.html">What 713 R Errors Taught Me About AI Coding Assistants</a>. Both draw on the same 1,248 session transcripts.</em>
         </p>
 
         <hr>
 
         <p>
-            <em>郑思尧是上海交通大学国际与公共事务学院助理教授。</em>
+            <em>Siyao Zheng is an Assistant Professor at the School of International and Public Affairs, Shanghai Jiao Tong University.</em>
         </p>
 
     </article>
 
-    <section id="comments" data-slug="ai-emotion-archaeology-zh"></section>
+    <section id="comments" data-slug="ai-emotion-archaeology"></section>
 
     <footer>
-        <p>&copy; 2026 郑思尧 &middot; <a href="/">首页</a> &middot; <a class="lang-switch" href="/en/blog/ai-emotion-archaeology.html">English</a></p>
+        <p>&copy; 2026 Siyao Zheng &middot; <a href="/en/">Home</a> &middot; <a href="/">中文</a></p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
@@ -776,20 +765,20 @@
 
     const emotions = ["frustration", "disappointment", "anxiety", "anger", "sadness"];
 
-    // 触发项 × 情绪（根据关键词分类的子样本插补）
+    // Trigger × emotion (imputed from keyword-classified subsample)
     const triggerData = [
-        {trigger:"运行缓慢", frustration:137,disappointment:60,anxiety:21,anger:3,sadness:0,total:221},
-        {trigger:"报错 / 崩溃", frustration:127,disappointment:39,anxiety:8,anger:8,sadness:0,total:182},
-        {trigger:"错误输出", frustration:65,disappointment:34,anxiety:13,anger:0,sadness:3,total:115},
-        {trigger:"质量潦草", frustration:21,disappointment:18,anxiety:13,anger:0,sadness:0,total:52},
-        {trigger:"未经授权改动", frustration:39,disappointment:0,anxiety:0,anger:5,sadness:0,total:44},
-        {trigger:"超出范围", frustration:18,disappointment:10,anxiety:5,anger:0,sadness:0,total:34},
-        {trigger:"忘记指令", frustration:31,disappointment:0,anxiety:0,anger:0,sadness:0,total:31},
-        {trigger:"无视问题", frustration:12,disappointment:0,anxiety:3,anger:0,sadness:0,total:16},
-        {trigger:"截止压力", frustration:5,disappointment:0,anxiety:8,anger:0,sadness:0,total:13}
+        {trigger:"Slow performance", frustration:137,disappointment:60,anxiety:21,anger:3,sadness:0,total:221},
+        {trigger:"Error / crash",    frustration:127,disappointment:39,anxiety:8,anger:8,sadness:0,total:182},
+        {trigger:"Wrong output",     frustration:65,disappointment:34,anxiety:13,anger:0,sadness:3,total:115},
+        {trigger:"Sloppy quality",   frustration:21,disappointment:18,anxiety:13,anger:0,sadness:0,total:52},
+        {trigger:"Unauthorized edit", frustration:39,disappointment:0,anxiety:0,anger:5,sadness:0,total:44},
+        {trigger:"Scope overreach",  frustration:18,disappointment:10,anxiety:5,anger:0,sadness:0,total:34},
+        {trigger:"Forgot instructions",frustration:31,disappointment:0,anxiety:0,anger:0,sadness:0,total:31},
+        {trigger:"Ignored question", frustration:12,disappointment:0,anxiety:3,anger:0,sadness:0,total:16},
+        {trigger:"Deadline pressure",frustration:5,disappointment:0,anxiety:8,anger:0,sadness:0,total:13}
     ];
 
-    // 各情绪对应的消息长度分布（字符数）
+    // Message length distributions (chars) by emotion
     const msgLengths = [
         {emotion:"frustration",  n:452, p5:7,  q1:18, median:35, q3:77,  p95:334, mean:72.6},
         {emotion:"disappointment",n:163, p5:11, q1:27, median:51, q3:109, p95:184, mean:73.4},
@@ -798,7 +787,7 @@
         {emotion:"sadness",      n:14,  p5:4,  q1:23, median:61, q3:93,  p95:148, mean:56.9}
     ];
 
-    // 会话强度：每个会话出现多少次情绪事件
+    // Session intensity: events per session
     const intensityData = [
         {events:0,sessions:928},{events:1,sessions:176},{events:2,sessions:63},
         {events:3,sessions:29},{events:4,sessions:22},{events:5,sessions:10},
@@ -807,7 +796,7 @@
         {events:12,sessions:1},{events:17,sessions:1},{events:18,sessions:1}
     ];
 
-    // 情绪共现：同一会话里同时出现两种情绪的次数
+    // Emotion co-occurrence: sessions where both emotions appear
     const cooccurData = [
         {from:"frustration",to:"frustration",v:243},
         {from:"frustration",to:"disappointment",v:70},
@@ -836,7 +825,7 @@
         {from:"sadness",to:"sadness",v:12}
     ];
 
-    // 各情绪分类器置信度
+    // Classifier confidence by emotion
     const confData = [
         {emotion:"anger",        high:18, medium:1,   highPct:94.7},
         {emotion:"sadness",      high:4,  medium:10,  highPct:28.6},
@@ -865,7 +854,7 @@
             .words(wordData.map(d => ({ text: d.text, size: d.size })))
             .padding(3)
             .rotate(() => (~~(Math.random() * 3) - 1) * 30)
-            .font("'Noto Sans SC', 'Inter', sans-serif")
+            .font("'Inter', sans-serif")
             .fontWeight(d => d.size > 50 ? 700 : d.size > 30 ? 600 : 500)
             .fontSize(d => sizeScale(d.size))
             .random(() => 0.5)
@@ -890,7 +879,7 @@
                 .join("text")
                 .style("font-size", d => d.size + "px")
                 .style("font-weight", d => d.weight || 500)
-                .style("font-family", "'Noto Sans SC', 'Inter', sans-serif")
+                .style("font-family", "'Inter', sans-serif")
                 .style("fill", d => colorScale(wordData.find(w => w.text === d.text)?.size || 30))
                 .style("cursor", "default")
                 .attr("text-anchor", "middle")
@@ -899,7 +888,7 @@
                 .append("title")
                 .text(d => {
                     const orig = wordData.find(w => w.text === d.text);
-                    return `${d.text}：${orig ? orig.size : "?"} 次`;
+                    return `${d.text}: ${orig ? orig.size : "?"} occurrences`;
                 });
         }
     }
@@ -908,13 +897,6 @@
 
     const trigContainer = document.getElementById("trigger-chart");
     if (trigContainer) {
-        const emotionLabels = {
-            frustration: "挫败感",
-            disappointment: "失望",
-            anxiety: "焦虑",
-            anger: "愤怒",
-            sadness: "悲伤"
-        };
         const flat = [];
         for (const t of triggerData) {
             for (const e of emotions) {
@@ -931,12 +913,12 @@
             marginBottom: 35,
             marginTop: 10,
             style: {
-                fontFamily: "'Noto Sans SC', 'Inter', sans-serif",
+                fontFamily: "'Inter', sans-serif",
                 fontSize: "12px",
                 background: "transparent"
             },
             x: {
-                label: "事件数",
+                label: "Events",
                 grid: true,
                 tickSize: 0
             },
@@ -959,7 +941,7 @@
                     order: emotions,
                     rx: 2,
                     tip: true,
-                    title: d => `${d.trigger}：${d.count} ${emotionLabels[d.emotion]}`
+                    title: d => `${d.trigger}: ${d.count} ${d.emotion}`
                 }),
                 Plot.ruleX([0])
             ]
@@ -972,19 +954,11 @@
     const msgLenContainer = document.getElementById("msg-length-chart");
     if (msgLenContainer) {
         // Build synthetic points for each emotion's distribution
-        const emotionLabels = {
-            frustration: "挫败感",
-            disappointment: "失望",
-            anxiety: "焦虑",
-            anger: "愤怒",
-            sadness: "悲伤"
-        };
         const rects = [];
         const medianMarks = [];
         for (const d of msgLengths) {
             rects.push({
-                emotion: `${emotionLabels[d.emotion]} (${d.n})`,
-                emotionKey: d.emotion,
+                emotion: `${d.emotion} (${d.n})`,
                 q1: d.q1,
                 q3: d.q3,
                 median: d.median,
@@ -1003,12 +977,12 @@
             marginTop: 10,
             marginBottom: 35,
             style: {
-                fontFamily: "'Noto Sans SC', 'Inter', sans-serif",
+                fontFamily: "'Inter', sans-serif",
                 fontSize: "12px",
                 background: "transparent"
             },
             x: {
-                label: "消息长度（字符）",
+                label: "Message length (characters)",
                 grid: true,
                 tickSize: 0,
                 domain: [0, 260]
@@ -1025,7 +999,7 @@
                     x1: "p5",
                     x2: "p95",
                     y: "emotion",
-                    stroke: d => COLORS[d.emotionKey],
+                    stroke: d => COLORS[d.emotion.split(" ")[0]],
                     strokeWidth: 1.5
                 }),
                 // IQR box
@@ -1033,7 +1007,7 @@
                     x1: "q1",
                     x2: "q3",
                     y: "emotion",
-                    fill: d => COLORS[d.emotionKey],
+                    fill: d => COLORS[d.emotion.split(" ")[0]],
                     fillOpacity: 0.3,
                     rx: 3
                 }),
@@ -1041,17 +1015,17 @@
                 Plot.tickX(rects, {
                     x: "median",
                     y: "emotion",
-                    stroke: d => COLORS[d.emotionKey],
+                    stroke: d => COLORS[d.emotion.split(" ")[0]],
                     strokeWidth: 2.5
                 }),
                 // Mean dot
                 Plot.dot(rects, {
                     x: "mean",
                     y: "emotion",
-                    fill: d => COLORS[d.emotionKey],
+                    fill: d => COLORS[d.emotion.split(" ")[0]],
                     r: 4,
                     tip: true,
-                    title: d => `${d.emotion}\n中位数：${d.median} 字符\n均值：${d.mean} 字符\n四分位距：${d.q1}–${d.q3}`
+                    title: d => `${d.emotion}\nMedian: ${d.median} chars\nMean: ${d.mean} chars\nIQR: ${d.q1}–${d.q3}`
                 })
             ]
         });
@@ -1072,18 +1046,18 @@
             marginBottom: 35,
             marginTop: 10,
             style: {
-                fontFamily: "'Noto Sans SC', 'Inter', sans-serif",
+                fontFamily: "'Inter', sans-serif",
                 fontSize: "12px",
                 background: "transparent"
             },
             x: {
-                label: "每个会话中的情绪事件数",
+                label: "Emotional events per session",
                 tickSize: 0,
                 domain: nonZero.map(d => d.events),
                 padding: 0.25
             },
             y: {
-                label: "会话数",
+                label: "Sessions",
                 grid: true,
                 tickSize: 0
             },
@@ -1099,7 +1073,7 @@
                     fill: "events",
                     rx: 2,
                     tip: true,
-                    title: d => `${d.events} 次事件：${d.sessions} 个会话`
+                    title: d => `${d.events} events: ${d.sessions} session${d.sessions > 1 ? "s" : ""}`
                 }),
                 Plot.ruleY([0])
             ]
@@ -1112,11 +1086,11 @@
     const cooccurContainer = document.getElementById("cooccurrence-chart");
     if (cooccurContainer) {
         const labels = {
-            frustration: "挫败",
-            disappointment: "失望",
-            anxiety: "焦虑",
-            anger: "愤怒",
-            sadness: "悲伤"
+            frustration: "Frust.",
+            disappointment: "Disapp.",
+            anxiety: "Anxiety",
+            anger: "Anger",
+            sadness: "Sadness"
         };
         const cellData = cooccurData
             .filter(d => d.from !== d.to)
@@ -1136,7 +1110,7 @@
             marginTop: 10,
             padding: 0,
             style: {
-                fontFamily: "'Noto Sans SC', 'Inter', sans-serif",
+                fontFamily: "'Inter', sans-serif",
                 fontSize: "12px",
                 background: "transparent"
             },
@@ -1156,7 +1130,7 @@
                 type: "linear",
                 scheme: "purples",
                 domain: [0, 70],
-                label: "共现会话",
+                label: "Shared sessions",
                 legend: false
             },
             marks: [
@@ -1167,7 +1141,7 @@
                     inset: 2,
                     rx: 3,
                     tip: true,
-                    title: d => `${d.from} + ${d.to}\n${d.v} 个会话`
+                    title: d => `${d.from} + ${d.to}\n${d.v} sessions`
                 }),
                 Plot.text(cellData.filter(d => d.v > 0), {
                     x: "toLabel",
@@ -1186,13 +1160,6 @@
 
     const confContainer = document.getElementById("confidence-chart");
     if (confContainer) {
-        const emotionLabels = {
-            frustration: "挫败感",
-            disappointment: "失望",
-            anxiety: "焦虑",
-            anger: "愤怒",
-            sadness: "悲伤"
-        };
         const chart = Plot.plot({
             width: 680,
             height: 200,
@@ -1200,12 +1167,12 @@
             marginBottom: 35,
             marginTop: 10,
             style: {
-                fontFamily: "'Noto Sans SC', 'Inter', sans-serif",
+                fontFamily: "'Inter', sans-serif",
                 fontSize: "12px",
                 background: "transparent"
             },
             x: {
-                label: "高置信度分类占比（>= 0.9）",
+                label: "Share of high-confidence classifications (>= 0.9)",
                 domain: [0, 100],
                 tickFormat: d => d + "%",
                 tickSize: 0,
@@ -1214,30 +1181,30 @@
             y: {
                 label: null,
                 tickSize: 0,
-                domain: confData.map(d => emotionLabels[d.emotion]),
+                domain: confData.map(d => d.emotion),
                 padding: 0.35
             },
             marks: [
                 // Background bar (total)
                 Plot.barX(confData, {
                     x: 100,
-                    y: d => emotionLabels[d.emotion],
+                    y: "emotion",
                     fill: "#e5e5e5",
                     rx: 3
                 }),
                 // High confidence portion
                 Plot.barX(confData, {
                     x: "highPct",
-                    y: d => emotionLabels[d.emotion],
+                    y: "emotion",
                     fill: d => COLORS[d.emotion],
                     rx: 3,
                     tip: true,
-                    title: d => `${emotionLabels[d.emotion]}\n${d.highPct}% 高置信度（${d.high}/${d.high + d.medium}）`
+                    title: d => `${d.emotion}\n${d.highPct}% high confidence (${d.high}/${d.high + d.medium})`
                 }),
                 // Percentage label
                 Plot.text(confData, {
                     x: d => d.highPct + 3,
-                    y: d => emotionLabels[d.emotion],
+                    y: "emotion",
                     text: d => `${d.highPct}%`,
                     fill: "#333",
                     fontSize: 11,

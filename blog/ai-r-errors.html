@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>What 713 R Errors Taught Me About AI Coding Assistants | Siyao Zheng</title>
-    <meta name="description" content="I mined 1,237 AI coding sessions for every R error. The finding: AI makes the exact same mistakes human researchers do — variable name mismatches, path issues, type surprises. Here's the data.">
+    <title>713 个 R 错误教会了我什么：AI 编码助手并不“聪明”在哪儿 | 郑思尧</title>
+    <meta name="description" content="我从 1,237 个 AI 编码会话里抓出所有 R 错误。AI 并不会犯什么高明的错，它反复犯的，是你自己也会犯的那些。">
     <script defer data-domain="siyaozheng.org" src="https://plausible.io/js/script.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #fafafa;
@@ -24,7 +24,7 @@
         html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Noto Sans SC', 'Inter', sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
@@ -352,6 +352,18 @@
 
         footer a { color: var(--accent); text-decoration: none; }
 
+        footer a.lang-switch {
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            letter-spacing: 0.04em;
+            opacity: 0.85;
+        }
+
+        footer a.lang-switch:hover {
+            color: var(--text);
+            opacity: 1;
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             nav { padding: 1rem 2rem; }
@@ -371,150 +383,150 @@
             footer { padding: 1.5rem; font-size: 0.8rem; }
         }
     </style>
-    <link rel="stylesheet" href="comments/comments.css">
+    <link rel="stylesheet" href="/blog/comments/comments.css">
 </head>
 <body>
     <nav>
-        <a class="nav-name" href="/">Siyao Zheng</a>
+        <a class="nav-name" href="/">郑思尧</a>
         <div class="nav-links">
-            <a href="/#publications">Publications</a>
-            <a href="/#teaching">Teaching</a>
-            <a href="/#cv">CV</a>
-            <a href="/blog/">Blog</a>
-            <a href="/#contact">Contact</a>
+            <a href="/#publications">论文</a>
+            <a href="/#teaching">教学</a>
+            <a href="/#cv">简历</a>
+            <a href="/blog/">博客</a>
+            <a href="/#contact">联系</a>
         </div>
     </nav>
 
     <header class="article-header">
-        <div class="article-meta">February 12, 2026 &middot; AI for Social Science</div>
-        <h1>What 713 R Errors Taught Me About AI Coding Assistants</h1>
+        <div class="article-meta">2026 年 2 月 12 日 · AI 与社会科学</div>
+        <h1>713 个 R 错误教会了我什么：AI 编码助手并不“聪明”在哪儿</h1>
         <p class="article-subtitle">
-            I mined 1,237 AI coding sessions for every R error. The finding: AI doesn't make exotic mistakes. It makes <em>your</em> mistakes. Variable typos, broken paths, type surprises. And R is the reason why.
+            我从 1,237 个 AI 编码会话里抓出所有 R 错误。AI 并不会犯什么高明的错，它反复犯的，是你自己也会犯的那些。
         </p>
     </header>
 
     <article class="article-body">
 
         <p>
-            Over the past month, I used <a href="https://docs.anthropic.com/en/docs/claude-code/overview">Claude Code</a> (Anthropic's AI coding assistant) to help build a large R-based research pipeline. Survey data from multiple sources, latent variable models, multiple imputation, regression analysis. The kind of project that grows to 40+ R files and hundreds of variables scattered across config files and model specifications.
+            过去一个月里，我用 <a href="https://docs.anthropic.com/en/docs/claude-code/overview">Claude Code</a> 帮我搭一个大型 R 研究流水线。问卷数据来自多个来源，既有潜变量模型，也有多重插补和回归分析。项目一旦长起来，就会变成 40 多个 R 文件、数百个变量，散落在配置文件和模型规格里。
         </p>
 
         <p>
-            Claude Code logs every session as a structured JSON transcript. 1,237 sessions over 33 days, across all my research projects. I wrote a Python script to extract every R error from those transcripts, parsing stderr output and matching error patterns. 713 unique errors across 168 sessions.
+            Claude Code 会把每个会话都记录成结构化 JSON 转录。33 天里一共 1,237 个会话，覆盖了我手头所有研究项目。我写了一个 Python 脚本，从这些转录里把所有 R 错误都提取出来，再按 stderr 输出和错误模式进行匹配。最后抓到 168 个会话中的 713 个独立错误。
         </p>
 
         <p>
-            I expected to find exotic failures &mdash; hallucinated function names, impossible syntax, the kind of mistakes only an AI would make. Instead, I found my own mistakes staring back at me.
+            我原本以为会看到一些“很 AI”的失败，比如凭空编造的函数名、根本不可能的语法。结果看到的，是我自己的老毛病在屏幕上回望我。
         </p>
 
-        <h2>The Numbers</h2>
+        <h2>数字先说话</h2>
 
         <div class="big-stat">
             <div class="big-stat-item">
                 <div class="big-stat-number">1,237</div>
-                <div class="big-stat-label">Coding Sessions</div>
+                <div class="big-stat-label">编码会话</div>
             </div>
             <div class="big-stat-item">
                 <div class="big-stat-number">713</div>
-                <div class="big-stat-label">R Errors</div>
+                <div class="big-stat-label">R 错误</div>
             </div>
             <div class="big-stat-item">
                 <div class="big-stat-number">86%</div>
-                <div class="big-stat-label">Error-Free Sessions</div>
+                <div class="big-stat-label">无错误会话</div>
             </div>
         </div>
 
         <p>
-            86% of sessions produced zero R errors. The AI is not constantly breaking things. But those 713 errors across the remaining 14% tell a story, and the story is not about AI.
+            86% 的会话里没有任何 R 错误。AI 并不是天天在把事情搞坏。但剩下 14% 里那 713 个错误，讲的是另一回事，而且那故事并不主要关于 AI。
         </p>
 
         <table class="data-table">
             <thead>
                 <tr>
-                    <th>Error Category</th>
-                    <th class="num">Count</th>
+                    <th>错误类别</th>
+                    <th class="num">数量</th>
                     <th class="num">%</th>
-                    <th>In Plain English</th>
+                    <th>直白地说</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Variable/object not found</td>
+                    <td>变量/对象未找到</td>
                     <td class="num accent">160</td>
                     <td class="num">22%</td>
-                    <td>Renamed in one file, forgot another</td>
+                    <td>一个文件改名，另一个文件忘了同步</td>
                 </tr>
                 <tr>
-                    <td>Type and dimension errors</td>
+                    <td>类型与维度错误</td>
                     <td class="num accent">137</td>
                     <td class="num">19%</td>
-                    <td>haven_labelled, subscript out of bounds, factor/numeric confusion</td>
+                    <td>haven_labelled、subscript out of bounds、factor/numeric 混淆</td>
                 </tr>
                 <tr>
-                    <td>File path and IO errors</td>
+                    <td>文件路径与 IO 错误</td>
                     <td class="num accent">123</td>
                     <td class="num">17%</td>
-                    <td>Spaces in paths, wrong root directory, corrupt files</td>
+                    <td>路径里有空格、根目录弄错、文件损坏</td>
                 </tr>
                 <tr>
-                    <td>Package and API issues</td>
+                    <td>包与 API 问题</td>
                     <td class="num">65</td>
                     <td class="num">9%</td>
-                    <td>Missing package, API renames, Quarto/igraph</td>
+                    <td>缺包、API 改名、Quarto / igraph 变动</td>
                 </tr>
                 <tr>
-                    <td>Syntax errors</td>
+                    <td>语法错误</td>
                     <td class="num">47</td>
                     <td class="num">7%</td>
-                    <td>Escape characters, unexpected symbols</td>
+                    <td>转义字符、意外符号</td>
                 </tr>
                 <tr>
-                    <td>Runtime logic errors</td>
+                    <td>运行时逻辑错误</td>
                     <td class="num">44</td>
                     <td class="num">6%</td>
-                    <td>if() on NA, pipe chain failures, grid/ggplot</td>
+                    <td>对 NA 用 if()、pipe 链断掉、grid / ggplot 相关问题</td>
                 </tr>
                 <tr>
-                    <td>Wrong function arguments</td>
+                    <td>函数参数写错</td>
                     <td class="num">29</td>
                     <td class="num">4%</td>
-                    <td>Unused arguments, misspecified options</td>
+                    <td>多写了没用的参数、选项配置错误</td>
                 </tr>
                 <tr>
-                    <td>Infrastructure failures</td>
+                    <td>基础设施故障</td>
                     <td class="num">51</td>
                     <td class="num">7%</td>
-                    <td>HPC workers, targets lock, C++ compilation</td>
+                    <td>HPC worker、targets 锁文件、C++ 编译</td>
                 </tr>
                 <tr>
-                    <td>Numerical/convergence</td>
+                    <td>数值 / 收敛问题</td>
                     <td class="num">24</td>
                     <td class="num">3%</td>
-                    <td>Singular matrix, memory limits, hIRT initialization</td>
+                    <td>奇异矩阵、内存限制、hIRT 初始化</td>
                 </tr>
                 <tr>
-                    <td>Known pitfalls (mice)</td>
+                    <td>已知陷阱（mice）</td>
                     <td class="num">7</td>
                     <td class="num">1%</td>
-                    <td>Documented bugs, hit repeatedly</td>
+                    <td>文档里写过的坑，还是一再踩到</td>
                 </tr>
                 <tr>
-                    <td>Missing function/method</td>
+                    <td>缺失函数 / 方法</td>
                     <td class="num">25</td>
                     <td class="num">4%</td>
-                    <td>Function removed or not exported</td>
+                    <td>函数被移除，或者根本没导出</td>
                 </tr>
             </tbody>
         </table>
 
         <p>
-            The top three categories &mdash; wrong names, wrong types, wrong paths &mdash; account for 58% of all errors. Every R programmer will recognize them immediately. They share a single root cause: <strong>R gives you no feedback about code correctness until the code actually runs.</strong> This is what the rest of this post is about.
+            排在最前面的三类错误——名字错、类型错、路径错——一共占了全部错误的 58%。做 R 的人一眼就知道这是什么意思。它们共享同一个根因：<strong>R 不会在代码真正运行之前，给你任何关于正确性的结构化反馈。</strong>这也是这篇文章真正要讲的。
         </p>
 
-        <h2>R Has No Compiler (And That Changes Everything)</h2>
+        <h2>R 没有编译器，这会改变一切</h2>
 
         <p>
-            The single largest category: 160 naming errors, 22% of the total. The AI renames a variable in one file &mdash; say, changing <code>income_level</code> to <code>income_percentile</code> in the data cleaning script &mdash; and misses a reference downstream. A regression formula, a config file, a visualization three pipeline steps later.
+            最大的一类是命名错误：160 个，占总数的 22%。AI 可能在一个文件里把变量改名，比如把数据清洗脚本里的 <code>income_level</code> 改成 <code>income_percentile</code>，却漏掉下游引用。回归公式、配置文件，甚至三步之后才会跑到的可视化脚本里，都可能还在用旧名字。
         </p>
 
         <div class="error-block">
@@ -528,38 +540,38 @@
         </div>
 
         <p>
-            This is not an AI-specific problem. It is the most common mistake every R programmer makes. I've done it myself more times than I'd like to admit. But it reveals something fundamental about why R is different from the languages where AI coding assistants shine.
+            这不是 AI 独有的问题，而是每个 R 程序员都会遇到的最常见错误之一。我自己也犯过无数次，只是不愿意承认。它真正说明的是，为什么 R 和那些 AI 助手特别擅长的语言不一样。
         </p>
 
         <p>
-            In Python, referencing an undefined name raises <code>NameError</code> immediately. In Go or Rust, the compiler refuses to build. In R, your pipeline hums along for thirty minutes &mdash; loading data, fitting models, running imputation &mdash; and only crashes at minute 31 when it finally reaches the line with the wrong name.
+            在 Python 里，引用一个不存在的名字会立刻抛出 <code>NameError</code>。在 Go 或 Rust 里，编译器根本不会让你过。在 R 里，流水线可能已经跑了 30 分钟，数据也读了、模型也拟了、插补也做了，直到第 31 分钟才在那个旧名字上炸掉。
         </p>
 
-        <pre><code># This runs for 30 minutes before failing
+        <pre><code># 这段代码会跑 30 分钟，然后才失败
 data &lt;- load_all_surveys()          # 2 min
 data &lt;- harmonize_variables(data)   # 3 min
 models &lt;- fit_irt_models(data)      # 10 min
-imps &lt;- run_mice(models, m = 20)   # 15 min
+imps &lt;- run_mice(models, m = 20)     # 15 min
 results &lt;- run_regressions(imps)
-# Error: object 'income_level' not found   # minute 31</code></pre>
+# Error: object 'income_level' not found   # 第 31 分钟</code></pre>
 
         <p>
-            The AI has no way to "compile" R code. It writes the edit, it looks correct, and nothing validates it until runtime. This is why naming errors were the <em>only</em> category that persisted across the entire month. Type errors were fixed once and stayed fixed. Path issues were resolved and didn't return. Only naming errors kept recurring, from the first week to the last day, because R's lack of static analysis is a permanent condition.
+            AI 没有办法“编译” R 代码。它把编辑写出来，看上去也没问题，但没有任何东西会在运行前替你验证。也正因为如此，命名错误是整个一个月里唯一持续反复出现的类别。类型错误修过一次就基本消失了，路径问题修过一次也基本不回来；只有命名错误会一周接一周地回来，因为 R 本来就没有静态分析这道保险。
         </p>
 
         <div class="callout">
-            <p>Chronic vs. acute</p>
-            <p>Most error categories follow an "acute" pattern: they cluster around a specific refactoring, get fixed, and don't return. The <code>haven_labelled</code> type errors appeared in late January, were resolved, and never came back. The <code>mice</code> configuration bugs, same story. Only naming errors are <em>chronic</em> &mdash; a permanent condition of working in a language with no compile step.</p>
+            <p>慢性问题 vs. 急性问题</p>
+            <p>大多数错误类别都更像“急性病”：它们会围绕某次重构集中爆发，修完就过去，不会再回来。<code>haven_labelled</code> 的类型错误是在 1 月下旬出现的，修掉之后就不再出现；<code>mice</code> 的配置 bug 也是一样。只有命名错误更像“慢性病”——在一门没有编译步骤的语言里工作，这几乎是永久条件。</p>
         </div>
 
-        <h2>Your Data Is Lying About Its Type</h2>
+        <h2>你的数据在类型上撒谎</h2>
 
         <p>
-            If you're a quantitative social scientist, this section is about you specifically.
+            如果你做的是定量社会科学，这一节基本就是写给你的。
         </p>
 
         <p>
-            137 errors &mdash; 19% of the total &mdash; came from type and dimension mismatches. The most revealing variety involves survey data. When you load a Stata <code>.dta</code> file with <code>haven::read_dta()</code>, what you get back is not a normal data frame. The columns carry invisible metadata &mdash; value labels, variable labels, format specifications &mdash; encoded as a special <code>haven_labelled</code> type. It <em>looks</em> like a numeric vector. It prints like one. It isn't one.
+            137 个错误，占总数的 19%，来自类型和维度不匹配。最典型的例子来自问卷数据。用 <code>haven::read_dta()</code> 读进 Stata 的 <code>.dta</code> 文件时，返回的并不是普通 data frame。那些列里带着看不见的元数据——取值标签、变量标签、格式信息——被编码成一种特殊的 <code>haven_labelled</code> 类型。它看起来像数值向量，打印出来也像，但它不是。
         </p>
 
         <div class="error-block">
@@ -571,31 +583,31 @@ results &lt;- run_regressions(imps)
         </div>
 
         <p>
-            Basic arithmetic fails. <code>bind_rows()</code> fails. The data looks numeric but doesn't behave numerically. The fix is a single function call &mdash; <code>haven::zap_labels()</code> &mdash; but you have to know to call it <em>immediately</em> after loading, before the labelled values propagate through the pipeline. Three files and two hours later, something breaks with an incomprehensible type error, and the root cause is a data type that never should have existed past line 10 of your cleaning script.
+            连基本运算都会失败，<code>bind_rows()</code> 也会失败。数据看起来是数值，行为上却不是。修复其实只要一个函数：<code>haven::zap_labels()</code>。但你必须在刚读入时就立刻调用它，不能等标签沿着流水线扩散下去。要是拖上三份文件、两小时之后才炸，那往往已经不是表面上的类型错误，而是清洗脚本第 10 行本来就该处理掉、却一路被放大的问题。
         </p>
 
         <p>
-            This is a trap that only affects people who work with survey data stored in Stata or SPSS format &mdash; which is to say, a large fraction of quantitative social scientists. The AI doesn't know about <code>haven_labelled</code> unless it's been told. It sees a data frame, assumes it's a normal data frame, and writes perfectly reasonable code that fails for invisible reasons.
+            这类坑主要影响那些处理 Stata 或 SPSS 问卷数据的人，也就是很大一部分定量社会科学研究者。AI 不会自己知道 <code>haven_labelled</code> 是什么，除非你明确告诉它。它看见一个 data frame，就默认它是普通 data frame，然后写出一段完全说得通、但会因为隐藏原因失败的代码。
         </p>
 
         <p>
-            The broader category includes other R type traps: subscript-out-of-bounds after unexpected filtering, factor/numeric confusion when columns were silently coerced, dimension mismatches after merges that dropped rows. All invisible until runtime. All correct-looking code meeting incorrect-at-runtime data.
+            更广义的类型陷阱还包括：过滤之后出现的 subscript-out-of-bounds、列在静默强制转换后变成 factor/numeric 混淆、合并之后丢行导致的维度不一致。它们都在运行前看不见，直到运行时才露馅。代码看上去没问题，运行时的数据却不对。
         </p>
 
-        <h2>The Gap Between Your Code and Your Computer</h2>
+        <h2>代码和电脑之间有一道缝</h2>
 
         <p>
-            174 errors &mdash; 24% of the total &mdash; have nothing to do with analytical logic. They come from the messy reality of how research computing actually works.
+            174 个错误，占总数的 24%，和分析逻辑本身关系不大。它们来自研究计算的真实脏活：文件、路径、集群、编译器、锁文件。
         </p>
 
         <p>
-            The biggest sub-category: file paths (123 errors). If you're on macOS and your project lives in Dropbox, you probably have a path like:
+            其中最大的子类是文件路径，123 个错误。如果你在 macOS 上做项目，代码又放在 Dropbox 里，大概率会有这种路径：
         </p>
 
         <pre><code>/Users/you/Dropbox/My Research Project/code/R/model.R</code></pre>
 
         <p>
-            That space in "My Research Project" is a ticking time bomb. Inside R, <code>here::here()</code> handles it fine. But the moment a path gets passed to a shell command via <code>system()</code> or <code>Rscript</code>, the space breaks things:
+            “My Research Project” 里的那个空格，就是一颗定时炸弹。在 R 里，<code>here::here()</code> 能处理得很好；但只要路径被 <code>system()</code> 或 <code>Rscript</code> 传给 shell，空格就会开始作怪：
         </p>
 
         <div class="error-block">
@@ -603,21 +615,21 @@ results &lt;- run_regressions(imps)
         </div>
 
         <p>
-            The AI writes the <code>system()</code> call without quoting the path &mdash; the same mistake I've made dozens of times. The fix is always the same: wrap the path in quotes. But the AI doesn't retain this lesson across sessions, because each new <code>system()</code> call is a new context. Separately, R's <code>here::here()</code> function can resolve to the <em>wrong</em> project root when a <code>renv.lock</code> file sits in a subdirectory. In our project, this sent every file lookup to <code>code/Data/</code> instead of <code>Data/</code>. A symlink fixed it, but the AI had to rediscover the problem. Multiple times.
+            AI 往往会像我一样，直接写一个不加引号的 <code>system()</code> 调用。修复方式其实一直都一样：把路径放进引号里。但 AI 不会把这个教训跨会话记住，因为每一个新的 <code>system()</code> 调用都是新的上下文。更麻烦的是，R 的 <code>here::here()</code> 在某些情况下会因为子目录里的 <code>renv.lock</code> 而解析到<em>错误的</em>项目根目录。我们的项目里，这会把所有文件查找都导向 <code>code/Data/</code>，而不是 <code>Data/</code>。后来是靠一个符号链接修好的，但 AI 还是得一遍遍重新发现这个问题。
         </p>
 
         <p>
-            Then there's infrastructure (51 errors): the code is correct, but the environment fails. HPC workers crash mid-computation. Network connections drop between nodes. The <a href="https://docs.ropensci.org/targets/">targets</a> pipeline manager accumulates stale lock files that block new runs. C++ dependencies fail to compile on a remote cluster's older toolchain. None of this is the AI's fault. But <strong>the AI cannot distinguish "my code is wrong" from "the infrastructure had a hiccup"</strong> &mdash; both produce identical-looking errors in the log, and both send it down the wrong debugging path.
+            另一类是基础设施故障，51 个错误：代码本身没错，坏的是环境。HPC worker 会在中途崩掉，节点间的网络会断，<a href="https://docs.ropensci.org/targets/">targets</a> 管线会堆出旧锁文件，新任务被卡住，远端集群上的旧工具链又会让 C++ 依赖编译失败。这里没有 AI 的锅，但 <strong>AI 分不清“我的代码错了”和“基础设施出岔子了”</strong>，两种情况在日志里长得几乎一模一样，也会把它带去同一条错误的排障路径。
         </p>
 
-        <h2>What the AI Remembers (and What It Doesn't)</h2>
+        <h2>AI 记住了什么，也没记住什么</h2>
 
         <p>
-            Seven errors, barely 1% of the total, but they reveal something important about how AI coding assistants actually work.
+            7 个错误，勉强才占总数的 1%，但它们能说明 AI 编码助手到底怎么工作。
         </p>
 
         <p>
-            The <code>mice</code> package for multiple imputation has a known quirk: when using its parallel variant <code>futuremice()</code>, you must <em>not</em> pass the <code>printFlag</code> argument, because the function passes it internally. Pass it anyway, and R complains:
+            做多重插补的 <code>mice</code> 包有个老问题：使用并行版本 <code>futuremice()</code> 时，不能传 <code>printFlag</code> 参数，因为函数内部已经会传。你要是还传，R 就会报：
         </p>
 
         <div class="error-block">
@@ -625,77 +637,78 @@ results &lt;- run_regressions(imps)
         </div>
 
         <p>
-            This was documented in our project notes from the start. Yet the AI kept re-introducing <code>printFlag = FALSE</code> every time it touched the imputation code for other reasons. Each time, from the AI's perspective, passing <code>printFlag = FALSE</code> to a <code>mice</code>-like function is the obviously correct thing to do &mdash; it has seen thousands of examples of exactly this pattern in its training data.
+            这条注意事项从一开始就在项目笔记里写着。可每次 AI 因为别的原因碰到插补代码时，它还是会把 <code>printFlag = FALSE</code> 加回来。站在 AI 的角度，给一个类似 <code>mice</code> 的函数传 <code>printFlag = FALSE</code> 显然是“正确写法”，因为训练数据里这种模式它见得太多了。
         </p>
 
         <p>
-            This is the tension at the heart of AI-assisted coding: <strong>the model has strong priors from training data that can override project-specific knowledge.</strong> Our project note saying "don't pass printFlag to futuremice" is one instruction competing against an overwhelming statistical prior. The prior wins, repeatedly, until the code is structured to make the error <em>impossible</em> rather than merely inadvisable. For researchers relying on AI assistants, the lesson is architectural: don't tell the AI what not to do; design your code so the wrong thing can't be done.
+            这正是 AI 辅助编码的核心张力：<strong>模型从训练数据里学到的强先验，可能会覆盖掉项目特定的知识。</strong>“不要给 futuremice 传 printFlag”这条项目笔记，和一个极强的统计先验在对抗。结果通常是先验赢，而且会一赢再赢，直到你把代码结构改到让错误<em>根本做不出来</em>，而不只是“不建议这么做”。
         </p>
 
-        <h2>Errors Follow the Calendar</h2>
+        <h2>错误是跟着日历走的</h2>
 
         <p>
-            Errors are not uniformly distributed. They cluster around major refactoring events:
+            错误分布并不均匀，它们会跟着重大重构节点一起爆发：
         </p>
 
         <div class="timeline">
             <div class="timeline-item">
-                <div class="timeline-date">Feb 1 &mdash; <span class="timeline-count">94 errors</span></div>
-                <p>Full-scale imputation run + regression model rewrite</p>
+                <div class="timeline-date">2 月 1 日 &mdash; <span class="timeline-count">94 个错误</span></div>
+                <p>全规模插补运行 + 回归模型重写</p>
             </div>
             <div class="timeline-item">
-                <div class="timeline-date">Jan 31 &mdash; <span class="timeline-count">88 errors</span></div>
-                <p>Unified loading of 33 surveys into a single function + new analysis module</p>
+                <div class="timeline-date">1 月 31 日 &mdash; <span class="timeline-count">88 个错误</span></div>
+                <p>33 份问卷统一读入一个函数 + 新分析模块</p>
             </div>
             <div class="timeline-item">
-                <div class="timeline-date">Feb 10 &mdash; <span class="timeline-count">66 errors</span></div>
-                <p>Visualization refactoring + beamer presentation pipeline</p>
+                <div class="timeline-date">2 月 10 日 &mdash; <span class="timeline-count">66 个错误</span></div>
+                <p>可视化重构 + beamer 演示流水线</p>
             </div>
             <div class="timeline-item">
-                <div class="timeline-date">Feb 2 &mdash; <span class="timeline-count">55 errors</span></div>
-                <p>First full-scale multiple imputation run (m=20, distributed across HPC)</p>
+                <div class="timeline-date">2 月 2 日 &mdash; <span class="timeline-count">55 个错误</span></div>
+                <p>第一次全规模多重插补运行（m=20，分布在 HPC 上）</p>
             </div>
         </div>
 
         <p>
-            Four days, 42% of all errors. The pattern is clear: errors spike when the project is being restructured, not when the AI is doing routine analytical work. And the errors that dominate during refactoring are almost entirely naming errors &mdash; the AI restructures code correctly in the files it touches, but misses references in files it didn't think to update. This is the same blind spot every human programmer has. You remember to update the three files you have open. You forget about the config file you last touched two weeks ago.
+            四天，贡献了全部错误的 42%。模式很清楚：错误会在项目被重组的时候激增，而不是在 AI 正常做常规分析的时候。重构期间最占主导的，几乎全是命名错误——AI 能把它碰到的文件重构得很好，却会漏掉那些它没想到要一起改的文件。这也是所有人类程序员共有的盲点：你会记得更新眼前打开的那三份文件，却忘了两周前最后碰过的配置文件。
         </p>
 
-        <h2>So What?</h2>
+        <h2>所以呢？</h2>
 
         <p>
-            Here's what I keep coming back to: <strong>AI coding errors in R are not AI-specific errors. They are R-specific errors.</strong> The AI doesn't hallucinate function names or invent impossible syntax. It makes the same mistakes I make, for the same structural reasons.
-        </p>
-
-        <p>
-            R is dynamically typed, lazily evaluated, and has no compile step. A misspelled variable is only caught when the line executes, potentially hours into a pipeline. A type mismatch &mdash; <code>haven_labelled</code> vs. <code>double</code> &mdash; is invisible until an operation fails. A file path with a space in it works inside R but breaks when passed to the shell. None of these have compile-time equivalents. There is no way to "build" a multi-file R project and check for consistency before running it.
+            我最后一直在想的是：<strong>R 里的 AI 编码错误，其实不是 AI 特有的错误，而是 R 特有的错误。</strong>AI 并没有凭空捏造函数名，也没有发明不可能的语法；它只是用和我一样的方式，在同样的结构条件下犯同样的错。
         </p>
 
         <p>
-            These aren't bugs in R. They are design choices that prioritize interactivity and flexibility &mdash; exactly what makes R excellent for exploratory data analysis. But they also mean that neither humans nor AI gets any structural feedback about code correctness until something breaks at runtime. In languages with static tooling (TypeScript, Rust, Go), the same AI assistant makes far fewer of these errors, because the compiler catches them before execution. R doesn't have that feedback loop.
+            R 是动态类型、惰性求值，而且没有编译步骤。拼错的变量名只有在那一行真正执行时才会被发现，可能已经是整条流水线跑到一半甚至更晚。类型不匹配——比如 <code>haven_labelled</code> 和 <code>double</code>——要等操作失败才会暴露。带空格的文件路径，在 R 里能用，传给 shell 却会炸。这些东西都没有编译期等价物，也就意味着你没法在跑之前先“构建”一个多文件 R 项目，检查它是否一致。
+        </p>
+
+        <p>
+            这不是 R 的 bug，而是它的设计选择：强调交互性和灵活性，也正是这让 R 非常适合探索性分析。但代价是，直到运行出问题之前，人和 AI 都拿不到结构化反馈。在有静态工具链的语言里，比如 TypeScript、Rust、Go，同一个 AI 助手会少犯很多这类错，因为编译器会在执行前就把它拦下来。R 没有这道反馈回路。
         </p>
 
         <div class="callout">
-            <p>What I'm trying next</p>
-            <p>If the AI's biggest weakness in R is the same as mine &mdash; no structural feedback before runtime &mdash; then the solution probably isn't making the AI smarter. It's giving it better tools. R's <a href="https://github.com/REditorSupport/languageserver">Language Server</a> already provides some of this for IDE users: undefined variable detection, cross-file references, scope-aware renaming. I've been experimenting with making these same capabilities available to the AI assistant directly. Whether that actually reduces the error rate is a question I'll take up in a future post.</p>
+            <p>我接下来在试什么</p>
+            <p>如果 AI 在 R 里的最大弱点和我一样，都是“运行前没有结构化反馈”，那解决方案大概率不是把 AI 变得更聪明，而是给它更好的工具。R 的 <a href="https://github.com/REditorSupport/languageserver">Language Server</a> 已经为 IDE 用户提供了其中一部分能力：未定义变量检测、跨文件引用、范围感知重命名。我一直在尝试把这些能力直接暴露给 AI 助手。这样是否真的能降低错误率，后面我会再写一篇文章继续讲。
+            </p>
         </div>
 
         <hr>
 
         <p>
-            <em>Siyao Zheng is an Assistant Professor at the School of International and Public Affairs, Shanghai Jiao Tong University. His research focuses on AI for Social Science and Digital Politics. The error data and extraction script are available on <a href="https://github.com/SiyaoZheng/">GitHub</a>.</em>
+            <em>郑思尧是上海交通大学国际与公共事务学院助理教授，研究关注 AI for Social Science 和 Digital Politics。错误数据与提取脚本可在 <a href="https://github.com/SiyaoZheng/">GitHub</a> 上找到。</em>
         </p>
 
     </article>
 
-    <section id="comments" data-slug="ai-r-errors"></section>
+    <section id="comments" data-slug="ai-r-errors-zh"></section>
 
     <footer>
-        <p>&copy; 2026 Siyao Zheng &middot; <a href="/">Home</a></p>
+        <p>&copy; 2026 郑思尧 &middot; <a href="/">首页</a> &middot; <a class="lang-switch" href="/en/blog/ai-r-errors.html">English</a></p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-    <script src="comments/profanity-filter.js"></script>
-    <script src="comments/comments.js"></script>
+    <script src="/blog/comments/profanity-filter.js"></script>
+    <script src="/blog/comments/comments.js"></script>
 </body>
 </html>
