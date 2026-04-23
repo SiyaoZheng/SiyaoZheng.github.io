@@ -1,0 +1,6 @@
+interface:
+  display_name: "SiyaoZheng.github.io"
+  short_description: "Repo-specific patterns and workflows for SiyaoZheng.github.io"
+  default_prompt: "Use the SiyaoZheng.github.io repo skill to follow existing architecture, testing, and workflow conventions."
+policy:
+  allow_implicit_invocation: true
