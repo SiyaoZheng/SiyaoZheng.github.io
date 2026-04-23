@@ -1,0 +1,211 @@
+{
+  "version": "1.3",
+  "schemaVersion": "1.0",
+  "generatedBy": "ecc-tools",
+  "generatedAt": "2026-04-23T04:30:52.655Z",
+  "repo": "https://github.com/SiyaoZheng/SiyaoZheng.github.io",
+  "profiles": {
+    "requested": "security",
+    "recommended": "security",
+    "effective": "security",
+    "requestedAlias": "security",
+    "recommendedAlias": "security",
+    "effectiveAlias": "security"
+  },
+  "requestedProfile": "security",
+  "profile": "security",
+  "recommendedProfile": "security",
+  "effectiveProfile": "security",
+  "tier": "pro",
+  "requestedComponents": [
+    "repo-baseline",
+    "workflow-automation",
+    "security-audits"
+  ],
+  "selectedComponents": [
+    "repo-baseline",
+    "workflow-automation",
+    "security-audits"
+  ],
+  "requestedAddComponents": [],
+  "requestedRemoveComponents": [],
+  "blockedRemovalComponents": [],
+  "tierFilteredComponents": [],
+  "requestedRootPackages": [
+    "runtime-core",
+    "workflow-pack",
+    "agentshield-pack"
+  ],
+  "selectedRootPackages": [
+    "runtime-core",
+    "workflow-pack",
+    "agentshield-pack"
+  ],
+  "requestedPackages": [
+    "runtime-core",
+    "workflow-pack",
+    "agentshield-pack"
+  ],
+  "requestedAddPackages": [],
+  "requestedRemovePackages": [],
+  "selectedPackages": [
+    "runtime-core",
+    "workflow-pack",
+    "agentshield-pack"
+  ],
+  "packages": [
+    "runtime-core",
+    "workflow-pack",
+    "agentshield-pack"
+  ],
+  "blockedRemovalPackages": [],
+  "tierFilteredRootPackages": [],
+  "tierFilteredPackages": [],
+  "conflictingPackages": [],
+  "dependencyGraph": {
+    "runtime-core": [],
+    "workflow-pack": [
+      "runtime-core"
+    ],
+    "agentshield-pack": [
+      "workflow-pack"
+    ]
+  },
+  "resolutionOrder": [
+    "runtime-core",
+    "workflow-pack",
+    "agentshield-pack"
+  ],
+  "requestedModules": [
+    "runtime-core",
+    "workflow-pack",
+    "agentshield-pack"
+  ],
+  "selectedModules": [
+    "runtime-core",
+    "workflow-pack",
+    "agentshield-pack"
+  ],
+  "modules": [
+    "runtime-core",
+    "workflow-pack",
+    "agentshield-pack"
+  ],
+  "managedFiles": [
+    ".claude/skills/SiyaoZheng.github.io/SKILL.md",
+    ".agents/skills/SiyaoZheng.github.io/SKILL.md",
+    ".agents/skills/SiyaoZheng.github.io/agents/openai.yaml",
+    ".claude/identity.json",
+    ".codex/config.toml",
+    ".codex/AGENTS.md",
+    ".codex/agents/explorer.toml",
+    ".codex/agents/reviewer.toml",
+    ".codex/agents/docs-researcher.toml",
+    ".claude/homunculus/instincts/inherited/SiyaoZheng.github.io-instincts.yaml",
+    ".claude/rules/SiyaoZheng.github.io-guardrails.md"
+  ],
+  "packageFiles": {
+    "runtime-core": [
+      ".claude/skills/SiyaoZheng.github.io/SKILL.md",
+      ".agents/skills/SiyaoZheng.github.io/SKILL.md",
+      ".agents/skills/SiyaoZheng.github.io/agents/openai.yaml",
+      ".claude/identity.json",
+      ".codex/config.toml",
+      ".codex/AGENTS.md",
+      ".codex/agents/explorer.toml",
+      ".codex/agents/reviewer.toml",
+      ".codex/agents/docs-researcher.toml",
+      ".claude/homunculus/instincts/inherited/SiyaoZheng.github.io-instincts.yaml"
+    ],
+    "agentshield-pack": [
+      ".claude/rules/SiyaoZheng.github.io-guardrails.md"
+    ]
+  },
+  "moduleFiles": {
+    "runtime-core": [
+      ".claude/skills/SiyaoZheng.github.io/SKILL.md",
+      ".agents/skills/SiyaoZheng.github.io/SKILL.md",
+      ".agents/skills/SiyaoZheng.github.io/agents/openai.yaml",
+      ".claude/identity.json",
+      ".codex/config.toml",
+      ".codex/AGENTS.md",
+      ".codex/agents/explorer.toml",
+      ".codex/agents/reviewer.toml",
+      ".codex/agents/docs-researcher.toml",
+      ".claude/homunculus/instincts/inherited/SiyaoZheng.github.io-instincts.yaml"
+    ],
+    "agentshield-pack": [
+      ".claude/rules/SiyaoZheng.github.io-guardrails.md"
+    ]
+  },
+  "files": [
+    {
+      "moduleId": "runtime-core",
+      "path": ".claude/skills/SiyaoZheng.github.io/SKILL.md",
+      "description": "Repository-specific Claude Code skill generated from git history."
+    },
+    {
+      "moduleId": "runtime-core",
+      "path": ".agents/skills/SiyaoZheng.github.io/SKILL.md",
+      "description": "Codex-facing copy of the generated repository skill."
+    },
+    {
+      "moduleId": "runtime-core",
+      "path": ".agents/skills/SiyaoZheng.github.io/agents/openai.yaml",
+      "description": "Codex skill metadata so the repo skill appears cleanly in the skill interface."
+    },
+    {
+      "moduleId": "runtime-core",
+      "path": ".claude/identity.json",
+      "description": "Suggested identity.json baseline derived from repository conventions."
+    },
+    {
+      "moduleId": "runtime-core",
+      "path": ".codex/config.toml",
+      "description": "Repo-local Codex MCP and multi-agent baseline aligned with ECC defaults."
+    },
+    {
+      "moduleId": "runtime-core",
+      "path": ".codex/AGENTS.md",
+      "description": "Codex usage guide that points at the generated repo skill and workflow bundle."
+    },
+    {
+      "moduleId": "runtime-core",
+      "path": ".codex/agents/explorer.toml",
+      "description": "Read-only explorer role config for Codex multi-agent work."
+    },
+    {
+      "moduleId": "runtime-core",
+      "path": ".codex/agents/reviewer.toml",
+      "description": "Read-only reviewer role config focused on correctness and security."
+    },
+    {
+      "moduleId": "runtime-core",
+      "path": ".codex/agents/docs-researcher.toml",
+      "description": "Read-only docs researcher role config for API verification."
+    },
+    {
+      "moduleId": "runtime-core",
+      "path": ".claude/homunculus/instincts/inherited/SiyaoZheng.github.io-instincts.yaml",
+      "description": "Continuous-learning instincts derived from repository patterns."
+    },
+    {
+      "moduleId": "agentshield-pack",
+      "path": ".claude/rules/SiyaoZheng.github.io-guardrails.md",
+      "description": "Repository guardrails distilled from analysis for security and workflow review."
+    }
+  ],
+  "workflows": [],
+  "adapters": {
+    "claudeCode": {
+      "skillPath": ".claude/skills/SiyaoZheng.github.io/SKILL.md",
+      "identityPath": ".claude/identity.json",
+      "commandPaths": []
+    },
+    "codex": {
+      "configPath": ".codex/config.toml",
+      "agentsGuidePath": ".codex/AGENTS.md",
+      "skillPath": ".agents/skills/SiyaoZheng.github.io/SKILL.md"
+    }
+  }
+}
