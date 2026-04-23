@@ -233,31 +233,19 @@ async function findLinearIssuesForGitHubIssueUrl(url) {
     .filter(Boolean);
 }
 
-async function main() {
-  if (!process.env.GITHUB_EVENT_PATH) {
-    throw new Error("Missing GITHUB_EVENT_PATH.");
-  }
-
-  const event = JSON.parse(await readFile(process.env.GITHUB_EVENT_PATH, "utf8"));
-  const pr = event.pull_request;
-  const repository = event.repository;
-
-  if (!pr || !repository) {
-    console.log("No pull_request payload found; nothing to do.");
-    return;
-  }
-
-  const [owner, repo] = repository.full_name.split("/");
+async function processPullRequest(pr, owner, repo) {
   const searchText = [pr.title || "", pr.body || ""].join("\n");
   const githubIssueRefs = extractGitHubIssueUrls(searchText, owner, repo);
 
   if (githubIssueRefs.length === 0) {
-    console.log("No GitHub issue references found after recognized magic words.");
-    return;
+    console.log(
+      `PR #${pr.number}: no GitHub issue references found after recognized magic words.`,
+    );
+    return "no_github_refs";
   }
 
   console.log(
-    `Found GitHub issue references: ${githubIssueRefs
+    `PR #${pr.number}: found GitHub issue references: ${githubIssueRefs
       .map((issue) => `#${issue.number}`)
       .join(", ")}`,
   );
@@ -277,20 +265,24 @@ async function main() {
   }
 
   if (identifiers.size === 0) {
-    console.log("No synced Linear issues found for the referenced GitHub issues.");
-    return;
+    console.log(
+      `PR #${pr.number}: no synced Linear issues found for the referenced GitHub issues.`,
+    );
+    return "no_linear_matches";
   }
 
   const updatedBody = updatePullRequestBody(pr.body || "", identifiers);
   if (updatedBody === (pr.body || "")) {
-    console.log("PR body already contains the matching Linear issue references.");
-    return;
+    console.log(
+      `PR #${pr.number}: body already contains the matching Linear issue references.`,
+    );
+    return "already_linked";
   }
 
   if (process.env.DRY_RUN === "true") {
-    console.log("DRY_RUN=true; would update PR body to:");
+    console.log(`PR #${pr.number}: DRY_RUN=true; would update PR body to:`);
     console.log(updatedBody);
-    return;
+    return "would_update";
   }
 
   await githubRequest(`/repos/${owner}/${repo}/pulls/${pr.number}`, {
@@ -303,6 +295,78 @@ async function main() {
       ", ",
     )}`,
   );
+  return "updated";
+}
+
+async function listPullRequests(owner, repo, state) {
+  const pullRequests = [];
+  for (let page = 1; ; page += 1) {
+    const batch = await githubRequest(
+      `/repos/${owner}/${repo}/pulls?state=${state}&per_page=100&page=${page}`,
+    );
+    pullRequests.push(...batch);
+
+    if (batch.length < 100) {
+      break;
+    }
+  }
+
+  return pullRequests;
+}
+
+async function backfillPullRequests(owner, repo) {
+  const state = process.env.BACKFILL_PR_STATE || "open";
+  const validStates = new Set(["open", "closed", "all"]);
+  if (!validStates.has(state)) {
+    throw new Error(
+      `Invalid BACKFILL_PR_STATE=${state}; expected open, closed, or all.`,
+    );
+  }
+
+  const pullRequests = await listPullRequests(owner, repo, state);
+  console.log(
+    `Backfill mode: inspecting ${pullRequests.length} ${state} PR(s) in ${owner}/${repo}.`,
+  );
+
+  const summary = new Map();
+  for (const pr of pullRequests) {
+    const result = await processPullRequest(pr, owner, repo);
+    summary.set(result, (summary.get(result) || 0) + 1);
+  }
+
+  console.log("Backfill summary:");
+  for (const [result, count] of [...summary.entries()].sort()) {
+    console.log(`- ${result}: ${count}`);
+  }
+}
+
+async function main() {
+  if (!process.env.GITHUB_EVENT_PATH) {
+    throw new Error("Missing GITHUB_EVENT_PATH.");
+  }
+
+  const event = JSON.parse(await readFile(process.env.GITHUB_EVENT_PATH, "utf8"));
+  const repositoryFullName =
+    event.repository?.full_name || process.env.GITHUB_REPOSITORY;
+
+  if (!repositoryFullName) {
+    throw new Error("Missing repository full name.");
+  }
+
+  const [owner, repo] = repositoryFullName.split("/");
+
+  if (process.env.BACKFILL_EXISTING_PRS === "true") {
+    await backfillPullRequests(owner, repo);
+    return;
+  }
+
+  const pr = event.pull_request;
+  if (!pr) {
+    console.log("No pull_request payload found; nothing to do.");
+    return;
+  }
+
+  await processPullRequest(pr, owner, repo);
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {

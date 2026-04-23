@@ -1,6 +1,23 @@
 name: Link Linear issue from GitHub issue
 
 on:
+  workflow_dispatch:
+    inputs:
+      pr_state:
+        description: Which existing pull requests to inspect
+        required: true
+        default: open
+        type: choice
+        options:
+          - open
+          - closed
+          - all
+      dry_run:
+        description: Preview changes without updating PR bodies
+        required: true
+        default: true
+        type: boolean
+
   pull_request:
     types:
       - opened
@@ -31,4 +48,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}
+          BACKFILL_EXISTING_PRS: ${{ github.event_name == 'workflow_dispatch' && 'true' || 'false' }}
+          BACKFILL_PR_STATE: ${{ github.event_name == 'workflow_dispatch' && inputs.pr_state || 'open' }}
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || 'false' }}
         run: node scripts/link-linear-from-github-issue.mjs
