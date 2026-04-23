@@ -25,7 +25,7 @@
         body {
             margin: 0;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--bg);
+            background: linear-gradient(180deg, #fafafa 0%, #ffffff 12rem);
             color: var(--text);
             line-height: 1.7;
             font-size: 15px;
@@ -85,10 +85,15 @@
 
         /* Hero */
         .hero {
-            padding: 2.5rem 0;
+            margin-top: 1.25rem;
+            padding: 1.75rem;
             display: flex;
             gap: 2rem;
             align-items: flex-start;
+            background: rgba(255, 255, 255, 0.86);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
         }
 
         .hero-photo {
@@ -126,6 +131,25 @@
             line-height: 1.7;
         }
 
+        .hero-tags {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.7rem;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            color: var(--muted);
+            background: #fff;
+            font-size: 0.84rem;
+            line-height: 1.4;
+        }
+
         .hero-links {
             margin-top: 1rem;
             display: flex;
@@ -153,10 +177,20 @@
         }
 
         h2 {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
             margin: 0 0 1.2rem;
             font-size: 1.15rem;
             font-weight: 600;
             color: var(--text);
+        }
+
+        h2::after {
+            content: '';
+            height: 1px;
+            flex: 1;
+            background: var(--line);
         }
 
         h3 {
@@ -319,6 +353,7 @@
                 flex-direction: column;
                 align-items: center;
                 text-align: center;
+                padding: 1.25rem;
             }
 
             .hero-photo img {
@@ -327,6 +362,10 @@
             }
 
             .hero-links {
+                justify-content: center;
+            }
+
+            .hero-tags {
                 justify-content: center;
             }
 
@@ -377,6 +416,11 @@
                 <p class="hero-bio">
                     My research focuses on artificial intelligence for social science research, digital politics, and state governance. I am currently based at Shanghai Jiao Tong University. Previously, I received my Ph.D. in Political Science from Tsinghua University and was a visiting student at Harvard University's Department of Government.
                 </p>
+                <div class="hero-tags">
+                    <span class="hero-tag">AI for social science</span>
+                    <span class="hero-tag">Digital politics</span>
+                    <span class="hero-tag">State governance</span>
+                </div>
                 <div class="hero-links">
                     <a href="https://scholar.google.com/citations?user=5HvIF_kAAAAJ&hl=en" target="_blank">Google Scholar</a>
                     <a href="https://github.com/SiyaoZheng/" target="_blank">GitHub</a>
