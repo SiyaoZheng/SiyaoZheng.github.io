@@ -7,21 +7,21 @@
     <script defer data-domain="siyaozheng.org" src="https://plausible.io/js/script.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #fafafa;
-            --bg-alt: #f5f5f5;
-            --accent: #7c3aed;
-            --accent-light: #8b5cf6;
-            --text: #171717;
-            --text-secondary: #737373;
-            --border: #e5e5e5;
+            --bg: #f6f8fa;
+            --paper: #ffffff;
+            --ink: #18212b;
+            --muted: #586673;
+            --quiet: #7a8994;
+            --line: #d8e0e6;
+            --line-strong: #c8d2da;
+            --accent: #2f6f73;
+            --soft: #edf2f5;
         }
 
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
         }
 
@@ -30,848 +30,474 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            margin: 0;
+            font-family: 'Geist', sans-serif;
             background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            font-weight: 400;
-            position: relative;
+            color: var(--ink);
+            line-height: 1.58;
         }
 
-        /* Navigation */
         nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            padding: 1.5rem 4rem;
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 1.55rem 2rem;
             display: flex;
+            align-items: baseline;
             justify-content: space-between;
-            align-items: center;
-            background: rgba(250, 250, 250, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid var(--line);
         }
 
         .nav-name {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: var(--text);
-            letter-spacing: 0.02em;
+            font-size: 1.12rem;
+            font-weight: 650;
+            letter-spacing: -0.02em;
         }
 
         .nav-links {
             display: flex;
-            gap: 2.5rem;
+            gap: 1.55rem;
+            flex-wrap: wrap;
         }
 
         .nav-links a {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            color: var(--text-secondary);
+            color: var(--muted);
+            font-size: 0.9rem;
             text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--accent);
-            transition: width 0.3s ease;
         }
 
         .nav-links a:hover {
-            color: var(--text);
+            color: var(--ink);
         }
 
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: grid;
-            grid-template-columns: 1fr auto;
-            padding: 8rem 4rem 4rem;
-            gap: 4rem;
-            align-items: center;
-            max-width: 1200px;
+        .hero,
+        section,
+        footer {
+            max-width: 1180px;
             margin: 0 auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
         }
 
-        .hero-content {
-            animation: fadeInUp 1s ease forwards;
-            opacity: 0;
+        .hero {
+            padding-top: 5.5rem;
+            padding-bottom: 5.5rem;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 320px;
+            gap: 5rem;
+            align-items: start;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .hero-label,
+        .section-number,
+        .course-level,
+        .course-meta,
+        .slides-label,
+        .cv-date,
+        .map-label {
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--accent);
+            letter-spacing: 0.08em;
         }
 
         .hero-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--accent);
-            margin-bottom: 1.5rem;
-            font-weight: 500;
+            margin-bottom: 1.3rem;
+            font-size: 0.86rem;
         }
 
-        .hero h1 {
-            font-size: 4.5rem;
-            font-weight: 700;
-            line-height: 1.1;
-            color: var(--text);
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.02em;
-        }
-
-        .hero h1 span {
-            color: var(--accent);
+        h1 {
+            margin: 0;
+            font-size: clamp(3.2rem, 8vw, 6.2rem);
+            line-height: 0.94;
+            font-weight: 540;
+            letter-spacing: -0.075em;
         }
 
         .hero-subtitle {
-            font-size: 1.15rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            max-width: 500px;
-            line-height: 1.7;
+            max-width: 580px;
+            margin: 1.65rem 0 2.4rem;
+            color: var(--muted);
+            font-size: 1.2rem;
+            line-height: 1.55;
+        }
+
+        .hero-subtitle strong {
+            color: var(--ink);
+            font-weight: 600;
         }
 
         .hero-affiliation {
-            display: flex;
-            align-items: center;
+            display: grid;
+            grid-template-columns: 46px minmax(0, 1fr);
             gap: 1rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border);
+            align-items: start;
+            max-width: 520px;
+            padding-top: 1.4rem;
+            border-top: 1px solid var(--line);
         }
 
         .affiliation-logo {
-            width: 50px;
-            height: 50px;
-            background: var(--text);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 46px;
+            height: 46px;
+            display: grid;
+            place-items: center;
+            background: var(--ink);
             color: white;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            font-weight: 500;
-            letter-spacing: 0.05em;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
         }
 
         .affiliation-text {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
+            color: var(--muted);
+            font-size: 0.96rem;
+            line-height: 1.45;
         }
 
         .affiliation-text strong {
             display: block;
-            color: var(--text);
-            font-weight: 600;
+            color: var(--ink);
+            font-weight: 650;
         }
 
         .hero-image {
-            animation: fadeInUp 1s ease 0.2s forwards;
-            opacity: 0;
+            padding-top: 0.25rem;
         }
 
         .hero-image img {
-            display: block;
             width: 100%;
-            max-width: 380px;
             height: auto;
-            border-radius: 4px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
-            filter: grayscale(10%);
-            transition: all 0.5s ease;
+            display: block;
+            border: 1px solid var(--line-strong);
         }
 
-        .hero-image:hover img {
-            filter: grayscale(0%);
-            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Section Styling */
         section {
-            padding: 6rem 4rem;
-            max-width: 1400px;
-            margin: 0 auto;
+            padding-top: 4.7rem;
+            padding-bottom: 4.7rem;
+            border-top: 1px solid var(--line);
+        }
+
+        #publications {
+            background: var(--paper);
+            max-width: none;
+            padding-left: max(2rem, calc((100vw - 1180px) / 2 + 2rem));
+            padding-right: max(2rem, calc((100vw - 1180px) / 2 + 2rem));
+        }
+
+        #teaching {
+            background: var(--soft);
+            max-width: none;
+            padding-left: max(2rem, calc((100vw - 1180px) / 2 + 2rem));
+            padding-right: max(2rem, calc((100vw - 1180px) / 2 + 2rem));
         }
 
         .section-header {
-            display: flex;
+            display: grid;
+            grid-template-columns: 54px minmax(0, 1fr);
+            gap: 1.6rem;
             align-items: baseline;
-            gap: 2rem;
-            margin-bottom: 3rem;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 1rem;
+            margin-bottom: 2.4rem;
         }
 
         .section-number {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            color: var(--accent);
+            font-size: 0.82rem;
         }
 
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--text);
+        .section-title,
+        .contact-info h2 {
+            margin: 0;
+            font-size: clamp(2rem, 4.4vw, 4.25rem);
+            line-height: 1;
+            font-weight: 480;
+            letter-spacing: -0.06em;
         }
 
-        /* Research Section */
-        #research {
-            background: var(--bg-alt);
-            max-width: 100%;
-            padding: 6rem 4rem;
-        }
-
-        #research .content-wrapper {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .research-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .research-card {
-            background: white;
-            padding: 2.5rem;
-            border: 1px solid var(--border);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .research-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 3px;
-            height: 0;
-            background: var(--accent);
-            transition: height 0.4s ease;
-        }
-
-        .research-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
-        }
-
-        .research-card:hover::before {
-            height: 100%;
-        }
-
-        .research-icon {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .research-card h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 1rem;
-        }
-
-        .research-card p {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
-
-        /* Publications Section */
         .publications-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
+            border-top: 1px solid var(--line-strong);
         }
 
         .publication-item {
             display: grid;
-            grid-template-columns: 80px 1fr;
+            grid-template-columns: 72px minmax(0, 1fr);
             gap: 2rem;
-            padding: 2rem 0;
-            border-bottom: 1px solid var(--border);
-            transition: background 0.3s ease;
-        }
-
-        .publication-item:hover {
-            background: linear-gradient(90deg, var(--bg-alt) 0%, transparent 100%);
-            padding-left: 1rem;
-            margin-left: -1rem;
+            padding: 1.55rem 0;
+            border-bottom: 1px solid var(--line);
         }
 
         .pub-year {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
+            font-family: 'IBM Plex Mono', monospace;
             color: var(--accent);
+            font-size: 0.9rem;
+            letter-spacing: 0.04em;
         }
 
         .pub-content h4 {
-            font-size: 1.25rem;
+            margin: 0;
+            max-width: 900px;
+            font-size: clamp(1.22rem, 2.2vw, 1.85rem);
+            line-height: 1.13;
             font-weight: 600;
-            color: var(--text);
-            margin-bottom: 0.5rem;
-            line-height: 1.4;
+            letter-spacing: -0.035em;
         }
 
-        .pub-authors {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.3rem;
+        .pub-authors,
+        .pub-venue,
+        .course-featured p,
+        .course-card p,
+        .cv-item p,
+        .contact-text,
+        .map-address {
+            color: var(--muted);
+            font-size: 0.96rem;
+        }
+
+        .pub-authors,
+        .pub-venue {
+            margin: 0.42rem 0 0;
         }
 
         .pub-authors strong {
-            color: var(--text);
+            color: var(--ink);
+            font-weight: 650;
         }
 
         .pub-venue {
-            font-size: 0.9rem;
             font-style: italic;
-            color: var(--text-secondary);
         }
 
-        .pub-tag {
-            display: inline-block;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            padding: 0.3rem 0.8rem;
-            background: var(--text);
-            color: white;
-            margin-top: 0.8rem;
-        }
-
-        /* Teaching Section */
-        #teaching {
-            background: white;
-            max-width: 100%;
-            padding: 6rem 4rem;
-            color: var(--text);
-        }
-
-        #teaching .content-wrapper {
-            max-width: 1400px;
+        .content-wrapper {
+            max-width: 1180px;
             margin: 0 auto;
         }
 
         .teaching-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
+            border-top: 1px solid var(--line-strong);
         }
 
+        .course-featured,
         .course-card {
-            padding: 2.5rem;
-            border: 1px solid var(--border);
-            background: white;
-            transition: all 0.4s ease;
+            display: grid;
+            grid-template-columns: 220px minmax(0, 1fr);
+            gap: 2rem;
+            padding: 1.65rem 0;
+            border-bottom: 1px solid var(--line);
+            background: transparent;
         }
 
-        .course-card:hover {
-            border-color: var(--accent);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        .course-level {
+            margin: 0;
+            font-size: 0.76rem;
+            line-height: 1.5;
         }
 
-        .course-featured {
-            grid-column: 1 / -1;
-            padding: 2.5rem;
-            border: 1px solid var(--border);
-            background: white;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .course-featured::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 3px;
-            height: 100%;
-            background: var(--accent);
-        }
-
-        .course-featured:hover {
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-        }
-
-        .course-featured h3 {
-            font-size: 1.6rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text);
+        .course-featured h3,
+        .course-card h3,
+        .cv-item h4 {
+            margin: 0;
+            font-size: clamp(1.28rem, 2.2vw, 1.95rem);
+            line-height: 1.12;
+            font-weight: 570;
+            letter-spacing: -0.04em;
         }
 
         .course-meta {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            color: var(--accent);
-            letter-spacing: 0.05em;
-            margin-bottom: 1rem;
+            margin-top: 0.85rem;
+            font-size: 0.82rem;
         }
 
-        .course-featured p {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 1.2rem;
-            max-width: 700px;
+        .course-featured p,
+        .course-card p {
+            max-width: 760px;
+            margin: 0.9rem 0 0;
         }
 
         .course-slides {
             display: flex;
-            align-items: center;
-            gap: 0.6rem;
             flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+            margin-top: 1rem;
         }
 
         .slides-label {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-right: 0.2rem;
+            color: var(--quiet);
+            font-size: 0.76rem;
         }
 
         .course-slides a {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
+            color: var(--muted);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.76rem;
             text-decoration: none;
-            padding: 0.25rem 0.6rem;
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
+            border-bottom: 1px solid var(--line-strong);
         }
 
-        .course-slides a:hover {
-            color: var(--accent);
-            border-color: var(--accent);
+        #cv {
+            background: var(--paper);
+            max-width: none;
+            padding-left: max(2rem, calc((100vw - 1180px) / 2 + 2rem));
+            padding-right: max(2rem, calc((100vw - 1180px) / 2 + 2rem));
         }
 
-        .course-level {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--accent);
-            margin-bottom: 1rem;
-        }
-
-        .course-card h3 {
-            font-size: 1.6rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--text);
-        }
-
-        .course-card p {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
-
-        /* CV Section */
         .cv-timeline {
-            position: relative;
-            padding-left: 3rem;
-        }
-
-        .cv-timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background: var(--border);
+            display: grid;
+            border-top: 1px solid var(--line-strong);
         }
 
         .cv-item {
-            position: relative;
-            padding-bottom: 3rem;
-        }
-
-        .cv-item::before {
-            content: '';
-            position: absolute;
-            left: -3rem;
-            top: 0.5rem;
-            width: 9px;
-            height: 9px;
-            background: var(--bg);
-            border: 2px solid var(--accent);
-            border-radius: 50%;
+            display: grid;
+            grid-template-columns: 150px minmax(0, 1fr);
+            gap: 2rem;
+            padding: 1.35rem 0;
+            border-bottom: 1px solid var(--line);
         }
 
         .cv-date {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-        }
-
-        .cv-item h4 {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 0.3rem;
-        }
-
-        .cv-item p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        /* Contact Section */
-        #contact {
-            background: var(--bg-alt);
-            max-width: 100%;
-            padding: 6rem 4rem;
-        }
-
-        #contact .content-wrapper {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-        }
-
-        .contact-info h2 {
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 2rem;
-            line-height: 1.2;
-        }
-
-        .contact-details {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .contact-item {
-            display: flex;
-            gap: 1rem;
-            align-items: flex-start;
-        }
-
-        .contact-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--text);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            flex-shrink: 0;
-        }
-
-        .contact-text {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-        }
-
-        .contact-text strong {
-            display: block;
-            color: var(--text);
-            margin-bottom: 0.2rem;
-        }
-
-        .contact-text a {
-            color: var(--accent);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .contact-text a:hover {
-            color: var(--accent-light);
-        }
-
-        .contact-map {
-            background: var(--text);
-            padding: 3rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .map-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--accent-light);
-            margin-bottom: 1rem;
-        }
-
-        .map-address {
-            font-size: 1.8rem;
-            font-weight: 300;
-            color: white;
+            font-size: 0.78rem;
             line-height: 1.5;
         }
 
-        /* Footer */
-        footer {
-            padding: 2rem 4rem;
-            text-align: center;
-            border-top: 1px solid var(--border);
-            font-size: 0.85rem;
-            color: var(--text-secondary);
+        .cv-item p {
+            margin: 0.35rem 0 0;
         }
 
-        footer a {
-            color: var(--accent);
+        #contact {
+            background: #17222c;
+            color: white;
+            max-width: none;
+            padding-left: max(2rem, calc((100vw - 1180px) / 2 + 2rem));
+            padding-right: max(2rem, calc((100vw - 1180px) / 2 + 2rem));
+        }
+
+        #contact .content-wrapper {
+            display: grid;
+            grid-template-columns: minmax(0, 0.8fr) minmax(360px, 0.75fr);
+            gap: 5rem;
+        }
+
+        .contact-info h2 {
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .contact-details {
+            display: grid;
+            gap: 1.3rem;
+        }
+
+        .contact-item {
+            display: grid;
+            grid-template-columns: 88px minmax(0, 1fr);
+            gap: 1.2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(216, 224, 230, 0.18);
+        }
+
+        .contact-icon {
+            color: #a7b6bf;
+            font-size: 0.94rem;
+        }
+
+        .contact-text {
+            color: #c2cdd4;
+        }
+
+        .contact-text strong,
+        .map-label {
+            display: block;
+            color: #a7b6bf;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.78rem;
+            letter-spacing: 0.08em;
+            font-weight: 400;
+            margin-bottom: 0.35rem;
+        }
+
+        .contact-text a {
+            color: white;
             text-decoration: none;
         }
 
-        /* Scroll animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+        .contact-map {
+            padding-top: 1rem;
+            border-top: 1px solid rgba(216, 224, 230, 0.18);
         }
 
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .map-address {
+            color: white;
+            font-size: 1rem;
         }
 
-        /* Responsive - Tablet */
-        @media (max-width: 1024px) {
+        footer {
+            max-width: none;
+            padding-top: 0;
+            padding-bottom: 2.5rem;
+            color: #a7b6bf;
+            background: #17222c;
+            padding-left: max(2rem, calc((100vw - 1180px) / 2 + 2rem));
+            padding-right: max(2rem, calc((100vw - 1180px) / 2 + 2rem));
+        }
+
+        footer p {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding-top: 1.6rem;
+            border-top: 1px solid rgba(216, 224, 230, 0.18);
+        }
+
+        @media (max-width: 980px) {
             .hero {
-                grid-template-columns: 1fr;
-                text-align: center;
-                padding: 8rem 2rem 4rem;
+                grid-template-columns: minmax(0, 1fr) 280px;
                 gap: 3rem;
             }
 
-            .hero-content {
-                order: 2;
+            .course-featured,
+            .course-card {
+                grid-template-columns: 170px minmax(0, 1fr);
+            }
+        }
+
+        @media (max-width: 760px) {
+            nav {
+                align-items: flex-start;
+                gap: 1rem;
+                flex-direction: column;
             }
 
-            .hero-image {
-                order: 1;
-                display: flex;
-                justify-content: center;
+            .nav-links {
+                gap: 1rem;
             }
 
-            .hero-image img {
-                max-width: 280px;
-            }
-
-            .hero-subtitle {
-                margin: 0 auto 2rem;
-            }
-
-            .hero-affiliation {
-                justify-content: center;
-            }
-
-            .teaching-grid {
-                grid-template-columns: 1fr;
-            }
-
+            .hero,
             #contact .content-wrapper {
                 grid-template-columns: 1fr;
             }
 
-            nav {
-                padding: 1rem 2rem;
-            }
-
-            .nav-links {
-                gap: 1.5rem;
-            }
-
-            .nav-links a {
-                font-size: 0.75rem;
-            }
-
-            section {
-                padding: 4rem 2rem;
-            }
-
-            #research, #teaching, #contact {
-                padding: 4rem 2rem;
-            }
-
-            .hero h1 {
-                font-size: 3rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .contact-info h2 {
-                font-size: 2.2rem;
-            }
-
-            .map-address {
-                font-size: 1.4rem;
-            }
-        }
-
-        /* Responsive - Mobile */
-        @media (max-width: 600px) {
-            nav {
-                padding: 1rem 1.5rem;
-            }
-
-            .nav-name {
-                font-size: 1.2rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
             .hero {
-                padding: 7rem 1.5rem 3rem;
-                min-height: auto;
+                padding-top: 3.2rem;
+                padding-bottom: 3.5rem;
             }
 
-            .hero h1 {
-                font-size: 2.5rem;
+            .hero-image {
+                max-width: 300px;
             }
 
-            .hero-label {
-                font-size: 0.65rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1rem;
-            }
-
-            .hero-image img {
-                max-width: 220px;
-            }
-
-            .hero-affiliation {
-                flex-direction: column;
-                gap: 0.8rem;
-            }
-
-            .affiliation-text {
-                text-align: center;
-            }
-
-            section {
-                padding: 3rem 1.5rem;
-            }
-
-            #teaching, #contact {
-                padding: 3rem 1.5rem;
+            .section-header,
+            .publication-item,
+            .course-featured,
+            .course-card,
+            .cv-item,
+            .contact-item {
+                grid-template-columns: 1fr;
+                gap: 0.65rem;
             }
 
             .section-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
+                margin-bottom: 1.8rem;
             }
 
-            .section-title {
-                font-size: 1.8rem;
-            }
-
-            .publication-item {
-                grid-template-columns: 1fr;
-                gap: 0.5rem;
-            }
-
-            .pub-content h4 {
-                font-size: 1.1rem;
-            }
-
-            .course-card {
-                padding: 1.5rem;
-            }
-
-            .course-card h3,
-            .course-featured h3 {
-                font-size: 1.3rem;
-            }
-
-            .course-featured {
-                padding: 1.5rem;
-            }
-
-            .cv-timeline {
-                padding-left: 2rem;
-            }
-
-            .cv-item::before {
-                left: -2rem;
-            }
-
-            .cv-item h4 {
-                font-size: 1.2rem;
-            }
-
-            .contact-info h2 {
-                font-size: 1.8rem;
-            }
-
-            .contact-map {
-                padding: 2rem;
-            }
-
-            .map-address {
-                font-size: 1.2rem;
-            }
-
-            footer {
-                padding: 1.5rem;
-                font-size: 0.8rem;
-            }
-        }
-
-        /* Responsive - Small Mobile */
-        @media (max-width: 380px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero-image img {
-                max-width: 180px;
-            }
-
-            .section-title {
-                font-size: 1.5rem;
-            }
-
-            .pub-content h4 {
-                font-size: 1rem;
+            section {
+                padding-top: 3.4rem;
+                padding-bottom: 3.4rem;
             }
         }
     </style>
@@ -891,7 +517,7 @@
     <section class="hero">
         <div class="hero-content">
             <div class="hero-label">Chinese Politics & Computational Social Science</div>
-            <h1>Siyao <span>Zheng</span></h1>
+            <h1>Siyao Zheng</h1>
             <p class="hero-subtitle">
                 My research focuses on <strong>AI for Social Science</strong> and <strong>Digital Politics</strong>.
             </p>
@@ -915,7 +541,7 @@
             <h2 class="section-title">Selected Publications</h2>
         </div>
         <div class="publications-list">
-            <div class="publication-item fade-in">
+            <div class="publication-item">
                 <div class="pub-year">2023</div>
                 <div class="pub-content">
                     <h4>The Informational Theory of State Governance: Perspectives from Information Politics</h4>
@@ -923,7 +549,7 @@
                     <p class="pub-venue">CASS Journal of Political Science (政治学研究)</p>
                 </div>
             </div>
-            <div class="publication-item fade-in">
+            <div class="publication-item">
                 <div class="pub-year">2022</div>
                 <div class="pub-content">
                     <h4>Government Information Disclosure and Governance Effectiveness in Public Crisis: A Survey Experiment</h4>
@@ -931,7 +557,7 @@
                     <p class="pub-venue">Public Administration and Policy Review (公共管理与政策评论)</p>
                 </div>
             </div>
-            <div class="publication-item fade-in">
+            <div class="publication-item">
                 <div class="pub-year">2021</div>
                 <div class="pub-content">
                     <h4>Information Politics of Environmental Governance: How Central Environmental Inspection Drives Public Participation</h4>
@@ -939,7 +565,7 @@
                     <p class="pub-venue">Comparative Economic & Social Systems (经济社会体制比较)</p>
                 </div>
             </div>
-            <div class="publication-item fade-in">
+            <div class="publication-item">
                 <div class="pub-year">2020</div>
                 <div class="pub-content">
                     <h4>The Paradox of Responsiveness and Social Protest in China</h4>
@@ -947,7 +573,7 @@
                     <p class="pub-venue">Journal of Contemporary China</p>
                 </div>
             </div>
-            <div class="publication-item fade-in">
+            <div class="publication-item">
                 <div class="pub-year">2017</div>
                 <div class="pub-content">
                     <h4>Information, Communication, and Influence: Government New Media in Internet Governance</h4>
@@ -965,31 +591,37 @@
                 <h2 class="section-title">Teaching</h2>
             </div>
             <div class="teaching-grid">
-                <div class="course-featured fade-in">
+                <div class="course-featured">
                     <div class="course-level">Micro-Major · Spring 2026</div>
-                    <h3>Machine Learning & Natural Language Processing</h3>
-                    <div class="course-meta">45 students · 16 weeks · Per-student AI Agent</div>
-                    <p>Each of the 45 students has their own OpenClaw AI Agent instance deployed on SJTU's Zhiyuan-1 supercomputer (1024 Ascend 910B GPUs), used throughout the semester for research, coding, and analysis.</p>
-                    <div class="course-slides">
-                        <span class="slides-label">Slides:</span>
-                        <a href="/slides/lecture01/">L01</a>
-                        <a href="/slides/lecture02/">L02</a>
-                        <a href="/slides/lecture03/">L03</a>
-                        <a href="/slides/lecture04/">L04</a>
-                        <a href="/slides/lecture05/">L05</a>
-                        <a href="/slides/lecture06/">L06</a>
-                        <a href="/slides/lecture08/">L08</a>
+                    <div>
+                        <h3>Machine Learning & Natural Language Processing</h3>
+                        <div class="course-meta">45 students · 16 weeks · Per-student AI Agent</div>
+                        <p>Each of the 45 students has their own OpenClaw AI Agent instance deployed on SJTU's Zhiyuan-1 supercomputer (1024 Ascend 910B GPUs), used throughout the semester for research, coding, and analysis.</p>
+                        <div class="course-slides">
+                            <span class="slides-label">Slides:</span>
+                            <a href="/slides/lecture01/">L01</a>
+                            <a href="/slides/lecture02/">L02</a>
+                            <a href="/slides/lecture03/">L03</a>
+                            <a href="/slides/lecture04/">L04</a>
+                            <a href="/slides/lecture05/">L05</a>
+                            <a href="/slides/lecture06/">L06</a>
+                            <a href="/slides/lecture08/">L08</a>
+                        </div>
                     </div>
                 </div>
-                <div class="course-card fade-in">
+                <div class="course-card">
                     <div class="course-level">Undergraduate</div>
-                    <h3>Multivariate Statistical Analysis</h3>
-                    <p>Foundation course covering regression, factor analysis, and causal inference methods for social science research.</p>
+                    <div>
+                        <h3>Multivariate Statistical Analysis</h3>
+                        <p>Foundation course covering regression, factor analysis, and causal inference methods for social science research.</p>
+                    </div>
                 </div>
-                <div class="course-card fade-in">
+                <div class="course-card">
                     <div class="course-level">Undergraduate</div>
-                    <h3>Social Computing in the AI Era</h3>
-                    <p>Exploring how artificial intelligence and computational methods transform social science research and practice.</p>
+                    <div>
+                        <h3>Social Computing in the AI Era</h3>
+                        <p>Exploring how artificial intelligence and computational methods transform social science research and practice.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1001,30 +633,40 @@
             <h2 class="section-title">Education & Career</h2>
         </div>
         <div class="cv-timeline">
-            <div class="cv-item fade-in">
+            <div class="cv-item">
                 <div class="cv-date">2024 – Present</div>
-                <h4>Assistant Professor</h4>
-                <p>Shanghai Jiao Tong University, School of International and Public Affairs</p>
+                <div>
+                    <h4>Assistant Professor</h4>
+                    <p>Shanghai Jiao Tong University, School of International and Public Affairs</p>
+                </div>
             </div>
-            <div class="cv-item fade-in">
+            <div class="cv-item">
                 <div class="cv-date">2020 – 2024</div>
-                <h4>Ph.D. in Political Science</h4>
-                <p>Tsinghua University, Department of Political Science</p>
+                <div>
+                    <h4>Ph.D. in Political Science</h4>
+                    <p>Tsinghua University, Department of Political Science</p>
+                </div>
             </div>
-            <div class="cv-item fade-in">
+            <div class="cv-item">
                 <div class="cv-date">2022 – 2023</div>
-                <h4>Visiting Doctoral Student</h4>
-                <p>Harvard University, Department of Government</p>
+                <div>
+                    <h4>Visiting Doctoral Student</h4>
+                    <p>Harvard University, Department of Government</p>
+                </div>
             </div>
-            <div class="cv-item fade-in">
+            <div class="cv-item">
                 <div class="cv-date">2017 – 2020</div>
-                <h4>Master of Public Administration</h4>
-                <p>Tsinghua University, School of Public Policy and Management</p>
+                <div>
+                    <h4>Master of Public Administration</h4>
+                    <p>Tsinghua University, School of Public Policy and Management</p>
+                </div>
             </div>
-            <div class="cv-item fade-in">
+            <div class="cv-item">
                 <div class="cv-date">2013 – 2017</div>
-                <h4>Bachelor of Laws</h4>
-                <p>Peking University, School of Government</p>
+                <div>
+                    <h4>Bachelor of Laws</h4>
+                    <p>Peking University, School of Government</p>
+                </div>
             </div>
         </div>
     </section>
@@ -1071,37 +713,5 @@
     <footer>
         <p>© 2026 Siyao Zheng</p>
     </footer>
-
-    <script>
-        // Scroll-triggered animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        });
-
-        document.querySelectorAll('.fade-in').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Smooth scroll for navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-    </script>
 </body>
 </html>
