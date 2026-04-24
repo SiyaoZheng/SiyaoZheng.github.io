@@ -236,6 +236,36 @@
             font-style: italic;
         }
 
+        .pub-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            margin-top: 0.55rem;
+        }
+
+        .pub-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.22rem 0.55rem;
+            border-radius: 999px;
+            border: 1px solid var(--line);
+            background: #fff;
+            color: var(--link);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+        }
+
+        .pub-link:hover {
+            color: var(--link-hover);
+            border-color: var(--link-hover);
+            text-decoration: none;
+        }
+
         /* Teaching */
         .course-list {
             list-style: none;
@@ -434,26 +464,41 @@
                     <p class="pub-title">国家治理的信息理论：来自信息政治学的视角</p>
                     <p class="pub-authors">孟天广 & <strong>郑思尧</strong></p>
                     <p class="pub-venue">《政治学研究》, 2023</p>
+                    <div class="pub-links">
+                        <a class="pub-link" href="https://www.dps.tsinghua.edu.cn/info/1114/3035.htm" target="_blank" rel="noopener noreferrer">页面</a>
+                    </div>
                 </li>
                 <li class="pub-item">
                     <p class="pub-title">公共危机中的政府信息公开与治理效能：一项调查实验</p>
                     <p class="pub-authors"><strong>郑思尧</strong> & 孟天广</p>
                     <p class="pub-venue">《公共管理与政策评论》, 2022</p>
+                    <div class="pub-links">
+                        <a class="pub-link" href="http://ggglyzc.ruc.edu.cn/CN/Y2022/V11/I1/88" target="_blank" rel="noopener noreferrer">页面</a>
+                    </div>
                 </li>
                 <li class="pub-item">
                     <p class="pub-title">环境治理中的信息政治：中央环保督察如何推动公众参与</p>
                     <p class="pub-authors"><strong>郑思尧</strong> & 孟天广</p>
                     <p class="pub-venue">《经济社会体制比较》, 2021</p>
+                    <div class="pub-links">
+                        <a class="pub-link" href="https://tucsu.tsinghua.edu.cn/info/1015/1145.htm" target="_blank" rel="noopener noreferrer">页面</a>
+                    </div>
                 </li>
                 <li class="pub-item">
                     <p class="pub-title">The Paradox of Responsiveness and Social Protest in China</p>
                     <p class="pub-authors"><strong>Siyao Zheng</strong> & Tiangang Meng</p>
                     <p class="pub-venue">Journal of Contemporary China, 2020</p>
+                    <div class="pub-links">
+                        <a class="pub-link" href="https://www.tandfonline.com/doi/abs/10.1080/10670564.2020.1790899" target="_blank" rel="noopener noreferrer">Publisher</a>
+                    </div>
                 </li>
                 <li class="pub-item">
                     <p class="pub-title">信息、传播与影响：政府新媒体与互联网治理</p>
                     <p class="pub-authors">孟天广 & <strong>郑思尧</strong></p>
                     <p class="pub-venue">《公共行政评论》, 2017</p>
+                    <div class="pub-links">
+                        <a class="pub-link" href="https://ir.pku.edu.cn/browse?etal=-1&order=ASC&rpp=20&sort_by=1&starts_with=R&type=author&value=%E5%AD%9F%E5%A4%A9%E5%B9%BF" target="_blank" rel="noopener noreferrer">仓库</a>
+                    </div>
                 </li>
             </ul>
         </section>
