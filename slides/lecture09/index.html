@@ -1,0 +1,2051 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第九课 大语言模型 — 机器学习与自然语言处理</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    :root {
+      --r-background-color: #fff;
+      --r-main-font: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+      --r-main-font-size: 32px;
+      --r-main-color: #1a1a2e;
+      --r-heading-font: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+      --r-heading-color: #0f0f1a;
+      --r-heading-font-weight: 700;
+      --r-link-color: #2563eb;
+      --accent: #2563eb;
+      --accent-light: #dbeafe;
+      --orange: #f97316;
+      --orange-light: #fff7ed;
+      --green: #16a34a;
+      --green-light: #f0fdf4;
+      --red: #dc2626;
+      --purple: #9333ea;
+      --cyan: #00bcd4;
+      --cyan-light: #e0f7fa;
+      --gray-50: #f8f9fa;
+      --gray-100: #f1f3f5;
+      --gray-200: #e9ecef;
+      --gray-400: #adb5bd;
+      --gray-500: #868e96;
+      --gray-600: #6c757d;
+      --gray-700: #495057;
+      --gray-800: #343a40;
+    }
+
+    .reveal { font-weight: 400; }
+    .reveal h1 { font-size: 2.2em; letter-spacing: -0.02em; }
+    .reveal h2 { font-size: 1.6em; letter-spacing: -0.01em; color: var(--accent); text-transform: none; }
+    .reveal h3 { font-size: 1.2em; color: var(--gray-800); }
+    .reveal p, .reveal li { line-height: 1.6; }
+    .reveal ul { list-style: none; padding-left: 0; }
+    .reveal ul li { padding-left: 1.5em; position: relative; margin-bottom: 0.4em; }
+    .reveal ul li::before {
+      content: '';
+      position: absolute; left: 0; top: 0.55em;
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    .reveal code {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--gray-100);
+      padding: 0.1em 0.4em;
+      border-radius: 4px;
+      font-size: 0.85em;
+    }
+    .reveal pre code {
+      font-family: 'JetBrains Mono', monospace;
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 1em 1.4em;
+      border-radius: 8px;
+      font-size: 0.72em;
+      line-height: 1.7;
+      display: block;
+      text-align: left;
+    }
+    .reveal pre { box-shadow: none; width: 100%; margin: 0.6em 0; }
+    .kw { color: #cba6f7; }
+    .fn { color: #89b4fa; }
+    .st { color: #a6e3a1; }
+    .cm { color: #6c7086; font-style: italic; }
+    .num { color: #fab387; }
+
+    .section-title { background: var(--r-background-color) !important; }
+    .section-title h2 {
+      font-size: 2.4em;
+      color: var(--r-main-color);
+      border-left: 6px solid var(--accent);
+      padding-left: 0.6em;
+      text-align: left;
+    }
+    .section-title .section-num {
+      font-size: 0.5em;
+      color: var(--gray-400);
+      font-weight: 400;
+      display: block;
+      margin-bottom: 0.2em;
+    }
+
+    .cover h1 { font-size: 2.6em; margin-bottom: 0.1em; }
+    .cover .subtitle { font-size: 1.1em; color: var(--accent); font-weight: 500; margin-bottom: 2em; }
+    .cover .meta { font-size: 0.7em; color: var(--gray-600); line-height: 1.8; }
+
+    .highlight-box {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-left: 4px solid var(--accent);
+      padding: 1em 1.5em;
+      border-radius: 4px;
+      text-align: left;
+      margin: 1em 0;
+    }
+
+    .quote-box {
+      background: var(--accent-light);
+      border: 1px solid #bfdbfe;
+      border-left: 4px solid var(--accent);
+      padding: 1.2em 1.8em;
+      border-radius: 4px;
+      text-align: left;
+      margin: 1em 0;
+    }
+    .quote-box .quote-text {
+      font-size: 1.1em;
+      font-weight: 600;
+      color: var(--r-main-color);
+      line-height: 1.5;
+      font-style: italic;
+    }
+    .quote-box .quote-source {
+      font-size: 0.65em;
+      color: var(--gray-600);
+      margin-top: 0.6em;
+    }
+
+    .cols { display: flex; gap: 2em; align-items: flex-start; }
+    .cols .col { flex: 1; text-align: left; }
+    .cols .col-40 { flex: 0 0 40%; text-align: left; }
+    .cols .col-60 { flex: 0 0 58%; text-align: left; }
+
+    .flow { display: flex; align-items: center; justify-content: center; gap: 0; margin: 1em 0; }
+    .flow-node {
+      background: var(--gray-50);
+      border: 2px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.8em 1.2em;
+      font-size: 0.75em;
+      font-weight: 500;
+      text-align: center;
+      min-width: 110px;
+    }
+    .flow-node.accent { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .flow-node.orange { background: var(--orange); color: #fff; border-color: var(--orange); }
+    .flow-node.green { background: var(--green); color: #fff; border-color: var(--green); }
+    .flow-node.cyan { background: var(--cyan); color: #fff; border-color: var(--cyan); }
+    .flow-node.outline { background: #fff; border-color: var(--accent); color: var(--accent); }
+    .flow-arrow {
+      width: 40px; height: 2px;
+      background: var(--gray-400);
+      position: relative; flex-shrink: 0;
+    }
+    .flow-arrow::after {
+      content: '';
+      position: absolute;
+      right: -1px; top: -5px;
+      border: 6px solid transparent;
+      border-left: 8px solid var(--gray-400);
+    }
+    .flow-arrow.accent-arrow { background: var(--accent); }
+    .flow-arrow.accent-arrow::after { border-left-color: var(--accent); }
+    .flow-arrow.orange-arrow { background: var(--orange); }
+    .flow-arrow.orange-arrow::after { border-left-color: var(--orange); }
+
+    .card-grid { display: grid; gap: 1em; margin: 1em 0; }
+    .card-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .card-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+    .card-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 1.2em;
+      text-align: center;
+    }
+    .card.accent-card { background: var(--accent-light); border-color: #93c5fd; }
+    .card.orange-card { background: var(--orange-light); border-color: #fed7aa; }
+    .card.green-card { background: var(--green-light); border-color: #bbf7d0; }
+    .card .card-icon { font-size: 2em; margin-bottom: 0.3em; line-height: 1; }
+    .card .card-label { font-size: 0.7em; font-weight: 600; color: var(--r-main-color); margin-bottom: 0.2em; }
+    .card .card-desc { font-size: 0.65em; color: var(--gray-600); line-height: 1.4; }
+
+    .vs-layout { display: flex; align-items: stretch; gap: 0; margin: 0.8em 0; }
+    .vs-panel { flex: 1; padding: 1.2em 1.5em; border-radius: 8px; text-align: left; }
+    .vs-panel.left { background: var(--gray-50); border: 1px solid var(--gray-200); margin-right: -1px; border-radius: 8px 0 0 8px; }
+    .vs-panel.right { background: var(--accent-light); border: 1px solid #bfdbfe; border-radius: 0 8px 8px 0; }
+    .vs-divider { width: 48px; display: flex; align-items: center; justify-content: center; font-size: 1.4em; font-weight: 700; color: var(--gray-400); flex-shrink: 0; }
+    .vs-panel h3 { font-size: 0.85em; margin-bottom: 0.6em; }
+    .vs-panel .vs-items { font-size: 0.75em; color: var(--gray-800); line-height: 2; }
+
+    .takeaway { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 2em; text-align: center; }
+    .takeaway .divider { width: 3em; height: 3px; background: var(--accent); border-radius: 2px; margin-bottom: 1.8em; }
+    .takeaway .main-text { font-size: 1.5em; font-weight: 700; color: var(--accent); line-height: 1.45; margin: 0 0 1.2em 0; max-width: 15em; }
+    .takeaway .sub-text { font-size: 0.82em; color: var(--gray-600); line-height: 1.8; margin: 0 0 2em 0; max-width: 28em; }
+    .takeaway .hint { font-size: 0.6em; color: var(--gray-400); letter-spacing: 0.04em; }
+
+    .warning-box { background: #fef2f2; border: 1px solid #fca5a5; border-left: 4px solid #dc2626; padding: 0.8em 1.2em; border-radius: 4px; text-align: left; margin: 0.5em 0; }
+    .success-box { background: var(--green-light); border: 1px solid #bbf7d0; border-left: 4px solid var(--green); padding: 0.8em 1.2em; border-radius: 4px; text-align: left; margin: 0.5em 0; }
+
+    .tag { display: inline-block; background: var(--accent); color: #fff; font-size: 0.55em; font-weight: 600; padding: 0.2em 0.7em; border-radius: 20px; vertical-align: middle; margin-left: 0.4em; letter-spacing: 0.03em; }
+    .tag.gray { background: var(--gray-400); }
+    .tag.green { background: #16a34a; }
+    .tag.orange { background: #f97316; }
+    .tag.purple { background: #9333ea; }
+    .tag.cyan { background: var(--cyan); }
+
+    .reveal .slide-number { font-family: 'Inter', sans-serif; font-size: 14px; color: var(--gray-400); }
+    .reveal .progress span { background: var(--accent); }
+
+    .prompt-box {
+      background: #1e1e2e;
+      border: 1px solid #45475a;
+      border-left: 4px solid #f97316;
+      padding: 0.8em 1.2em;
+      border-radius: 8px;
+      text-align: left;
+      margin: 0.8em 0;
+      color: #cdd6f4;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68em;
+      line-height: 1.8;
+    }
+    .prompt-box .prompt-label {
+      color: #f97316;
+      font-weight: 700;
+      font-size: 0.9em;
+      margin-bottom: 0.4em;
+    }
+    .prompt-box .prompt-out {
+      color: #a6e3a1;
+      border-top: 1px dashed #585b70;
+      padding-top: 0.5em;
+      margin-top: 0.5em;
+    }
+    .prompt-box .prompt-out .out-label {
+      color: #a6e3a1;
+      font-weight: 700;
+    }
+
+    .openclaw-box {
+      background: linear-gradient(135deg, #111827 0%, #1e1e2e 100%);
+      border: 1px solid #374151;
+      border-left: 4px solid #00d2ff;
+      padding: 1em 1.5em;
+      border-radius: 8px;
+      text-align: left;
+      margin: 0.8em 0;
+      color: #e5e7eb;
+    }
+    .openclaw-box .oc-label {
+      color: #00d2ff;
+      font-weight: 700;
+      font-size: 0.75em;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 0.5em;
+    }
+    .openclaw-box .oc-content {
+      font-size: 0.72em;
+      line-height: 1.8;
+      color: #d1d5db;
+    }
+
+    .loop-step {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+      margin: 0.5em 0;
+      text-align: left;
+    }
+    .loop-step .step-num {
+      flex-shrink: 0;
+      width: 2.2em;
+      height: 2.2em;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85em;
+    }
+    .loop-step .step-body { flex: 1; }
+    .loop-step .step-title { font-weight: 600; font-size: 0.75em; }
+    .loop-step .step-desc { font-size: 0.62em; color: var(--gray-600); line-height: 1.5; }
+
+    /* Agent loop cycle */
+    .agent-cycle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+      margin: 1.2em 0;
+      flex-wrap: nowrap;
+    }
+    .cycle-node {
+      background: var(--gray-50);
+      border: 2px solid var(--gray-200);
+      border-radius: 50%;
+      width: 120px; height: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7em;
+      font-weight: 600;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .cycle-node.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .cycle-node .cn-emoji { font-size: 1.6em; margin-bottom: 0.2em; }
+    .cycle-arrow {
+      width: 36px;
+      text-align: center;
+      font-size: 1.2em;
+      color: var(--gray-400);
+      flex-shrink: 0;
+    }
+
+    /* Step list for setup guide */
+    .step-list { list-style: none; padding: 0; margin: 0; }
+    .step-list li {
+      display: flex;
+      gap: 0.8em;
+      margin-bottom: 0.6em;
+      font-size: 0.72em;
+      align-items: flex-start;
+      padding-left: 0;
+    }
+    .step-list li::before { display: none; }
+    .step-badge {
+      flex-shrink: 0;
+      width: 1.8em; height: 1.8em;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.9em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.1em;
+    }
+    .step-content { flex: 1; line-height: 1.6; color: var(--gray-800); }
+    .step-content code { font-size: 0.9em; }
+    .step-note { font-size: 0.85em; color: var(--gray-500); }
+
+    /* Model table */
+    .model-table { width: 100%; border-collapse: collapse; font-size: 0.68em; margin: 0.8em 0; }
+    .model-table th { background: var(--gray-100); color: var(--gray-700); font-weight: 600; padding: 0.5em 0.8em; text-align: left; border: 1px solid var(--gray-200); }
+    .model-table td { padding: 0.45em 0.8em; border: 1px solid var(--gray-200); color: var(--gray-800); line-height: 1.5; }
+    .model-table tr:nth-child(even) td { background: var(--gray-50); }
+    .model-table .badge { display: inline-block; font-size: 0.8em; font-weight: 600; padding: 0.1em 0.5em; border-radius: 4px; }
+    .model-table .badge.default { background: var(--accent-light); color: var(--accent); }
+    .model-table .badge.reasoning { background: #fae8ff; color: #9333ea; }
+    .model-table .badge.vision { background: var(--green-light); color: var(--green); }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- ============================================================ -->
+<!-- CURRENT VERSION: OpenClaw Skills                              -->
+<!-- ============================================================ -->
+
+<section class="cover">
+  <h1>大语言模型</h1>
+  <p class="subtitle">以 OpenClaw Skills 机制为例：把一次性提示变成可复用能力</p>
+  <p class="meta">
+    第九课<br>
+    郑思尧<br>
+    上海交通大学 国际与公共事务学院
+  </p>
+</section>
+
+<section>
+  <h2>今天的路线图</h2>
+  <div class="highlight-box">
+    <p style="font-size:0.8em;margin:0;">
+      大纲标题是“大语言模型”。所以开头先讲 LLM 的技术底座：
+      <strong>token、Transformer、上下文、训练、推理与幻觉风险</strong>。
+      后半段再进入 OpenClaw Skills：如何把 LLM 能力写成可复用、可审计的研究流程。
+    </p>
+  </div>
+  <div class="card-grid cols-4">
+    <div class="card accent-card">
+      <div class="card-label">原理</div>
+      <div class="card-desc">LLM 如何从文本预测下一个 token</div>
+    </div>
+    <div class="card green-card">
+      <div class="card-label">模型</div>
+      <div class="card-desc">GPT 模型、reasoning effort 与工具调用</div>
+    </div>
+    <div class="card orange-card">
+      <div class="card-label">机制</div>
+      <div class="card-desc">OpenClaw Skill 如何被发现、注入、调用</div>
+    </div>
+    <div class="card">
+      <div class="card-label">实践</div>
+      <div class="card-desc">为社科研究写一个可复用 SKILL.md</div>
+    </div>
+  </div>
+</section>
+
+<section class="section-title">
+  <h2><span class="section-num">Part 1</span>LLM 的技术底座</h2>
+</section>
+
+<section>
+  <h2>LLM 到底在做什么？</h2>
+  <div class="flow">
+    <div class="flow-node outline">text</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node accent">tokens</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node green">embeddings</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node orange">Transformer</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node cyan">next token</div>
+  </div>
+  <div class="quote-box">
+    <div class="quote-text">
+      大语言模型不是在“查数据库”，而是在给定上下文之后，对下一个 token 的概率分布进行建模。
+    </div>
+  </div>
+  <p style="font-size:0.68em;text-align:left;color:var(--gray-600);">
+    因此，模型越像“懂了”，越需要问：它的判断来自上下文证据、训练中学到的模式，还是一次流畅的概率补全？
+  </p>
+</section>
+
+<section>
+  <h2>Token 与上下文窗口</h2>
+  <div class="card-grid cols-3">
+    <div class="card accent-card" style="text-align:left;">
+      <div class="card-label">Tokenization</div>
+      <div class="card-desc">
+        模型读到的不是完整汉字、英文词或句子，而是被切分后的 token 序列。
+      </div>
+    </div>
+    <div class="card green-card" style="text-align:left;">
+      <div class="card-label">Context window</div>
+      <div class="card-desc">
+        提示词、历史对话、工具结果和输出都挤在同一个上下文预算里。
+      </div>
+    </div>
+    <div class="card orange-card" style="text-align:left;">
+      <div class="card-label">Implication</div>
+      <div class="card-desc">
+        长文档任务要分块、引用来源、保留中间结果，而不是一次性全塞进去。
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Transformer：注意力机制</h2>
+  <div class="cols">
+    <div class="col-60">
+      <div class="highlight-box">
+        <p style="font-size:0.76em;margin:0;text-align:left;">
+          Self-attention 让每个 token 在生成表示时“看向”上下文中相关的 token。
+          这使模型可以处理指代、长距离依赖、格式模仿和多步文本结构。
+        </p>
+      </div>
+      <ul style="font-size:0.68em;">
+        <li><strong>Query</strong>：当前 token 想找什么信息</li>
+        <li><strong>Key</strong>：其他 token 提供什么线索</li>
+        <li><strong>Value</strong>：被加权汇入的新表示</li>
+      </ul>
+    </div>
+    <div class="col-40">
+      <div class="openclaw-box">
+        <div class="oc-label">课堂直觉</div>
+        <div class="oc-content">
+          注意力不是人类意义上的“注意”，而是一套可训练的加权计算：
+          哪些上下文片段会更影响下一个 token。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>训练过程：从“会续写”到“会听指令”</h2>
+  <div class="flow">
+    <div class="flow-node accent">pretrain</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node green">instruct</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node orange">preference</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node cyan">tool / agent</div>
+  </div>
+  <div class="card-grid cols-2">
+    <div class="card" style="text-align:left;">
+      <div class="card-label">预训练</div>
+      <div class="card-desc">从海量文本里学习语言、知识模式、代码结构和推理痕迹。</div>
+    </div>
+    <div class="card" style="text-align:left;">
+      <div class="card-label">对齐与工具化</div>
+      <div class="card-desc">通过指令数据、偏好反馈、工具调用样例，让模型更像“助理”。</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>为什么会幻觉？</h2>
+  <div class="card-grid cols-4">
+    <div class="card accent-card">
+      <div class="card-label">概率补全</div>
+      <div class="card-desc">生成目标是延续合理文本，不等于事实核验。</div>
+    </div>
+    <div class="card green-card">
+      <div class="card-label">证据缺口</div>
+      <div class="card-desc">上下文没有材料时，模型仍可能给出流畅答案。</div>
+    </div>
+    <div class="card orange-card">
+      <div class="card-label">格式压力</div>
+      <div class="card-desc">用户要求表格、结论、引用时，模型会倾向补齐结构。</div>
+    </div>
+    <div class="card">
+      <div class="card-label">边界模糊</div>
+      <div class="card-desc">训练记忆、上下文事实、工具结果容易被混在一起。</div>
+    </div>
+  </div>
+  <div class="warning-box">
+    <p style="font-size:0.72em;margin:0;">
+      社科研究中，LLM 输出必须绑定原始材料、证据摘录、处理脚本和审计记录；不能只保存“看起来合理”的最终答案。
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>从 LLM 到 Skill：工程化这一层</h2>
+  <div class="flow">
+    <div class="flow-node outline">LLM</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node accent">tool use</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node green">agent loop</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node orange">skill</div>
+  </div>
+  <div class="success-box">
+    <p style="font-size:0.76em;margin:0;">
+      LLM 提供语言与推理能力；工具让它读写、搜索、计算；Agent Loop 让它多步执行；
+      <strong>Skill 则把反复使用的流程写成明确、可复验的操作规程。</strong>
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>Prompt vs. Skill：差别在哪里？</h2>
+  <div class="vs-layout">
+    <div class="vs-panel left">
+      <h3>一次性 Prompt</h3>
+      <div class="vs-items">
+        每次都要重新解释流程<br>
+        容易遗漏输入、输出、验证步骤<br>
+        很难统一给全班复用<br>
+        修改后没有明确版本边界
+      </div>
+    </div>
+    <div class="vs-divider">→</div>
+    <div class="vs-panel right">
+      <h3 style="color:var(--accent);">OpenClaw Skill</h3>
+      <div class="vs-items">
+        一个目录 + 一个 <code>SKILL.md</code><br>
+        说明何时使用、如何使用、用哪些工具<br>
+        可以附带脚本、模板、样例数据<br>
+        可配置、可禁用、可按环境过滤
+      </div>
+    </div>
+  </div>
+  <div class="quote-box">
+    <div class="quote-text">Skill 不是“更长的提示词”，而是可复用的操作规程。</div>
+  </div>
+</section>
+
+<section>
+  <h2>Skills 机制总览</h2>
+  <div class="flow">
+    <div class="flow-node outline">skill folder</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node accent">discover</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node green">gate</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node orange">prompt list</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node cyan">read SKILL.md</div>
+  </div>
+  <div class="openclaw-box">
+    <div class="oc-label">OpenClaw runtime</div>
+    <div class="oc-content">
+      启动会话时，OpenClaw 扫描 eligible skills，生成一个紧凑的 <code>&lt;available_skills&gt;</code> 列表。
+      模型先只看到 name / description / location；真正需要使用时，再用 read 工具读取对应的 <code>SKILL.md</code>。
+    </div>
+  </div>
+</section>
+
+<section class="section-title">
+  <h2><span class="section-num">Part 2</span>Skill 的文件结构与提示词注入</h2>
+</section>
+
+<section>
+  <h2>一个 Skill 最少需要什么？</h2>
+  <div class="cols">
+    <div class="col-40">
+      <div class="card accent-card" style="text-align:left;">
+        <div class="card-label">必要部分</div>
+        <div class="card-desc" style="font-size:0.72em;line-height:1.7;">
+          目录名：能力边界<br>
+          <code>SKILL.md</code>：元数据 + 指令<br>
+          YAML frontmatter：名称与触发描述<br>
+          Markdown 正文：执行步骤、工具、注意事项
+        </div>
+      </div>
+    </div>
+    <div class="col-60">
+      <pre><code>skills/
+  interview-coding/
+    SKILL.md
+    templates/
+      codebook.md
+    scripts/
+      validate_labels.py
+    examples/
+      sample_interviews.csv</code></pre>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><code>SKILL.md</code> 的最小格式</h2>
+  <pre><code>---
+name: interview-coding
+description: Code interview excerpts into a finite qualitative codebook.
+---
+
+# Interview Coding Skill
+
+Use this when the user asks to classify interview excerpts,
+open-ended survey responses, or field notes.
+
+Workflow:
+1. Verify input path, encoding, and row count.
+2. Read or create a finite codebook.
+3. Label each excerpt with code, confidence, and evidence quote.
+4. Save outputs as CSV and Markdown audit report.</code></pre>
+  <div class="highlight-box">
+    <p style="font-size:0.75em;margin:0;">
+      OpenClaw 遵循 AgentSkills 兼容目录；frontmatter 的 key 需要保持单行，<code>metadata</code> 也建议写成单行 JSON。
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>为什么不是把全文都塞进系统提示词？</h2>
+  <div class="card-grid cols-3">
+    <div class="card">
+      <div class="card-label">节省上下文</div>
+      <div class="card-desc">系统提示词只注入 compact skills list，不直接注入所有 SKILL.md 全文。</div>
+    </div>
+    <div class="card">
+      <div class="card-label">按需读取</div>
+      <div class="card-desc">模型判断相关后，再读取具体 skill 文件，降低噪音。</div>
+    </div>
+    <div class="card">
+      <div class="card-label">可审计</div>
+      <div class="card-desc">location 明确；可以检查模型是否真的读了 SKILL.md。</div>
+    </div>
+  </div>
+  <pre><code>&lt;available_skills&gt;
+  &lt;skill&gt;
+    &lt;name&gt;interview-coding&lt;/name&gt;
+    &lt;description&gt;Code interview excerpts...&lt;/description&gt;
+    &lt;location&gt;/workspace/skills/interview-coding/SKILL.md&lt;/location&gt;
+  &lt;/skill&gt;
+&lt;/available_skills&gt;</code></pre>
+</section>
+
+<section>
+  <h2>Skill 从哪里加载？优先级是什么？</h2>
+  <table class="model-table">
+    <thead>
+      <tr><th>位置</th><th>作用</th><th>优先级</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>&lt;workspace&gt;/skills</code></td>
+        <td>当前 agent / 当前课堂项目专用 skill</td>
+        <td><span class="badge default">最高</span></td>
+      </tr>
+      <tr>
+        <td><code>~/.openclaw/skills</code></td>
+        <td>本机共享、可管理、可覆盖 bundled 的 skill</td>
+        <td>中</td>
+      </tr>
+      <tr>
+        <td>bundled skills</td>
+        <td>OpenClaw 安装包或 OpenClaw.app 自带</td>
+        <td>最低</td>
+      </tr>
+      <tr>
+        <td><code>skills.load.extraDirs</code></td>
+        <td>额外共享 skill 包目录</td>
+        <td>最低扩展层</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="success-box">
+    <p style="font-size:0.75em;margin:0;">同名冲突时：workspace wins。课堂实验优先把自定义 skill 放进当前 workspace。</p>
+  </div>
+</section>
+
+<section class="section-title">
+  <h2><span class="section-num">Part 3</span>加载、过滤、配置与热更新</h2>
+</section>
+
+<section>
+  <h2>Load-time filters：不是所有 skill 都会出现</h2>
+  <div class="cols">
+    <div class="col">
+      <ul style="font-size:0.75em;">
+        <li><code>os</code>：只在 darwin / linux / win32 中某些平台启用</li>
+        <li><code>requires.bins</code>：要求命令在 host 的 PATH 上存在</li>
+        <li><code>requires.anyBins</code>：多个命令至少存在一个</li>
+        <li><code>requires.env</code>：要求环境变量或配置提供</li>
+        <li><code>requires.config</code>：要求 openclaw.json 中某项为真</li>
+      </ul>
+    </div>
+    <div class="col">
+      <pre><code>---
+name: policy-crawler
+description: Crawl policy pages into auditable CSV.
+metadata: {"openclaw":{"requires":{"bins":["python3"],"env":["TAVILY_API_KEY"]},"primaryEnv":"TAVILY_API_KEY"}}
+---</code></pre>
+    </div>
+  </div>
+  <div class="warning-box">
+    <p style="font-size:0.72em;margin:0;">注意：<code>requires.bins</code> 检查的是 host；如果实际运行在 Docker sandbox，容器里也必须有这个命令。</p>
+  </div>
+</section>
+
+<section>
+  <h2><code>openclaw.json</code>：skills 的控制面</h2>
+  <pre><code>{
+  skills: {
+    allowBundled: ["gemini", "peekaboo"],
+    load: {
+      extraDirs: ["~/Projects/course-skills"],
+      watch: true,
+      watchDebounceMs: 250
+    },
+    install: {
+      preferBrew: true,
+      nodeManager: "npm"
+    },
+    entries: {
+      "policy-crawler": {
+        enabled: true,
+        apiKey: { source: "env", provider: "default", id: "TAVILY_API_KEY" },
+        config: { maxPages: 30 }
+      },
+      sag: { enabled: false }
+    }
+  }
+}</code></pre>
+</section>
+
+<section>
+  <h2>Env / API Key 的作用域</h2>
+  <div class="card-grid cols-3">
+    <div class="card green-card">
+      <div class="card-label">Agent run 开始</div>
+      <div class="card-desc">读取 skill metadata，应用 <code>entries.env</code> 或 <code>apiKey</code>。</div>
+    </div>
+    <div class="card accent-card">
+      <div class="card-label">运行期间</div>
+      <div class="card-desc">密钥注入 host process 环境；不要写进 prompt、日志或报告。</div>
+    </div>
+    <div class="card orange-card">
+      <div class="card-label">运行结束</div>
+      <div class="card-desc">OpenClaw 恢复原始环境；不是全局 shell 配置。</div>
+    </div>
+  </div>
+  <div class="warning-box">
+    <p style="font-size:0.75em;margin:0;">
+      沙箱会话里，skill 进程在 Docker 内运行；sandbox 不继承 host <code>process.env</code>。需要用 sandbox docker env 或自定义镜像。
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>Session snapshot 与 watcher</h2>
+  <div class="flow">
+    <div class="flow-node outline">new session</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node accent">snapshot eligible skills</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node green">reuse list</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node orange">next turn refresh</div>
+  </div>
+  <div class="highlight-box">
+    <p style="font-size:0.78em;margin:0;">
+      默认情况下，会话开始时记录 eligible skills；改动 skill 或配置后，通常新会话生效。
+      如果 watcher 开启，<code>SKILL.md</code> 改动会刷新 snapshot，下一轮 agent turn 可拾取。
+    </p>
+  </div>
+  <pre><code>{ skills: { load: { watch: true, watchDebounceMs: 250 } } }</code></pre>
+</section>
+
+<section>
+  <h2>Plugin skills、ClawHub 与课堂边界</h2>
+  <div class="cols">
+    <div class="col">
+      <div class="card" style="text-align:left;">
+        <div class="card-label">Plugins + skills</div>
+        <div class="card-desc" style="font-size:0.7em;line-height:1.7;">
+          插件可在 <code>openclaw.plugin.json</code> 里声明 skills 目录。
+          插件启用后，其 skills 参与正常优先级规则。
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card" style="text-align:left;">
+        <div class="card-label">ClawHub</div>
+        <div class="card-desc" style="font-size:0.7em;line-height:1.7;">
+          公开 skill registry，可安装、更新、同步。
+          课堂上只把它当作发现来源，第三方内容必须先读后用。
+        </div>
+      </div>
+    </div>
+  </div>
+  <pre><code>clawhub install &lt;skill-slug&gt;
+clawhub update --all
+clawhub sync --all</code></pre>
+</section>
+
+<section class="section-title">
+  <h2><span class="section-num">补充</span>GPT 模型与 Skill 选型</h2>
+</section>
+
+<section>
+  <h2>Skill 与 GPT 模型：不是同一层</h2>
+  <div class="flow">
+    <div class="flow-node outline">SKILL.md</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node accent">workflow contract</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node green">model execution</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node orange">audited output</div>
+  </div>
+  <div class="cols">
+    <div class="col">
+      <div class="card accent-card" style="text-align:left;">
+        <div class="card-label">Skill 决定“怎么做”</div>
+        <div class="card-desc" style="font-size:0.7em;line-height:1.7;">
+          触发条件、输入输出、工具边界、保存路径、验证步骤、失败时要不要停下来。
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card green-card" style="text-align:left;">
+        <div class="card-label">模型决定“做得怎样”</div>
+        <div class="card-desc" style="font-size:0.7em;line-height:1.7;">
+          推理深度、工具选择精度、长上下文能力、输出风格、速度、成本与稳定性。
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="warning-box">
+    <p style="font-size:0.72em;margin:0;">
+      不要把 OpenClaw 的 skill discovery 与 OpenAI 模型文档中的 “supported tools: skills” 混为一谈；前者是 OpenClaw 的运行时机制，后者是模型/平台工具能力。
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>GPT 系列：给 Agent 工作流的粗略选型</h2>
+  <table class="model-table">
+    <thead>
+      <tr><th>模型</th><th>官方定位（2026-04）</th><th>适合放在哪类 Skill 后面</th><th>课堂提醒</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>gpt-5.5</code></td>
+        <td>最新 frontier reasoning model；面向复杂专业工作</td>
+        <td>工具密集、多步分析、长文档综合、复杂代码执行</td>
+        <td>默认 <code>reasoning.effort=medium</code>，复杂任务再升高</td>
+      </tr>
+      <tr>
+        <td><code>gpt-5.4</code></td>
+        <td>frontier model；更偏可负担的专业工作</td>
+        <td>常规研究助理、代码分析、文档处理、批量工作流</td>
+        <td>支持 <code>none/low/medium/high/xhigh</code></td>
+      </tr>
+      <tr>
+        <td><code>gpt-5.1</code></td>
+        <td>coding / agentic tasks 的旗舰模型</td>
+        <td>较稳定的编码、工具调用、agent 任务</td>
+        <td>可作为课程演示里的强基线</td>
+      </tr>
+      <tr>
+        <td><code>gpt-5</code></td>
+        <td>上一代 reasoning / coding / agentic model</td>
+        <td>兼容旧 workflow 或复现实验设置</td>
+        <td>新项目优先评估更新模型</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.58em;color:var(--gray-500);text-align:left;margin-top:0.5em;">
+    注：模型名与可用性会变化；正式部署前以当前 provider / OpenAI API 文档为准。
+  </p>
+</section>
+
+<section>
+  <h2>Reasoning effort：给 Skill 加一个“成本旋钮”</h2>
+  <div class="card-grid cols-4">
+    <div class="card">
+      <div class="card-label">none</div>
+      <div class="card-desc">极低延迟；简单分类、格式转换、轻量检索。</div>
+    </div>
+    <div class="card green-card">
+      <div class="card-label">low</div>
+      <div class="card-desc">日常 agent 任务；多数课堂练习的起点。</div>
+    </div>
+    <div class="card accent-card">
+      <div class="card-label">medium</div>
+      <div class="card-desc">平衡质量、速度、成本；GPT-5.5 默认起点。</div>
+    </div>
+    <div class="card orange-card">
+      <div class="card-label">high / xhigh</div>
+      <div class="card-desc">复杂推理、长链工具调用、异步高价值任务。</div>
+    </div>
+  </div>
+  <div class="highlight-box">
+    <p style="font-size:0.75em;margin:0;">
+      原则：不要因为模型“更会想”就盲目拉高 effort。先用代表性样例做 eval；只有质量收益超过成本和延迟，才提高推理档位。
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>把模型策略写进 Skill，而不是写死模型</h2>
+  <pre><code># Model policy
+
+Default:
+- Use a fast/low-effort model for schema checks, deduplication, and simple labeling.
+
+Escalate:
+- Use a stronger reasoning model when:
+  1. codebook definitions conflict,
+  2. confidence is low on more than 20% of rows,
+  3. the task requires tool-heavy multi-step execution.
+
+Do not:
+- Change model silently after producing results.
+- Hide cost/latency tradeoffs from the user.
+- Treat model output as validated evidence without spot-checks.</code></pre>
+  <div class="success-box">
+    <p style="font-size:0.75em;margin:0;">
+      好的 skill 写“模型选择规则”，不把某个模型神化为答案。研究流程要能换模型、能复验、能解释差异。
+    </p>
+  </div>
+</section>
+
+<section class="section-title">
+  <h2><span class="section-num">Part 4</span>怎样设计一个研究型 Skill</h2>
+</section>
+
+<section>
+  <h2>Skill 设计协议：先把规格空间写有限</h2>
+  <div class="loop-step">
+    <div class="step-num" style="background:var(--accent);color:#fff;">1</div>
+    <div class="step-body"><div class="step-title">Trigger</div><div class="step-desc">什么请求触发？什么请求不该触发？</div></div>
+  </div>
+  <div class="loop-step">
+    <div class="step-num" style="background:var(--green);color:#fff;">2</div>
+    <div class="step-body"><div class="step-title">Input / Output</div><div class="step-desc">输入文件、字段、编码、输出格式、保存路径。</div></div>
+  </div>
+  <div class="loop-step">
+    <div class="step-num" style="background:var(--orange);color:#fff;">3</div>
+    <div class="step-body"><div class="step-title">Tool surface</div><div class="step-desc">允许读写哪些目录？是否需要 exec、web search、API key？</div></div>
+  </div>
+  <div class="loop-step">
+    <div class="step-num" style="background:var(--purple);color:#fff;">4</div>
+    <div class="step-body"><div class="step-title">Validation</div><div class="step-desc">抽检、日志、失败条件、不可 silent fallback 的警告。</div></div>
+  </div>
+</section>
+
+<section>
+  <h2>课堂示例：开放题编码 Skill</h2>
+  <pre><code>---
+name: open-response-coding
+description: Classify Chinese open-ended survey answers with a finite codebook and audit trail.
+---
+
+# Open Response Coding
+
+Use when the user provides CSV/XLSX/text responses and asks for coding,
+categorization, or qualitative labeling.
+
+Rules:
+- Verify file path, encoding, row count, and target column before analysis.
+- Do not invent unlimited categories; propose at most 6 codes first.
+- For each row, output: id, code, confidence, evidence_quote.
+- Save `coded_responses.csv` and `coding_report.md`.
+- Randomly spot-check 10 rows and report disagreements or low confidence.
+- If input contains direct identifiers, stop and ask for de-identification.</code></pre>
+</section>
+
+<section>
+  <h2>把脚本和模板放进 Skill，而不是塞进 Prompt</h2>
+  <div class="cols">
+    <div class="col-40">
+      <ul style="font-size:0.75em;">
+        <li><code>templates/codebook.md</code>：固定输出结构</li>
+        <li><code>scripts/validate_labels.py</code>：检查标签、置信度、缺失值</li>
+        <li><code>examples/sample.csv</code>：给模型具体 I/O 参照</li>
+        <li><code>{baseDir}</code>：在说明中引用 skill 自身目录</li>
+      </ul>
+    </div>
+    <div class="col-60">
+      <pre><code>Before final answer:
+1. Run:
+   python3 {baseDir}/scripts/validate_labels.py coded_responses.csv
+2. Include validation output in the report.
+3. If validation fails, repair the CSV instead of hiding the error.</code></pre>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>测试一个 Skill：不要只看“有没有回复”</h2>
+  <div class="card-grid cols-2">
+    <div class="card accent-card" style="text-align:left;">
+      <div class="card-label">最小 smoke test</div>
+      <div class="card-desc" style="font-size:0.7em;line-height:1.7;">
+        <code>openclaw agent --message "use open-response-coding on examples/sample.csv"</code><br>
+        检查模型是否读取了 <code>SKILL.md</code>，是否生成指定文件。
+      </div>
+    </div>
+    <div class="card green-card" style="text-align:left;">
+      <div class="card-label">研究完整性 test</div>
+      <div class="card-desc" style="font-size:0.7em;line-height:1.7;">
+        查看输出行数、编码空间、抽检样本、低置信度说明、验证脚本输出。
+      </div>
+    </div>
+  </div>
+  <div class="warning-box">
+    <p style="font-size:0.75em;margin:0;">如果 skill 需要跑重任务或外部 API，先用小样本；不要把失败包装成“已完成”。</p>
+  </div>
+</section>
+
+<section class="section-title">
+  <h2><span class="section-num">Part 5</span>社科课堂里的三类 Skills</h2>
+</section>
+
+<section>
+  <h2>类型一：编码与标注 Skill</h2>
+  <div class="prompt-box">
+    <div class="prompt-label">User</div>
+    我上传了 200 条市民对社区治理的开放题回答。请用 open-response-coding 生成不超过 6 类的编码表，并保存结果。
+    <div class="prompt-out">
+      <span class="out-label">Skill 应保证：</span><br>
+      先确认字段和编码 → 提出有限 codebook → 逐条标注 → 输出 CSV + Markdown 报告 → 抽检低置信度样本
+    </div>
+  </div>
+  <div class="highlight-box">
+    <p style="font-size:0.75em;margin:0;">研究者负责解释与修订 codebook；skill 负责让流程可重复、可检查。</p>
+  </div>
+</section>
+
+<section>
+  <h2>类型二：政策文本采集 Skill</h2>
+  <div class="cols">
+    <div class="col">
+      <div class="card orange-card" style="text-align:left;">
+        <div class="card-label">适合封装</div>
+        <div class="card-desc" style="font-size:0.7em;line-height:1.7;">
+          固定来源、固定字段、固定限速、固定输出路径。
+          例如：标题、发布日期、发布机构、URL、摘要。
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card" style="text-align:left;">
+        <div class="card-label">必须写清</div>
+        <div class="card-desc" style="font-size:0.7em;line-height:1.7;">
+          目标站点、时间范围、去重规则、失败重试、robots/访问限制、代理或 API key 使用边界。
+        </div>
+      </div>
+    </div>
+  </div>
+  <pre><code>Output contract:
+policy_list.csv columns:
+source, title, date, agency, url, fetched_at, hash</code></pre>
+</section>
+
+<section>
+  <h2>类型三：可复现分析 Skill</h2>
+  <div class="flow">
+    <div class="flow-node outline">input data</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node accent">validate schema</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node green">run script</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node orange">save artifacts</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node cyan">audit report</div>
+  </div>
+  <div class="openclaw-box">
+    <div class="oc-label">Research integrity</div>
+    <div class="oc-content">
+      分析型 skill 的核心不是“自动跑代码”，而是把输入检查、依赖记录、随机种子、日志、图表路径、异常与警告都写成可审计输出。
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>课堂练习：20 分钟写一个 Mini Skill</h2>
+  <ol class="step-list">
+    <li><span class="step-badge">1</span><span class="step-content">选择一个小任务：开放题分类、政策标题抽取、CSV 描述统计。</span></li>
+    <li><span class="step-badge">2</span><span class="step-content">写 <code>skills/my-mini-skill/SKILL.md</code>：name、description、触发条件、输出契约。</span></li>
+    <li><span class="step-badge">3</span><span class="step-content">加一个样例输入，要求 agent 保存结构化输出。</span></li>
+    <li><span class="step-badge">4</span><span class="step-content">新开会话测试：确认它读了 skill，且没有绕开验证步骤。</span></li>
+  </ol>
+  <div class="success-box">
+    <p style="font-size:0.75em;margin:0;">提交标准：SKILL.md + sample input + output artifact + 你认为最需要人工复核的一点。</p>
+  </div>
+</section>
+
+<section>
+  <h2>常见失败模式</h2>
+  <div class="card-grid cols-2">
+    <div class="card" style="text-align:left;">
+      <div class="card-label">机制错误</div>
+      <div class="card-desc" style="font-size:0.7em;line-height:1.7;">
+        skill 放错目录；frontmatter 多行解析失败；同名 skill 被 workspace 覆盖；改完后旧 session 没刷新。
+      </div>
+    </div>
+    <div class="card" style="text-align:left;">
+      <div class="card-label">执行错误</div>
+      <div class="card-desc" style="font-size:0.7em;line-height:1.7;">
+        host 有命令但 sandbox 没有；API key 注入到 host 但容器里没有；脚本路径没有用 <code>{baseDir}</code>。
+      </div>
+    </div>
+    <div class="card" style="text-align:left;">
+      <div class="card-label">研究错误</div>
+      <div class="card-desc" style="font-size:0.7em;line-height:1.7;">
+        类别空间无限膨胀；没有保存证据引用；没有抽检；把低置信度结果写成确定结论。
+      </div>
+    </div>
+    <div class="card" style="text-align:left;">
+      <div class="card-label">安全错误</div>
+      <div class="card-desc" style="font-size:0.7em;line-height:1.7;">
+        第三方 skill 未读即用；把密钥写进 SKILL.md；把敏感访谈原文交给不可信脚本或外部 API。
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>今天的 takeaway</h2>
+  <div class="takeaway">
+    <div class="divider"></div>
+    <p class="main-text">Skill 是 Agent 的<br>可复用研究规程</p>
+    <p class="sub-text">
+      OpenClaw 用 <code>SKILL.md</code> 把能力边界、工具使用、输出契约和验证步骤写入系统。<br>
+      好的 skill 不追求“更聪明”，而追求<strong>可复现、可审计、可修改、可共享</strong>。
+    </p>
+    <p class="hint">Write the procedure once; make every run inspectable.</p>
+  </div>
+</section>
+
+<template id="previous-general-agent-version">
+
+<!-- ============================================================ -->
+<!-- COVER                                                         -->
+<!-- ============================================================ -->
+
+<section class="cover">
+  <h1>AI Agent 实战：<br>OpenClaw 从入门到应用</h1>
+  <p class="subtitle">从"聊天"到"行动"——让 AI 替你动手</p>
+  <p class="meta">
+    第九课<br>
+    郑思尧<br>
+    上海交通大学 国际与公共事务学院
+  </p>
+</section>
+
+<!-- ============================================================ -->
+<!-- 路线图                                                         -->
+<!-- ============================================================ -->
+
+<section>
+  <h2>今天的路线图</h2>
+
+  <div class="card-grid cols-4" style="margin-top:1.2em;">
+    <div class="card accent-card">
+      <div class="card-icon">🧠</div>
+      <div class="card-label">Part 1</div>
+      <div class="card-desc">LLM vs. Agent<br><span style="color:var(--gray-400);font-size:0.85em;">什么是"行动"？</span></div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🦞</div>
+      <div class="card-label">Part 2</div>
+      <div class="card-desc">OpenClaw 是什么<br><span style="color:var(--gray-400);font-size:0.85em;">架构与 Agent Loop</span></div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🖥️</div>
+      <div class="card-label">Part 3</div>
+      <div class="card-desc">交大环境上手<br><span style="color:var(--gray-400);font-size:0.85em;">配置 → 对话 → 实操</span></div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔬</div>
+      <div class="card-label">Part 4</div>
+      <div class="card-desc">社科研究场景<br><span style="color:var(--gray-400);font-size:0.85em;">Agent 怎么帮你做研究</span></div>
+    </div>
+  </div>
+
+  <div class="highlight-box" style="margin-top:1.2em;">
+    <p style="font-size:0.8em;margin:0;">
+      <strong>目标</strong>：今天结束时，你能用 OpenClaw 让 AI 帮你自动完成一段文本分析任务——不只是"聊天"，而是真正动手干活。
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PART 1: LLM vs. Agent                                         -->
+<!-- ============================================================ -->
+
+<section class="section-title">
+  <h2><span class="section-num">Part 1</span>从"聊天"到"行动"</h2>
+</section>
+
+<!-- Slide: 你现在用的是什么？ -->
+<section>
+  <h2>你每天用的 AI，是什么？</h2>
+
+  <div class="vs-layout" style="margin-top:1.2em;">
+    <div class="vs-panel left">
+      <h3>ChatGPT / 文心 / 豆包</h3>
+      <div class="vs-items">
+        你输入 → 它输出<br>
+        一问一答，对话式<br>
+        <strong>不会主动行动</strong><br>
+        <span style="color:var(--gray-400);">你要数据，它给你代码，你自己去跑</span>
+      </div>
+    </div>
+    <div class="vs-divider">vs</div>
+    <div class="vs-panel right">
+      <h3 style="color:var(--accent);">AI Agent</h3>
+      <div class="vs-items">
+        你给目标 → 它规划 + 执行<br>
+        能调用工具、读写文件、写代码并运行<br>
+        <strong>主动循环直到完成</strong><br>
+        <span style="color:var(--gray-500);">你要数据，它帮你抓、清洗、分析、出报告</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-box" style="margin-top:1em;">
+    <p style="font-size:0.8em;margin:0;">
+      LLM 是"大脑"，Agent 是"大脑 + 四肢"。<strong>OpenClaw 就是让 Claude 长出四肢的框架。</strong>
+    </p>
+  </div>
+</section>
+
+<!-- Slide: Agent 三大能力 -->
+<section>
+  <h2>Agent 的三大能力</h2>
+
+  <div class="card-grid cols-3" style="margin-top:1.2em;">
+    <div class="card accent-card">
+      <div class="card-icon">📋</div>
+      <div class="card-label" style="color:var(--accent);">规划 Planning</div>
+      <div class="card-desc" style="text-align:left; line-height:1.8;">
+        把大任务拆成小步骤<br>
+        决定先做什么、再做什么<br>
+        失败了会自己调整
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔧</div>
+      <div class="card-label">工具使用 Tool Use</div>
+      <div class="card-desc" style="text-align:left; line-height:1.8;">
+        调用搜索、文件读写<br>
+        执行代码、调用 API<br>
+        操控浏览器
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🧩</div>
+      <div class="card-label">记忆 Memory</div>
+      <div class="card-desc" style="text-align:left; line-height:1.8;">
+        会话内短期记忆<br>
+        文件形式的长期记忆<br>
+        跨任务知识积累
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-box" style="margin-top:0.8em;">
+    <p style="font-size:0.78em;margin:0;">
+      <strong>社科研究类比</strong>：LLM 是图书馆，Agent 是会使用图书馆、做实验、整理笔记的研究助理。
+    </p>
+  </div>
+</section>
+
+<!-- Slide: Agent Loop 循环 -->
+<section>
+  <h2>Agent 如何工作：Think → Act → Observe</h2>
+
+  <div class="agent-cycle" style="margin-top:1em;">
+    <div class="cycle-node active">
+      <div class="cn-emoji">🤔</div>
+      Think<br><span style="font-size:0.85em;font-weight:400;">分析任务<br>选择行动</span>
+    </div>
+    <div class="cycle-arrow">→</div>
+    <div class="cycle-node" style="border-color:var(--orange);color:var(--orange);">
+      <div class="cn-emoji">🔧</div>
+      Act<br><span style="font-size:0.85em;font-weight:400;">调用工具<br>执行操作</span>
+    </div>
+    <div class="cycle-arrow">→</div>
+    <div class="cycle-node" style="border-color:var(--green);color:var(--green);">
+      <div class="cn-emoji">👁️</div>
+      Observe<br><span style="font-size:0.85em;font-weight:400;">读取结果<br>判断下一步</span>
+    </div>
+    <div class="cycle-arrow" style="color:var(--accent);">↩</div>
+    <div style="font-size:0.7em;color:var(--gray-500);align-self:center;">
+      循环<br>直到<br>完成
+    </div>
+  </div>
+
+  <div class="cols" style="margin-top:1em;gap:1.5em;">
+    <div class="col">
+      <div class="highlight-box" style="margin:0;">
+        <p style="font-size:0.72em;margin:0;line-height:1.8;">
+          <strong>例：分析 100 条微博情感</strong><br>
+          Think: 我需要先读文件，再逐条分类<br>
+          Act: read_file("weibo.csv")<br>
+          Observe: 获得 100 行文本<br>
+          Think: 用 LLM 批量打标签<br>
+          Act: 调用模型 API…<br>
+          Observe: 获得标签结果<br>
+          Act: write_file("result.csv")
+        </p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="openclaw-box" style="margin:0;">
+        <div class="oc-label">OpenClaw 实现</div>
+        <div class="oc-content">
+          每次工具调用后模型重新看结果<br>
+          工具包括：文件读写、代码执行、网页搜索、发送消息<br>
+          超时上限：默认 600 秒/任务
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PART 2: OpenClaw 是什么                                        -->
+<!-- ============================================================ -->
+
+<section class="section-title">
+  <h2><span class="section-num">Part 2</span>OpenClaw 是什么？</h2>
+</section>
+
+<!-- Slide: 三句话定义 -->
+<section>
+  <h2>三句话认识 OpenClaw</h2>
+
+  <div class="card-grid cols-3" style="margin-top:1.2em;">
+    <div class="card accent-card">
+      <div class="card-label" style="color:var(--accent);font-size:0.8em;">① 自托管网关</div>
+      <div class="card-desc" style="text-align:left;line-height:1.8;font-size:0.72em;">
+        运行在你的服务器上<br>数据不出门<br>你掌控一切
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label" style="font-size:0.8em;">② 多渠道接入</div>
+      <div class="card-desc" style="text-align:left;line-height:1.8;font-size:0.72em;">
+        WhatsApp / Telegram / iMessage / Web<br>一个 Gateway 服务所有渠道<br>手机发消息 → Agent 干活
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label" style="font-size:0.8em;">③ Agent 原生</div>
+      <div class="card-desc" style="text-align:left;line-height:1.8;font-size:0.72em;">
+        内置工具：文件读写、代码执行、搜索<br>会话记忆、多 Agent 路由<br>可扩展插件系统
+      </div>
+    </div>
+  </div>
+
+  <div class="openclaw-box" style="margin-top:1em;">
+    <div class="oc-label">OpenClaw 的定位</div>
+    <div class="oc-content">
+      MIT 开源 · 社区驱动 · 支持 Claude / GPT / DeepSeek / GLM 等 30+ 模型<br>
+      可以理解为：<strong style="color:#00d2ff;">你的私有 AI 助理平台</strong>，从手机到服务器全打通
+    </div>
+  </div>
+</section>
+
+<!-- Slide: 架构图 -->
+<section>
+  <h2>OpenClaw 架构：一个 Gateway 统管所有</h2>
+
+  <div style="margin-top:1em;">
+    <!-- 渠道层 -->
+    <div style="display:flex;gap:0.5em;justify-content:center;margin-bottom:0.5em;">
+      <div class="flow-node" style="min-width:90px;font-size:0.65em;background:var(--gray-100);">WhatsApp</div>
+      <div class="flow-node" style="min-width:90px;font-size:0.65em;background:var(--gray-100);">Telegram</div>
+      <div class="flow-node" style="min-width:90px;font-size:0.65em;background:var(--gray-100);">iMessage</div>
+      <div class="flow-node" style="min-width:90px;font-size:0.65em;background:var(--gray-100);">Web Chat</div>
+      <div class="flow-node" style="min-width:90px;font-size:0.65em;background:var(--gray-100);">CLI</div>
+    </div>
+    <div style="text-align:center;color:var(--gray-400);font-size:0.75em;margin:0.3em 0;">↓ WebSocket ↓</div>
+    <!-- Gateway -->
+    <div style="display:flex;justify-content:center;margin-bottom:0.5em;">
+      <div class="flow-node accent" style="min-width:320px;font-size:0.85em;padding:1em 2em;">
+        Gateway (Port 18789)<br>
+        <span style="font-size:0.75em;font-weight:400;opacity:0.85;">路由 · 会话管理 · 鉴权 · 工具注入</span>
+      </div>
+    </div>
+    <div style="text-align:center;color:var(--gray-400);font-size:0.75em;margin:0.3em 0;">↓</div>
+    <!-- Agent + Tools + Models -->
+    <div style="display:flex;gap:1em;justify-content:center;">
+      <div class="flow-node" style="min-width:120px;font-size:0.7em;border-color:var(--orange);color:var(--orange);">
+        Agent Runtime<br><span style="font-size:0.85em;font-weight:400;color:var(--gray-600);">Think→Act→Observe</span>
+      </div>
+      <div class="flow-node" style="min-width:120px;font-size:0.7em;border-color:var(--green);color:var(--green);">
+        Tools<br><span style="font-size:0.85em;font-weight:400;color:var(--gray-600);">文件 · 代码 · 搜索</span>
+      </div>
+      <div class="flow-node" style="min-width:120px;font-size:0.7em;border-color:var(--purple);color:var(--purple);">
+        Models<br><span style="font-size:0.85em;font-weight:400;color:var(--gray-600);">Claude · GLM · DS</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-box" style="margin-top:0.8em;">
+    <p style="font-size:0.75em;margin:0;">
+      <strong>本课实验</strong>：交大 ailab 已为大家部署好 Gateway，你直接用 Web Chat 接入，背后是 GLM-5 / DeepSeek 等模型。
+    </p>
+  </div>
+</section>
+
+<!-- Slide: Agent 有哪些工具 -->
+<section>
+  <h2>Agent 内置了哪些工具？</h2>
+
+  <div class="card-grid cols-2" style="margin-top:1.2em;">
+    <div class="card" style="text-align:left;">
+      <div class="card-label">文件工具 <span class="tag green">核心</span></div>
+      <div class="card-desc" style="line-height:2;font-size:0.72em;">
+        <code>read</code> 读文件（txt / csv / pdf / 代码）<br>
+        <code>write</code> 写文件、生成报告<br>
+        <code>glob</code> 批量查找文件<br>
+        工作目录 = <code>~/.openclaw/workspace/</code>
+      </div>
+    </div>
+    <div class="card" style="text-align:left;">
+      <div class="card-label">代码执行 <span class="tag orange">强力</span></div>
+      <div class="card-desc" style="line-height:2;font-size:0.72em;">
+        <code>exec</code> 在服务器上跑 Bash / Python<br>
+        可以安装包、处理数据、生成图表<br>
+        结果实时返回给 Agent 判断<br>
+        <span style="color:var(--red);">* 沙箱隔离，不影响宿主机</span>
+      </div>
+    </div>
+    <div class="card" style="text-align:left;">
+      <div class="card-label">网络工具 <span class="tag">搜索</span></div>
+      <div class="card-desc" style="line-height:2;font-size:0.72em;">
+        <code>web_search</code> 联网检索<br>
+        <code>web_fetch</code> 抓取网页内容<br>
+        适合：查资料、抓政策文本
+      </div>
+    </div>
+    <div class="card" style="text-align:left;">
+      <div class="card-label">会话与记忆 <span class="tag gray">持久化</span></div>
+      <div class="card-desc" style="line-height:2;font-size:0.72em;">
+        每个对话保存为 JSONL<br>
+        AGENTS.md = Agent 的长期指令<br>
+        SOUL.md = Agent 的性格设定
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PART 3: 交大环境上手                                           -->
+<!-- ============================================================ -->
+
+<section class="section-title">
+  <h2><span class="section-num">Part 3</span>交大课堂环境：手把手上手</h2>
+</section>
+
+<!-- Slide: 今天的实验环境 -->
+<section>
+  <h2>今天的实验环境</h2>
+
+  <div class="cols" style="margin-top:1.2em;gap:2em;">
+    <div class="col">
+      <div class="openclaw-box" style="margin:0;">
+        <div class="oc-label">环境信息</div>
+        <div class="oc-content" style="line-height:2.2;">
+          平台：<strong style="color:#00d2ff;">ailab.sjtu.edu.cn</strong><br>
+          登录方式：jAccount<br>
+          容器规格：4 vCPU · 8 GB RAM<br>
+          时限：2 小时（可延时）<br>
+          OpenClaw 版本：2026.x（预装）
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card-grid cols-1" style="margin:0;gap:0.6em;">
+        <div class="card green-card" style="text-align:left;padding:0.8em 1em;">
+          <div class="card-label" style="color:var(--green);font-size:0.75em;">✅ 不需要</div>
+          <div class="card-desc" style="font-size:0.7em;line-height:1.6;">安装任何软件、API Key、本地 Python 环境</div>
+        </div>
+        <div class="card accent-card" style="text-align:left;padding:0.8em 1em;">
+          <div class="card-label" style="color:var(--accent);font-size:0.75em;">✔ 已内置</div>
+          <div class="card-desc" style="font-size:0.7em;line-height:1.6;">GLM-5 · DeepSeek Chat · DeepSeek Reasoner · MiniMax · Qwen3 Coder · Qwen3 VL</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-box" style="margin-top:1em;">
+    <p style="font-size:0.78em;margin:0;">
+      每次重新打开实验环境，需要重新配置模型并获取令牌（约 2 分钟）。配置一次，当次有效。
+    </p>
+  </div>
+</section>
+
+<!-- Slide: 操作步骤 Part A -->
+<section>
+  <h2>上手步骤（1/2）：登录与配置</h2>
+
+  <ul class="step-list" style="margin-top:1.2em;">
+    <li>
+      <div class="step-badge">1</div>
+      <div class="step-content">
+        打开 <code>ailab.sjtu.edu.cn</code>，用 <strong>jAccount 登录</strong>
+      </div>
+    </li>
+    <li>
+      <div class="step-badge">2</div>
+      <div class="step-content">
+        进入《机器学习与自然语言处理》课程 → 点击 <strong>OpenClaw 实验</strong> → <strong>去学习</strong>
+      </div>
+    </li>
+    <li>
+      <div class="step-badge">3</div>
+      <div class="step-content">
+        点击 <strong>开始连接</strong>，等约 10 秒直到出现三个按钮（Web 终端 / Agent 网关 / 桌面）
+      </div>
+    </li>
+    <li>
+      <div class="step-badge">4</div>
+      <div class="step-content">
+        点击 <strong>Web 终端</strong>，在黑色命令行中粘贴以下命令并回车：
+        <div class="prompt-box" style="margin-top:0.4em;font-size:0.75em;">
+          <span style="color:#89b4fa;">python3</span> <span style="color:#a6e3a1;">-c "...</span><span style="color:#6c7086;"> # 见使用指南或课件二维码</span><span style="color:#a6e3a1;">"</span>
+        </div>
+        <span class="step-note">看到 <code>done</code> 输出 = 配置成功</span>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<!-- Slide: 操作步骤 Part B -->
+<section>
+  <h2>上手步骤（2/2）：连接网关与开始对话</h2>
+
+  <ul class="step-list" style="margin-top:1.2em;">
+    <li>
+      <div class="step-badge" style="background:var(--orange);">5</div>
+      <div class="step-content">
+        在 Web 终端执行：<code>openclaw dashboard</code><br>
+        从输出中找到 <code>#token=</code> 后面的字符串，<strong>复制</strong>
+      </div>
+    </li>
+    <li>
+      <div class="step-badge" style="background:var(--orange);">6</div>
+      <div class="step-content">
+        回到实验平台页面，<strong>右键点击"Agent 网关"→ 在新标签页中打开</strong><br>
+        <span class="step-note">注意：必须右键新标签页，直接点会报错</span>
+      </div>
+    </li>
+    <li>
+      <div class="step-badge" style="background:var(--orange);">7</div>
+      <div class="step-content">
+        在 Agent 网关页面，将 token 粘贴到 <strong>Gateway Token</strong> 输入框 → 点击 <strong>Connect</strong>
+      </div>
+    </li>
+    <li>
+      <div class="step-badge" style="background:var(--green);">8</div>
+      <div class="step-content">
+        出现 <code>pairing required</code> 错误？回 Web 终端执行：<code>openclaw devices approve</code><br>
+        然后再点 Connect。顶部显示 <code>sjtu/glm-5</code> = <strong>成功！</strong>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<!-- Slide: 可用模型 -->
+<section>
+  <h2>可用的 AI 模型</h2>
+
+  <p style="font-size:0.75em;color:var(--gray-600);margin:0.5em 0 0.8em;">在 Chat 界面用 <code>/model sjtu/模型名</code> 切换</p>
+
+  <table class="model-table">
+    <thead>
+      <tr>
+        <th>模型</th>
+        <th>调用名</th>
+        <th>特点</th>
+        <th>适合场景</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>GLM 5.0 <span class="badge default">默认</span></td>
+        <td><code>sjtu/glm-5</code></td>
+        <td>快速、中文强</td>
+        <td>日常对话、文本分析、Agent 任务</td>
+      </tr>
+      <tr>
+        <td>DeepSeek Chat</td>
+        <td><code>sjtu/deepseek-chat</code></td>
+        <td>推理能力强</td>
+        <td>复杂文本理解、摘要生成</td>
+      </tr>
+      <tr>
+        <td>DeepSeek Reasoner <span class="badge reasoning">推理</span></td>
+        <td><code>sjtu/deepseek-reasoner</code></td>
+        <td>慢但深思熟虑</td>
+        <td>复杂逻辑推理、数据分析规划</td>
+      </tr>
+      <tr>
+        <td>Qwen3 Coder</td>
+        <td><code>sjtu/qwen3coder</code></td>
+        <td>代码能力最强</td>
+        <td>让 Agent 写分析脚本</td>
+      </tr>
+      <tr>
+        <td>Qwen3 VL <span class="badge vision">视觉</span></td>
+        <td><code>sjtu/qwen3vl</code></td>
+        <td>理解图片</td>
+        <td>图表解读、截图分析</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="highlight-box" style="margin-top:0.6em;">
+    <p style="font-size:0.75em;margin:0;">
+      <strong>建议</strong>：一般任务用默认 GLM-5；需要 Agent 写代码时换 Qwen3 Coder；要推理复杂问题时试 DeepSeek Reasoner。
+    </p>
+  </div>
+</section>
+
+<!-- Slide: 常见问题 -->
+<section>
+  <h2>常见问题快速排错</h2>
+
+  <div class="card-grid cols-1" style="margin-top:1em;gap:0.7em;">
+    <div class="warning-box">
+      <p style="font-size:0.72em;margin:0;">
+        <strong>❌ pairing required</strong> — 回 Web 终端，执行 <code>openclaw devices approve</code>，再回网关点 Connect
+      </p>
+    </div>
+    <div class="warning-box">
+      <p style="font-size:0.72em;margin:0;">
+        <strong>❌ Agent 网关打开后空白</strong> — 必须右键 → "在新标签页中打开"，不能直接点
+      </p>
+    </div>
+    <div class="warning-box">
+      <p style="font-size:0.72em;margin:0;">
+        <strong>❌ 配置命令报错</strong> — 确保完整复制了整条命令（从 python3 到最后的引号），分段粘贴容易出错
+      </p>
+    </div>
+    <div class="warning-box">
+      <p style="font-size:0.72em;margin:0;">
+        <strong>❌ 环境突然消失</strong> — 右上角有倒计时，归零后容器回收。点"延时"可续至 2 小时
+      </p>
+    </div>
+    <div class="success-box">
+      <p style="font-size:0.72em;margin:0;">
+        <strong>✅ 成功标志</strong>：Chat 界面顶部显示 <code>sjtu/glm-5</code>，发一条消息有回复
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- PART 4: 社科研究场景                                           -->
+<!-- ============================================================ -->
+
+<section class="section-title">
+  <h2><span class="section-num">Part 4</span>社科研究场景实战</h2>
+</section>
+
+<!-- Slide: 场景1 — 文本分析 -->
+<section>
+  <h2>场景 1：让 Agent 分析采访稿 / 开放题</h2>
+
+  <div class="cols" style="margin-top:1em;gap:1.5em;">
+    <div class="col">
+      <p style="font-size:0.75em;font-weight:600;color:var(--gray-700);margin:0 0 0.5em;">你的指令（Prompt）</p>
+      <div class="prompt-box" style="margin:0;">
+        <div class="prompt-label">你 →</div>
+        我上传了一批市民对城市拆迁政策的访谈记录（interview.txt）。
+        请帮我：<br>
+        1. 提取主要诉求类别（不超过 6 类）<br>
+        2. 统计每类出现频次<br>
+        3. 每类给出 2 个典型引用<br>
+        4. 生成 Markdown 格式报告保存为 report.md
+        <div class="prompt-out">
+          <div class="out-label">Agent 做了什么 ↓</div>
+          read_file("interview.txt") → 读取 87 段访谈<br>
+          分析归类 → 识别 6 类诉求<br>
+          统计频次 → 写入 report.md
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="highlight-box" style="margin:0 0 0.6em;">
+        <p style="font-size:0.72em;margin:0;font-weight:600;">关键技巧：上传文件</p>
+        <p style="font-size:0.68em;margin:0.3em 0 0;color:var(--gray-700);">
+          把文件放进 workspace：<br>
+          Web 终端 → <code>openclaw workspace</code> 查看路径<br>
+          或直接在 Chat 界面上传附件
+        </p>
+      </div>
+      <div class="card" style="text-align:left;padding:0.8em 1em;">
+        <div class="card-label" style="font-size:0.72em;">传统做法 vs Agent</div>
+        <div class="card-desc" style="font-size:0.68em;line-height:1.9;">
+          传统：手动编码 → 双人核对 → Excel 统计 → 3天<br>
+          Agent：一条 Prompt → 5 分钟<br>
+          <strong>你的工作</strong>：验证 Agent 的分类是否合理
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide: 场景2 — 数据分析 -->
+<section>
+  <h2>场景 2：让 Agent 写 Python 并自己跑</h2>
+
+  <div class="vs-layout" style="margin-top:1.2em;">
+    <div class="vs-panel left">
+      <h3>以前的你</h3>
+      <div class="vs-items">
+        学 pandas → 学 jieba → 查文档<br>
+        写代码 → 报错 → Stack Overflow<br>
+        花了一天，只是词频统计
+      </div>
+    </div>
+    <div class="vs-divider">→</div>
+    <div class="vs-panel right">
+      <h3 style="color:var(--accent);">现在（Agent）</h3>
+      <div class="vs-items">
+        "帮我分析 weibo.csv 的情感分布，用中文结巴分词，画词云图保存为 wordcloud.png"<br>
+        <span style="color:var(--gray-500);">Agent：装包 → 写代码 → 跑通 → 返图</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="prompt-box" style="margin-top:0.8em;font-size:0.68em;">
+    <div class="prompt-label">实战 Prompt 示例 →</div>
+    帮我分析 weibo.csv（字段：text, date, user_id）中的情感倾向。<br>
+    用 Python + jieba + snownlp，输出每条的情感分（0-1），<br>
+    画分布直方图保存为 sentiment_dist.png，并告诉我正负面比例。
+    <div class="prompt-out">
+      <div class="out-label">Agent 执行 ↓</div>
+      exec: pip install jieba snownlp<br>
+      exec: python3 analyze.py → 生成结果 + 图片<br>
+      回复：正面 62%，负面 38%，图已保存
+    </div>
+  </div>
+</section>
+
+<!-- Slide: 场景3 — 文献辅助 -->
+<section>
+  <h2>场景 3：让 Agent 读文献、抓政策文本</h2>
+
+  <div class="card-grid cols-2" style="margin-top:1em;">
+    <div class="card" style="text-align:left;">
+      <div class="card-label">📄 批量阅读论文摘要</div>
+      <div class="card-desc" style="font-size:0.7em;line-height:1.8;">
+        "这个文件夹有 20 篇关于社会信任的论文摘要（abstracts/），请帮我：<br>
+        1. 提取每篇的核心论点<br>
+        2. 按研究方法分类（量化/质化/混合）<br>
+        3. 输出对比表格到 summary.md"
+      </div>
+    </div>
+    <div class="card" style="text-align:left;">
+      <div class="card-label">🌐 抓取政策文本</div>
+      <div class="card-desc" style="font-size:0.7em;line-height:1.8;">
+        "请从国务院官网抓取 2023-2024 年所有关键词含'数字经济'的政策文件标题和发布日期，保存为 policy_list.csv"<br>
+        <span style="color:var(--gray-400);font-size:0.85em;">Agent 会调用 web_fetch 自动完成</span>
+      </div>
+    </div>
+    <div class="card accent-card" style="text-align:left;">
+      <div class="card-label" style="color:var(--accent);">💬 跨文档问答</div>
+      <div class="card-desc" style="font-size:0.7em;line-height:1.8;">
+        上传多份文件后：<br>
+        "比较这三份地方政府白皮书中，对'公众参与'的定义有何异同？"<br>
+        Agent 会逐份读取后综合回答
+      </div>
+    </div>
+    <div class="card" style="text-align:left;">
+      <div class="card-label">📊 多模态：图表解读</div>
+      <div class="card-desc" style="font-size:0.7em;line-height:1.8;">
+        切换到 Qwen3 VL，上传统计图截图：<br>
+        "这张图表显示了什么趋势？有哪些值得关注的异常点？"
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide: Prompt 技巧 -->
+<section>
+  <h2>写好 Prompt：与 Agent 高效沟通</h2>
+
+  <div class="cols" style="margin-top:1em;gap:1.5em;">
+    <div class="col">
+      <p style="font-size:0.72em;font-weight:600;color:var(--red);margin:0 0 0.4em;">❌ 模糊 Prompt（差）</p>
+      <div class="prompt-box" style="margin:0;border-left-color:#dc2626;font-size:0.68em;">
+        <div class="prompt-label" style="color:#dc2626;">你 →</div>
+        帮我分析一下这些文本
+        <div class="prompt-out" style="color:#f38ba8;">
+          <div class="out-label" style="color:#f38ba8;">问题 ↓</div>
+          "分析"是什么意思？输出什么格式？保存还是直接显示？
+        </div>
+      </div>
+
+      <p style="font-size:0.72em;font-weight:600;color:var(--green);margin:0.8em 0 0.4em;">✅ 具体 Prompt（好）</p>
+      <div class="prompt-box" style="margin:0;border-left-color:var(--green);font-size:0.68em;">
+        <div class="prompt-label" style="color:#a6e3a1;">你 →</div>
+        读取 data/survey.csv（字段：id, age, answer）<br>
+        对 answer 列做情感分类（积极/中性/消极）<br>
+        按 age 分组统计比例，结果保存为 result.md
+        <div class="prompt-out">
+          <div class="out-label">Agent ↓</div>
+          明确知道做什么、输入输出是什么
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card-grid cols-1" style="margin:0;gap:0.6em;">
+        <div class="card" style="text-align:left;padding:0.8em 1em;">
+          <div class="card-label" style="font-size:0.72em;">原则 1：说清目标</div>
+          <div class="card-desc" style="font-size:0.68em;">你想要什么结果？输出格式？文件还是打印？</div>
+        </div>
+        <div class="card" style="text-align:left;padding:0.8em 1em;">
+          <div class="card-label" style="font-size:0.72em;">原则 2：给出约束</div>
+          <div class="card-desc" style="font-size:0.68em;">类别数量、语言、长度限制、方法偏好</div>
+        </div>
+        <div class="card" style="text-align:left;padding:0.8em 1em;">
+          <div class="card-label" style="font-size:0.72em;">原则 3：迭代修正</div>
+          <div class="card-desc" style="font-size:0.68em;">第一次结果不满意，直接说"第 2 类的定义太宽泛，请拆分"</div>
+        </div>
+        <div class="card accent-card" style="text-align:left;padding:0.8em 1em;">
+          <div class="card-label" style="font-size:0.72em;color:var(--accent);">原则 4：验证输出</div>
+          <div class="card-desc" style="font-size:0.68em;">随机抽 10 条检查标签是否合理。AI 很快，但错误也很快。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 能力边界与伦理                                                  -->
+<!-- ============================================================ -->
+
+<section class="section-title">
+  <h2><span class="section-num">补充</span>能力边界与数据安全</h2>
+</section>
+
+<!-- Slide: 能做 vs 不能做 -->
+<section>
+  <h2>Agent 能做什么 vs. 不能做什么</h2>
+
+  <div class="vs-layout" style="margin-top:1.2em;">
+    <div class="vs-panel left" style="background:var(--green-light);border-color:#bbf7d0;">
+      <h3 style="color:var(--green);">✅ 擅长</h3>
+      <div class="vs-items" style="font-size:0.72em;line-height:2;">
+        大规模文本分类与标注<br>
+        重复性数据处理任务<br>
+        代码生成与调试<br>
+        结构化信息抽取<br>
+        多文档综合摘要<br>
+        格式转换（PDF → CSV 等）
+      </div>
+    </div>
+    <div class="vs-divider"></div>
+    <div class="vs-panel right" style="background:#fef2f2;border-color:#fca5a5;">
+      <h3 style="color:var(--red);">⚠️ 有局限</h3>
+      <div class="vs-items" style="font-size:0.72em;line-height:2;">
+        细腻的文化/语境判断<br>
+        因果推断（相关 ≠ 因果）<br>
+        实时数据（知识截止日期）<br>
+        高度专业领域的准确性<br>
+        定量测量的信效度<br>
+        随机性：每次结果可能不同
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-box" style="margin-top:0.8em;">
+    <p style="font-size:0.78em;margin:0;">
+      <strong>研究者的责任</strong>：用 Agent 提速，用人的判断保质。永远要问：这个结果我能解释吗？
+    </p>
+  </div>
+</section>
+
+<!-- Slide: 数据安全 -->
+<section>
+  <h2>为什么自托管很重要：数据主权</h2>
+
+  <div class="card-grid cols-3" style="margin-top:1.2em;">
+    <div class="card">
+      <div class="card-icon">🔒</div>
+      <div class="card-label">数据不出校</div>
+      <div class="card-desc" style="text-align:left;line-height:1.8;font-size:0.7em;">
+        OpenClaw 运行在交大服务器上<br>
+        访谈原文、问卷数据不会发给第三方<br>
+        符合科研数据管理要求
+      </div>
+    </div>
+    <div class="card accent-card">
+      <div class="card-icon">🏛️</div>
+      <div class="card-label" style="color:var(--accent);">IRB 合规</div>
+      <div class="card-desc" style="text-align:left;line-height:1.8;font-size:0.7em;">
+        研究伦理委员会通常要求<br>
+        受访者数据仅限研究团队访问<br>
+        自托管 > 上传到 ChatGPT
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌐</div>
+      <div class="card-label">可审计</div>
+      <div class="card-desc" style="text-align:left;line-height:1.8;font-size:0.7em;">
+        所有对话保存为 JSONL<br>
+        可以重现分析过程<br>
+        方法透明，支持同行审查
+      </div>
+    </div>
+  </div>
+
+  <div class="warning-box" style="margin-top:0.8em;">
+    <p style="font-size:0.75em;margin:0;">
+      <strong>注意</strong>：即使自托管，也不要把真实受访者姓名、身份证号等敏感 PII 直接放入对话。先脱敏，再分析。
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 讨论 + 总结                                                    -->
+<!-- ============================================================ -->
+
+<!-- Slide: 课堂讨论 -->
+<section>
+  <h2>课堂讨论</h2>
+
+  <div class="highlight-box" style="margin-top:1.2em;">
+    <p style="font-size:0.85em;margin:0 0 0.5em;font-weight:600;">带着你的研究问题思考：</p>
+    <p style="font-size:0.8em;margin:0;line-height:2;color:var(--gray-700);">
+      1. 你手上有哪类数据？让 Agent 分析，你会怎么写第一条 Prompt？<br>
+      2. Agent 给出了结果，你会怎么验证它是对的？<br>
+      3. 如果 Agent 的分类和你的直觉不一样，你怎么决定听谁的？<br>
+      4. 用 OpenClaw 试一下：上传一个小文件 → 让 Agent 做一件具体的事
+    </p>
+  </div>
+
+  <div class="cols" style="margin-top:1em;gap:1.5em;">
+    <div class="col">
+      <div class="card orange-card" style="text-align:center;">
+        <div class="card-label" style="font-size:0.75em;color:var(--orange);">动手练习</div>
+        <div class="card-desc" style="font-size:0.68em;margin-top:0.3em;">
+          上传 5-10 条文本<br>让 Agent 做情感分类<br>抽检 3 条是否合理
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card" style="text-align:center;">
+        <div class="card-label" style="font-size:0.75em;">进阶挑战</div>
+        <div class="card-desc" style="font-size:0.68em;margin-top:0.3em;">
+          让 Agent 写 Python 分析代码<br>不看代码，只看结果<br>你信任这个结果吗？
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide: 总结 -->
+<section>
+  <div class="takeaway">
+    <div class="divider"></div>
+    <p class="main-text">Agent 是你的<br>研究助理<br>不是替代者</p>
+    <p class="sub-text">
+      OpenClaw 让 AI 能读、写、算、搜——真正"动手"<br>
+      你的工作：给出清晰目标 + 严格验证结果 + 负责解释<br><br>
+      <strong>数据上交大，分析交 Agent，判断交你自己</strong>
+    </p>
+    <p class="hint">The agent does the running, you do the thinking — 郑思尧 2026</p>
+  </div>
+</section>
+
+</template>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: true,
+    progress: true,
+    transition: 'slide',
+    transitionSpeed: 'fast',
+    backgroundTransition: 'none',
+    controls: true,
+    controlsTutorial: false,
+    width: 1280,
+    height: 720,
+    margin: 0.04,
+    minScale: 0.2,
+    maxScale: 2.0,
+    plugins: []
+  });
+</script>
+</body>
+</html>
