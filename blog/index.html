@@ -1,275 +1,247 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>研究札记 | 郑思尧</title>
-    <meta name="description" content="郑思尧的研究札记与随笔，围绕人工智能辅助研究、代码、R 语言与社会科学方法展开。">
-    <script defer data-domain="siyaozheng.org" src="https://plausible.io/js/script.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #fafafa;
-            --bg-alt: #f5f5f5;
-            --accent: #7c3aed;
-            --accent-light: #8b5cf6;
-            --text: #171717;
-            --text-secondary: #737373;
-            --border: #e5e5e5;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>笔记 | 郑思尧</title>
+<meta name="description" content="郑思尧的研究札记与随笔。AI 辅助研究、代码、R 语言与社会科学方法。">
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+<meta property="og:type" content="website">
+<meta property="og:title" content="笔记 | 郑思尧">
+<meta property="og:description" content="研究札记与随笔。AI 辅助研究、代码、R 语言与社会科学方法。">
+<meta property="og:url" content="https://siyaozheng.org/blog/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<link rel="canonical" href="https://siyaozheng.org/blog/">
+<link rel="alternate" hreflang="zh-CN" href="https://siyaozheng.org/blog/">
+<!-- <link rel="alternate" hreflang="en" href="https://siyaozheng.org/en/blog/"> -->
 
-        body {
-            font-family: 'Noto Sans SC', 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            font-weight: 400;
-        }
+<script defer data-domain="siyaozheng.org" src="https://plausible.io/js/script.js"></script>
 
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            padding: 1.5rem 4rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(250, 250, 250, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            border-bottom: 1px solid var(--border);
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-        .nav-name {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text);
-            letter-spacing: 0.02em;
-            text-decoration: none;
-        }
+<style>
+  :root {
+    --serif: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'STSong', Georgia, serif;
+    --mono:  'JetBrains Mono', 'IBM Plex Mono', ui-monospace, Menlo, monospace;
 
-        .nav-links { display: flex; gap: 2.5rem; }
+    --bg:      #ffffff;
+    --fg:      #0a0a0a;
+    --ink:     #1a1a1a;
+    --muted:   #6b6b6b;
+    --faint:   #9a9a9a;
+    --rule:    #e6e6e6;
+    --rule-2:  #c8c8c8;
+    --accent:  #1e3a8a;
+    --accent-h:#0f1e4d;
 
-        .nav-links a {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-            position: relative;
-        }
+    --measure: 680px;
+    --gutter:  1.5rem;
+  }
 
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px; left: 0;
-            width: 0; height: 1px;
-            background: var(--accent);
-            transition: width 0.3s ease;
-        }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
 
-        .nav-links a:hover { color: var(--text); }
-        .nav-links a:hover::after { width: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.85;
+    letter-spacing: 0.01em;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-        /* Page Header */
-        .page-header {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 8rem 2rem 3rem;
-        }
+  ::selection { background: var(--accent); color: #fff; }
 
-        .page-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--accent);
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-        }
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 1px;
+  }
+  a:hover { color: var(--accent-h); text-decoration: underline; }
 
-        .page-header h1 {
-            font-size: 2.25rem;
-            font-weight: 700;
-            line-height: 1.1;
-            color: var(--text);
-            letter-spacing: -0.02em;
-            margin-bottom: 1rem;
-        }
+  .wrap { max-width: var(--measure); margin: 0 auto; padding: 0 var(--gutter); }
 
-        .page-subtitle {
-            font-size: 1.05rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            max-width: 550px;
-        }
+  .ribbon {
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .ribbon-inner { display: flex; justify-content: space-between; align-items: center; padding: 0.7rem 0; flex-wrap: wrap; gap: 0.5rem; }
+  .ribbon-left { color: var(--faint); }
+  .ribbon-nav { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+  .ribbon-nav a { color: var(--muted); border-bottom: 1px solid transparent; padding-bottom: 1px; }
+  .ribbon-nav a:hover { color: var(--ink); border-bottom-color: var(--ink); text-decoration: none; }
+  .ribbon-nav a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--ink); }
 
-        /* Post List */
-        .post-list {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 2rem 6rem;
-        }
+  .byline { padding: 4.5rem 0 2.5rem; border-bottom: 1px solid var(--rule); }
+  .byline-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 0 0 1.5rem;
+  }
+  .byline-name {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: clamp(36px, 5.2vw, 48px);
+    line-height: 1.15;
+    letter-spacing: 0.03em;
+    margin: 0 0 0.7rem;
+    color: var(--fg);
+  }
+  .byline-lede {
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.85;
+    color: var(--ink);
+    margin: 0;
+    max-width: 32em;
+  }
+  .byline-lede em { font-style: italic; color: var(--muted); }
 
-        .post-item {
-            display: grid;
-            grid-template-columns: 100px 1fr;
-            gap: 2.5rem;
-            padding: 2.5rem 0;
-            border-bottom: 1px solid var(--border);
-            transition: background 0.3s ease;
-        }
+  .posts { list-style: none; margin: 0; padding: 0; }
+  .post {
+    display: grid;
+    grid-template-columns: 9ch 1fr;
+    gap: 1.5rem;
+    padding: 1.85rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .post-when {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--faint);
+    padding-top: 0.45rem;
+    font-feature-settings: "tnum";
+    white-space: nowrap;
+  }
+  .post-body { min-width: 0; }
+  .post-title {
+    font-family: var(--serif);
+    font-size: 20px;
+    line-height: 1.45;
+    font-weight: 500;
+    margin: 0 0 0.6rem;
+    text-wrap: pretty;
+    letter-spacing: 0.02em;
+  }
+  .post-title a {
+    color: var(--fg);
+    border-bottom: 1px solid transparent;
+    transition: color .15s, border-color .15s;
+  }
+  .post-title a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    text-decoration: none;
+  }
+  .post-excerpt {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.75;
+    margin: 0 0 0.85rem;
+    max-width: 38em;
+  }
+  .post-excerpt em { font-style: italic; color: var(--ink); }
+  .post-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
 
-        .post-item:first-child {
-            border-top: 1px solid var(--border);
-        }
+  footer {
+    margin-top: 2.5rem;
+    padding: 1.5rem 0 3.5rem;
+    border-top: 1px solid var(--rule);
+    color: var(--faint);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  footer a { color: var(--muted); border-bottom: 1px solid var(--rule); padding-bottom: 1px; }
+  footer a:hover { color: var(--ink); border-bottom-color: var(--ink); text-decoration: none; }
+  .foot-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
 
-        .post-item:hover {
-            background: linear-gradient(90deg, var(--bg-alt) 0%, transparent 100%);
-            padding-left: 1.5rem;
-            margin-left: -1.5rem;
-        }
-
-        .post-date {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            color: var(--accent);
-            padding-top: 0.2rem;
-        }
-
-        .post-content h3 {
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 0.6rem;
-            line-height: 1.35;
-        }
-
-        .post-content h3 a {
-            color: inherit;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .post-content h3 a:hover {
-            color: var(--accent);
-        }
-
-        .post-excerpt {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 0.8rem;
-        }
-
-        .post-tag {
-            display: inline-block;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            padding: 0.25rem 0.7rem;
-            background: var(--text);
-            color: white;
-            font-weight: 500;
-        }
-
-        /* Footer */
-        footer {
-            padding: 2rem 4rem;
-            text-align: center;
-            border-top: 1px solid var(--border);
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        footer a {
-            color: var(--accent);
-            text-decoration: none;
-        }
-
-        footer a.lang-switch {
-            color: var(--text-secondary);
-            font-size: 0.82rem;
-            letter-spacing: 0.04em;
-            opacity: 0.85;
-        }
-
-        footer a.lang-switch:hover {
-            color: var(--text);
-            opacity: 1;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            nav { padding: 1rem 2rem; }
-            .nav-links { gap: 1.5rem; }
-            .nav-links a { font-size: 0.75rem; }
-        }
-
-        @media (max-width: 600px) {
-            nav { padding: 1rem 1.5rem; }
-            .nav-name { font-size: 0.95rem; }
-            .nav-links { display: none; }
-            .page-header { padding: 7rem 1.5rem 2rem; }
-            .page-header h1 { font-size: 2rem; }
-            .post-list { padding: 0 1.5rem 4rem; }
-            .post-item { grid-template-columns: 1fr; gap: 0.5rem; }
-            footer { padding: 1.5rem; font-size: 0.8rem; }
-        }
-    </style>
+  @media (max-width: 640px) {
+    .byline { padding: 3rem 0 1.75rem; }
+    .post { grid-template-columns: 1fr; gap: 0.4rem; padding: 1.5rem 0; }
+    .post-when { padding-top: 0; }
+  }
+  @media print {
+    .ribbon, footer { display: none; }
+    body { font-size: 11pt; color: #000; }
+  }
+</style>
 </head>
 <body>
-    <nav>
-        <a class="nav-name" href="/">郑思尧</a>
-        <div class="nav-links">
-            <a href="/#publications">论文</a>
-            <a href="/#teaching">教学</a>
-            <a href="/#cv">简历</a>
-            <a href="/blog/">博客</a>
-            <a href="/#contact">联系</a>
-        </div>
+
+<div class="ribbon">
+  <div class="wrap ribbon-inner">
+    <div class="ribbon-left">SIYAOZHENG.ORG · SHANGHAI · 上海</div>
+    <nav class="ribbon-nav" aria-label="Sections">
+      <a href="../#work">论文</a>
+      <a href="../#teaching">教学</a>
+      <a href="../#cv">简历</a>
+      <a href="index.html" aria-current="page">博客</a>
+      <!-- <a href="../en/blog/">EN</a> -->
     </nav>
+  </div>
+</div>
 
-    <header class="page-header">
-        <div class="page-label">研究札记与随想</div>
-        <h1>博客</h1>
-        <p class="page-subtitle">
-            记录一些 AI 辅助研究、写代码和方法论的短笔记。
-        </p>
-    </header>
+<div class="wrap">
 
-    <div class="post-list">
-        <div class="post-item">
-            <div class="post-date">2026.02.12</div>
-            <div class="post-content">
-                <h3><a href="/blog/ai-emotion-archaeology.html">1,248 次 AI 编码会话的情绪成本</a></h3>
-                <p class="post-excerpt">
-                    我把一个月里的 AI 编码对话一条条过了一遍，专门标出所有负面情绪。最后发现，三分之二都指向挫败感，而且触发场景一点也不陌生。
-                </p>
-                <span class="post-tag">AI 与社会科学</span>
-            </div>
-        </div>
-        <div class="post-item">
-            <div class="post-date">2026.02.12</div>
-            <div class="post-content">
-                <h3><a href="/blog/ai-r-errors.html">713 个 R 错误教会了我什么：AI 编码助手并不“聪明”在哪儿</a></h3>
-                <p class="post-excerpt">
-                    我从 1,237 个 AI 编码对话里整理出所有 R 错误。结论其实很朴素：AI 反复踩到的，还是<em>你自己</em>也会踩的坑，只是变量名、路径和类型问题在 R 里更容易冒出来。
-                </p>
-                <span class="post-tag">AI 与社会科学</span>
-            </div>
-        </div>
-    </div>
+  <header class="byline">
+    <p class="byline-eyebrow">NOTES · 研究札记与随笔</p>
+    <h1 class="byline-name">博客</h1>
+    <p class="byline-lede">记录一些 AI 辅助研究、写代码与方法论的短笔记。多数从我自己的研究/教学中长出来——常常先成文于此，再被纳入论文或讲义。</p>
+  </header>
 
-    <footer>
-        <p>&copy; 2026 郑思尧 &middot; <a href="/">首页</a> &middot; <a class="lang-switch" href="/en/blog/">English</a></p>
-    </footer>
+  <ol class="posts" aria-label="文章列表">
+    <li class="post">
+      <span class="post-when">2026.02.12</span>
+      <div class="post-body">
+        <h2 class="post-title"><a href="ai-emotion-archaeology.html">1,248 次 AI 编码会话的情绪成本</a></h2>
+        <p class="post-excerpt">我把一个月里的 AI 编码对话一条条过了一遍，专门标出所有负面情绪。最后发现，三分之二都指向挫败感，而且触发场景一点也不陌生。</p>
+        <span class="post-tag">AI 与社会科学</span>
+      </div>
+    </li>
+    <li class="post">
+      <span class="post-when">2026.02.12</span>
+      <div class="post-body">
+        <h2 class="post-title"><a href="ai-r-errors.html">713 个 R 错误教会了我什么：AI 编码助手并不"聪明"在哪儿</a></h2>
+        <p class="post-excerpt">我从 1,237 个 AI 编码对话里整理出所有 R 错误。结论其实很朴素：AI 反复踩到的，还是<em>你自己</em>也会踩的坑，只是变量名、路径和类型问题在 R 里更容易冒出来。</p>
+        <span class="post-tag">AI 与社会科学</span>
+      </div>
+    </li>
+  </ol>
+
+</div>
+
+<footer>
+  <div class="wrap foot-row">
+    <span>© MMXXVI 郑思尧</span>
+    <span>
+      <a href="../">首页</a> <!-- · <a href="../en/blog/">English</a> --> · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">沪ICP备2026018408号</a>
+    </span>
+  </div>
+</footer>
+
 </body>
 </html>

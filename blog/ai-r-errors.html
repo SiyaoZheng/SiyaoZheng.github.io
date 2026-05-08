@@ -1,552 +1,468 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>713 个 R 错误教会了我什么：AI 编码助手并不“聪明”在哪儿 | 郑思尧</title>
-    <meta name="description" content="我从 1,237 个 AI 编码会话里抓出所有 R 错误。AI 并不会犯什么高明的错，它反复犯的，是你自己也会犯的那些。">
-    <script defer data-domain="siyaozheng.org" src="https://plausible.io/js/script.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #fafafa;
-            --bg-alt: #f5f5f5;
-            --accent: #7c3aed;
-            --accent-light: #8b5cf6;
-            --text: #171717;
-            --text-secondary: #737373;
-            --border: #e5e5e5;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>713 个 R 错误教会了我什么 | 郑思尧</title>
+<meta name="description" content="我从 1,237 个 AI 编码会话里抓出所有 R 错误。AI 并不会犯什么高明的错，它反复犯的，是你自己也会犯的那些。">
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+<meta property="og:type" content="article">
+<meta property="og:title" content="713 个 R 错误教会了我什么：AI 编码助手并不"聪明"在哪儿">
+<meta property="og:description" content="AI 编码助手在 R 里的弱点，其实不是 AI 特有的弱点，而是 R 特有的弱点。">
+<meta property="og:url" content="https://siyaozheng.org/blog/ai-r-errors.html">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="article:published_time" content="2026-02-12">
+<meta property="article:author" content="Siyao Zheng">
+<link rel="canonical" href="https://siyaozheng.org/blog/ai-r-errors.html">
+<link rel="alternate" hreflang="zh-CN" href="https://siyaozheng.org/blog/ai-r-errors.html">
+<!-- <link rel="alternate" hreflang="en" href="https://siyaozheng.org/en/blog/ai-r-errors.html"> -->
 
-        body {
-            font-family: 'Noto Sans SC', 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            font-weight: 400;
-        }
+<script defer data-domain="siyaozheng.org" src="https://plausible.io/js/script.js"></script>
 
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            padding: 1.5rem 4rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(250, 250, 250, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            border-bottom: 1px solid var(--border);
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-        .nav-name {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text);
-            letter-spacing: 0.02em;
-            text-decoration: none;
-        }
+<style>
+  :root {
+    --serif: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'STSong', Georgia, serif;
+    --mono:  'JetBrains Mono', 'IBM Plex Mono', ui-monospace, Menlo, monospace;
 
-        .nav-links { display: flex; gap: 2.5rem; }
+    --bg:      #ffffff;
+    --surface: #fafafa;
+    --fg:      #0a0a0a;
+    --ink:     #1a1a1a;
+    --muted:   #6b6b6b;
+    --faint:   #9a9a9a;
+    --rule:    #e6e6e6;
+    --rule-2:  #c8c8c8;
+    --accent:  #1e3a8a;
+    --accent-h:#0f1e4d;
+    --c-error: #a23232;
 
-        .nav-links a {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-            position: relative;
-        }
+    --measure: 720px;
+    --gutter:  1.5rem;
+  }
 
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px; left: 0;
-            width: 0; height: 1px;
-            background: var(--accent);
-            transition: width 0.3s ease;
-        }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 
-        .nav-links a:hover { color: var(--text); }
-        .nav-links a:hover::after { width: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 16.5px;
+    line-height: 1.95;
+    letter-spacing: 0.01em;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-        /* Article Layout */
-        .article-header {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 8rem 2rem 3rem;
-        }
+  ::selection { background: var(--accent); color: #fff; }
 
-        .article-meta {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--accent);
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-        }
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 1px;
+  }
+  a:hover { color: var(--accent-h); text-decoration: underline; }
 
-        .article-header h1 {
-            font-size: 2.25rem;
-            font-weight: 700;
-            line-height: 1.15;
-            color: var(--text);
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.02em;
-        }
+  .wrap { max-width: var(--measure); margin: 0 auto; padding: 0 var(--gutter); }
 
-        .article-subtitle {
-            font-size: 1.05rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            max-width: 620px;
-        }
+  .ribbon {
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .ribbon-inner { display: flex; justify-content: space-between; align-items: center; padding: 0.7rem 0; flex-wrap: wrap; gap: 0.5rem; }
+  .ribbon-left { color: var(--faint); }
+  .ribbon-nav { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+  .ribbon-nav a { color: var(--muted); border-bottom: 1px solid transparent; padding-bottom: 1px; }
+  .ribbon-nav a:hover { color: var(--ink); border-bottom-color: var(--ink); text-decoration: none; }
+  .ribbon-nav a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--ink); }
 
-        /* Article Body */
-        .article-body {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 0 2rem 6rem;
-        }
+  .article-head { padding: 4.5rem 0 2.5rem; border-bottom: 1px solid var(--rule); }
+  .article-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 0 0 1.4rem;
+  }
+  .article-eyebrow .sep { color: var(--rule-2); margin: 0 0.55rem; }
+  .article-eyebrow .cat { color: var(--muted); }
+  .article-head h1 {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: clamp(28px, 4.4vw, 42px);
+    line-height: 1.18;
+    letter-spacing: 0.02em;
+    margin: 0 0 1.1rem;
+    color: var(--fg);
+    text-wrap: pretty;
+  }
+  .article-lede {
+    font-family: var(--serif);
+    font-size: 18.5px;
+    line-height: 1.85;
+    color: var(--ink);
+    margin: 0;
+    max-width: 36em;
+  }
 
-        .article-body p {
-            font-size: 1.05rem;
-            line-height: 1.85;
-            color: var(--text);
-            margin-bottom: 1.5rem;
-        }
+  article { padding: 2.5rem 0 3rem; }
+  article p {
+    margin: 0 0 1.5rem;
+    color: var(--ink);
+    font-size: 17px;
+    line-height: 2;
+    letter-spacing: 0.005em;
+    text-wrap: pretty;
+  }
+  article p strong { font-weight: 700; color: var(--fg); }
+  article p em { font-style: italic; color: var(--accent); font-weight: 400; }
 
-        .article-body h2 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--text);
-            margin: 3rem 0 1.2rem;
-            letter-spacing: -0.01em;
-        }
+  article h2 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 26px;
+    letter-spacing: 0.02em;
+    margin: 3rem 0 1.4rem;
+    color: var(--fg);
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--rule);
+    line-height: 1.3;
+  }
+  article h3 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 19px;
+    letter-spacing: 0.02em;
+    margin: 2.4rem 0 1rem;
+    color: var(--fg);
+  }
 
-        .article-body h3 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--text);
-            margin: 2.5rem 0 1rem;
-        }
+  article ul, article ol {
+    margin: 0 0 1.5rem;
+    padding-left: 1.6em;
+    color: var(--ink);
+    font-size: 17px;
+    line-height: 1.9;
+  }
+  article li { margin-bottom: 0.45rem; }
 
-        .article-body a {
-            color: var(--accent);
-            text-decoration: none;
-            border-bottom: 1px solid transparent;
-            transition: border-color 0.3s ease;
-        }
+  article hr {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 3rem 0;
+  }
 
-        .article-body a:hover {
-            border-bottom-color: var(--accent);
-        }
+  article code {
+    font-family: var(--mono);
+    font-size: 0.86em;
+    background: var(--surface);
+    padding: 0.1rem 0.4rem;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    color: var(--ink);
+  }
 
-        .article-body ul, .article-body ol {
-            margin: 0 0 1.5rem 1.5rem;
-            font-size: 1.05rem;
-            line-height: 1.85;
-        }
+  article pre {
+    background: var(--surface);
+    color: var(--ink);
+    padding: 1.2rem 1.4rem;
+    margin: 1.75rem 0;
+    overflow-x: auto;
+    border: 1px solid var(--rule);
+    border-left: 2px solid var(--rule-2);
+    line-height: 1.6;
+  }
+  article pre code {
+    font-family: var(--mono);
+    font-size: 13px;
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+  }
 
-        .article-body li { margin-bottom: 0.5rem; }
-        .article-body strong { font-weight: 600; }
+  /* Big stat — editorial table */
+  .big-stat {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 2.25rem 0;
+    border-top: 1px solid var(--rule-2);
+    border-bottom: 1px solid var(--rule-2);
+  }
+  .big-stat-item {
+    padding: 1.4rem 0.5rem 1.2rem;
+    text-align: left;
+    border-right: 1px solid var(--rule);
+  }
+  .big-stat-item:last-child { border-right: none; }
+  .big-stat-number {
+    font-family: var(--mono);
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--fg);
+    line-height: 1.1;
+    font-feature-settings: "tnum";
+    letter-spacing: -0.02em;
+  }
+  .big-stat-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--faint);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.4rem;
+    line-height: 1.4;
+  }
 
-        /* Code */
-        .article-body code {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.88rem;
-            background: var(--bg-alt);
-            padding: 0.15rem 0.4rem;
-            border-radius: 3px;
-            border: 1px solid var(--border);
-        }
+  /* Data table — editorial */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0 2.25rem;
+    font-size: 15px;
+  }
+  .data-table thead th {
+    text-align: left;
+    padding: 0.75rem 0.85rem;
+    border-bottom: 2px solid var(--fg);
+    border-top: 1px solid var(--fg);
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink);
+  }
+  .data-table tbody td {
+    padding: 0.7rem 0.85rem;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    font-family: var(--serif);
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .data-table tbody tr:last-child td { border-bottom: 1px solid var(--rule-2); }
+  .data-table .num {
+    font-family: var(--mono);
+    font-weight: 500;
+    text-align: right;
+    font-feature-settings: "tnum";
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .data-table .accent { color: var(--accent); }
 
-        .article-body pre {
-            background: #1e1e2e;
-            color: #cdd6f4;
-            padding: 1.5rem;
-            border-radius: 6px;
-            overflow-x: auto;
-            margin: 1.5rem 0 2rem;
-            line-height: 1.6;
-        }
+  /* Error block — editorial mono */
+  .error-block {
+    margin: 1.4rem 0 1.75rem;
+    padding: 0.95rem 1.2rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-left: 2px solid var(--c-error);
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--c-error);
+    line-height: 1.65;
+    overflow-x: auto;
+    letter-spacing: 0;
+  }
 
-        .article-body pre code {
-            background: none;
-            border: none;
-            padding: 0;
-            font-size: 0.85rem;
-            color: inherit;
-        }
+  /* Callout */
+  .callout {
+    margin: 2.25rem 0;
+    padding: 1.5rem 1.6rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-left: 2px solid var(--accent);
+  }
+  .callout p:first-child {
+    font-family: var(--mono);
+    font-weight: 500;
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin: 0 0 0.85rem;
+  }
+  .callout p:last-child {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--ink);
+  }
 
-        /* Callout */
-        .callout {
-            border-left: 3px solid var(--accent);
-            padding: 1.2rem 1.5rem;
-            margin: 1.5rem 0 2rem;
-            background: var(--bg-alt);
-        }
+  /* Timeline */
+  .timeline {
+    margin: 2rem 0 2.25rem;
+    padding-left: 1.5rem;
+    border-left: 1px solid var(--rule-2);
+  }
+  .timeline-item { position: relative; padding-bottom: 1.5rem; }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -1.62rem;
+    top: 0.55rem;
+    width: 7px; height: 7px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+  .timeline-date {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+    letter-spacing: 0.02em;
+  }
+  .timeline-count { font-weight: 500; }
+  .timeline-item p {
+    margin: 0;
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--muted);
+  }
 
-        .callout p {
-            margin-bottom: 0;
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-        }
+  .colophon {
+    margin-top: 2rem;
+    color: var(--muted);
+    font-size: 14.5px;
+    font-style: italic;
+    line-height: 1.7;
+  }
+  .colophon a { color: var(--accent); }
 
-        .callout p:first-child {
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 0.5rem;
-        }
+  footer {
+    margin-top: 1.5rem;
+    padding: 1.5rem 0 3.5rem;
+    border-top: 1px solid var(--rule);
+    color: var(--faint);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  footer a { color: var(--muted); border-bottom: 1px solid var(--rule); padding-bottom: 1px; }
+  footer a:hover { color: var(--ink); border-bottom-color: var(--ink); text-decoration: none; }
+  .foot-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
 
-        /* Table */
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0 2rem;
-            font-size: 0.95rem;
-        }
-
-        .data-table th {
-            text-align: left;
-            padding: 0.8rem 1rem;
-            border-bottom: 2px solid var(--text);
-            font-weight: 600;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-        }
-
-        .data-table td {
-            padding: 0.8rem 1rem;
-            border-bottom: 1px solid var(--border);
-            vertical-align: top;
-        }
-
-        .data-table .num {
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 500;
-            text-align: right;
-        }
-
-        .data-table .accent {
-            color: var(--accent);
-        }
-
-        /* Error block */
-        .error-block {
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            border-radius: 6px;
-            padding: 1.2rem 1.5rem;
-            margin: 1.5rem 0 2rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.88rem;
-            color: #991b1b;
-            line-height: 1.6;
-        }
-
-        /* Big stat */
-        .big-stat {
-            display: flex;
-            gap: 2rem;
-            margin: 2rem 0;
-            padding: 1.5rem 0;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .big-stat-item {
-            flex: 1;
-            text-align: center;
-        }
-
-        .big-stat-number {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--accent);
-            line-height: 1.2;
-        }
-
-        .big-stat-label {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin-top: 0.3rem;
-        }
-
-        /* Timeline */
-        .timeline {
-            position: relative;
-            padding-left: 2rem;
-            margin: 1.5rem 0 2rem;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 0; bottom: 0;
-            width: 2px;
-            background: var(--border);
-        }
-
-        .timeline-item {
-            position: relative;
-            padding-bottom: 1.5rem;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -2rem;
-            top: 0.45rem;
-            width: 8px; height: 8px;
-            background: var(--accent);
-            border-radius: 50%;
-        }
-
-        .timeline-date {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            color: var(--accent);
-            margin-bottom: 0.2rem;
-        }
-
-        .timeline-item p {
-            font-size: 0.95rem;
-            margin-bottom: 0;
-            line-height: 1.6;
-        }
-
-        .timeline-count {
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 600;
-        }
-
-        /* Separator */
-        .article-body hr {
-            border: none;
-            border-top: 1px solid var(--border);
-            margin: 3rem 0;
-        }
-
-        /* Footer */
-        footer {
-            padding: 2rem 4rem;
-            text-align: center;
-            border-top: 1px solid var(--border);
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        footer a { color: var(--accent); text-decoration: none; }
-
-        footer a.lang-switch {
-            color: var(--text-secondary);
-            font-size: 0.82rem;
-            letter-spacing: 0.04em;
-            opacity: 0.85;
-        }
-
-        footer a.lang-switch:hover {
-            color: var(--text);
-            opacity: 1;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            nav { padding: 1rem 2rem; }
-            .nav-links { gap: 1.5rem; }
-            .nav-links a { font-size: 0.75rem; }
-        }
-
-        @media (max-width: 600px) {
-            nav { padding: 1rem 1.5rem; }
-            .nav-name { font-size: 0.95rem; }
-            .nav-links { display: none; }
-            .article-header { padding: 7rem 1.5rem 2rem; }
-            .article-header h1 { font-size: 1.95rem; }
-            .article-body { padding: 0 1.5rem 4rem; }
-            .big-stat { flex-direction: column; gap: 1rem; }
-            .big-stat-number { font-size: 2rem; }
-            footer { padding: 1.5rem; font-size: 0.8rem; }
-        }
-    </style>
+  @media (max-width: 640px) {
+    .article-head { padding: 3rem 0 1.5rem; }
+    .article-head h1 { font-size: 26px; }
+    .article-lede { font-size: 17px; }
+    article p { font-size: 16.5px; line-height: 1.9; }
+    .big-stat { grid-template-columns: 1fr; border-bottom: none; }
+    .big-stat-item { border-right: none; border-bottom: 1px solid var(--rule); padding: 0.85rem 0.5rem; }
+    .big-stat-item:last-child { border-bottom: 1px solid var(--rule-2); }
+    .data-table { font-size: 13.5px; }
+    .data-table thead th, .data-table tbody td { padding: 0.55rem 0.5rem; }
+    .callout { padding: 1.2rem; }
+  }
+  @media print {
+    .ribbon, footer { display: none; }
+    body { font-size: 11pt; color: #000; }
+  }
+</style>
 </head>
 <body>
-    <nav>
-        <a class="nav-name" href="/">郑思尧</a>
-        <div class="nav-links">
-            <a href="/#publications">论文</a>
-            <a href="/#teaching">教学</a>
-            <a href="/#cv">简历</a>
-            <a href="/blog/">博客</a>
-            <a href="/#contact">联系</a>
-        </div>
+
+<div class="ribbon">
+  <div class="wrap ribbon-inner">
+    <div class="ribbon-left">SIYAOZHENG.ORG · SHANGHAI · 上海</div>
+    <nav class="ribbon-nav" aria-label="Sections">
+      <a href="../#work">论文</a>
+      <a href="../#teaching">教学</a>
+      <a href="../#cv">简历</a>
+      <a href="index.html" aria-current="page">博客</a>
+      <!-- <a href="../en/blog/ai-r-errors.html">EN</a> -->
     </nav>
+  </div>
+</div>
 
-    <header class="article-header">
-        <div class="article-meta">2026 年 2 月 12 日 · AI 与社会科学</div>
-        <h1>713 个 R 错误教会了我什么：AI 编码助手并不“聪明”在哪儿</h1>
-        <p class="article-subtitle">
-            我从 1,237 个 AI 编码会话里抓出所有 R 错误。AI 并不会犯什么高明的错，它反复犯的，是你自己也会犯的那些。
-        </p>
-    </header>
+<div class="wrap">
 
-    <article class="article-body">
+  <header class="article-head">
+    <p class="article-eyebrow">
+      <time datetime="2026-02-12">2026.02.12</time>
+      <span class="sep">·</span>
+      <span class="cat">AI 与社会科学</span>
+    </p>
+    <h1>713 个 R 错误教会了我什么：AI 编码助手并不"聪明"在哪儿</h1>
+    <p class="article-lede">我从 1,237 个 AI 编码会话里抓出所有 R 错误。AI 并不会犯什么高明的错，它反复犯的，是你自己也会犯的那些。</p>
+  </header>
 
-        <p>
-            过去一个月里，我用 <a href="https://docs.anthropic.com/en/docs/claude-code/overview">Claude Code</a> 搭了一个大型 R 研究流水线。问卷数据来自多个来源，既有潜变量模型，也有多重插补和回归分析。项目一旦长起来，就会变成 40 多个 R 文件、数百个变量，散落在配置文件和模型规格里。
-        </p>
+  <article>
 
-        <p>
-            Claude Code 会把每个会话都记成结构化 JSON 转录。33 天里一共 1,237 个会话，覆盖了我手头所有研究项目。我写了一个 Python 脚本，把这些转录里的 R 错误逐条抓出来，再按 stderr 输出和错误模式去匹配。最后一共抓到 168 个会话里的 713 个独立错误。
-        </p>
+    <p>过去一个月里，我用 <a href="https://docs.anthropic.com/en/docs/claude-code/overview">Claude Code</a> 搭了一个大型 R 研究流水线。问卷数据来自多个来源，既有潜变量模型，也有多重插补和回归分析。项目一旦长起来，就会变成 40 多个 R 文件、数百个变量，散落在配置文件和模型规格里。</p>
 
-        <p>
-            我原本以为会看到一些很“AI”的失败，比如凭空编造函数名、写出根本不可能的语法。结果看到的，却是我自己的老毛病在屏幕上回望我。
-        </p>
+    <p>Claude Code 会把每个会话都记成结构化 JSON 转录。33 天里一共 1,237 个会话，覆盖了我手头所有研究项目。我写了一个 Python 脚本，把这些转录里的 R 错误逐条抓出来，再按 stderr 输出和错误模式去匹配。最后一共抓到 168 个会话里的 713 个独立错误。</p>
 
-        <h2>数字先说话</h2>
+    <p>我原本以为会看到一些很"AI"的失败，比如凭空编造函数名、写出根本不可能的语法。结果看到的，却是我自己的老毛病在屏幕上回望我。</p>
 
-        <div class="big-stat">
-            <div class="big-stat-item">
-                <div class="big-stat-number">1,237</div>
-                <div class="big-stat-label">编码会话</div>
-            </div>
-            <div class="big-stat-item">
-                <div class="big-stat-number">713</div>
-                <div class="big-stat-label">R 错误</div>
-            </div>
-            <div class="big-stat-item">
-                <div class="big-stat-number">86%</div>
-                <div class="big-stat-label">无错误会话</div>
-            </div>
-        </div>
+    <h2>数字先说话</h2>
 
-        <p>
-            86% 的会话里没有任何 R 错误。AI 并不是天天在把事情搞坏。但剩下 14% 里 713 个错误，讲的是另一回事，而且故事并不主要关于 AI。
-        </p>
+    <div class="big-stat">
+      <div class="big-stat-item"><div class="big-stat-number">1,237</div><div class="big-stat-label">编码会话</div></div>
+      <div class="big-stat-item"><div class="big-stat-number">713</div><div class="big-stat-label">R 错误</div></div>
+      <div class="big-stat-item"><div class="big-stat-number">86%</div><div class="big-stat-label">无错误会话</div></div>
+    </div>
 
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>错误类别</th>
-                    <th class="num">数量</th>
-                    <th class="num">%</th>
-                    <th>直白地说</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>变量/对象未找到</td>
-                    <td class="num accent">160</td>
-                    <td class="num">22%</td>
-                    <td>一个文件改名，另一个文件忘了同步</td>
-                </tr>
-                <tr>
-                    <td>类型与维度错误</td>
-                    <td class="num accent">137</td>
-                    <td class="num">19%</td>
-                    <td>haven_labelled、subscript out of bounds、factor/numeric 混淆</td>
-                </tr>
-                <tr>
-                    <td>文件路径与 IO 错误</td>
-                    <td class="num accent">123</td>
-                    <td class="num">17%</td>
-                    <td>路径里有空格、根目录弄错、文件损坏</td>
-                </tr>
-                <tr>
-                    <td>包与 API 问题</td>
-                    <td class="num">65</td>
-                    <td class="num">9%</td>
-                    <td>缺包、API 改名、Quarto / igraph 变动</td>
-                </tr>
-                <tr>
-                    <td>语法错误</td>
-                    <td class="num">47</td>
-                    <td class="num">7%</td>
-                    <td>转义字符、意外符号</td>
-                </tr>
-                <tr>
-                    <td>运行时逻辑错误</td>
-                    <td class="num">44</td>
-                    <td class="num">6%</td>
-                    <td>对 NA 用 if()、pipe 链断掉、grid / ggplot 相关问题</td>
-                </tr>
-                <tr>
-                    <td>函数参数写错</td>
-                    <td class="num">29</td>
-                    <td class="num">4%</td>
-                    <td>多写了没用的参数、选项配置错误</td>
-                </tr>
-                <tr>
-                    <td>基础设施故障</td>
-                    <td class="num">51</td>
-                    <td class="num">7%</td>
-                    <td>HPC worker、targets 锁文件、C++ 编译</td>
-                </tr>
-                <tr>
-                    <td>数值 / 收敛问题</td>
-                    <td class="num">24</td>
-                    <td class="num">3%</td>
-                    <td>奇异矩阵、内存限制、hIRT 初始化</td>
-                </tr>
-                <tr>
-                    <td>已知陷阱（mice）</td>
-                    <td class="num">7</td>
-                    <td class="num">1%</td>
-                    <td>文档里写过的坑，还是一再踩到</td>
-                </tr>
-                <tr>
-                    <td>缺失函数 / 方法</td>
-                    <td class="num">25</td>
-                    <td class="num">4%</td>
-                    <td>函数被移除，或者根本没导出</td>
-                </tr>
-            </tbody>
-        </table>
+    <p>86% 的会话里没有任何 R 错误。AI 并不是天天在把事情搞坏。但剩下 14% 里 713 个错误，讲的是另一回事，而且故事并不主要关于 AI。</p>
 
-        <p>
-            排在最前面的三类错误——名字错、类型错、路径错——一共占了全部错误的 58%。做 R 的人一看就知道这是怎么回事。它们共享同一个根因：<strong>R 不会在代码真正运行之前，给你任何关于正确性的结构化反馈。</strong>这也是这篇文章真正要讲的。
-        </p>
+    <table class="data-table">
+      <thead>
+        <tr><th>错误类别</th><th class="num">数量</th><th class="num">%</th><th>直白地说</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>变量/对象未找到</td><td class="num accent">160</td><td class="num">22%</td><td>一个文件改名，另一个文件忘了同步</td></tr>
+        <tr><td>类型与维度错误</td><td class="num accent">137</td><td class="num">19%</td><td>haven_labelled、subscript out of bounds、factor/numeric 混淆</td></tr>
+        <tr><td>文件路径与 IO 错误</td><td class="num accent">123</td><td class="num">17%</td><td>路径里有空格、根目录弄错、文件损坏</td></tr>
+        <tr><td>包与 API 问题</td><td class="num">65</td><td class="num">9%</td><td>缺包、API 改名、Quarto / igraph 变动</td></tr>
+        <tr><td>语法错误</td><td class="num">47</td><td class="num">7%</td><td>转义字符、意外符号</td></tr>
+        <tr><td>运行时逻辑错误</td><td class="num">44</td><td class="num">6%</td><td>对 NA 用 if()、pipe 链断掉、grid / ggplot 相关问题</td></tr>
+        <tr><td>函数参数写错</td><td class="num">29</td><td class="num">4%</td><td>多写了没用的参数、选项配置错误</td></tr>
+        <tr><td>基础设施故障</td><td class="num">51</td><td class="num">7%</td><td>HPC worker、targets 锁文件、C++ 编译</td></tr>
+        <tr><td>数值 / 收敛问题</td><td class="num">24</td><td class="num">3%</td><td>奇异矩阵、内存限制、hIRT 初始化</td></tr>
+        <tr><td>已知陷阱（mice）</td><td class="num">7</td><td class="num">1%</td><td>文档里写过的坑，还是一再踩到</td></tr>
+        <tr><td>缺失函数 / 方法</td><td class="num">25</td><td class="num">4%</td><td>函数被移除，或者根本没导出</td></tr>
+      </tbody>
+    </table>
 
-        <h2>R 没有编译器，这会改变一切</h2>
+    <p>排在最前面的三类错误——名字错、类型错、路径错——一共占了全部错误的 58%。做 R 的人一看就知道这是怎么回事。它们共享同一个根因：<strong>R 不会在代码真正运行之前，给你任何关于正确性的结构化反馈。</strong>这也是这篇文章真正要讲的。</p>
 
-        <p>
-            最大的一类是命名错误：160 个，占总数的 22%。AI 可能在一个文件里把变量改名，比如把数据清洗脚本里的 <code>income_level</code> 改成 <code>income_percentile</code>，却漏掉下游引用。回归公式、配置文件，甚至后面好几步才会执行到的可视化脚本里，都可能还在用旧名字。
-        </p>
+    <h2>R 没有编译器，这会改变一切</h2>
 
-        <div class="error-block">
-            Error: Can't subset columns that don't exist.<br>
-            x Column `income_level` doesn't exist.
-        </div>
+    <p>最大的一类是命名错误：160 个，占总数的 22%。AI 可能在一个文件里把变量改名，比如把数据清洗脚本里的 <code>income_level</code> 改成 <code>income_percentile</code>，却漏掉下游引用。回归公式、配置文件，甚至后面好几步才会执行到的可视化脚本里，都可能还在用旧名字。</p>
 
-        <div class="error-block">
-            Error in eval(expr, envir, enclos):<br>
-            &nbsp;&nbsp;object 'birthyear' not found
-        </div>
+    <div class="error-block">
+      Error: Can't subset columns that don't exist.<br>
+      x Column `income_level` doesn't exist.
+    </div>
 
-        <p>
-            这不是 AI 独有的问题，而是每个 R 程序员都会遇到的老问题。我自己也犯过无数次，只是不愿意承认。它真正说明的是，为什么 R 跟那些 AI 助手最擅长的语言不一样。
-        </p>
+    <div class="error-block">
+      Error in eval(expr, envir, enclos):<br>
+      &nbsp;&nbsp;object 'birthyear' not found
+    </div>
 
-        <p>
-            在 Python 里，引用一个不存在的名字会立刻抛出 <code>NameError</code>。在 Go 或 Rust 里，编译器根本不会让你过。在 R 里，流水线可能已经跑了 30 分钟，数据也读了、模型也拟了、插补也做了，直到第 31 分钟才在那个旧名字上炸掉。
-        </p>
+    <p>这不是 AI 独有的问题，而是每个 R 程序员都会遇到的老问题。我自己也犯过无数次，只是不愿意承认。它真正说明的是，为什么 R 跟那些 AI 助手最擅长的语言不一样。</p>
 
-        <pre><code># 这段代码会跑 30 分钟，然后才失败
+    <p>在 Python 里，引用一个不存在的名字会立刻抛出 <code>NameError</code>。在 Go 或 Rust 里，编译器根本不会让你过。在 R 里，流水线可能已经跑了 30 分钟，数据也读了、模型也拟了、插补也做了，直到第 31 分钟才在那个旧名字上炸掉。</p>
+
+    <pre><code># 这段代码会跑 30 分钟，然后才失败
 data &lt;- load_all_surveys()          # 2 min
 data &lt;- harmonize_variables(data)   # 3 min
 models &lt;- fit_irt_models(data)      # 10 min
@@ -554,155 +470,111 @@ imps &lt;- run_mice(models, m = 20)     # 15 min
 results &lt;- run_regressions(imps)
 # Error: object 'income_level' not found   # 第 31 分钟</code></pre>
 
-        <p>
-            AI 没有办法“编译” R 代码。它把改动写出来，看上去也没问题，但没有任何东西会在运行前替你验证。也正因为如此，命名错误是整个一个月里唯一持续反复出现的类别。类型错误修过一次就基本消失了，路径问题修过一次也基本不回来；只有命名错误会一周接一周地回来，因为 R 本来就没有静态分析这道保险。
-        </p>
+    <p>AI 没有办法"编译" R 代码。它把改动写出来，看上去也没问题，但没有任何东西会在运行前替你验证。也正因为如此，命名错误是整个一个月里唯一持续反复出现的类别。类型错误修过一次就基本消失了，路径问题修过一次也基本不回来；只有命名错误会一周接一周地回来，因为 R 本来就没有静态分析这道保险。</p>
 
-        <div class="callout">
-            <p>慢性问题 vs. 急性问题</p>
-            <p>大多数错误类别都更像“急性病”：它们会在某次重构里集中爆发，修完就过去，不会再回来。<code>haven_labelled</code> 的类型错误是在 1 月下旬出现的，修掉之后就不再出现；<code>mice</code> 的配置 bug 也是一样。只有命名错误更像“慢性病”——在一门没有编译步骤的语言里工作，这几乎是永久条件。</p>
-        </div>
+    <div class="callout">
+      <p>慢性问题 vs. 急性问题</p>
+      <p>大多数错误类别都更像"急性病"：它们会在某次重构里集中爆发，修完就过去，不会再回来。<code>haven_labelled</code> 的类型错误是在 1 月下旬出现的，修掉之后就不再出现；<code>mice</code> 的配置 bug 也是一样。只有命名错误更像"慢性病"——在一门没有编译步骤的语言里工作，这几乎是永久条件。</p>
+    </div>
 
-        <h2>你的数据在类型上撒谎</h2>
+    <h2>你的数据在类型上撒谎</h2>
 
-        <p>
-            这段基本就是写给做定量社会科学的人看的。
-        </p>
+    <p>这段基本就是写给做定量社会科学的人看的。</p>
 
-        <p>
-            137 个错误，占总数的 19%，来自类型和维度不匹配。最典型的例子来自问卷数据。用 <code>haven::read_dta()</code> 读进 Stata 的 <code>.dta</code> 文件时，返回的并不是普通 data frame。那些列里带着看不见的元数据——取值标签、变量标签、格式信息——于是被编码成一种特殊的 <code>haven_labelled</code> 类型。它看起来像数值向量，打印出来也像，但它不是。
-        </p>
+    <p>137 个错误，占总数的 19%，来自类型和维度不匹配。最典型的例子来自问卷数据。用 <code>haven::read_dta()</code> 读进 Stata 的 <code>.dta</code> 文件时，返回的并不是普通 data frame。那些列里带着看不见的元数据——取值标签、变量标签、格式信息——于是被编码成一种特殊的 <code>haven_labelled</code> 类型。它看起来像数值向量，打印出来也像，但它不是。</p>
 
-        <div class="error-block">
-            Error: &lt;haven_labelled&gt; - &lt;haven_labelled&gt; is not permitted
-        </div>
+    <div class="error-block">Error: &lt;haven_labelled&gt; - &lt;haven_labelled&gt; is not permitted</div>
 
-        <div class="error-block">
-            Error: Can't combine &lt;haven_labelled&gt; and &lt;double&gt;.
-        </div>
+    <div class="error-block">Error: Can't combine &lt;haven_labelled&gt; and &lt;double&gt;.</div>
 
-        <p>
-            连基本运算都会失败，<code>bind_rows()</code> 也会失败。数据看起来是数值，行为上却不是。修复其实只要一个函数：<code>haven::zap_labels()</code>。但你必须在刚读入时就立刻调用它，不能等标签沿着流水线扩散下去。要是拖上三份文件、两小时之后才炸，那往往已经不是表面上的类型错误，而是清洗脚本第 10 行本来就该处理掉、却一路被放大的问题。
-        </p>
+    <p>连基本运算都会失败，<code>bind_rows()</code> 也会失败。数据看起来是数值，行为上却不是。修复其实只要一个函数：<code>haven::zap_labels()</code>。但你必须在刚读入时就立刻调用它，不能等标签沿着流水线扩散下去。要是拖上三份文件、两小时之后才炸，那往往已经不是表面上的类型错误，而是清洗脚本第 10 行本来就该处理掉、却一路被放大的问题。</p>
 
-        <p>
-            这类坑主要影响那些处理 Stata 或 SPSS 问卷数据的人，也就是很大一部分定量社会科学研究者。AI 不会自己知道 <code>haven_labelled</code> 是什么，除非你明确告诉它。它看见一个 data frame，就默认它是普通 data frame，然后写出一段完全说得通、但会因为隐藏原因失败的代码。
-        </p>
+    <p>这类坑主要影响那些处理 Stata 或 SPSS 问卷数据的人，也就是很大一部分定量社会科学研究者。AI 不会自己知道 <code>haven_labelled</code> 是什么，除非你明确告诉它。它看见一个 data frame，就默认它是普通 data frame，然后写出一段完全说得通、但会因为隐藏原因失败的代码。</p>
 
-        <p>
-            更广义的类型陷阱还包括：过滤之后出现的 subscript-out-of-bounds、列在静默强制转换后变成 factor/numeric 混淆、合并之后丢行导致的维度不一致。它们在运行前都看不出来，直到运行时才露馅。代码看上去没问题，运行出来的数据却不对。
-        </p>
+    <p>更广义的类型陷阱还包括：过滤之后出现的 subscript-out-of-bounds、列在静默强制转换后变成 factor/numeric 混淆、合并之后丢行导致的维度不一致。它们在运行前都看不出来，直到运行时才露馅。代码看上去没问题，运行出来的数据却不对。</p>
 
-        <h2>代码和电脑之间有一道缝</h2>
+    <h2>代码和电脑之间有一道缝</h2>
 
-        <p>
-            174 个错误，占总数的 24%，和分析逻辑本身没多大关系。它们来自研究计算的真实脏活：文件、路径、集群、编译器、锁文件。
-        </p>
+    <p>174 个错误，占总数的 24%，和分析逻辑本身没多大关系。它们来自研究计算的真实脏活：文件、路径、集群、编译器、锁文件。</p>
 
-        <p>
-            其中最大的子类是文件路径，123 个错误。如果你在 macOS 上做项目，代码又放在 Dropbox 里，大概率会有这种路径：
-        </p>
+    <p>其中最大的子类是文件路径，123 个错误。如果你在 macOS 上做项目，代码又放在 Dropbox 里，大概率会有这种路径：</p>
 
-        <pre><code>/Users/you/Dropbox/My Research Project/code/R/model.R</code></pre>
+    <pre><code>/Users/you/Dropbox/My Research Project/code/R/model.R</code></pre>
 
-        <p>
-            “My Research Project” 里的那个空格，就是一颗定时炸弹。在 R 里，<code>here::here()</code> 能处理得很好；但只要路径被 <code>system()</code> 或 <code>Rscript</code> 传给 shell，空格就会开始作怪：
-        </p>
+    <p>"My Research Project" 里的那个空格，就是一颗定时炸弹。在 R 里，<code>here::here()</code> 能处理得很好；但只要路径被 <code>system()</code> 或 <code>Rscript</code> 传给 shell，空格就会开始作怪：</p>
 
-        <div class="error-block">
-            Fatal error: cannot open file '/Users/you/Dropbox/My': No such file or directory
-        </div>
+    <div class="error-block">Fatal error: cannot open file '/Users/you/Dropbox/My': No such file or directory</div>
 
-        <p>
-            AI 往往会像我一样，直接写一个不加引号的 <code>system()</code> 调用。修复方式其实一直都一样：把路径放进引号里。但 AI 不会把这个教训跨会话记住，因为每一个新的 <code>system()</code> 调用都是新的上下文。更麻烦的是，R 的 <code>here::here()</code> 在某些情况下会因为子目录里的 <code>renv.lock</code> 而解析到<em>错误的</em>项目根目录。我们的项目里，这会把所有文件查找都导向 <code>code/Data/</code>，而不是 <code>Data/</code>。后来是靠一个符号链接修好的，但 AI 还是得一遍遍重新发现这个问题。
-        </p>
+    <p>AI 往往会像我一样，直接写一个不加引号的 <code>system()</code> 调用。修复方式其实一直都一样：把路径放进引号里。但 AI 不会把这个教训跨会话记住，因为每一个新的 <code>system()</code> 调用都是新的上下文。更麻烦的是，R 的 <code>here::here()</code> 在某些情况下会因为子目录里的 <code>renv.lock</code> 而解析到<em>错误的</em>项目根目录。我们的项目里，这会把所有文件查找都导向 <code>code/Data/</code>，而不是 <code>Data/</code>。后来是靠一个符号链接修好的，但 AI 还是得一遍遍重新发现这个问题。</p>
 
-        <p>
-            另一类是基础设施故障，51 个错误：代码本身没错，出问题的是环境。HPC worker 会在中途崩掉，节点间的网络会断，<a href="https://docs.ropensci.org/targets/">targets</a> 管线会堆出旧锁文件，新任务被卡住，远端集群上的旧工具链又会让 C++ 依赖编译失败。这里没有 AI 的锅，但 <strong>AI 分不清“我的代码错了”和“基础设施出岔子了”</strong>，两种情况在日志里长得几乎一模一样，也会把它带去同一条错误的排障路径。
-        </p>
+    <p>另一类是基础设施故障，51 个错误：代码本身没错，出问题的是环境。HPC worker 会在中途崩掉，节点间的网络会断，<a href="https://docs.ropensci.org/targets/">targets</a> 管线会堆出旧锁文件，新任务被卡住，远端集群上的旧工具链又会让 C++ 依赖编译失败。这里没有 AI 的锅，但 <strong>AI 分不清"我的代码错了"和"基础设施出岔子了"</strong>，两种情况在日志里长得几乎一模一样，也会把它带去同一条错误的排障路径。</p>
 
-        <h2>AI 记住了什么，也没记住什么</h2>
+    <h2>AI 记住了什么，也没记住什么</h2>
 
-        <p>
-            7 个错误，勉强才占总数的 1%，但它们能说明 AI 编码助手到底怎么工作。
-        </p>
+    <p>7 个错误，勉强才占总数的 1%，但它们能说明 AI 编码助手到底怎么工作。</p>
 
-        <p>
-            做多重插补的 <code>mice</code> 包有个老问题：使用并行版本 <code>futuremice()</code> 时，不能传 <code>printFlag</code> 参数，因为函数内部已经会传。你要是还传，R 就会报：
-        </p>
+    <p>做多重插补的 <code>mice</code> 包有个老问题：使用并行版本 <code>futuremice()</code> 时，不能传 <code>printFlag</code> 参数，因为函数内部已经会传。你要是还传，R 就会报：</p>
 
-        <div class="error-block">
-            Error: formal argument "printFlag" matched by multiple actual arguments
-        </div>
+    <div class="error-block">Error: formal argument "printFlag" matched by multiple actual arguments</div>
 
-        <p>
-            这条注意事项从一开始就在项目笔记里写着。可每次 AI 因为别的原因碰到插补代码时，它还是会把 <code>printFlag = FALSE</code> 加回来。从 AI 的角度看，给一个类似 <code>mice</code> 的函数传 <code>printFlag = FALSE</code> 显然是“正确写法”，因为训练数据里这种模式它见得太多了。
-        </p>
+    <p>这条注意事项从一开始就在项目笔记里写着。可每次 AI 因为别的原因碰到插补代码时，它还是会把 <code>printFlag = FALSE</code> 加回来。从 AI 的角度看，给一个类似 <code>mice</code> 的函数传 <code>printFlag = FALSE</code> 显然是"正确写法"，因为训练数据里这种模式它见得太多了。</p>
 
-        <p>
-            这正是 AI 辅助编码的核心张力：<strong>模型从训练数据里学到的强先验，可能会覆盖掉项目特定的知识。</strong>“不要给 futuremice 传 printFlag”这条项目笔记，和一个极强的统计先验在对抗。结果通常是先验赢，而且会一赢再赢，直到你把代码结构改到让错误<em>根本做不出来</em>，而不只是“不建议这么做”。
-        </p>
+    <p>这正是 AI 辅助编码的核心张力：<strong>模型从训练数据里学到的强先验，可能会覆盖掉项目特定的知识。</strong>"不要给 futuremice 传 printFlag"这条项目笔记，和一个极强的统计先验在对抗。结果通常是先验赢，而且会一赢再赢，直到你把代码结构改到让错误<em>根本做不出来</em>，而不只是"不建议这么做"。</p>
 
-        <h2>错误是跟着日历走的</h2>
+    <h2>错误是跟着日历走的</h2>
 
-        <p>
-            错误分布并不均匀，它们会跟着重大重构节点一起爆发：
-        </p>
+    <p>错误分布并不均匀，它们会跟着重大重构节点一起爆发：</p>
 
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-date">2 月 1 日 &mdash; <span class="timeline-count">94 个错误</span></div>
-                <p>全规模插补运行 + 回归模型重写</p>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-date">1 月 31 日 &mdash; <span class="timeline-count">88 个错误</span></div>
-                <p>33 份问卷统一读入一个函数 + 新分析模块</p>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-date">2 月 10 日 &mdash; <span class="timeline-count">66 个错误</span></div>
-                <p>可视化重构 + beamer 演示流水线</p>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-date">2 月 2 日 &mdash; <span class="timeline-count">55 个错误</span></div>
-                <p>第一次全规模多重插补运行（m=20，分布在 HPC 上）</p>
-            </div>
-        </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">2 月 1 日 — <span class="timeline-count">94 个错误</span></div>
+        <p>全规模插补运行 + 回归模型重写</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">1 月 31 日 — <span class="timeline-count">88 个错误</span></div>
+        <p>33 份问卷统一读入一个函数 + 新分析模块</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2 月 10 日 — <span class="timeline-count">66 个错误</span></div>
+        <p>可视化重构 + beamer 演示流水线</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">2 月 2 日 — <span class="timeline-count">55 个错误</span></div>
+        <p>第一次全规模多重插补运行（m=20，分布在 HPC 上）</p>
+      </div>
+    </div>
 
-        <p>
-            四天，贡献了全部错误的 42%。模式很清楚：错误会在项目重构的时候激增，而不是在 AI 正常做常规分析的时候。重构期间最占主导的，几乎全是命名错误——AI 能把它碰到的文件重构得很好，却会漏掉那些它没想到要一起改的文件。这也是所有人类程序员共有的盲点：你会记得更新眼前打开的那三份文件，却忘了两周前最后碰过的配置文件。
-        </p>
+    <p>四天，贡献了全部错误的 42%。模式很清楚：错误会在项目重构的时候激增，而不是在 AI 正常做常规分析的时候。重构期间最占主导的，几乎全是命名错误——AI 能把它碰到的文件重构得很好，却会漏掉那些它没想到要一起改的文件。这也是所有人类程序员共有的盲点：你会记得更新眼前打开的那三份文件，却忘了两周前最后碰过的配置文件。</p>
 
-        <h2>所以呢？</h2>
+    <h2>所以呢？</h2>
 
-        <p>
-            我最后一直在想：<strong>R 里的 AI 编码错误，其实不是 AI 特有的错误，而是 R 特有的错误。</strong>AI 并没有凭空捏造函数名，也没有发明不可能的语法；它只是用和我一样的方式，在同样的结构条件下犯同样的错。
-        </p>
+    <p>我最后一直在想：<strong>R 里的 AI 编码错误，其实不是 AI 特有的错误，而是 R 特有的错误。</strong>AI 并没有凭空捏造函数名，也没有发明不可能的语法；它只是用和我一样的方式，在同样的结构条件下犯同样的错。</p>
 
-        <p>
-            R 是动态类型、惰性求值，而且没有编译步骤。拼错的变量名只有在那一行真正执行时才会被发现，可能已经是整条流水线跑到一半甚至更晚。类型不匹配——比如 <code>haven_labelled</code> 和 <code>double</code>——要等操作失败才会暴露。带空格的文件路径，在 R 里能用，传给 shell 却会炸。这些东西都没有编译期等价物，也就意味着你没法在跑之前先“构建”一个多文件 R 项目，检查它是否一致。
-        </p>
+    <p>R 是动态类型、惰性求值，而且没有编译步骤。拼错的变量名只有在那一行真正执行时才会被发现，可能已经是整条流水线跑到一半甚至更晚。类型不匹配——比如 <code>haven_labelled</code> 和 <code>double</code>——要等操作失败才会暴露。带空格的文件路径，在 R 里能用，传给 shell 却会炸。这些东西都没有编译期等价物，也就意味着你没法在跑之前先"构建"一个多文件 R 项目，检查它是否一致。</p>
 
-        <p>
-            这不是 R 的 bug，而是它的设计选择：强调交互性和灵活性，也正是这让 R 非常适合探索性分析。但代价是，直到运行出问题之前，人和 AI 都拿不到结构化反馈。在有静态工具链的语言里，比如 TypeScript、Rust、Go，同一个 AI 助手会少犯很多这类错，因为编译器会在执行前就把它拦下来。R 没有这道反馈回路。
-        </p>
+    <p>这不是 R 的 bug，而是它的设计选择：强调交互性和灵活性，也正是这让 R 非常适合探索性分析。但代价是，直到运行出问题之前，人和 AI 都拿不到结构化反馈。在有静态工具链的语言里，比如 TypeScript、Rust、Go，同一个 AI 助手会少犯很多这类错，因为编译器会在执行前就把它拦下来。R 没有这道反馈回路。</p>
 
-        <div class="callout">
-            <p>我接下来在试什么</p>
-            <p>如果 AI 在 R 里的最大弱点和我一样，都是“运行前没有结构化反馈”，那解决方案大概率不是把 AI 变得更聪明，而是给它更好的工具。R 的 <a href="https://github.com/REditorSupport/languageserver">Language Server</a> 已经为 IDE 用户提供了其中一部分能力：未定义变量检测、跨文件引用、范围感知重命名。我一直在尝试把这些能力直接暴露给 AI 助手。这样是否真的能降低错误率，后面我会再写一篇文章继续讲。
-            </p>
-        </div>
+    <div class="callout">
+      <p>我接下来在试什么</p>
+      <p>如果 AI 在 R 里的最大弱点和我一样，都是"运行前没有结构化反馈"，那解决方案大概率不是把 AI 变得更聪明，而是给它更好的工具。R 的 <a href="https://github.com/REditorSupport/languageserver">Language Server</a> 已经为 IDE 用户提供了其中一部分能力：未定义变量检测、跨文件引用、范围感知重命名。我一直在尝试把这些能力直接暴露给 AI 助手。这样是否真的能降低错误率，后面我会再写一篇文章继续讲。</p>
+    </div>
 
-        <hr>
+    <hr>
 
-        <p>
-            <em>郑思尧是上海交通大学国际与公共事务学院助理教授，研究关注 AI for Social Science 和 Digital Politics。错误数据与提取脚本可在 <a href="https://github.com/SiyaoZheng/">GitHub</a> 上找到。</em>
-        </p>
+    <p class="colophon">郑思尧是上海交通大学国际与公共事务学院助理教授，研究关注 AI for Social Science 和 Digital Politics。这篇文章的姊妹篇是<a href="ai-emotion-archaeology.html">《1,248 次 AI 编码会话的情绪成本》</a>，两篇都基于同一批转录数据。</p>
 
-    </article>
+  </article>
 
-    <footer>
-        <p>&copy; 2026 郑思尧 &middot; <a href="/">首页</a> &middot; <a class="lang-switch" href="/en/blog/ai-r-errors.html">English</a></p>
-    </footer>
+</div>
+
+<footer>
+  <div class="wrap foot-row">
+    <span>© MMXXVI 郑思尧</span>
+    <span>
+      <a href="../">首页</a> · <a href="index.html">博客</a> <!-- · <a href="../en/blog/ai-r-errors.html">English</a> -->
+    </span>
+  </div>
+</footer>
 
 </body>
 </html>
