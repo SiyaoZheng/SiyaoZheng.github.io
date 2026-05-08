@@ -92,6 +92,18 @@ following are commented (not deleted):
 
 To re-enable, uncomment all three. EN pages themselves are left intact.
 
+## ICP / 备案 footer
+
+The site is hosted on Aliyun ECS (PRC mainland), so MIIT ICP filing is mandatory and must appear on **every** public page — including blog post pages, not just landings.
+
+Current state:
+
+- **MIIT ICP**: `沪ICP备2026018408号-1` (the `-1` suffix is required from first filing per 信息产业部令第33号; bare `沪ICP备2026018408号` without `-1` is non-compliant).
+- Linked to `https://beian.miit.gov.cn/` with `target="_blank" rel="noopener noreferrer"`.
+- 公安备案: **pending review**. The site is intentionally deployed in this gap because 公安部 审核 needs a live URL. When the 14-digit 公安备案号 issues, add the 警徽 SVG/PNG + number linking to `https://beian.mps.gov.cn/` to every footer.
+
+Edit footers directly in markup. **Do not** introduce a build-time script for this — the previous `scripts/add_icp_footer.py` was deleted because its templates always drift behind the actual footer markup whenever the design changes.
+
 ## Other defaults
 
 - Email is obfuscated by an inline JS scriptlet in the contact section. Don't flatten to plaintext.
