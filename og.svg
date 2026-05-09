@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <style>
+      .bg { fill: #ffffff; }
+      .rule { stroke: #e6e6e6; stroke-width: 1; }
+      .rule-strong { stroke: #1a1a1a; stroke-width: 1; }
+      .eyebrow { font-family: 'Menlo', 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, monospace; font-size: 22px; letter-spacing: 4px; fill: #6b6b6b; text-transform: uppercase; }
+      .name { font-family: 'Songti SC', 'STSong', 'Iowan Old Style', Georgia, serif; font-weight: 900; font-size: 220px; letter-spacing: 8px; fill: #0a0a0a; }
+      .role { font-family: 'Songti SC', 'STSong', 'Iowan Old Style', Georgia, serif; font-weight: 400; font-size: 32px; letter-spacing: 1.5px; fill: #6b6b6b; }
+      .meta { font-family: 'Menlo', 'JetBrains Mono', ui-monospace, monospace; font-size: 18px; letter-spacing: 3px; fill: #9a9a9a; text-transform: uppercase; }
+      .meta-strong { font-family: 'Menlo', 'JetBrains Mono', ui-monospace, monospace; font-size: 18px; letter-spacing: 3px; fill: #1a1a1a; text-transform: uppercase; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1200" height="630"/>
+
+  <text class="eyebrow" x="90" y="120">AI4SOCIALSCIENCE · 计算政治学 · 数字治理</text>
+  <line class="rule" x1="90" y1="155" x2="280" y2="155"/>
+
+  <text class="name" x="80" y="385">郑思尧</text>
+
+  <text class="role" x="90" y="455">助理教授 · 上海交通大学国际与公共事务学院</text>
+
+  <line class="rule-strong" x1="90" y1="555" x2="1110" y2="555"/>
+  <text class="meta-strong" x="90" y="592">SIYAOZHENG.ORG</text>
+  <text class="meta" x="1110" y="592" text-anchor="end">MMXXVI</text>
+</svg>
