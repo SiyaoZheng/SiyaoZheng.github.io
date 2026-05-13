@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent & Agent Loop · SJTU Qingjiao Deck</title>
+  <meta name="description" content="Agent & Agent Loop deck for SJTU Qingjiao. Offline standalone HTML and PPTX download.">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #0a0a0a;
+      --muted: #6b6b6b;
+      --rule: #e6e6e6;
+      --accent: #1e3a8a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Noto Serif SC", "Source Serif 4", Georgia, serif;
+      line-height: 1.75;
+    }
+
+    main {
+      width: min(680px, calc(100vw - 40px));
+      margin: 12vh auto 8vh;
+    }
+
+    .kicker,
+    .meta,
+    .actions,
+    footer {
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: 0.02em;
+    }
+
+    .kicker {
+      margin-bottom: 3rem;
+      color: var(--muted);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(3rem, 8vw, 6.25rem);
+      line-height: 0.95;
+      letter-spacing: 0.01em;
+      font-weight: 900;
+    }
+
+    .lede {
+      margin: 2.5rem 0 0;
+      max-width: 36rem;
+      font-size: 1.18rem;
+      color: #1a1a1a;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin: 3rem 0 2.5rem;
+      font-size: 0.82rem;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.18em;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--fg);
+      color: var(--fg);
+      text-decoration: none;
+    }
+
+    .button.primary {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .meta {
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: 1.25rem 0;
+      color: var(--muted);
+      font-size: 0.75rem;
+      overflow-wrap: anywhere;
+    }
+
+    .meta p {
+      margin: 0.35rem 0;
+    }
+
+    footer {
+      margin-top: 5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+      font-size: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="kicker">SJTU Qingjiao · Offline Deck Package</p>
+    <h1>Agent &<br>Agent Loop</h1>
+    <p class="lede">上海交通大学青椒分享讲稿网页版本。这里挂载的是离线单文件 HTML 和离线 PPTX：保存到本地后，在其他电脑断网也可以打开。</p>
+
+    <nav class="actions" aria-label="Deck actions">
+      <a class="button primary" href="deck.html">Open standalone HTML</a>
+      <a class="button" href="sjtu-agent-loop-deck-33-offline-animated.pptx">Download PPTX</a>
+      <a class="button" href="../../">Back to slides</a>
+    </nav>
+
+    <section class="meta" aria-label="File checksums">
+      <p>HTML SHA-256 · 3369db030bf4c90352ac8f074955318e07be778051b32d6f7509c87d7f341a00</p>
+      <p>PPTX SHA-256 · 16364b5538fdaf5137e3bc984619f2e5c5e951b6a0776c20d464032928c02988</p>
+    </section>
+
+    <footer>
+      <p><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">沪ICP备2026018408号-1</a></p>
+    </footer>
+  </main>
+</body>
+</html>
