@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I Thought I Couldn't Use Git | Siyao Zheng</title>
+<meta name="description" content="I thought Git was just add, commit, push. Then Codex and Claude Code turned it into branches, rebases, worktrees, and a different way of organizing research.">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="I Thought I Couldn't Use Git">
+<meta property="og:description" content="AI coding tools did not just help me write code. They dragged a larger, more developer-shaped version of Git into my research workflow.">
+<meta property="og:url" content="https://siyaozheng.org/en/blog/i-thought-i-couldnt-use-git.html">
+<meta property="og:image" content="https://siyaozheng.org/images/blog/codex-worktree-quote-card.png">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-05-18">
+<meta property="article:author" content="Siyao Zheng">
+<link rel="canonical" href="https://siyaozheng.org/en/blog/i-thought-i-couldnt-use-git.html">
+<link rel="alternate" hreflang="en" href="https://siyaozheng.org/en/blog/i-thought-i-couldnt-use-git.html">
+
+<script defer data-domain="siyaozheng.org" src="https://plausible.io/js/script.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500;8..60,600;8..60,700;8..60,900&family=Noto+Serif+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --serif: 'Source Serif 4', 'Iowan Old Style', 'Charter', 'Cambria', Georgia, serif;
+    --serif-cn: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'STSong', serif;
+    --mono:  'JetBrains Mono', 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+
+    --bg:      #ffffff;
+    --surface: #fafafa;
+    --fg:      #0a0a0a;
+    --ink:     #1a1a1a;
+    --muted:   #6b6b6b;
+    --faint:   #9a9a9a;
+    --rule:    #e6e6e6;
+    --rule-2:  #c8c8c8;
+    --accent:  #1e3a8a;
+    --accent-h:#0f1e4d;
+
+    --measure: 720px;
+    --gutter:  1.5rem;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.75;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection { background: var(--accent); color: #fff; }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 1px;
+  }
+  a:hover { color: var(--accent-h); text-decoration: underline; }
+
+  .han { font-family: var(--serif-cn); }
+
+  .wrap { max-width: var(--measure); margin: 0 auto; padding: 0 var(--gutter); }
+
+  .ribbon {
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .ribbon-inner { display: flex; justify-content: space-between; align-items: center; padding: 0.7rem 0; flex-wrap: wrap; gap: 0.5rem; }
+  .ribbon-left { color: var(--faint); }
+  .ribbon-nav { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+  .ribbon-nav a { color: var(--muted); border-bottom: 1px solid transparent; padding-bottom: 1px; }
+  .ribbon-nav a:hover { color: var(--ink); border-bottom-color: var(--ink); text-decoration: none; }
+  .ribbon-nav a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--ink); }
+
+  .article-head { padding: 4.5rem 0 2.5rem; border-bottom: 1px solid var(--rule); }
+  .article-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 0 0 1.4rem;
+  }
+  .article-eyebrow .sep { color: var(--rule-2); margin: 0 0.55rem; }
+  .article-eyebrow .cat { color: var(--muted); }
+  .article-head h1 {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: clamp(32px, 5vw, 48px);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    margin: 0 0 1.1rem;
+    color: var(--fg);
+    text-wrap: pretty;
+  }
+  .article-lede {
+    font-family: var(--serif);
+    font-size: 19.5px;
+    line-height: 1.55;
+    color: var(--ink);
+    margin: 0;
+    max-width: 36em;
+  }
+
+  article { padding: 2.5rem 0 3rem; }
+  article p {
+    margin: 0 0 1.4rem;
+    color: var(--ink);
+    font-size: 18px;
+    line-height: 1.75;
+    text-wrap: pretty;
+  }
+  article p strong { font-weight: 600; color: var(--fg); }
+  article p em { font-style: italic; color: var(--accent); font-weight: 400; }
+
+  article h2 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: -0.01em;
+    margin: 3rem 0 1.4rem;
+    color: var(--fg);
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--rule);
+    line-height: 1.25;
+  }
+
+  article h3 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: -0.005em;
+    margin: 2.4rem 0 1rem;
+    color: var(--fg);
+  }
+
+  article code {
+    font-family: var(--mono);
+    font-size: 0.86em;
+    background: var(--surface);
+    padding: 0.1rem 0.4rem;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    color: var(--ink);
+  }
+
+  .big-stat {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 2.25rem 0;
+    border-top: 1px solid var(--rule-2);
+    border-bottom: 1px solid var(--rule-2);
+  }
+  .big-stat-item {
+    padding: 1.4rem 0.5rem 1.2rem;
+    text-align: left;
+    border-right: 1px solid var(--rule);
+  }
+  .big-stat-item:last-child { border-right: none; }
+  .big-stat-number {
+    font-family: var(--mono);
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--fg);
+    line-height: 1.1;
+    font-feature-settings: "tnum";
+    letter-spacing: -0.02em;
+  }
+  .big-stat-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--faint);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.4rem;
+    line-height: 1.4;
+  }
+
+  .article-figure {
+    margin: 2.25rem 0;
+  }
+  .article-figure img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    border: 1px solid var(--rule);
+    height: auto;
+  }
+  .article-figure figcaption {
+    margin-top: 0.75rem;
+    font-family: var(--mono);
+    font-size: 11px;
+    line-height: 1.55;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0 2.25rem;
+    font-size: 15px;
+  }
+  .data-table thead th {
+    text-align: left;
+    padding: 0.75rem 0.85rem;
+    border-bottom: 2px solid var(--fg);
+    border-top: 1px solid var(--fg);
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink);
+  }
+  .data-table tbody td {
+    padding: 0.7rem 0.85rem;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    font-family: var(--serif);
+    color: var(--ink);
+    line-height: 1.45;
+  }
+  .data-table tbody tr:last-child td { border-bottom: 1px solid var(--rule-2); }
+
+  .quote-block {
+    margin: 1.75rem 0 2rem;
+    padding: 0.4rem 0 0.4rem 1.5rem;
+    border-left: 2px solid var(--accent);
+  }
+  .quote-block .quote-label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+    font-weight: 500;
+  }
+  .quote-block .quote-text {
+    font-family: var(--serif-cn);
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--fg);
+    margin: 0;
+    letter-spacing: 0.01em;
+  }
+  .quote-block .quote-translation {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.55;
+    margin-top: 0.7rem;
+    padding-top: 0.65rem;
+    border-top: 1px dashed var(--rule);
+  }
+
+  .callout {
+    margin: 2.25rem 0;
+    padding: 1.5rem 1.6rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-left: 2px solid var(--accent);
+  }
+  .callout p:first-child {
+    font-family: var(--mono);
+    font-weight: 500;
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin: 0 0 0.85rem;
+  }
+  .callout p:last-child {
+    margin: 0;
+    font-size: 16.5px;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+
+  .keep-reading {
+    margin-top: 3rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--rule);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--muted);
+  }
+  .keep-reading a { color: var(--accent); }
+
+  .colophon {
+    margin-top: 2.5rem;
+    color: var(--muted);
+    font-size: 15px;
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  footer {
+    margin-top: 1.5rem;
+    padding: 1.5rem 0 3.5rem;
+    border-top: 1px solid var(--rule);
+    color: var(--faint);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  footer a { color: var(--muted); border-bottom: 1px solid var(--rule); padding-bottom: 1px; }
+  footer a:hover { color: var(--ink); border-bottom-color: var(--ink); text-decoration: none; }
+  .foot-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+
+  @media (max-width: 640px) {
+    .article-head { padding: 3rem 0 1.5rem; }
+    .article-head h1 { font-size: 30px; }
+    .article-lede { font-size: 17.5px; }
+    article p { font-size: 17px; line-height: 1.7; }
+    .big-stat { grid-template-columns: 1fr; border-bottom: none; }
+    .big-stat-item { border-right: none; border-bottom: 1px solid var(--rule); padding: 0.85rem 0.5rem; }
+    .big-stat-item:last-child { border-bottom: 1px solid var(--rule-2); }
+    .data-table { font-size: 13.5px; }
+    .data-table thead th, .data-table tbody td { padding: 0.55rem 0.5rem; }
+    .quote-block { padding-left: 1.1rem; }
+    .callout { padding: 1.2rem; }
+  }
+  @media print {
+    .ribbon, footer, .keep-reading { display: none; }
+    body { font-size: 11pt; color: #000; }
+  }
+</style>
+</head>
+<body>
+
+<div class="ribbon">
+  <div class="wrap ribbon-inner">
+    <div class="ribbon-left">SIYAOZHENG.ORG · SHANGHAI · 上海</div>
+    <nav class="ribbon-nav" aria-label="Sections">
+      <a href="../#work">Publications</a>
+      <a href="../#teaching">Teaching</a>
+      <a href="../#cv">CV</a>
+      <a href="index.html" aria-current="page">Blog</a>
+      <a href="../../blog/">中文</a>
+    </nav>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <header class="article-head">
+    <p class="article-eyebrow">
+      <time datetime="2026-05-18">2026.05.18</time>
+      <span class="sep">·</span>
+      <span class="cat">AI for Social Science</span>
+    </p>
+    <h1>I Thought I Couldn't Use Git</h1>
+    <p class="article-lede">I thought Git was just <code>add</code>, <code>commit</code>, <code>push</code>. Then Codex and Claude Code brought in branches, rebases, worktrees, and a much larger way of organizing research work.</p>
+  </header>
+
+  <article>
+
+    <p>Social scientists have been teaching Git for a long time. The problem was never that my field had ignored version control. The problem was that the version of Git we were taught was much smaller than the version AI coding tools assume you already know.</p>
+
+    <p>If you had asked me a year ago what Git was for, I would have given a very small answer: <code>add</code>, <code>commit</code>, <code>push</code>. Save the files, leave a trace, move on. For a long time, that answer was good enough. As a political scientist, I was not maintaining a production codebase or coordinating a software team. I was trying to keep research scripts, outputs, and drafts from dissolving into a folder full of <code>final_v3_really_final.do</code> files.</p>
+
+    <p>Then Codex and Claude Code arrived with a much larger idea of what Git was supposed to be.</p>
+
+    <p>I went back through a pile of old Codex transcripts expecting to find a familiar kind of embarrassment: a few wrong commands, a few silly mistakes, a few moments where I clearly had no idea what I was doing. There was plenty of that. But it was not the main pattern. What kept showing up instead was a mismatch between two different versions of Git. The first was the Git I had actually needed for years: <code>add</code>, <code>commit</code>, <code>push</code>. The second was the Git that AI coding tools quietly assume you already understand: branches, pull requests, rebases, merges, worktrees, and phrases like <code>detached HEAD</code> that still do not sound like they were designed for normal people.</p>
+
+    <div class="big-stat">
+      <div class="big-stat-item"><div class="big-stat-number">3</div><div class="big-stat-label">Commands I needed</div></div>
+      <div class="big-stat-item"><div class="big-stat-number">6</div><div class="big-stat-label">New developer concepts</div></div>
+      <div class="big-stat-item"><div class="big-stat-number">2</div><div class="big-stat-label">Different Git worlds</div></div>
+    </div>
+
+    <p>Once I saw that split, a lot of my own Git frustration started to make more sense.</p>
+
+    <h2>The Git Social Scientists Were Taught</h2>
+
+    <p>If you look at the classic Git materials written for economists and social scientists, the ambition is surprisingly modest. Texts like <a href="https://web.stanford.edu/~gentzkow/research/CodeAndData.pdf">Code and Data for the Social Sciences</a>, <a href="https://www.frankpinter.com/git/">Git for economists</a>, and <a href="https://polmeth.org/blog/gitgithub-transparency-and-legitimacy-quantitative-research">Git/GitHub, Transparency, and Legitimacy in Quantitative Research</a> are not really manuals for professional software collaboration. They are attempts to stop researchers from losing control of their own projects.</p>
+
+    <p>That older workflow is not glamorous, but it is rational. You have code, maybe some cleaning scripts, a few model specifications, and a folder full of outputs you do not trust yourself to reconstruct six weeks later. Git gives you a way to say: this script produced this table; this is the version before I changed the estimator; this is where the project stopped making sense.</p>
+
+    <p>For that kind of work, Git often collapses into three verbs. You add the files you want. You commit them with a sentence that hopefully means something. Then you push, mostly because you do not want your laptop to be the only place where the project exists. That was the version of Git I thought I was learning. It was manageable because it solved a real problem.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Question</th><th>The social-science Git tutorial answer</th><th>The AI-tool answer</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>What is Git for?</td><td>Reproducibility, backup, traceability</td><td>Collaboration, isolation, parallel work</td></tr>
+        <tr><td>Default unit of work</td><td>A saved research state</td><td>A reviewable branch or diff</td></tr>
+        <tr><td>Core verbs</td><td><code>add</code>, <code>commit</code>, <code>push</code></td><td><code>branch</code>, <code>rebase</code>, <code>merge</code>, <code>PR</code>, <code>worktree</code></td></tr>
+        <tr><td>Main fear</td><td>Losing track of results</td><td>Dirty trees, conflicting histories, ambiguous state</td></tr>
+      </tbody>
+    </table>
+
+    <p>This is why a lot of Git advice in social science feels so reasonable. It is built around the real pathologies of research work. We forget which script produced which result. We tweak the sample definition and fail to document it. We overwrite something important late at night and only realize it the next morning. We come back a week later and discover that the number in the draft no longer corresponds to any version of the code we can actually find. For those problems, <code>add</code>, <code>commit</code>, and <code>push</code> are not a childish beginning. They are most of the solution.</p>
+
+    <p>In that sense, Git entered social science less as software engineering than as infrastructure for research transparency.</p>
+
+    <p>The trouble started when AI tools brought in a different one.</p>
+
+    <h2>Codex and Claude Code Brought the Developer World With Them</h2>
+
+    <figure class="article-figure">
+      <img src="../../images/blog/codex-worktree-quote-card.png" alt="OpenAI Codex quote highlighting built-in worktrees and parallel project work.">
+      <figcaption>Official Codex positioning, via the <a href="https://openai.com/codex/">OpenAI Codex page</a>: the product is explicitly framed around built-in worktrees and parallel work across projects.</figcaption>
+    </figure>
+
+    <p>Codex and Claude Code do not just help you write code. They also bring in a much more developer-shaped workflow. You can see it in what they treat as normal. Branches are cheap. Changes should be isolated. Pull requests are a natural unit of work. Rebasing is ordinary maintenance rather than obscure ritual. Worktrees are not a weird edge case but a built-in feature. The tools present this as the default environment.</p>
+
+    <p>All of this makes sense if you already live in software. It makes much less sense if you opened Git because you wanted a safer way to track research code and outputs.</p>
+
+    <p>One of the clearest moments in my transcripts was almost embarrassingly simple. Faced with an extra branch created in the course of AI-assisted work, my instinctive response was basically: just make this the main branch and merge it back, because I am the only person working here.</p>
+
+    <div class="quote-block">
+      <div class="quote-label">Field note</div>
+      <p class="quote-text">现在的 branch 就设为主分支吧，直接合并进主分支，因为只有我一个人工作。</p>
+      <div class="quote-translation">“Let the current branch be the main branch and merge it directly back into the main branch, because I’m the only person working here.”</div>
+    </div>
+
+    <div class="callout">
+      <p>Detached HEAD, in civilian language</p>
+      <p>In normal life, a branch just keeps moving forward: first commit, second commit, third commit. <code>HEAD</code> points to the branch, and the branch points to the latest commit. In <code>detached HEAD</code>, <code>HEAD</code> points directly to a specific commit instead. You can still commit there, but the new commit is no longer attached to an ordinary branch name unless you create one.</p>
+    </div>
+
+    <p>That instinct was not wrong. It was just out of sync with the world the tool assumed. <code>detached HEAD</code> was the perfect example. I still do not think this is a normal phrase to throw at civilians. <code>rebase</code> at least sounds like a thing you do. <code>detached HEAD</code> sounds like either a medical emergency or a punishment.</p>
+
+    <p>What made it feel so alien was that, in the single-author Git I was used to, I almost never had to go back from the third commit to the second one. Why would I? Usually you only do that if you are checking an older state, trying to reproduce an earlier result, or because a tool has temporarily parked you there during something like a rebase. The fact that AI workflows made me think about this at all was part of the story.</p>
+
+    <p>Single-person Git tutorials in social science usually do not force you to think very hard about historical position. They are trying to help you save your work and make your research reproducible. AI coding tools, by contrast, assume a world where the exact placement of work matters all the time.</p>
+
+    <p>AI coding tools brought more than automation. They brought a developer style of project organization.</p>
+
+    <h2>The Hard Part Was Never the Commands</h2>
+
+    <p>The most misleading thing about Git is that beginners think the hard part is the advanced vocabulary. It is not. The hard part is boundaries.</p>
+
+    <p>I used to think <code>git add</code> was basically a harmless save button. It is not. <code>git add</code> is a declaration. It says: these changes belong to the same thing. If you do not know what “the same thing” is, Git becomes miserable very quickly.</p>
+
+    <p>This is how you end up with giant commits. A log file sneaks in. Then a cached output. Then a generated figure. Then a temporary script. Then some AI tool touches a file you never asked it to touch. Suddenly you are staring at a commit with hundreds of thousands of lines, and the real problem is not that push might fail. It is that you also know this commit should not exist.</p>
+
+    <p>One case made that painfully obvious. I only wanted to save three files: one script and two diagnostic outputs. The worktree, however, was full of unrelated changes. One of the files I actually needed was even ignored, so it had to be forced in with <code>git add -f</code>. This was a tiny task dressed up as a huge mess. Git was forcing me to answer a question I had avoided earlier: what, exactly, belongs to this commit?</p>
+
+    <p>This is why <code>git status</code> can feel so accusatory. It does not merely list files. It reveals the shape of your disorder. Which files are code? Which are results? Which are temporary? Which are noise? Which belong to this line of work, and which are leftovers from another one? A dirty working directory is often just a technical description of a messy thought process.</p>
+
+    <p>This was also why <code>rebase</code> ended up teaching me more than I expected. I learned it because a local crawler file blocked a <code>pull --rebase</code>, so I had to stash exactly that file, let the rebase continue, resolve a conflict in <code>.gitignore</code>, and then figure out how to keep moving when even <code>rebase --continue</code> got stuck. It felt much less like mastering Git and much more like being cornered into understanding it.</p>
+
+    <p>This, I think, is the real emotional structure of Git for many non-programmers. The commands are not what hurts. What hurts is being forced to make boundaries explicit.</p>
+
+    <p>Git punishes not clumsiness, but vagueness.</p>
+
+    <p>And research work, especially early-stage research work, often runs on vagueness for longer than we like to admit.</p>
+
+    <h2>Why Git Matters More in the Age of AI</h2>
+
+    <p>If AI tools made Git more annoying, they also made it more important.</p>
+
+    <p>The first reason is that Git is unusually native to AI. A lot of the code AI models were trained on already contains Git commands, Git workflows, Git conflicts, Git histories, and Git discussions. So when an AI agent operates around <code>status</code>, <code>diff</code>, <code>commit</code>, <code>branch</code>, or <code>merge</code>, it is moving through a structure it has already seen many times. Git is textual, explicit, and structured. It tells the machine what changed, where it changed, and how history is organized.</p>
+
+    <p>For empirical research, version management is not just about saving code. It is about tracking changes in research design. Which sample definition was I using when this result looked good? When did I switch estimators? When did I add those controls? Which figure came from which specification? Why did the regression I ran on Monday stop reproducing on Tuesday?</p>
+
+    <p>These are not edge cases. They are the texture of real research. Without version control, those changes often live in memory, filenames, chat messages, or nowhere at all. A lot of research confusion is not grand fraud or deep theoretical error. It is simply the slow disappearance of process.</p>
+
+    <p>Git does not solve that by itself. It cannot make a bad workflow good. But it does something important. It gives those changes a place to land.</p>
+
+    <p>That matters even more in an AI workflow, because AI tends to increase the volume of change. More edits happen. More files get touched. More temporary branches appear. More things get generated, rewritten, or refactored at speed. If you do not have a way to record what happened, the project becomes unreadable very quickly.</p>
+
+    <p>The old social-science tutorials were right that version control is part of reproducible research. What they could not fully anticipate was that AI would also turn version control into a human-machine coordination problem.</p>
+
+    <p>In the age of AI, Git does two jobs at once. It gives the machine a native interface for acting on a codebase, and it gives the researcher a low-cost but unusually strict external memory.</p>
+
+    <h2>We Are Using AI, and AI Is Retraining Us</h2>
+
+    <p>For a long time, I thought the story was simple: I was bad at Git. Now I think the story is slightly different. I was fine at the Git I originally needed. What I was not prepared for was the larger Git that AI coding tools dragged into my work.</p>
+
+    <p>That larger Git came with branches, pull requests, rebases, worktrees, and <code>detached HEAD</code>. It also came with a quieter demand: that I become much more precise about what a piece of work is, where it belongs, and how it relates to the version that came before.</p>
+
+    <p>At one point, that meant learning how to survive a stash-plus-rebase sequence I would never have chosen for myself. At another, it meant cleaning up three leftover worktrees from an earlier agent-assisted experiment and realizing that I now had to understand not just one working directory, but several.</p>
+
+    <p>That change was first of all a nuisance. It forced a political scientist to deal with a set of engineering concepts that had not been part of his original training. But it was not only a nuisance. Once those concepts entered my workflow, they started changing the workflow itself. I began thinking more clearly about what belonged in a commit, what deserved its own branch, what counted as a reproducible result, and what was still only an experiment. The discipline arrived through irritation, but it arrived nonetheless.</p>
+
+    <p>I used to think I could not use Git. What I understand now is a little different. I did not need all of Git before. I only needed a smaller one.</p>
+
+    <p>Social-science tutorials taught me the Git of the single-person pipeline. AI coding tools brought in the Git of the professional developer. The first solved reproducibility problems. The second imported a new layer of complexity.</p>
+
+    <p>We like to say that we are using AI to help us work. That is true. But it is also incomplete. While we are using AI, AI is quietly changing how we understand code, version history, and research work itself.</p>
+
+    <p class="keep-reading">Related: <a href="ai-emotion-archaeology.html">The Emotional Cost of 1,248 AI Coding Sessions</a> and <a href="ai-r-errors.html">What 713 R Errors Taught Me About AI Coding Assistants</a>.</p>
+
+    <p class="colophon">Siyao Zheng is an Assistant Professor at the School of International and Public Affairs, Shanghai Jiao Tong University.</p>
+
+  </article>
+
+</div>
+
+<footer>
+  <div class="wrap foot-row">
+    <span>© MMXXVI Siyao Zheng</span>
+    <span>
+      <a href="../">Home</a> · <a href="index.html">Blog</a> · <a href="../../blog/">中文</a> · <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">沪ICP备2026018408号-1</a>
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>
