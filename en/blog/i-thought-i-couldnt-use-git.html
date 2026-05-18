@@ -378,9 +378,9 @@
 
   <article>
 
-    <p>Social scientists have been teaching Git for a long time. The problem was never that my field had ignored version control. The problem was that the version of Git we were taught was much smaller than the version AI coding tools assume you already know.</p>
+    <p>Social scientists have been teaching Git for a long time. The issue was not neglect. It was mismatch. The version of Git we were taught was much smaller than the version AI coding tools assume you already know.</p>
 
-    <p>If you had asked me a year ago what Git was for, I would have given a very small answer: <code>add</code>, <code>commit</code>, <code>push</code>. Save the files, leave a trace, move on. For a long time, that answer was good enough. As a political scientist, I was not maintaining a production codebase or coordinating a software team. I was trying to keep research scripts, outputs, and drafts from dissolving into a folder full of <code>final_v3_really_final.do</code> files.</p>
+    <p>If you had asked me a year ago what Git was for, I would have given a very small answer: <code>add</code>, <code>commit</code>, <code>push</code>. Save the files, leave a trace, move on. For a long time, that was enough. As a political scientist, I was not maintaining a production codebase or coordinating a software team. I was trying to keep research scripts, outputs, and drafts from dissolving into a folder full of <code>final_v3_really_final.do</code> files.</p>
 
     <p>Then Codex and Claude Code arrived with a much larger idea of what Git was supposed to be.</p>
 
@@ -396,7 +396,7 @@
 
     <h2>The Git Social Scientists Were Taught</h2>
 
-    <p>If you look at the classic Git materials written for economists and social scientists, the ambition is surprisingly modest. Texts like <a href="https://web.stanford.edu/~gentzkow/research/CodeAndData.pdf">Code and Data for the Social Sciences</a>, <a href="https://www.frankpinter.com/git/">Git for economists</a>, and <a href="https://polmeth.org/blog/gitgithub-transparency-and-legitimacy-quantitative-research">Git/GitHub, Transparency, and Legitimacy in Quantitative Research</a> are not really manuals for professional software collaboration. They are attempts to stop researchers from losing control of their own projects.</p>
+    <p>If you look at the classic Git materials written for economists and social scientists, the ambition is modest. Texts like <a href="https://web.stanford.edu/~gentzkow/research/CodeAndData.pdf">Code and Data for the Social Sciences</a>, <a href="https://www.frankpinter.com/git/">Git for economists</a>, and <a href="https://polmeth.org/blog/gitgithub-transparency-and-legitimacy-quantitative-research">Git/GitHub, Transparency, and Legitimacy in Quantitative Research</a> are not manuals for professional software collaboration. They are attempts to stop researchers from losing control of their own projects.</p>
 
     <p>That older workflow is not glamorous, but it is rational. You have code, maybe some cleaning scripts, a few model specifications, and a folder full of outputs you do not trust yourself to reconstruct six weeks later. Git gives you a way to say: this script produced this table; this is the version before I changed the estimator; this is where the project stopped making sense.</p>
 
@@ -427,7 +427,7 @@
       <figcaption>Official Codex positioning, via the <a href="https://openai.com/codex/">OpenAI Codex page</a>: the product is explicitly framed around built-in worktrees and parallel work across projects.</figcaption>
     </figure>
 
-    <p>Codex and Claude Code do not just help you write code. They also bring in a much more developer-shaped workflow. You can see it in what they treat as normal. Branches are cheap. Changes should be isolated. Pull requests are a natural unit of work. Rebasing is ordinary maintenance rather than obscure ritual. Worktrees are not a weird edge case but a built-in feature. The tools present this as the default environment.</p>
+    <p>Codex and Claude Code do not just help you write code. They bring a developer workflow with them. You can see it in what they treat as normal. Branches are cheap. Changes should be isolated. Pull requests are a natural unit of work. Rebasing is ordinary maintenance rather than obscure ritual. Worktrees are not a weird edge case but a built-in feature. The tools present this as the default environment.</p>
 
     <p>All of this makes sense if you already live in software. It makes much less sense if you opened Git because you wanted a safer way to track research code and outputs.</p>
 
@@ -462,7 +462,7 @@
 
     <p>One case made that painfully obvious. I only wanted to save three files: one script and two diagnostic outputs. The worktree, however, was full of unrelated changes. One of the files I actually needed was even ignored, so it had to be forced in with <code>git add -f</code>. This was a tiny task dressed up as a huge mess. Git was forcing me to answer a question I had avoided earlier: what, exactly, belongs to this commit?</p>
 
-    <p>This is why <code>git status</code> can feel so accusatory. It does not merely list files. It reveals the shape of your disorder. Which files are code? Which are results? Which are temporary? Which are noise? Which belong to this line of work, and which are leftovers from another one? A dirty working directory is often just a technical description of a messy thought process.</p>
+    <p>This is why <code>git status</code> can feel so accusatory. It does not merely list files. It reveals the shape of your disorder. Which files are code? Which are results? Which are temporary? Which are noise? Which belong to this line of work, and which are leftovers from another one? A dirty working directory is often just a messy thought process made visible.</p>
 
     <p>This was also why <code>rebase</code> ended up teaching me more than I expected. I learned it because a local crawler file blocked a <code>pull --rebase</code>, so I had to stash exactly that file, let the rebase continue, resolve a conflict in <code>.gitignore</code>, and then figure out how to keep moving when even <code>rebase --continue</code> got stuck. It felt much less like mastering Git and much more like being cornered into understanding it.</p>
 
@@ -474,9 +474,9 @@
 
     <h2>Why Git Matters More in the Age of AI</h2>
 
-    <p>If AI tools made Git more annoying, they also made it more important.</p>
+    <p>If AI tools made Git more annoying, they also made it harder to avoid.</p>
 
-    <p>The first reason is that Git is unusually native to AI. A lot of the code AI models were trained on already contains Git commands, Git workflows, Git conflicts, Git histories, and Git discussions. So when an AI agent operates around <code>status</code>, <code>diff</code>, <code>commit</code>, <code>branch</code>, or <code>merge</code>, it is moving through a structure it has already seen many times. Git is textual, explicit, and structured. It tells the machine what changed, where it changed, and how history is organized.</p>
+    <p>The first reason is simple: Git is one of the things AI seems naturally comfortable with. The training material is full of Git commands, Git workflows, Git conflicts, Git histories, and Git discussions. So when an AI agent operates around <code>status</code>, <code>diff</code>, <code>commit</code>, <code>branch</code>, or <code>merge</code>, it is moving through a structure it has already seen many times. Git is textual, explicit, and structured. It tells the machine what changed, where it changed, and how history is organized.</p>
 
     <p>For empirical research, version management is not just about saving code. It is about tracking changes in research design. Which sample definition was I using when this result looked good? When did I switch estimators? When did I add those controls? Which figure came from which specification? Why did the regression I ran on Monday stop reproducing on Tuesday?</p>
 
@@ -500,7 +500,7 @@
 
     <p>That change was first of all a nuisance. It forced a political scientist to deal with a set of engineering concepts that had not been part of his original training. But it was not only a nuisance. Once those concepts entered my workflow, they started changing the workflow itself. I began thinking more clearly about what belonged in a commit, what deserved its own branch, what counted as a reproducible result, and what was still only an experiment. The discipline arrived through irritation, but it arrived nonetheless.</p>
 
-    <p>I used to think I could not use Git. What I understand now is a little different. I did not need all of Git before. I only needed a smaller one.</p>
+    <p>I used to think I could not use Git. What I understand now is simpler. I did not need all of Git before. I only needed a smaller one.</p>
 
     <p>Social-science tutorials taught me the Git of the single-person pipeline. AI coding tools brought in the Git of the professional developer. The first solved reproducibility problems. The second imported a new layer of complexity.</p>
 
