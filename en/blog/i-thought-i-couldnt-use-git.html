@@ -427,7 +427,7 @@
       <figcaption>Official Codex positioning, via the <a href="https://openai.com/codex/">OpenAI Codex page</a>: the product is explicitly framed around built-in worktrees and parallel work across projects.</figcaption>
     </figure>
 
-    <p>Codex and Claude Code do not just help you write code. They bring a developer workflow with them. You can see it in what they treat as normal. Branches are cheap. Changes should be isolated. Pull requests are a natural unit of work. Rebasing is ordinary maintenance rather than obscure ritual. Worktrees are not a weird edge case but a built-in feature. The tools present this as the default environment.</p>
+    <p>Codex and Claude Code help you write code, but they also bring a developer workflow with them. You can see it in what they treat as normal. Branches are cheap. Changes should be isolated. Pull requests are a natural unit of work. Rebasing is ordinary maintenance rather than obscure ritual. Worktrees are not a weird edge case but a built-in feature. The tools present this as the default environment.</p>
 
     <p>All of this makes sense if you already live in software. It makes much less sense if you opened Git because you wanted a safer way to track research code and outputs.</p>
 
@@ -462,7 +462,7 @@
 
     <p>One case made that painfully obvious. I only wanted to save three files: one script and two diagnostic outputs. The worktree, however, was full of unrelated changes. One of the files I actually needed was even ignored, so it had to be forced in with <code>git add -f</code>. This was a tiny task dressed up as a huge mess. Git was forcing me to answer a question I had avoided earlier: what, exactly, belongs to this commit?</p>
 
-    <p>This is why <code>git status</code> can feel so accusatory. It does not merely list files. It reveals the shape of your disorder. Which files are code? Which are results? Which are temporary? Which are noise? Which belong to this line of work, and which are leftovers from another one? A dirty working directory is often just a messy thought process made visible.</p>
+    <p>This is why <code>git status</code> can feel so accusatory. It lists files, but it also reveals the shape of your disorder. Which files are code? Which are results? Which are temporary? Which are noise? Which belong to this line of work, and which are leftovers from another one? A dirty working directory is often just a messy thought process made visible.</p>
 
     <p>This was also why <code>rebase</code> ended up teaching me more than I expected. I learned it because a local crawler file blocked a <code>pull --rebase</code>, so I had to stash exactly that file, let the rebase continue, resolve a conflict in <code>.gitignore</code>, and then figure out how to keep moving when even <code>rebase --continue</code> got stuck. It felt much less like mastering Git and much more like being cornered into understanding it.</p>
 
@@ -478,7 +478,7 @@
 
     <p>The first reason is simple: Git is one of the things AI seems naturally comfortable with. The training material is full of Git commands, Git workflows, Git conflicts, Git histories, and Git discussions. So when an AI agent operates around <code>status</code>, <code>diff</code>, <code>commit</code>, <code>branch</code>, or <code>merge</code>, it is moving through a structure it has already seen many times. Git is textual, explicit, and structured. It tells the machine what changed, where it changed, and how history is organized.</p>
 
-    <p>For empirical research, version management is not just about saving code. It is about tracking changes in research design. Which sample definition was I using when this result looked good? When did I switch estimators? When did I add those controls? Which figure came from which specification? Why did the regression I ran on Monday stop reproducing on Tuesday?</p>
+    <p>For empirical research, version management goes beyond saving code. It is about tracking changes in research design. Which sample definition was I using when this result looked good? When did I switch estimators? When did I add those controls? Which figure came from which specification? Why did the regression I ran on Monday stop reproducing on Tuesday?</p>
 
     <p>These are not edge cases. They are the texture of real research. Without version control, those changes often live in memory, filenames, chat messages, or nowhere at all. A lot of research confusion is not grand fraud or deep theoretical error. It is simply the slow disappearance of process.</p>
 
@@ -496,7 +496,7 @@
 
     <p>That larger Git came with branches, pull requests, rebases, worktrees, and <code>detached HEAD</code>. It also came with a quieter demand: that I become much more precise about what a piece of work is, where it belongs, and how it relates to the version that came before.</p>
 
-    <p>At one point, that meant learning how to survive a stash-plus-rebase sequence I would never have chosen for myself. At another, it meant cleaning up three leftover worktrees from an earlier agent-assisted experiment and realizing that I now had to understand not just one working directory, but several.</p>
+    <p>At one point, that meant learning how to survive a stash-plus-rebase sequence I would never have chosen for myself. At another, it meant cleaning up three leftover worktrees from an earlier agent-assisted experiment and realizing that I now had to understand several working directories instead of one.</p>
 
     <p>That change was first of all a nuisance. It forced a political scientist to deal with a set of engineering concepts that had not been part of his original training. But it was not only a nuisance. Once those concepts entered my workflow, they started changing the workflow itself. I began thinking more clearly about what belonged in a commit, what deserved its own branch, what counted as a reproducible result, and what was still only an experiment. The discipline arrived through irritation, but it arrived nonetheless.</p>
 
