@@ -198,10 +198,10 @@
     .vs-panel h3 { font-size: 0.85em; margin-bottom: 0.6em; }
     .vs-panel .vs-items { font-size: 0.75em; color: var(--gray-800); line-height: 2; }
 
-    .takeaway { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 2em; text-align: center; }
-    .takeaway .divider { width: 3em; height: 3px; background: var(--accent); border-radius: 2px; margin-bottom: 1.8em; }
-    .takeaway .main-text { font-size: 1.5em; font-weight: 700; color: var(--accent); line-height: 1.45; margin: 0 0 1.2em 0; max-width: 15em; }
-    .takeaway .sub-text { font-size: 0.82em; color: var(--gray-600); line-height: 1.8; margin: 0 0 2em 0; max-width: 28em; }
+    .takeaway { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 620px; padding: 1em 2em; box-sizing: border-box; text-align: center; }
+    .takeaway .divider { width: 3em; height: 3px; background: var(--accent); border-radius: 2px; margin-bottom: 1.2em; }
+    .takeaway .main-text { font-size: 1.35em; font-weight: 700; color: var(--accent); line-height: 1.4; margin: 0 0 0.8em 0; max-width: 15em; }
+    .takeaway .sub-text { font-size: 0.76em; color: var(--gray-600); line-height: 1.7; margin: 0 0 1.2em 0; max-width: 28em; }
     .takeaway .hint { font-size: 0.6em; color: var(--gray-400); letter-spacing: 0.04em; }
 
     .warning-box { background: #fef2f2; border: 1px solid #fca5a5; border-left: 4px solid #dc2626; padding: 0.8em 1.2em; border-radius: 4px; text-align: left; margin: 0.5em 0; }
@@ -1166,8 +1166,473 @@
 </section>
 
 <!-- ============================================================ -->
-<!-- 局限 + 讨论 + Takeaway                                        -->
+<!-- 论文例子 + 方法设计 + 局限 + 讨论 + Takeaway                    -->
 <!-- ============================================================ -->
+
+<section>
+  <h2>论文例子：视觉数据到底能问什么问题？</h2>
+  <table class="model-table">
+    <thead>
+      <tr><th>论文</th><th>视觉数据</th><th>有趣的问题</th><th>设计巧思</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Jean et al. 2016</strong></td><td>卫星图</td><td>没有调查数据的地方，贫困怎么测？</td><td>先学夜间灯光，再迁移到白天图像</td></tr>
+      <tr><td><strong>Gebru et al. 2017</strong></td><td>街景车</td><td>街上开什么车，能看出社区政治吗？</td><td>把车变成社会经济中间变量</td></tr>
+      <tr><td><strong>Won et al. 2017</strong></td><td>抗议照片</td><td>抗议现场的暴力感怎么大规模测？</td><td>人类先做成对比较，再训练模型</td></tr>
+      <tr><td><strong>Joo &amp; Steinert-Threlkeld 2022</strong></td><td>政治图片</td><td>政治行动者如何被视觉呈现？</td><td>把"图像作为数据"系统化</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.64em;color:var(--gray-600);text-align:left;">
+    这些论文共同点：它们不是直接问"图片说明了什么"，而是先把图片变成可验证的测量对象。
+  </p>
+</section>
+
+<section>
+  <h2>论文例子第一组：城市与发展</h2>
+  <div class="photo-grid cols-3">
+    <div class="photo-card">
+      <img src="images/nasa_africa_day.jpg" alt="Africa daytime satellite">
+      <div class="pc-body">
+        <span class="pc-tag">Jean et al. 2016</span><br>
+        白天卫星图 → 贫困预测<br>
+        <strong>有趣点</strong>：没有收入调查，也能做高分辨率贫困地图。
+        <div class="pc-cred">Science · satellite transfer learning</div>
+      </div>
+    </div>
+    <div class="photo-card">
+      <img src="images/times_square.jpg" alt="urban street">
+      <div class="pc-body">
+        <span class="pc-tag green">Naik et al. 2016</span><br>
+        街景外观 → 城市安全感<br>
+        <strong>有趣点</strong>：城市不是只有人口和收入，街道"长相"也是变量。
+        <div class="pc-cred">AER Papers &amp; Proceedings</div>
+      </div>
+    </div>
+    <div class="photo-card">
+      <img src="images/streetview_cars.png" alt="streetview cars">
+      <div class="pc-body">
+        <span class="pc-tag orange">Gebru et al. 2017</span><br>
+        街景车辆 → 社区政治倾向<br>
+        <strong>有趣点</strong>：sedan / pickup 变成连接生活方式与投票的桥。
+        <div class="pc-cred">PNAS · 22M cars</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>论文例子第二组：政治传播与动员</h2>
+  <div class="photo-grid cols-3">
+    <div class="photo-card">
+      <img src="images/protest_london_acta.jpg" alt="protest photo">
+      <div class="pc-body">
+        <span class="pc-tag green">Casas &amp; Williams 2019</span><br>
+        抗议推文配图 → 线上动员<br>
+        <strong>有趣点</strong>：图片不是装饰，它会改变传播概率。
+        <div class="pc-cred">Political Research Quarterly</div>
+      </div>
+    </div>
+    <div class="photo-card">
+      <img src="images/newspaper.jpg" alt="newspaper photo">
+      <div class="pc-body">
+        <span class="pc-tag">Joo et al. 2018</span><br>
+        新闻候选人照片 → 视觉偏见<br>
+        <strong>有趣点</strong>：媒体偏见也藏在脸部大小、表情和构图里。
+        <div class="pc-cred">Journal of Communication · 13,026 images</div>
+      </div>
+    </div>
+    <div class="photo-card">
+      <img src="images/protest_multitask.png" alt="protest multitask">
+      <div class="pc-body">
+        <span class="pc-tag orange">Won et al. 2017</span><br>
+        抗议图片 → 活动/暴力/人群<br>
+        <strong>有趣点</strong>：把主观的"暴力感"变成可学习的连续分数。
+        <div class="pc-cred">ACM Multimedia</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>好玩的例子 1：用街上的车预测政治</h2>
+  <div class="cols">
+    <div class="col-40">
+      <div class="hero-photo" style="margin:0;">
+        <img src="images/times_square.jpg" alt="urban street scene" style="max-height:280px;">
+        <div class="hp-cap">Gebru et al. 2017 · Google Street View · 22M cars</div>
+      </div>
+    </div>
+    <div class="col-60">
+      <div class="quote-box" style="margin-top:0;">
+        <div class="quote-text" style="font-size:0.92em;">
+          街景里 sedan 多还是 pickup 多，竟然能预测一个地区更可能投哪一党。
+        </div>
+      </div>
+      <div class="highlight-box">
+        <p style="font-size:0.72em;margin:0;">
+          这篇最值得学的不是"车能预测投票"，而是<strong>中间变量设计</strong>：
+          图像本身不能解释政治，但"车辆类型"连接了消费能力、生活方式、城乡结构和政治偏好。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>好玩的例子 2：同一个候选人，不同媒体拍出不同脸</h2>
+  <div class="card-grid cols-3">
+    <div class="card accent-card">
+      <div class="card-label">数据</div>
+      <div class="card-desc">2016 美国大选<br>15 家新闻网站<br>13,026 张图片</div>
+    </div>
+    <div class="card green-card">
+      <div class="card-label">变量</div>
+      <div class="card-desc">表情、脸部大小<br>画面构图、肤色/质感<br>候选人显著性</div>
+    </div>
+    <div class="card orange-card">
+      <div class="card-label">问题</div>
+      <div class="card-desc">媒体偏见不只在文字里<br>也在"选哪张照片"里</div>
+    </div>
+  </div>
+  <div class="highlight-box">
+    <p style="font-size:0.72em;margin:0;">
+      Joo et al. 2018 的启发：视觉偏见经常不是显性的立场表达，而是<strong>同一事件中反复选择哪种表情、角度和距离</strong>。
+      这类问题，用纯文本很难抓住。
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>好玩的例子 3：抗议"暴力感"不是二元变量</h2>
+  <div class="cols">
+    <div class="col-50">
+      <div class="hero-photo" style="margin:0;">
+        <img src="images/protest_london_acta.jpg" alt="protest" style="max-height:280px;">
+        <div class="hp-cap">Won, Steinert-Threlkeld &amp; Joo 2017</div>
+      </div>
+    </div>
+    <div class="col-50">
+      <div class="flow" style="flex-direction:column;align-items:stretch;gap:0.35em;margin:0;">
+        <div class="flow-node">两张照片放一起</div>
+        <div class="flow-node accent">问人：哪张更暴力？</div>
+        <div class="flow-node green">用 Bradley-Terry 模型变成连续分数</div>
+        <div class="flow-node orange">再训练视觉模型预测</div>
+      </div>
+      <p style="font-size:0.66em;color:var(--gray-700);text-align:left;">
+        聪明点：主观概念先交给人做相对判断，再用模型放大，而不是让模型直接定义"暴力"。
+      </p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>好玩的例子 4：VLM 自己也会有政治联想</h2>
+  <div class="vs-layout">
+    <div class="vs-panel left" style="background:var(--gray-50);border-color:var(--gray-200);">
+      <h3>实验设计</h3>
+      <div class="vs-items" style="font-size:0.7em;line-height:1.9;">
+        同一份中性竞选广告<br>
+        系统改变候选人的视觉人口特征<br>
+        让 VLM 判断意识形态标签
+      </div>
+    </div>
+    <div class="vs-divider"></div>
+    <div class="vs-panel right" style="background:#fef2f2;border-color:#fca5a5;">
+      <h3 style="color:var(--red);">警示</h3>
+      <div class="vs-items" style="font-size:0.7em;line-height:1.9;">
+        模型不是中性的测量仪器<br>
+        脸、年龄、性别等视觉线索<br>
+        可能被错误连到政治标签
+      </div>
+    </div>
+  </div>
+  <p style="font-size:0.66em;color:var(--gray-600);text-align:left;">
+    Jeon et al. 2026 "From Faces to Politics" 提醒我们：VLM 不只是帮研究者编码偏见，
+    它自己也可能把视觉人口特征带进政治判断。
+  </p>
+</section>
+
+<section>
+  <h2>好玩的例子 5：一张图片让抗议更容易扩散</h2>
+  <div class="cols">
+    <div class="col-50">
+      <div class="hero-photo" style="margin:0;">
+        <img src="images/protest_london_acta.jpg" alt="protest crowd" style="max-height:300px;">
+        <div class="hp-cap">Casas &amp; Williams 2019 · Black Lives Matter Twitter data</div>
+      </div>
+    </div>
+    <div class="col-50">
+      <div class="quote-box" style="margin-top:0;">
+        <div class="quote-text" style="font-size:0.92em;">
+          同样是抗议信息，带图的帖子更容易动员转发；但不是所有情绪都一样。
+        </div>
+      </div>
+      <div class="highlight-box">
+        <p style="font-size:0.72em;margin:0;">
+          讲课时可以问学生：一张抗议图里，什么会触发行动？
+          人数、愤怒、恐惧、共同身份、警察在场，还是"我也应该去"的可想象性？
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>好玩的例子 6：城市"看起来安全"会影响什么？</h2>
+  <div class="cols">
+    <div class="col-40">
+      <div class="hero-photo" style="margin:0;">
+        <img src="images/times_square.jpg" alt="urban street scene" style="max-height:280px;">
+        <div class="hp-cap">Streetscore / Place Pulse 系列</div>
+      </div>
+    </div>
+    <div class="col-60">
+      <div class="card-grid cols-2" style="margin-top:0;">
+        <div class="card accent-card"><div class="card-label">不是犯罪率</div><div class="card-desc">而是人们看照片后<br>觉得安不安全</div></div>
+        <div class="card green-card"><div class="card-label">不是问卷小样本</div><div class="card-desc">而是街景图<br>扩展到城市尺度</div></div>
+        <div class="card orange-card"><div class="card-label">可讨论</div><div class="card-desc">安全感是视觉事实<br>还是阶层偏见？</div></div>
+        <div class="card"><div class="card-label">可延伸</div><div class="card-desc">中国城市更新<br>也能这样测吗？</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>好玩的例子 7：宣传海报能不能被"读"成政治语法？</h2>
+  <div class="cols">
+    <div class="col-40">
+      <div class="hero-photo" style="margin:0;">
+        <img src="images/wwii_poster.jpg" alt="political poster" style="max-height:330px;">
+        <div class="hp-cap">政治传播 / 历史宣传图像</div>
+      </div>
+    </div>
+    <div class="col-60">
+      <table class="model-table" style="font-size:0.62em;margin-top:0;">
+        <thead><tr><th>可编码线索</th><th>可能连接的理论概念</th></tr></thead>
+        <tbody>
+          <tr><td>人物姿势、视线方向</td><td>权威、亲近感、动员姿态</td></tr>
+          <tr><td>颜色、旗帜、符号</td><td>国家身份、敌我边界</td></tr>
+          <tr><td>口号与字体</td><td>情绪框架、责任归因</td></tr>
+          <tr><td>性别/职业形象</td><td>公民角色与社会秩序想象</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:0.64em;color:var(--gray-600);text-align:left;">
+        这里最适合课堂讨论：VLM 可以先做"低层描述"，真正的政治解释仍然要靠理论。
+      </p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>好玩的例子 8：模型错例本身也可以成为发现</h2>
+  <div class="cols">
+    <div class="col-50">
+      <div class="warning-box" style="margin-top:0;">
+        <p style="font-size:0.74em;margin:0;">
+          如果模型总把某类街区判断为"危险"，它是在看治安，还是在复制阶层/种族/城市景观偏见？
+        </p>
+      </div>
+      <div class="warning-box">
+        <p style="font-size:0.74em;margin:0;">
+          如果模型总把某类候选人判断为"激进"，它是在读文本，还是在从脸和身份线索做政治联想？
+        </p>
+      </div>
+    </div>
+    <div class="col-50">
+      <div class="success-box" style="margin-top:0;">
+        <p style="font-size:0.72em;margin:0;">
+          所以多模态研究有两条路：<br>
+          <strong>用模型测量社会</strong>，以及<br>
+          <strong>用社会科学审计模型</strong>。
+        </p>
+      </div>
+      <p style="font-size:0.66em;color:var(--gray-700);text-align:left;">
+        第二条路很适合期末项目：拿一组图片，系统比较模型在不同群体、场景、语言提示下的误差。
+      </p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>这些论文教我们的四个设计套路</h2>
+  <div class="card-grid cols-4">
+    <div class="card accent-card"><div class="card-label">代理变量</div><div class="card-desc">车、灯光、建筑<br>替代难测概念</div></div>
+    <div class="card green-card"><div class="card-label">成对比较</div><div class="card-desc">把主观判断<br>变成连续量表</div></div>
+    <div class="card orange-card"><div class="card-label">中间线索</div><div class="card-desc">先识别可见对象<br>再解释社会意义</div></div>
+    <div class="card"><div class="card-label">偏误审计</div><div class="card-desc">把模型错误<br>当研究对象</div></div>
+  </div>
+  <div class="highlight-box">
+    <p style="font-size:0.72em;margin:0;">
+      一篇好的多模态论文，通常不是"我用了一个更强模型"，而是<strong>我把一个原来无法规模化测量的社会概念，设计成了可审计的视觉测量</strong>。
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>从案例到研究设计：多模态不是"看图说话"</h2>
+  <div class="flow">
+    <div class="flow-node">理论概念</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node accent">可见线索</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node green">结构化变量</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node orange">人工核验</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node cyan">统计分析</div>
+  </div>
+  <div class="highlight-box">
+    <p style="font-size:0.76em;margin:0;">
+      研究者真正要做的，不是让模型"理解社会"，而是把<strong>理论概念</strong>拆成可以从图像里观察到的线索，
+      再把这些线索变成可检验的变量。
+    </p>
+  </div>
+  <div class="card-grid cols-3">
+    <div class="card accent-card"><div class="card-label">抗议强度</div><div class="card-desc">人数、警察、冲突、标语</div></div>
+    <div class="card green-card"><div class="card-label">社区阶层</div><div class="card-desc">车辆、店铺、建筑维护</div></div>
+    <div class="card orange-card"><div class="card-label">国家能力</div><div class="card-desc">路网、照明、公共设施</div></div>
+  </div>
+</section>
+
+<section>
+  <h2>第一条规则：不要让 VLM 直接替你下结论</h2>
+  <table class="model-table">
+    <thead>
+      <tr><th>糟糕问法</th><th>更好的测量设计</th><th>为什么</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>这场抗议激进吗？</td><td>是否有警察、冲突、破坏、火焰、武器</td><td>把价值判断拆成可见证据</td></tr>
+      <tr><td>这个社区富裕吗？</td><td>车辆类型、道路质量、绿化、楼体维护</td><td>让模型编码中间变量</td></tr>
+      <tr><td>这张海报宣传什么意识形态？</td><td>人物、口号、符号、颜色、敌我对象</td><td>先描述，再解释</td></tr>
+      <tr><td>视频里谁对谁错？</td><td>逐镜头记录行动者、动作、时间顺序</td><td>避免模型编造因果叙事</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.68em;color:var(--gray-600);text-align:left;">
+    经验法则：VLM 最适合做<strong>观察记录员</strong>，不适合直接当理论解释者。
+  </p>
+</section>
+
+<section>
+  <h2>编码本怎么写：先定义变量，再让模型执行</h2>
+  <div class="cols">
+    <div class="col-50">
+      <table class="model-table" style="font-size:0.58em;">
+        <thead><tr><th>字段</th><th>取值</th><th>人工核验点</th></tr></thead>
+        <tbody>
+          <tr><td>crowd_size_bucket</td><td>小 / 中 / 大</td><td>阈值是否一致</td></tr>
+          <tr><td>police_visible</td><td>true / false</td><td>制服、车辆、盾牌</td></tr>
+          <tr><td>sign_text</td><td>原文摘录</td><td>OCR 是否误读</td></tr>
+          <tr><td>violence_visible</td><td>true / false</td><td>只看画面证据</td></tr>
+          <tr><td>uncertainty</td><td>low / mid / high</td><td>让模型暴露不确定</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-50">
+      <div class="quote-box" style="margin-top:0;">
+        <div class="quote-text" style="font-size:0.86em;">
+          "只根据图片中可见内容编码。看不清就写 unknown，不要根据常识补全。"
+        </div>
+      </div>
+      <div class="warning-box">
+        <p style="font-size:0.68em;margin:0;">
+          最危险的不是模型不会看，而是它把<strong>模糊处</strong>说得很确定。
+          所以编码本里一定要给 unknown / uncertain 留位置。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>抽样核验：最小可发表版本</h2>
+  <div class="card-grid cols-4">
+    <div class="card accent-card">
+      <div class="card-label">样本</div>
+      <div class="card-desc">随机抽 50–200 张<br>覆盖不同来源与时期</div>
+    </div>
+    <div class="card">
+      <div class="card-label">人工编码</div>
+      <div class="card-desc">至少一名人工 coder<br>最好双人交叉</div>
+    </div>
+    <div class="card green-card">
+      <div class="card-label">指标</div>
+      <div class="card-desc">准确率 / F1<br>相关系数 / 偏差方向</div>
+    </div>
+    <div class="card orange-card">
+      <div class="card-label">误差表</div>
+      <div class="card-desc">把错例分类<br>而不是只报一个分数</div>
+    </div>
+  </div>
+  <div class="highlight-box">
+    <p style="font-size:0.74em;margin:0;">
+      论文里真正有说服力的是：<strong>哪些字段可靠、哪些字段不可靠、误差朝哪个方向偏</strong>。
+      这比一句"我们使用先进 VLM"重要得多。
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>什么时候值得用 VLM？一个简单判断表</h2>
+  <table class="model-table">
+    <thead>
+      <tr><th></th><th>低风险</th><th>中风险</th><th>高风险</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>可见事实</strong></td><td>物体、场景、OCR</td><td>人数区间、动作类别</td><td>身份、动机、政治立场</td></tr>
+      <tr><td><strong>研究用途</strong></td><td>探索、筛选、辅助检索</td><td>描述统计、低 stakes 测量</td><td>因果识别、个体判断、敏感标签</td></tr>
+      <tr><td><strong>验证要求</strong></td><td>少量 spot check</td><td>抽样人工复核</td><td>双人编码 + 稳健性 + IRB</td></tr>
+      <tr><td><strong>课堂建议</strong></td><td>可以放心试</td><td>可以用，但要报告误差</td><td>先不要自动化</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>论文方法段必须交代什么</h2>
+  <div class="card-grid cols-2">
+    <div class="card accent-card" style="text-align:left;">
+      <div class="card-label">模型与输入</div>
+      <div class="card-desc">模型名称、版本日期、图片来源、预处理、是否抽帧</div>
+    </div>
+    <div class="card green-card" style="text-align:left;">
+      <div class="card-label">测量规则</div>
+      <div class="card-desc">编码本、字段定义、JSON schema、unknown 处理</div>
+    </div>
+    <div class="card orange-card" style="text-align:left;">
+      <div class="card-label">验证设计</div>
+      <div class="card-desc">抽样方法、人工编码人数、准确率、偏差方向、错例类型</div>
+    </div>
+    <div class="card" style="text-align:left;">
+      <div class="card-label">研究边界</div>
+      <div class="card-desc">不适用场景、敏感信息处理、数据是否出境、复现实验材料</div>
+    </div>
+  </div>
+  <p style="font-size:0.66em;color:var(--gray-600);text-align:left;">
+    写法目标：让读者能判断这个变量是不是可信，而不是只知道你用了哪个模型。
+  </p>
+</section>
+
+<section>
+  <h2>不用电脑也能做：设计一个多模态测量方案</h2>
+  <div class="cols">
+    <div class="col-40">
+      <div class="hero-photo" style="margin:0;">
+        <img src="images/protest_london_acta.jpg" alt="ACTA protest London" style="max-height:280px;">
+        <div class="hp-cap">把这张图当作练习材料：先别问模型，先设计测量。</div>
+      </div>
+    </div>
+    <div class="col-60">
+      <ol style="font-size:0.72em;padding-left:1.4em;line-height:1.9;">
+        <li>选一个理论概念：动员强度、国家回应、集体身份、情绪氛围</li>
+        <li>拆成 3 个可见变量：每个变量只能依赖画面证据</li>
+        <li>给每个变量写取值范围：true/false、等级、原文摘录、unknown</li>
+        <li>设计人工核验：抽多少、谁来判、错例怎么分类</li>
+      </ol>
+      <div class="success-box">
+        <p style="font-size:0.68em;margin:0;">下课前只交一页纸：变量表 + 核验方案。真正跑模型可以留到课后。</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section>
   <h2>怎样验证 VLM 的编码可不可信？</h2>
