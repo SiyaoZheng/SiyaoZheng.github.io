@@ -1,0 +1,1458 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第十一课 多模态模型 — 机器学习与自然语言处理</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    :root {
+      --r-background-color: #fff;
+      --r-main-font: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+      --r-main-font-size: 32px;
+      --r-main-color: #1a1a2e;
+      --r-heading-font: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+      --r-heading-color: #0f0f1a;
+      --r-heading-font-weight: 700;
+      --r-link-color: #2563eb;
+      --accent: #2563eb;
+      --accent-light: #dbeafe;
+      --orange: #f97316;
+      --orange-light: #fff7ed;
+      --green: #16a34a;
+      --green-light: #f0fdf4;
+      --red: #dc2626;
+      --purple: #9333ea;
+      --purple-light: #fae8ff;
+      --cyan: #00bcd4;
+      --cyan-light: #e0f7fa;
+      --gray-50: #f8f9fa;
+      --gray-100: #f1f3f5;
+      --gray-200: #e9ecef;
+      --gray-400: #adb5bd;
+      --gray-500: #868e96;
+      --gray-600: #6c757d;
+      --gray-700: #495057;
+      --gray-800: #343a40;
+    }
+
+    .reveal { font-weight: 400; }
+    .reveal h1 { font-size: 2.2em; letter-spacing: -0.02em; }
+    .reveal h2 { font-size: 1.6em; letter-spacing: -0.01em; color: var(--accent); text-transform: none; }
+    .reveal h3 { font-size: 1.2em; color: var(--gray-800); }
+    .reveal p, .reveal li { line-height: 1.6; }
+    .reveal ul { list-style: none; padding-left: 0; }
+    .reveal ul li { padding-left: 1.5em; position: relative; margin-bottom: 0.4em; }
+    .reveal ul li::before {
+      content: '';
+      position: absolute; left: 0; top: 0.55em;
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    .reveal code {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--gray-100);
+      padding: 0.1em 0.4em;
+      border-radius: 4px;
+      font-size: 0.85em;
+    }
+    .reveal pre code {
+      font-family: 'JetBrains Mono', monospace;
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 1em 1.4em;
+      border-radius: 8px;
+      font-size: 0.72em;
+      line-height: 1.7;
+      display: block;
+      text-align: left;
+    }
+    .reveal pre { box-shadow: none; width: 100%; margin: 0.6em 0; }
+    .kw { color: #cba6f7; }
+    .fn { color: #89b4fa; }
+    .st { color: #a6e3a1; }
+    .cm { color: #6c7086; font-style: italic; }
+    .num { color: #fab387; }
+
+    .section-title { background: var(--r-background-color) !important; }
+    .section-title h2 {
+      font-size: 2.4em;
+      color: var(--r-main-color);
+      border-left: 6px solid var(--accent);
+      padding-left: 0.6em;
+      text-align: left;
+    }
+    .section-title .section-num {
+      font-size: 0.5em;
+      color: var(--gray-400);
+      font-weight: 400;
+      display: block;
+      margin-bottom: 0.2em;
+    }
+
+    .cover h1 { font-size: 2.6em; margin-bottom: 0.1em; }
+    .cover .subtitle { font-size: 1.1em; color: var(--accent); font-weight: 500; margin-bottom: 2em; }
+    .cover .meta { font-size: 0.7em; color: var(--gray-600); line-height: 1.8; }
+
+    .highlight-box {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-left: 4px solid var(--accent);
+      padding: 1em 1.5em;
+      border-radius: 4px;
+      text-align: left;
+      margin: 1em 0;
+    }
+
+    .quote-box {
+      background: var(--accent-light);
+      border: 1px solid #bfdbfe;
+      border-left: 4px solid var(--accent);
+      padding: 1.2em 1.8em;
+      border-radius: 4px;
+      text-align: left;
+      margin: 1em 0;
+    }
+    .quote-box .quote-text {
+      font-size: 1.1em;
+      font-weight: 600;
+      color: var(--r-main-color);
+      line-height: 1.5;
+      font-style: italic;
+    }
+    .quote-box .quote-source {
+      font-size: 0.65em;
+      color: var(--gray-600);
+      margin-top: 0.6em;
+    }
+
+    .cols { display: flex; gap: 2em; align-items: flex-start; }
+    .cols .col { flex: 1; text-align: left; }
+    .cols .col-40 { flex: 0 0 40%; text-align: left; }
+    .cols .col-60 { flex: 0 0 58%; text-align: left; }
+    .cols .col-50 { flex: 1; text-align: left; }
+
+    .flow { display: flex; align-items: center; justify-content: center; gap: 0; margin: 1em 0; }
+    .flow-node {
+      background: var(--gray-50);
+      border: 2px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.8em 1.2em;
+      font-size: 0.75em;
+      font-weight: 500;
+      text-align: center;
+      min-width: 110px;
+    }
+    .flow-node.accent { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .flow-node.orange { background: var(--orange); color: #fff; border-color: var(--orange); }
+    .flow-node.green { background: var(--green); color: #fff; border-color: var(--green); }
+    .flow-node.cyan { background: var(--cyan); color: #fff; border-color: var(--cyan); }
+    .flow-node.purple { background: var(--purple); color: #fff; border-color: var(--purple); }
+    .flow-node.outline { background: #fff; border-color: var(--accent); color: var(--accent); }
+    .flow-arrow {
+      width: 40px; height: 2px;
+      background: var(--gray-400);
+      position: relative; flex-shrink: 0;
+    }
+    .flow-arrow::after {
+      content: '';
+      position: absolute;
+      right: -1px; top: -5px;
+      border: 6px solid transparent;
+      border-left: 8px solid var(--gray-400);
+    }
+    .flow-arrow.accent-arrow { background: var(--accent); }
+    .flow-arrow.accent-arrow::after { border-left-color: var(--accent); }
+    .flow-arrow.orange-arrow { background: var(--orange); }
+    .flow-arrow.orange-arrow::after { border-left-color: var(--orange); }
+
+    .card-grid { display: grid; gap: 1em; margin: 1em 0; }
+    .card-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .card-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+    .card-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 1.2em;
+      text-align: center;
+    }
+    .card.accent-card { background: var(--accent-light); border-color: #93c5fd; }
+    .card.orange-card { background: var(--orange-light); border-color: #fed7aa; }
+    .card.green-card { background: var(--green-light); border-color: #bbf7d0; }
+    .card.purple-card { background: var(--purple-light); border-color: #e9d5ff; }
+    .card .card-icon { font-size: 2em; margin-bottom: 0.3em; line-height: 1; }
+    .card .card-label { font-size: 0.7em; font-weight: 600; color: var(--r-main-color); margin-bottom: 0.2em; }
+    .card .card-desc { font-size: 0.65em; color: var(--gray-600); line-height: 1.4; }
+
+    .vs-layout { display: flex; align-items: stretch; gap: 0; margin: 0.8em 0; }
+    .vs-panel { flex: 1; padding: 1.2em 1.5em; border-radius: 8px; text-align: left; }
+    .vs-panel.left { background: var(--gray-50); border: 1px solid var(--gray-200); margin-right: -1px; border-radius: 8px 0 0 8px; }
+    .vs-panel.right { background: var(--accent-light); border: 1px solid #bfdbfe; border-radius: 0 8px 8px 0; }
+    .vs-divider { width: 48px; display: flex; align-items: center; justify-content: center; font-size: 1.4em; font-weight: 700; color: var(--gray-400); flex-shrink: 0; }
+    .vs-panel h3 { font-size: 0.85em; margin-bottom: 0.6em; }
+    .vs-panel .vs-items { font-size: 0.75em; color: var(--gray-800); line-height: 2; }
+
+    .takeaway { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 2em; text-align: center; }
+    .takeaway .divider { width: 3em; height: 3px; background: var(--accent); border-radius: 2px; margin-bottom: 1.8em; }
+    .takeaway .main-text { font-size: 1.5em; font-weight: 700; color: var(--accent); line-height: 1.45; margin: 0 0 1.2em 0; max-width: 15em; }
+    .takeaway .sub-text { font-size: 0.82em; color: var(--gray-600); line-height: 1.8; margin: 0 0 2em 0; max-width: 28em; }
+    .takeaway .hint { font-size: 0.6em; color: var(--gray-400); letter-spacing: 0.04em; }
+
+    .warning-box { background: #fef2f2; border: 1px solid #fca5a5; border-left: 4px solid #dc2626; padding: 0.8em 1.2em; border-radius: 4px; text-align: left; margin: 0.5em 0; }
+    .success-box { background: var(--green-light); border: 1px solid #bbf7d0; border-left: 4px solid var(--green); padding: 0.8em 1.2em; border-radius: 4px; text-align: left; margin: 0.5em 0; }
+
+    .tag { display: inline-block; background: var(--accent); color: #fff; font-size: 0.55em; font-weight: 600; padding: 0.2em 0.7em; border-radius: 20px; vertical-align: middle; margin-left: 0.4em; letter-spacing: 0.03em; }
+    .tag.gray { background: var(--gray-400); }
+    .tag.green { background: #16a34a; }
+    .tag.orange { background: #f97316; }
+    .tag.purple { background: #9333ea; }
+    .tag.cyan { background: var(--cyan); }
+
+    .reveal .slide-number { font-family: 'Inter', sans-serif; font-size: 14px; color: var(--gray-400); }
+    .reveal .progress span { background: var(--accent); }
+
+    .prompt-box {
+      background: #1e1e2e;
+      border: 1px solid #45475a;
+      border-left: 4px solid #f97316;
+      padding: 0.8em 1.2em;
+      border-radius: 8px;
+      text-align: left;
+      margin: 0.8em 0;
+      color: #cdd6f4;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68em;
+      line-height: 1.8;
+    }
+    .prompt-box .prompt-label {
+      color: #f97316;
+      font-weight: 700;
+      font-size: 0.9em;
+      margin-bottom: 0.4em;
+    }
+    .prompt-box .prompt-out {
+      color: #a6e3a1;
+      border-top: 1px dashed #585b70;
+      padding-top: 0.5em;
+      margin-top: 0.5em;
+    }
+    .prompt-box .prompt-out .out-label {
+      color: #a6e3a1;
+      font-weight: 700;
+    }
+
+    .openclaw-box {
+      background: linear-gradient(135deg, #111827 0%, #1e1e2e 100%);
+      border: 1px solid #374151;
+      border-left: 4px solid #00d2ff;
+      padding: 1em 1.5em;
+      border-radius: 8px;
+      text-align: left;
+      margin: 0.8em 0;
+      color: #e5e7eb;
+    }
+    .openclaw-box .oc-label {
+      color: #00d2ff;
+      font-weight: 700;
+      font-size: 0.75em;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 0.5em;
+    }
+    .openclaw-box .oc-content {
+      font-size: 0.72em;
+      line-height: 1.8;
+      color: #d1d5db;
+    }
+
+    .model-table { width: 100%; border-collapse: collapse; font-size: 0.68em; margin: 0.8em 0; }
+    .model-table th { background: var(--gray-100); color: var(--gray-700); font-weight: 600; padding: 0.5em 0.8em; text-align: left; border: 1px solid var(--gray-200); }
+    .model-table td { padding: 0.45em 0.8em; border: 1px solid var(--gray-200); color: var(--gray-800); line-height: 1.5; }
+    .model-table tr:nth-child(even) td { background: var(--gray-50); }
+    .model-table .badge { display: inline-block; font-size: 0.8em; font-weight: 600; padding: 0.1em 0.5em; border-radius: 4px; }
+    .model-table .badge.default { background: var(--accent-light); color: var(--accent); }
+    .model-table .badge.reasoning { background: #fae8ff; color: #9333ea; }
+    .model-table .badge.vision { background: var(--green-light); color: var(--green); }
+
+    /* Pixel grid for "what the model sees" demo */
+    .pixel-grid {
+      display: inline-grid;
+      grid-template-columns: repeat(8, 18px);
+      gap: 1px;
+      background: var(--gray-300, #ccc);
+      padding: 2px;
+      border-radius: 4px;
+    }
+    .pixel-grid div {
+      width: 18px; height: 18px;
+      font-size: 9px;
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Modality token */
+    .mod-token {
+      display: inline-block;
+      padding: 0.2em 0.7em;
+      border-radius: 20px;
+      font-size: 0.7em;
+      font-weight: 600;
+      margin: 0.15em;
+    }
+    .mod-token.text   { background: var(--accent-light); color: var(--accent); }
+    .mod-token.image  { background: var(--green-light); color: var(--green); }
+    .mod-token.audio  { background: var(--orange-light); color: var(--orange); }
+    .mod-token.video  { background: var(--purple-light); color: var(--purple); }
+    .mod-token.table  { background: var(--cyan-light); color: var(--cyan); }
+
+    /* Architecture block diagram */
+    .arch-row {
+      display: flex; gap: 0.6em;
+      justify-content: center; align-items: stretch;
+      margin: 0.5em 0;
+    }
+    .arch-block {
+      background: var(--gray-50);
+      border: 2px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.7em 1em;
+      font-size: 0.7em;
+      text-align: center;
+      min-width: 120px;
+    }
+    .arch-block.vision { background: var(--green-light); border-color: #bbf7d0; }
+    .arch-block.text   { background: var(--accent-light); border-color: #bfdbfe; }
+    .arch-block.fuse   { background: var(--purple-light); border-color: #e9d5ff; }
+    .arch-block.out    { background: var(--orange-light); border-color: #fed7aa; }
+    .arch-block .ab-label { font-weight: 700; font-size: 0.95em; margin-bottom: 0.2em; }
+    .arch-block .ab-desc { font-size: 0.85em; color: var(--gray-600); line-height: 1.4; }
+
+    /* Paper figure with citation caption */
+    .paper-fig {
+      display: flex; flex-direction: column;
+      align-items: center;
+      margin: 0.4em 0;
+    }
+    .paper-fig img {
+      max-width: 100%;
+      max-height: 380px;
+      object-fit: contain;
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+      background: #fff;
+    }
+    .paper-fig .fig-caption {
+      font-size: 0.55em;
+      color: var(--gray-600);
+      text-align: center;
+      margin-top: 0.4em;
+      max-width: 90%;
+      line-height: 1.5;
+    }
+    .paper-fig .fig-caption .src {
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .fig-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1em;
+      align-items: start;
+    }
+    .fig-grid-2 .paper-fig img { max-height: 280px; }
+
+    /* Real-photo gallery */
+    .photo-grid { display: grid; gap: 0.8em; margin: 0.6em 0; }
+    .photo-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+    .photo-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .photo-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+    .photo-card {
+      display: flex; flex-direction: column;
+      border-radius: 8px; overflow: hidden;
+      border: 1px solid var(--gray-200);
+      background: #fff;
+    }
+    .photo-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+    .photo-card .pc-body {
+      padding: 0.4em 0.6em;
+      font-size: 0.6em;
+      color: var(--gray-700);
+      background: var(--gray-50);
+      border-top: 1px solid var(--gray-200);
+      flex: 1;
+    }
+    .photo-card .pc-tag {
+      display: inline-block;
+      font-size: 0.85em; font-weight: 700;
+      padding: 0.1em 0.5em; border-radius: 4px;
+      background: var(--accent-light); color: var(--accent);
+      margin-bottom: 0.2em;
+    }
+    .photo-card .pc-tag.green { background: var(--green-light); color: var(--green); }
+    .photo-card .pc-tag.orange { background: var(--orange-light); color: var(--orange); }
+    .photo-card .pc-tag.purple { background: var(--purple-light); color: var(--purple); }
+    .photo-card .pc-cred {
+      font-size: 0.85em;
+      color: var(--gray-500);
+      margin-top: 0.2em;
+    }
+
+    /* Single hero photo */
+    .hero-photo {
+      display: flex; flex-direction: column;
+      align-items: center;
+      margin: 0.4em 0;
+    }
+    .hero-photo img {
+      max-width: 100%;
+      max-height: 420px;
+      object-fit: contain;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+    .hero-photo .hp-cap {
+      font-size: 0.6em;
+      color: var(--gray-600);
+      text-align: center;
+      margin-top: 0.4em;
+      line-height: 1.5;
+      max-width: 80%;
+    }
+    .hero-photo .hp-cap .cred {
+      color: var(--gray-500); font-size: 0.92em;
+    }
+
+    /* Inline annotated photo (for "VLM sees this") */
+    .annotated {
+      display: flex; gap: 1em; align-items: center; margin: 0.6em 0;
+    }
+    .annotated .ann-img { flex: 0 0 40%; }
+    .annotated .ann-img img {
+      width: 100%; max-height: 280px; object-fit: cover;
+      border-radius: 8px; border: 1px solid var(--gray-200);
+    }
+    .annotated .ann-body { flex: 1; font-size: 0.7em; text-align: left; }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- ============================================================ -->
+<!-- Lecture 11: Multimodal Models                                 -->
+<!-- ============================================================ -->
+
+<section class="cover">
+  <h1>多模态模型</h1>
+  <p class="subtitle">从 CNN 到 VLM：让 AI 同时读懂文字、图像、视频</p>
+  <p class="meta">
+    第十一课<br>
+    郑思尧<br>
+    上海交通大学 国际与公共事务学院
+  </p>
+</section>
+
+<!-- ============================================================ -->
+<!-- 衔接 & 路线图                                                  -->
+<!-- ============================================================ -->
+
+<section>
+  <h2>上节课和期中报告留下的问题</h2>
+  <p style="font-size:0.74em;text-align:left;color:var(--gray-700);margin:0.2em 0 0.5em;">
+    第九课我们把 LLM 当成"会续写文字的概率机器"。期中汇报里，多个同学问到<strong>同一类问题</strong>——只看文字不够：
+  </p>
+  <div class="photo-grid cols-3">
+    <div class="photo-card">
+      <img src="images/times_square.jpg" alt="Times Square">
+      <div class="pc-body">
+        <span class="pc-tag">微博 / 小红书</span><br>
+        "图文混排，单看文本丢了一半信息"
+        <div class="pc-cred">© Wikimedia Commons (CC BY-SA)</div>
+      </div>
+    </div>
+    <div class="photo-card">
+      <img src="images/protest_london_acta.jpg" alt="ACTA protest crowd London">
+      <div class="pc-body">
+        <span class="pc-tag green">抗议 / 集会研究</span><br>
+        "5000 张现场照片怎么自动数人头、识别标语？"
+        <div class="pc-cred">© MsSaraKelly / Wikimedia (CC BY-SA 3.0)</div>
+      </div>
+    </div>
+    <div class="photo-card">
+      <img src="images/newspaper.jpg" alt="Newspapers">
+      <div class="pc-body">
+        <span class="pc-tag orange">政策 / 媒体</span><br>
+        "标题 + 配图 + 短视频要联合分析"
+        <div class="pc-cred">© Wikimedia Commons</div>
+      </div>
+    </div>
+  </div>
+  <p style="font-size:0.7em;color:var(--gray-600);text-align:left;margin-top:0.4em;">
+    今天给一个统一答案：<strong>多模态模型</strong>——把图像、视频、音频接进 AI。
+  </p>
+</section>
+
+<section>
+  <h2>今天的路线图</h2>
+  <div class="highlight-box">
+    <p style="font-size:0.8em;margin:0;">
+      大纲标题是"多模态模型"。所以先讲<strong>什么是模态、为什么要联合</strong>；
+      传统的 CNN/ViT 视觉线<strong>快速过</strong>；
+      重点放在<strong>今天的多模态大模型（VLM）</strong>——它的架构、能力、主流型号。
+      最后落到 OpenClaw 的多模态实操和社科应用。
+    </p>
+  </div>
+  <div class="card-grid cols-4">
+    <div class="card accent-card">
+      <div class="card-label">概念</div>
+      <div class="card-desc">什么是模态<br>为什么要联合表示</div>
+    </div>
+    <div class="card">
+      <div class="card-label">技术线</div>
+      <div class="card-desc">CNN / ViT 快速过<br>CLIP 打开大门</div>
+    </div>
+    <div class="card purple-card">
+      <div class="card-label">VLM <span class="tag purple">重点</span></div>
+      <div class="card-desc">视觉语言大模型<br>架构 + 主流型号</div>
+    </div>
+    <div class="card green-card">
+      <div class="card-label">实战</div>
+      <div class="card-desc">OpenClaw 多模态<br>+ 社科案例</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- Part 1: 模态与联合表示                                         -->
+<!-- ============================================================ -->
+
+<section class="section-title">
+  <h2><span class="section-num">Part 1 / 5</span>什么是"模态"？为什么要联合？</h2>
+</section>
+
+<section>
+  <h2>模态 = 信息的"通道"</h2>
+  <div class="paper-fig">
+    <img src="images/multimodal_examples.png" alt="社科研究里的多模态数据示例">
+    <div class="fig-caption">
+      社科研究的数据本来就是多模态的——一条微博、一篇报道、一份政策文件、一次田野调查，每份都同时包含多个模态。
+    </div>
+  </div>
+  <div style="margin:0.4em 0;text-align:center;">
+    <span class="mod-token text">文本</span>
+    <span class="mod-token image">图像</span>
+    <span class="mod-token audio">音频</span>
+    <span class="mod-token video">视频</span>
+    <span class="mod-token table">表格</span>
+  </div>
+  <p style="font-size:0.7em;text-align:left;color:var(--gray-700);margin:0.3em 0;">
+    过去十年 AI 每个模态各练各的（NLP / CV / ASR）。
+    <strong>多模态模型 = 让一个模型同时读懂多种通道。</strong>
+  </p>
+</section>
+
+<section>
+  <h2>为什么社科研究今天必须懂多模态？</h2>
+  <div class="photo-grid cols-4">
+    <div class="photo-card">
+      <img src="images/nasa_africa_night.jpg" alt="Africa at night">
+      <div class="pc-body">
+        <span class="pc-tag">卫星图</span><br>
+        Jean et al. 2016 用它预测<br>非洲村级 GDP（R²≈0.75）
+        <div class="pc-cred">NASA · 公共领域</div>
+      </div>
+    </div>
+    <div class="photo-card">
+      <img src="images/times_square.jpg" alt="Times Square">
+      <div class="pc-body">
+        <span class="pc-tag green">街景</span><br>
+        Gebru et al. 2017 用它<br>推断社区收入与投票倾向
+        <div class="pc-cred">Wikimedia · CC BY-SA</div>
+      </div>
+    </div>
+    <div class="photo-card">
+      <img src="images/protest_london_acta.jpg" alt="protest London">
+      <div class="pc-body">
+        <span class="pc-tag orange">抗议照片</span><br>
+        Won et al. 2017 用它<br>估计暴力程度 + 视觉属性
+        <div class="pc-cred">MsSaraKelly · CC BY-SA</div>
+      </div>
+    </div>
+    <div class="photo-card">
+      <img src="images/wwii_poster.jpg" alt="Political poster">
+      <div class="pc-body">
+        <span class="pc-tag purple">政治海报</span><br>
+        Williams &amp; Casas 2020<br>编码海报意识形态信号
+        <div class="pc-cred">U.S. Govt · 公共领域</div>
+      </div>
+    </div>
+  </div>
+  <div class="quote-box" style="margin-top:0.4em;">
+    <div class="quote-text">
+      只用文本做社科，相当于只看一只眼睛的世界。
+    </div>
+    <div class="quote-source">—— 这一讲想留给你的核心问题意识</div>
+  </div>
+</section>
+
+<section>
+  <h2>多模态的两个核心问题</h2>
+  <div class="cols">
+    <div class="col-40">
+      <div class="hero-photo" style="margin:0;">
+        <img src="images/cat_classic.jpg" alt="cat" style="max-height:260px;">
+        <div class="hp-cap">
+          一张照片 + 一句"这是一只趴着的猫"<br>
+          ——它们怎么变成可以比较的东西？
+          <span class="cred">© Wikimedia · CC BY-SA</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-60">
+      <div class="vs-layout" style="flex-direction:column;gap:0.5em;">
+        <div class="vs-panel left" style="border-radius:8px;margin:0;">
+          <h3 style="color:var(--accent);">① 表示 Representation</h3>
+          <div class="vs-items" style="font-size:0.7em;">
+            一张照片和一句话，怎么放到<strong>同一种"语言"</strong>里？
+            模型必须找到一个共享表示空间，让它们能被比较、检索、对齐。
+          </div>
+        </div>
+        <div class="vs-panel right" style="border-radius:8px;margin:0;">
+          <h3 style="color:var(--accent);">② 对齐 Alignment</h3>
+          <div class="vs-items" style="font-size:0.7em;">
+            "这只猫"这三个字 对应图里哪几个像素？
+            对齐决定了模型能不能<strong>解释自己看到了什么</strong>。
+          </div>
+        </div>
+      </div>
+      <p style="font-size:0.66em;color:var(--gray-700);margin-top:0.4em;">
+        后面所有技术（CNN、ViT、CLIP、VLM）都是对这两个问题的不同回答。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- Part 2: CNN/ViT 快速过 + CLIP                                  -->
+<!-- ============================================================ -->
+
+<section class="section-title">
+  <h2><span class="section-num">Part 2 / 5</span>视觉表示简史：CNN → ViT → CLIP <span style="font-size:0.45em;color:var(--gray-500);">（快速过）</span></h2>
+</section>
+
+<section>
+  <h2>机器"看到"图像的本质</h2>
+  <div class="cols">
+    <div class="col-50">
+      <div class="hero-photo">
+        <img src="images/cat_classic.jpg" alt="A cat — what humans see">
+        <div class="hp-cap">
+          人看到：一只猫，趴在地上，神情平静。<br>
+          <span class="cred">© Wikimedia Commons (CC BY-SA)</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-50">
+      <p style="font-size:0.7em;text-align:left;">
+        模型看到：一个 <code>H × W × 3</code> 的数字矩阵。
+        每个像素一个 0–255 的 RGB 三元组。
+      </p>
+      <div style="text-align:center;margin:0.4em 0;">
+        <div class="pixel-grid" id="pg"></div>
+      </div>
+      <p style="font-size:0.65em;text-align:left;color:var(--gray-600);">
+        ↑ 8×8 的迷你像素阵列。视觉模型干的事——
+        把这堆数字<strong>压成一个有语义的向量</strong>。
+      </p>
+      <div class="highlight-box" style="margin-top:0.3em;">
+        <p style="font-size:0.65em;margin:0;">
+          文本：<code>word → token → embedding</code><br>
+          图像：<code>pixel → patch → embedding</code><br>
+          统一后，<strong>两类输入都能塞进同一个 Transformer</strong>。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>CNN：用"卷积核"扫描局部 <span class="tag gray">快速过</span></h2>
+  <div class="cols">
+    <div class="col-40">
+      <div class="hero-photo" style="margin:0;">
+        <img src="images/cat_classic.jpg" alt="cat for CNN" style="max-height:240px;">
+        <div class="hp-cap">
+          经典 CNN 任务：把这张图<br>分类成 <code>cat</code> / <code>dog</code> / ...
+          <span class="cred">© Wikimedia · CC BY-SA</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-60">
+      <ul style="font-size:0.68em;">
+        <li><strong>核心</strong>：图像有<em>局部性</em>和<em>平移不变性</em>，用小窗口（kernel）扫整张图</li>
+        <li><strong>层级抽象</strong>：低层学边缘 → 中层学纹理 → 高层学物体</li>
+        <li><strong>代表</strong>：LeNet 1998 → AlexNet 2012 → VGG → ResNet 2015</li>
+        <li><strong>2012 ImageNet</strong>：AlexNet 把错误率从 26% 砍到 15%，深度学习破圈</li>
+      </ul>
+      <div class="highlight-box" style="margin:0.3em 0;">
+        <p style="font-size:0.66em;margin:0;">
+          <strong>对社科的意义</strong>：CNN 第一次让"用图像做测量"成为可行手段。
+          Naik 2014 用 CNN 给 1.6 万张街景打安全感分数；Gebru 2017 用 CNN 在 5000 万张街景里识别车型，反推社区收入与投票倾向。
+        </p>
+      </div>
+      <p style="font-size:0.62em;color:var(--gray-600);text-align:left;margin:0.2em 0;">
+        <strong>局限</strong>：每个任务要单独标数据、单独训模型；不会"说话"，只输出标签。
+      </p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>ViT：把 Transformer 搬到图像上 <span class="tag gray">快速过</span></h2>
+  <div class="cols">
+    <div class="col-60">
+      <div class="paper-fig">
+        <img src="images/vit_pipeline.png" alt="ViT pipeline schematic">
+        <div class="fig-caption">
+          一张图被切成 patch → 加位置编码 → 当成 token 序列扔进 Transformer。
+          <span class="src">Dosovitskiy et al., ICLR 2021.</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-40">
+      <ul style="font-size:0.68em;">
+        <li>把图像切成 16×16 的 patch，每块当作一个 "token"</li>
+        <li>加位置编码，扔进标准 Transformer</li>
+        <li>训练目标和文本 BERT/GPT 几乎一致</li>
+        <li>从此<strong>视觉和语言可以用同一种"砖"</strong></li>
+      </ul>
+      <div class="highlight-box">
+        <p style="font-size:0.66em;margin:0;">
+          今天几乎所有多模态大模型都用 ViT 当视觉编码器。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>CLIP：第一次把"图"和"文"真正对齐</h2>
+  <div class="paper-fig">
+    <img src="images/clip_contrastive.png" alt="CLIP 对比学习概念示意">
+    <div class="fig-caption">
+      左：两个独立 encoder 把图和文字映到共享空间。右：训练时把对角线（匹配对）相似度拉高、其他拉低。
+      <span class="src">Radford et al., ICML 2021 (OpenAI CLIP) · 概念示意。</span>
+    </div>
+  </div>
+  <p style="font-size:0.68em;text-align:left;color:var(--gray-700);margin-top:0.4em;">
+    训练完，<strong>一句话就能当分类标签</strong>——零样本图像分类、检索、过滤、聚类全都解锁。
+    这是后来 Stable Diffusion、DALL·E、所有 VLM 的技术地基。
+  </p>
+</section>
+
+<section>
+  <h2>本部分小结：三个东西被打通了</h2>
+  <div class="card-grid cols-3">
+    <div class="card">
+      <div class="card-icon">🧱</div>
+      <div class="card-label">架构统一</div>
+      <div class="card-desc">ViT 让图像和文本都用 Transformer 处理</div>
+    </div>
+    <div class="card accent-card">
+      <div class="card-icon">🎯</div>
+      <div class="card-label">表示对齐</div>
+      <div class="card-desc">CLIP 让图文向量住在同一个语义空间</div>
+    </div>
+    <div class="card green-card">
+      <div class="card-icon">🗣️</div>
+      <div class="card-label">还差一步</div>
+      <div class="card-desc">让模型不仅"看懂"，还能<strong>开口讲</strong>它看到了什么</div>
+    </div>
+  </div>
+  <div class="quote-box" style="margin-top:0.8em;">
+    <div class="quote-text">
+      ViT 解决了"砖"，CLIP 解决了"对齐"。下一步：把对齐好的视觉能力<strong>接到一个会说话的 LLM 上</strong>。
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- Part 3: 多模态大模型 VLM (重点)                                -->
+<!-- ============================================================ -->
+
+<section class="section-title">
+  <h2><span class="section-num">Part 3 / 5</span>多模态大模型 VLM <span style="font-size:0.45em;color:var(--accent);">（今天的重点）</span></h2>
+</section>
+
+<section>
+  <h2>VLM 是什么？一句话定义</h2>
+  <div class="quote-box">
+    <div class="quote-text">
+      VLM (Vision-Language Model) = 视觉编码器 + 投影层 + 大语言模型。<br>
+      你给它图片 + 文字，它输出文字。
+    </div>
+  </div>
+  <div class="paper-fig">
+    <img src="images/vlm_stack.png" alt="VLM 架构示意">
+    <div class="fig-caption">
+      视觉只是一种额外的 token 流——其他都和第九课讲的 LLM 一模一样。
+      <span class="src">LLaVA / Qwen-VL / Claude Vision 等主流 VLM 都用这个结构。</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>VLM 看到图片之后，内部发生了什么？</h2>
+  <div class="cols">
+    <div class="col-50">
+      <div class="hero-photo" style="margin:0;">
+        <img src="images/times_square.jpg" alt="urban photo" style="max-height:200px;">
+        <div class="hp-cap">
+          一张 1280×720 的照片<br>
+          ≈ 1024–2304 个视觉 token
+          <span class="cred">© Wikimedia · CC BY-SA</span>
+        </div>
+      </div>
+      <ol style="font-size:0.62em;padding-left:1.3em;margin-top:0.3em;">
+        <li>图像切成 N 个 patch（如 24×24=576）</li>
+        <li>ViT 把每块 patch 变成<strong>视觉 token</strong></li>
+        <li>Projector 投影到 LLM 同维度</li>
+        <li>视觉 token + 文字 token 拼成长序列</li>
+        <li>LLM 一路读到底，自回归输出</li>
+      </ol>
+    </div>
+    <div class="col-50">
+      <div class="paper-fig" style="margin:0;">
+        <img src="images/vlm_token_budget.png" alt="token budget" style="max-height:280px;">
+        <div class="fig-caption">
+          图像 / 视频在 VLM 里也"吃" token——影响成本与上下文预算
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>VLM 看一张真实照片：能做什么</h2>
+  <div class="annotated">
+    <div class="ann-img">
+      <img src="images/protest_london_acta.jpg" alt="protest crowd">
+      <div style="font-size:0.55em;color:var(--gray-500);text-align:center;margin-top:0.2em;">
+        © MsSaraKelly · Wikimedia CC BY-SA · ACTA Protest London
+      </div>
+    </div>
+    <div class="ann-body">
+      <div class="prompt-box" style="margin:0;">
+        <div class="prompt-label">User: 帮我用 JSON 编码这张抗议照片</div>
+        <div class="prompt-out">
+{<br>
+&nbsp;&nbsp;"is_protest": true,<br>
+&nbsp;&nbsp;"crowd_size_bucket": "大",<br>
+&nbsp;&nbsp;"location_clue": "London, Trafalgar Square",<br>
+&nbsp;&nbsp;"signs_visible": true,<br>
+&nbsp;&nbsp;"violence_visible": false,<br>
+&nbsp;&nbsp;"police_visible": false,<br>
+&nbsp;&nbsp;"weather": "overcast",<br>
+&nbsp;&nbsp;"main_slogan_en": "STOP ACTA"<br>
+}
+        </div>
+      </div>
+    </div>
+  </div>
+  <p style="font-size:0.66em;color:var(--gray-700);text-align:left;margin-top:0.4em;">
+    一张照片 + 一段 prompt → 一份结构化数据。<strong>这是社科研究真正受益的地方</strong>。
+  </p>
+</section>
+
+<section>
+  <h2>VLM 的能力清单</h2>
+  <div class="card-grid cols-4">
+    <div class="card accent-card">
+      <div class="card-icon">📝</div>
+      <div class="card-label">图像描述</div>
+      <div class="card-desc">"这张照片里有什么？"</div>
+    </div>
+    <div class="card green-card">
+      <div class="card-icon">🔍</div>
+      <div class="card-label">视觉问答 VQA</div>
+      <div class="card-desc">"标语写了什么？""穿红衣的人在哪？"</div>
+    </div>
+    <div class="card orange-card">
+      <div class="card-icon">🧾</div>
+      <div class="card-label">文档/表格 OCR</div>
+      <div class="card-desc">扫描件、PDF、问卷自动提取</div>
+    </div>
+    <div class="card purple-card">
+      <div class="card-icon">📊</div>
+      <div class="card-label">图表理解</div>
+      <div class="card-desc">读懂统计图、流程图、地图</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🧩</div>
+      <div class="card-label">结构化抽取</div>
+      <div class="card-desc">"按 JSON 格式输出图中信息"</div>
+    </div>
+    <div class="card accent-card">
+      <div class="card-icon">⛓️</div>
+      <div class="card-label">多图推理</div>
+      <div class="card-desc">同时给多张图做比较/排序</div>
+    </div>
+    <div class="card green-card">
+      <div class="card-icon">🎬</div>
+      <div class="card-label">视频理解</div>
+      <div class="card-desc">把视频当成"帧序列"读</div>
+    </div>
+    <div class="card orange-card">
+      <div class="card-icon">🛠️</div>
+      <div class="card-label">视觉 + 工具</div>
+      <div class="card-desc">看截图 → 调用浏览器/代码</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>主流多模态大模型：2026 年课堂选型</h2>
+  <table class="model-table">
+    <thead>
+      <tr>
+        <th>模型</th><th>厂商</th><th>视觉</th><th>视频</th><th>音频</th><th>典型场景</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>GPT-4o / GPT-5</strong></td><td>OpenAI</td>
+        <td><span class="badge vision">原生</span></td><td>帧</td><td>原生</td>
+        <td>通用最强，海报/截图/截屏分析</td></tr>
+      <tr><td><strong>Claude 4.x / Opus 4.7</strong></td><td>Anthropic</td>
+        <td><span class="badge vision">原生</span></td><td>帧</td><td>—</td>
+        <td>长文档 + 图表，社科最稳的选择</td></tr>
+      <tr><td><strong>Gemini 2.5</strong></td><td>Google</td>
+        <td><span class="badge vision">原生</span></td><td><span class="badge default">原生</span></td><td>原生</td>
+        <td>长视频理解、Google Workspace 集成</td></tr>
+      <tr><td><strong>Qwen3-VL</strong></td><td>阿里</td>
+        <td><span class="badge vision">原生</span></td><td>帧</td><td>另一系列</td>
+        <td>中文 OCR、政策文件、本地化</td></tr>
+      <tr><td><strong>DeepSeek-VL2</strong></td><td>DeepSeek</td>
+        <td><span class="badge vision">原生</span></td><td>—</td><td>—</td>
+        <td>开源、可自部署、便宜</td></tr>
+      <tr><td><strong>InternVL / MiniCPM-V</strong></td><td>书生 / 面壁</td>
+        <td><span class="badge vision">开源</span></td><td>部分</td><td>—</td>
+        <td>本地/边缘部署、做实验</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.65em;color:var(--gray-600);text-align:left;">
+    选型原则：<strong>中文场景 → Qwen3-VL / DeepSeek-VL</strong>；
+    <strong>需要稳定推理 → Claude</strong>；
+    <strong>长视频 → Gemini</strong>；
+    <strong>预算紧 → 开源自托管</strong>。
+  </p>
+</section>
+
+<section>
+  <h2>VLM 和上一讲讲的 LLM 是什么关系？</h2>
+  <div class="vs-layout">
+    <div class="vs-panel left">
+      <h3 style="color:var(--gray-700);">第九课的 LLM</h3>
+      <div class="vs-items">
+        输入：文字 token<br>
+        输出：文字 token<br>
+        典型：GPT-4 text, Claude text<br>
+        Skill 接的就是它
+      </div>
+    </div>
+    <div class="vs-divider">⊃</div>
+    <div class="vs-panel right">
+      <h3 style="color:var(--accent);">本节课的 VLM</h3>
+      <div class="vs-items">
+        输入：文字 + 图像 + 视频 + (音频) token<br>
+        输出：文字 token（绝大多数）<br>
+        典型：GPT-5, Claude Vision, Qwen3-VL<br>
+        <strong>是 LLM 的超集</strong>
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box" style="margin-top:0.6em;">
+    <p style="font-size:0.74em;margin:0;">
+      所以第九课讲的<strong>所有东西都还有效</strong>：上下文窗口、幻觉、Skill、Prompt 工程。
+      VLM 只是多了一个"视觉 token 入口"。今天你不需要重新学一种 AI，
+      你只需要<strong>学会怎么把图片喂给它</strong>。
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>VLM 也会幻觉，而且方式更隐蔽</h2>
+  <div class="paper-fig">
+    <img src="images/visual_hallucination.png" alt="视觉幻觉三种典型模式">
+    <div class="fig-caption">
+      视觉幻觉因为人懒得逐张核对，往往悄无声息进入研究结论——比文字幻觉更危险。
+    </div>
+  </div>
+  <div class="warning-box" style="margin-top:0.4em;">
+    <p style="font-size:0.72em;margin:0;">
+      <strong>研究者守则</strong>：用 VLM 标注 → 必须随机抽样 → 人工核验 → 报告错误率。
+      和第九课讲 Agent 时的规矩一样。
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- Part 4: 社科应用案例                                           -->
+<!-- ============================================================ -->
+
+<section class="section-title">
+  <h2><span class="section-num">Part 4 / 5</span>社科应用：多模态在干什么活</h2>
+</section>
+
+<section>
+  <h2>四类典型社科应用</h2>
+  <div class="photo-grid cols-4">
+    <div class="photo-card">
+      <img src="images/nasa_africa_day.jpg" alt="Africa daytime satellite">
+      <div class="pc-body">
+        <span class="pc-tag">① 卫星 / 街景</span><br>
+        测量贫困、犯罪感、绿化、不平等<br>
+        Naik 2014 · Jean 2016 · Gebru 2017
+        <div class="pc-cred">NASA · 公共领域</div>
+      </div>
+    </div>
+    <div class="photo-card">
+      <img src="images/protest_london_acta.jpg" alt="protest">
+      <div class="pc-body">
+        <span class="pc-tag green">② 抗议 / 集会</span><br>
+        人头计数、标语识别、暴力程度<br>
+        Won 2017 · Sobolev 2020
+        <div class="pc-cred">© MsSaraKelly · CC BY-SA</div>
+      </div>
+    </div>
+    <div class="photo-card">
+      <img src="images/wwii_poster.jpg" alt="political poster">
+      <div class="pc-body">
+        <span class="pc-tag orange">③ 政治传播</span><br>
+        海报 / 表情包 / 新闻图片视觉框架<br>
+        Williams &amp; Casas 2020
+        <div class="pc-cred">U.S. Govt · 公共领域</div>
+      </div>
+    </div>
+    <div class="photo-card">
+      <img src="images/newspaper.jpg" alt="newspapers">
+      <div class="pc-body">
+        <span class="pc-tag purple">④ 文档 / 田野</span><br>
+        扫描政策文件、手写问卷、访谈转写<br>
+        档案数字化（民国报刊、地方志）
+        <div class="pc-cred">Wikimedia Commons</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>案例 1：用卫星图衡量贫困</h2>
+  <div class="photo-grid cols-2" style="margin:0.3em 0;">
+    <div class="photo-card">
+      <img src="images/nasa_africa_day.jpg" alt="Africa daytime satellite" style="height:200px;">
+      <div class="pc-body">
+        <strong>白天高清图</strong>——能看到建筑、农田、道路、水系
+        <div class="pc-cred">NASA Blue Marble · 公共领域</div>
+      </div>
+    </div>
+    <div class="photo-card">
+      <img src="images/nasa_africa_night.jpg" alt="Africa at night" style="height:200px;">
+      <div class="pc-body">
+        <strong>夜间灯光</strong>——电力消费 ≈ 经济活动的代理变量
+        <div class="pc-cred">NASA Earth Observatory · 公共领域</div>
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box" style="margin-top:0.3em;">
+    <p style="font-size:0.7em;margin:0;">
+      <strong>Jean et al. 2016 (Science)</strong>：白天图 + 夜光 → CNN transfer learning →
+      预测非洲五国村级<strong>消费/资产水平</strong>，R² 达 0.55–0.75。
+      在调查数据稀缺的地区<strong>首次</strong>给出大尺度高分辨率社会经济测量。
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>案例 2：街景图像 → 推断社区构成</h2>
+  <div class="cols">
+    <div class="col-50">
+      <div class="hero-photo" style="margin:0;">
+        <img src="images/times_square.jpg" alt="urban street scene" style="max-height:280px;">
+        <div class="hp-cap">
+          一张街景里有几辆车？是什么型号？车的总价？
+          <span class="cred">© Wikimedia · CC BY-SA</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-50">
+      <div class="paper-fig" style="margin:0;">
+        <img src="images/streetview_cars.png" alt="streetview cars pipeline" style="max-height:240px;">
+        <div class="fig-caption">
+          50M 张图 → CNN 检测车型 → 聚合 → 回归推断收入 / 投票
+          <span class="src">Gebru et al., PNAS 114 (2017)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box" style="margin-top:0.4em;">
+    <p style="font-size:0.7em;margin:0;">
+      <strong>关键发现</strong>：城市里 sedan 比 pickup 多 → 88% 概率投民主党；反之 82% 概率投共和党。
+      用<strong>视觉中间变量</strong>桥接"图像 → 社会属性"，是社科最值得借鉴的设计思路。
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>案例 3：抗议照片的自动编码</h2>
+  <div class="cols">
+    <div class="col-50">
+      <div class="hero-photo" style="margin:0;">
+        <img src="images/protest_london_acta.jpg" alt="ACTA protest London" style="max-height:280px;">
+        <div class="hp-cap">
+          一张抗议照片 → 至少可编码：人群规模、暴力、警察、标语、情绪。
+          <span class="cred">© MsSaraKelly · CC BY-SA · ACTA London 2012</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-50">
+      <div class="paper-fig" style="margin:0;">
+        <img src="images/protest_multitask.png" alt="protest multitask" style="max-height:240px;">
+        <div class="fig-caption">
+          Won et al. 2017 (ACM MM)：共享 CNN + 三个任务头
+        </div>
+      </div>
+      <p style="font-size:0.66em;color:var(--gray-700);">
+        <strong>2017 → 2026</strong>：从训练多任务 CNN，
+        变成<strong>写一段 prompt 让 VLM 直接输出 JSON</strong>。
+        门槛被推平了——本科生也能做到。
+      </p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>案例：把视频"读"成结构化叙事</h2>
+  <div class="flow">
+    <div class="flow-node">视频文件</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node accent">抽帧 1 fps</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node green">VLM 逐帧描述</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node orange">LLM 合成时间线</div>
+    <div class="flow-arrow accent-arrow"></div>
+    <div class="flow-node cyan">事件结构</div>
+  </div>
+  <div class="highlight-box">
+    <p style="font-size:0.72em;margin:0;">
+      <strong>典型用例</strong>：B 站 / 抖音政治评论视频研究、上访视频、庭审录像、纪录片。
+      关键 trick：让 VLM<strong>逐帧/逐镜头</strong>给出客观描述，再让 LLM 把这些描述合成"事件序列"——
+      这比"一次性把整段视频塞给 VLM"更可控、更可审计。
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- Part 5: OpenClaw 实操                                          -->
+<!-- ============================================================ -->
+
+<section class="section-title">
+  <h2><span class="section-num">Part 5 / 5</span>OpenClaw 多模态实操</h2>
+</section>
+
+<section>
+  <h2>OpenClaw 里用多模态：你只需要拖图进去</h2>
+  <div class="cols">
+    <div class="col-60">
+      <ol style="font-size:0.72em;padding-left:1.4em;">
+        <li>选一个支持视觉的模型（Claude / GPT-5 / Qwen3-VL）</li>
+        <li>把图片拖进对话框（或 <code>@文件路径</code>）</li>
+        <li>用<strong>自然语言</strong>问问题，最好<strong>要求结构化输出</strong></li>
+        <li>让 Agent 把结果<strong>写进 CSV / JSON / Excel</strong></li>
+        <li>抽 5–10 条人工核验</li>
+      </ol>
+      <div class="success-box" style="margin-top:0.4em;">
+        <p style="font-size:0.7em;margin:0;">
+          ✅ 这个流程的好处：所有对话保存为 JSONL，<strong>可重现、可审计</strong>；
+          数据不出交大服务器。
+        </p>
+      </div>
+    </div>
+    <div class="col-40">
+      <div class="openclaw-box">
+        <div class="oc-label">本节课实验环境</div>
+        <div class="oc-content">
+          OpenClaw 2026.4.9<br>
+          运行在交大 IDEKube 容器<br>
+          默认模型：<code>claude-opus-4-7</code><br>
+          视觉模型：可切换 GPT-5 / Qwen3-VL<br><br>
+          网关端口 18789，<br>
+          课堂直接用 Web UI，无需配置。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>把"多模态分析"写成一个 Skill</h2>
+  <div class="cols">
+    <div class="col-50">
+      <p style="font-size:0.72em;text-align:left;">
+        延续第九课的思路：
+        <strong>把一次性的视觉分析 prompt，写成可复用的 SKILL.md</strong>。
+        这样下次拿到新一批图片，
+        你只要说"用 protest-coding skill 标这批图"，
+        Agent 自动加载规范、调用 VLM、写入 CSV。
+      </p>
+      <ul style="font-size:0.68em;">
+        <li>把编码本（codebook）放进 Skill</li>
+        <li>把 JSON schema 固定下来</li>
+        <li>把抽样核验脚本也放进去</li>
+      </ul>
+    </div>
+    <div class="col-50">
+      <pre><code><span class="cm">---</span>
+<span class="kw">name</span>: protest-image-coding
+<span class="kw">description</span>: Code protest photos
+  into a fixed JSON schema.
+<span class="cm">---</span>
+
+<span class="cm"># 编码规则</span>
+crowd_size_bucket:
+  小: &lt; 50
+  中: 50–500
+  大: &gt; 500
+
+<span class="cm"># 输出格式</span>
+&lt;返回 JSON，字段固定&gt;
+
+<span class="cm"># 验证</span>
+随机抽 5%，
+人工核验后再入库。
+</code></pre>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>课堂实操（20 分钟）</h2>
+  <div class="card-grid cols-3">
+    <div class="card accent-card">
+      <div class="card-label">① 拿一张图</div>
+      <div class="card-desc" style="font-size:0.7em;">
+        从你自己研究里挑一张：海报 / 截图 / 现场照片 / 政策文件
+      </div>
+    </div>
+    <div class="card green-card">
+      <div class="card-label">② 写一个结构化 prompt</div>
+      <div class="card-desc" style="font-size:0.7em;">
+        要求 JSON 输出，<br>每个字段先定义清楚
+      </div>
+    </div>
+    <div class="card orange-card">
+      <div class="card-label">③ 跑、看、抽检</div>
+      <div class="card-desc" style="font-size:0.7em;">
+        让 Agent 处理 10–20 张，<br>抽 3 张人工核对
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box" style="margin-top:0.6em;">
+    <p style="font-size:0.74em;margin:0;">
+      <strong>评估三件事</strong>：
+      ① 输出格式稳定吗？　② 关键字段抽检准确率多少？　③ 哪些情况下 VLM 系统性出错？
+      <br>本周作业就是把这个流程跑通，并写一个 200 字的"VLM 在我的数据上能做 / 不能做什么"报告。
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 局限 + 讨论 + Takeaway                                        -->
+<!-- ============================================================ -->
+
+<section>
+  <h2>怎样验证 VLM 的编码可不可信？</h2>
+  <div class="paper-fig">
+    <img src="images/ai_human_agreement.png" alt="VLM vs 人工编码 agreement 两种情况">
+    <div class="fig-caption">
+      抽样 50–200 张做人工核验，画 VLM 编码 vs 人工编码的散点图。<strong>高相关 ≠ 无偏</strong>——右图收缩到中位是常见 VLM 失效模式。
+    </div>
+  </div>
+  <div class="highlight-box" style="margin-top:0.4em;">
+    <p style="font-size:0.7em;margin:0;">
+      <strong>报告时三件事必写</strong>：① 抽样规模 ② 相关系数 r ③ 偏差方向（VLM 是否系统性高估或低估）。
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>多模态的边界：哪些事 VLM 还做不好</h2>
+  <div class="vs-layout">
+    <div class="vs-panel left" style="background:var(--green-light);border-color:#bbf7d0;">
+      <h3 style="color:var(--green);">✅ 已经很可靠</h3>
+      <div class="vs-items" style="font-size:0.72em;line-height:2;">
+        高质量印刷文档 OCR<br>
+        通用图像描述<br>
+        简单图表读数<br>
+        粗粒度场景分类<br>
+        提取明显物体属性
+      </div>
+    </div>
+    <div class="vs-divider"></div>
+    <div class="vs-panel right" style="background:#fef2f2;border-color:#fca5a5;">
+      <h3 style="color:var(--red);">⚠️ 仍不可全信</h3>
+      <div class="vs-items" style="font-size:0.72em;line-height:2;">
+        精确计数（人数、车辆数）<br>
+        细粒度文化语义（地域、政治符号）<br>
+        手写体、潦草字体<br>
+        长视频中的因果叙事<br>
+        细节空间关系（谁在谁左边）
+      </div>
+    </div>
+  </div>
+  <div class="warning-box" style="margin-top:0.6em;">
+    <p style="font-size:0.72em;margin:0;">
+      <strong>研究者的责任</strong>：把 VLM 当成<strong>高速但偶尔糊涂的研究助理</strong>。
+      可以让它处理 10 万张图；但你必须设计一套抽样核验机制，再写进论文方法论里。
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>伦理与合规：多模态特有的风险</h2>
+  <div class="cols">
+    <div class="col-40">
+      <div class="hero-photo" style="margin:0;">
+        <img src="images/cctv.jpg" alt="surveillance camera" style="max-height:240px;">
+        <div class="hp-cap">
+          多模态能"看见"的，往往就是隐私敏感的：脸、车牌、住所、行踪。
+          <span class="cred">© Wikimedia Commons</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-60">
+      <div class="card-grid cols-1" style="grid-template-columns:1fr;gap:0.5em;">
+        <div class="card" style="text-align:left;padding:0.7em 1em;">
+          <strong>① 人脸 / 隐私</strong>
+          <span style="font-size:0.7em;color:var(--gray-700);">：现场照片含可识别人脸，上传前先模糊。IRB 审查通常会问这一项。</span>
+        </div>
+        <div class="card accent-card" style="text-align:left;padding:0.7em 1em;">
+          <strong>② 数据主权</strong>
+          <span style="font-size:0.7em;color:var(--gray-700);">：敏感图像不要发到境外 API。课堂默认<strong>自托管 OpenClaw + 国内模型</strong>。</span>
+        </div>
+        <div class="card orange-card" style="text-align:left;padding:0.7em 1em;">
+          <strong>③ 偏见放大</strong>
+          <span style="font-size:0.7em;color:var(--gray-700);">：训练数据偏西方城市/白人面孔，中国语境会有系统偏差。论文里必须明确报告。</span>
+        </div>
+        <div class="card green-card" style="text-align:left;padding:0.7em 1em;">
+          <strong>④ 二次伤害</strong>
+          <span style="font-size:0.7em;color:var(--gray-700);">：抗议、维权等敏感图像被错误识别 → 可能让受访者承担风险。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>课堂讨论</h2>
+  <div class="highlight-box" style="margin-top:1em;">
+    <p style="font-size:0.85em;margin:0 0 0.5em;font-weight:600;">带着你自己的研究问题：</p>
+    <p style="font-size:0.78em;margin:0;line-height:2;color:var(--gray-700);">
+      1. 你的研究数据里有多少模态被你<strong>忽略</strong>了？为什么？<br>
+      2. 如果用 VLM 给图像编码，<strong>哪个变量你最不放心</strong>？怎么验证？<br>
+      3. 多模态把测量变便宜了——这<strong>会改变</strong>你的研究问题选择吗？<br>
+      4. 用 OpenClaw 试一下：上传一张你研究里的图 → 让它输出 JSON
+    </p>
+  </div>
+  <div class="cols" style="margin-top:0.8em;gap:1.5em;">
+    <div class="col">
+      <div class="card orange-card" style="text-align:center;">
+        <div class="card-label" style="font-size:0.75em;color:var(--orange);">动手练习</div>
+        <div class="card-desc" style="font-size:0.68em;margin-top:0.3em;">
+          上传 10 张图<br>让 Agent 按统一 JSON 编码<br>抽 3 张人工核对
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card" style="text-align:center;">
+        <div class="card-label" style="font-size:0.75em;">进阶挑战</div>
+        <div class="card-desc" style="font-size:0.68em;margin-top:0.3em;">
+          把同一批图给两个不同模型<br>看分歧在哪<br>哪个更值得信？为什么？
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card accent-card" style="text-align:center;">
+        <div class="card-label" style="font-size:0.75em;color:var(--accent);">作业铺垫</div>
+        <div class="card-desc" style="font-size:0.68em;margin-top:0.3em;">
+          写 200 字小报告：<br>VLM 在你的数据上<br>能做 / 不能做什么
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="takeaway">
+    <div class="divider"></div>
+    <p class="main-text">多模态不是新 AI<br>是同一个 LLM<br>多了一双眼睛</p>
+    <p class="sub-text">
+      第九课 LLM 的全部规则都还在：上下文、幻觉、Skill、Prompt。<br>
+      多模态只是让你的<strong>原始数据</strong>第一次能被算法直接读懂。<br><br>
+      <strong>过去靠人工编码图像与视频的研究，现在可以放大百倍——前提是你为它设计验证机制。</strong>
+    </p>
+    <p class="hint">Seeing is still believing — but verify the model is seeing. 郑思尧 2026</p>
+  </div>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  // populate the 8x8 pixel demo
+  (function(){
+    var pg = document.getElementById('pg');
+    if (!pg) return;
+    var palette = ['#1e1e2e','#374151','#6b7280','#9ca3af','#d1d5db','#f3f4f6','#dbeafe','#2563eb'];
+    for (var i = 0; i < 64; i++) {
+      var d = document.createElement('div');
+      var v = Math.floor(Math.random() * palette.length);
+      d.style.background = palette[v];
+      d.textContent = v;
+      pg.appendChild(d);
+    }
+  })();
+
+  Reveal.initialize({
+    hash: true,
+    slideNumber: true,
+    progress: true,
+    transition: 'slide',
+    transitionSpeed: 'fast',
+    backgroundTransition: 'none',
+    controls: true,
+    controlsTutorial: false,
+    width: 1280,
+    height: 720,
+    margin: 0.04,
+    minScale: 0.2,
+    maxScale: 2.0,
+    plugins: []
+  });
+</script>
+</body>
+</html>
