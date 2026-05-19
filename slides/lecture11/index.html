@@ -512,7 +512,7 @@
       大纲标题是"多模态模型"。所以先讲<strong>什么是模态、为什么要联合</strong>；
       传统的 CNN/ViT 视觉线<strong>快速过</strong>；
       重点放在<strong>今天的多模态大模型（VLM）</strong>——它的架构、能力、主流型号。
-      最后落到 OpenClaw 的多模态实操和社科应用。
+      最后落到社科应用、可信度验证和伦理边界。
     </p>
   </div>
   <div class="card-grid cols-4">
@@ -529,8 +529,8 @@
       <div class="card-desc">视觉语言大模型<br>架构 + 主流型号</div>
     </div>
     <div class="card green-card">
-      <div class="card-label">实战</div>
-      <div class="card-desc">OpenClaw 多模态<br>+ 社科案例</div>
+      <div class="card-label">应用</div>
+      <div class="card-desc">社科案例<br>验证 + 边界</div>
     </div>
   </div>
 </section>
@@ -540,7 +540,7 @@
 <!-- ============================================================ -->
 
 <section class="section-title">
-  <h2><span class="section-num">Part 1 / 5</span>什么是"模态"？为什么要联合？</h2>
+  <h2><span class="section-num">Part 1 / 4</span>什么是"模态"？为什么要联合？</h2>
 </section>
 
 <section>
@@ -650,7 +650,7 @@
 <!-- ============================================================ -->
 
 <section class="section-title">
-  <h2><span class="section-num">Part 2 / 5</span>视觉表示简史：CNN → ViT → CLIP <span style="font-size:0.45em;color:var(--gray-500);">（快速过）</span></h2>
+  <h2><span class="section-num">Part 2 / 4</span>视觉表示简史：CNN → ViT → CLIP <span style="font-size:0.45em;color:var(--gray-500);">（快速过）</span></h2>
 </section>
 
 <section>
@@ -794,7 +794,7 @@
 <!-- ============================================================ -->
 
 <section class="section-title">
-  <h2><span class="section-num">Part 3 / 5</span>多模态大模型 VLM <span style="font-size:0.45em;color:var(--accent);">（今天的重点）</span></h2>
+  <h2><span class="section-num">Part 3 / 4</span>多模态大模型 VLM <span style="font-size:0.45em;color:var(--accent);">（今天的重点）</span></h2>
 </section>
 
 <section>
@@ -1013,7 +1013,7 @@
 <!-- ============================================================ -->
 
 <section class="section-title">
-  <h2><span class="section-num">Part 4 / 5</span>社科应用：多模态在干什么活</h2>
+  <h2><span class="section-num">Part 4 / 4</span>社科应用：多模态在干什么活</h2>
 </section>
 
 <section>
@@ -1166,120 +1166,6 @@
 </section>
 
 <!-- ============================================================ -->
-<!-- Part 5: OpenClaw 实操                                          -->
-<!-- ============================================================ -->
-
-<section class="section-title">
-  <h2><span class="section-num">Part 5 / 5</span>OpenClaw 多模态实操</h2>
-</section>
-
-<section>
-  <h2>OpenClaw 里用多模态：你只需要拖图进去</h2>
-  <div class="cols">
-    <div class="col-60">
-      <ol style="font-size:0.72em;padding-left:1.4em;">
-        <li>选一个支持视觉的模型（Claude / GPT-5 / Qwen3-VL）</li>
-        <li>把图片拖进对话框（或 <code>@文件路径</code>）</li>
-        <li>用<strong>自然语言</strong>问问题，最好<strong>要求结构化输出</strong></li>
-        <li>让 Agent 把结果<strong>写进 CSV / JSON / Excel</strong></li>
-        <li>抽 5–10 条人工核验</li>
-      </ol>
-      <div class="success-box" style="margin-top:0.4em;">
-        <p style="font-size:0.7em;margin:0;">
-          ✅ 这个流程的好处：所有对话保存为 JSONL，<strong>可重现、可审计</strong>；
-          数据不出交大服务器。
-        </p>
-      </div>
-    </div>
-    <div class="col-40">
-      <div class="openclaw-box">
-        <div class="oc-label">本节课实验环境</div>
-        <div class="oc-content">
-          OpenClaw 2026.4.9<br>
-          运行在交大 IDEKube 容器<br>
-          默认模型：<code>claude-opus-4-7</code><br>
-          视觉模型：可切换 GPT-5 / Qwen3-VL<br><br>
-          网关端口 18789，<br>
-          课堂直接用 Web UI，无需配置。
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <h2>把"多模态分析"写成一个 Skill</h2>
-  <div class="cols">
-    <div class="col-50">
-      <p style="font-size:0.72em;text-align:left;">
-        延续第九课的思路：
-        <strong>把一次性的视觉分析 prompt，写成可复用的 SKILL.md</strong>。
-        这样下次拿到新一批图片，
-        你只要说"用 protest-coding skill 标这批图"，
-        Agent 自动加载规范、调用 VLM、写入 CSV。
-      </p>
-      <ul style="font-size:0.68em;">
-        <li>把编码本（codebook）放进 Skill</li>
-        <li>把 JSON schema 固定下来</li>
-        <li>把抽样核验脚本也放进去</li>
-      </ul>
-    </div>
-    <div class="col-50">
-      <pre><code><span class="cm">---</span>
-<span class="kw">name</span>: protest-image-coding
-<span class="kw">description</span>: Code protest photos
-  into a fixed JSON schema.
-<span class="cm">---</span>
-
-<span class="cm"># 编码规则</span>
-crowd_size_bucket:
-  小: &lt; 50
-  中: 50–500
-  大: &gt; 500
-
-<span class="cm"># 输出格式</span>
-&lt;返回 JSON，字段固定&gt;
-
-<span class="cm"># 验证</span>
-随机抽 5%，
-人工核验后再入库。
-</code></pre>
-    </div>
-  </div>
-</section>
-
-<section>
-  <h2>课堂实操（20 分钟）</h2>
-  <div class="card-grid cols-3">
-    <div class="card accent-card">
-      <div class="card-label">① 拿一张图</div>
-      <div class="card-desc" style="font-size:0.7em;">
-        从你自己研究里挑一张：海报 / 截图 / 现场照片 / 政策文件
-      </div>
-    </div>
-    <div class="card green-card">
-      <div class="card-label">② 写一个结构化 prompt</div>
-      <div class="card-desc" style="font-size:0.7em;">
-        要求 JSON 输出，<br>每个字段先定义清楚
-      </div>
-    </div>
-    <div class="card orange-card">
-      <div class="card-label">③ 跑、看、抽检</div>
-      <div class="card-desc" style="font-size:0.7em;">
-        让 Agent 处理 10–20 张，<br>抽 3 张人工核对
-      </div>
-    </div>
-  </div>
-  <div class="highlight-box" style="margin-top:0.6em;">
-    <p style="font-size:0.74em;margin:0;">
-      <strong>评估三件事</strong>：
-      ① 输出格式稳定吗？　② 关键字段抽检准确率多少？　③ 哪些情况下 VLM 系统性出错？
-      <br>本周作业就是把这个流程跑通，并写一个 200 字的"VLM 在我的数据上能做 / 不能做什么"报告。
-    </p>
-  </div>
-</section>
-
-<!-- ============================================================ -->
 <!-- 局限 + 讨论 + Takeaway                                        -->
 <!-- ============================================================ -->
 
@@ -1351,7 +1237,7 @@ crowd_size_bucket:
         </div>
         <div class="card accent-card" style="text-align:left;padding:0.7em 1em;">
           <strong>② 数据主权</strong>
-          <span style="font-size:0.7em;color:var(--gray-700);">：敏感图像不要发到境外 API。课堂默认<strong>自托管 OpenClaw + 国内模型</strong>。</span>
+          <span style="font-size:0.7em;color:var(--gray-700);">：敏感图像不要随手发到公共 API。论文里要说明模型部署位置、数据是否出境、是否保留原图。</span>
         </div>
         <div class="card orange-card" style="text-align:left;padding:0.7em 1em;">
           <strong>③ 偏见放大</strong>
@@ -1374,15 +1260,15 @@ crowd_size_bucket:
       1. 你的研究数据里有多少模态被你<strong>忽略</strong>了？为什么？<br>
       2. 如果用 VLM 给图像编码，<strong>哪个变量你最不放心</strong>？怎么验证？<br>
       3. 多模态把测量变便宜了——这<strong>会改变</strong>你的研究问题选择吗？<br>
-      4. 用 OpenClaw 试一下：上传一张你研究里的图 → 让它输出 JSON
+      4. 不开电脑也能先做：为一张研究图片写出变量、JSON schema 和抽样核验方案
     </p>
   </div>
   <div class="cols" style="margin-top:0.8em;gap:1.5em;">
     <div class="col">
       <div class="card orange-card" style="text-align:center;">
-        <div class="card-label" style="font-size:0.75em;color:var(--orange);">动手练习</div>
+        <div class="card-label" style="font-size:0.75em;color:var(--orange);">纸面练习</div>
         <div class="card-desc" style="font-size:0.68em;margin-top:0.3em;">
-          上传 10 张图<br>让 Agent 按统一 JSON 编码<br>抽 3 张人工核对
+          选一类图像<br>定义 3 个变量<br>写清楚人工核验规则
         </div>
       </div>
     </div>
@@ -1390,7 +1276,7 @@ crowd_size_bucket:
       <div class="card" style="text-align:center;">
         <div class="card-label" style="font-size:0.75em;">进阶挑战</div>
         <div class="card-desc" style="font-size:0.68em;margin-top:0.3em;">
-          把同一批图给两个不同模型<br>看分歧在哪<br>哪个更值得信？为什么？
+          预测 VLM 最可能错在哪<br>是计数、语义<br>还是文化语境？
         </div>
       </div>
     </div>
