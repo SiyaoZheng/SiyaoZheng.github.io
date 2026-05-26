@@ -1,0 +1,1314 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第十二课 社交媒体分析与多智能体 — 机器学习与自然语言处理</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    :root {
+      --r-background-color: #fff;
+      --r-main-font: 'Inter', 'SF Pro Display', 'PingFang SC', system-ui, sans-serif;
+      --r-main-font-size: 31px;
+      --r-main-color: #1a1a2e;
+      --r-heading-font: 'Inter', 'SF Pro Display', 'PingFang SC', system-ui, sans-serif;
+      --r-heading-color: #0f172a;
+      --r-heading-font-weight: 700;
+      --r-link-color: #2563eb;
+      --accent: #2563eb;
+      --accent-light: #dbeafe;
+      --orange: #f97316;
+      --orange-light: #fff7ed;
+      --green: #16a34a;
+      --green-light: #f0fdf4;
+      --red: #dc2626;
+      --red-light: #fee2e2;
+      --purple: #9333ea;
+      --purple-light: #fae8ff;
+      --cyan: #0891b2;
+      --cyan-light: #e0f7fa;
+      --gray-50: #f8f9fa;
+      --gray-100: #f1f3f5;
+      --gray-200: #e9ecef;
+      --gray-400: #adb5bd;
+      --gray-500: #868e96;
+      --gray-600: #6c757d;
+      --gray-700: #495057;
+      --gray-800: #343a40;
+    }
+
+    .reveal { font-weight: 400; }
+    .reveal h1 { font-size: 2.25em; letter-spacing: 0; }
+    .reveal h2 { font-size: 1.55em; letter-spacing: 0; color: var(--accent); text-transform: none; }
+    .reveal h3 { font-size: 1.12em; color: var(--gray-800); text-transform: none; }
+    .reveal p, .reveal li { line-height: 1.55; }
+    .reveal ul { list-style: none; padding-left: 0; }
+    .reveal ul li { padding-left: 1.35em; position: relative; margin-bottom: 0.36em; }
+    .reveal ul li::before {
+      content: '';
+      position: absolute; left: 0; top: 0.58em;
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    .reveal code {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--gray-100);
+      padding: 0.08em 0.35em;
+      border-radius: 4px;
+      font-size: 0.85em;
+    }
+    .reveal pre { box-shadow: none; width: 100%; margin: 0.6em 0; }
+    .reveal pre code {
+      font-family: 'JetBrains Mono', monospace;
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 1em 1.25em;
+      border-radius: 8px;
+      font-size: 0.66em;
+      line-height: 1.62;
+      display: block;
+      text-align: left;
+      max-height: 470px;
+    }
+
+    .cover h1 { font-size: 2.45em; margin-bottom: 0.12em; }
+    .cover .subtitle { font-size: 1.02em; color: var(--accent); font-weight: 600; margin-bottom: 1.8em; }
+    .cover .meta { font-size: 0.68em; color: var(--gray-600); line-height: 1.8; }
+
+    .section-title { background: #fff !important; }
+    .section-title h2 {
+      font-size: 2.18em;
+      color: var(--r-main-color);
+      border-left: 6px solid var(--accent);
+      padding-left: 0.55em;
+      text-align: left;
+    }
+    .section-title .section-num {
+      font-size: 0.5em;
+      color: var(--gray-400);
+      font-weight: 400;
+      display: block;
+      margin-bottom: 0.22em;
+    }
+
+    .cols { display: flex; gap: 1.4em; align-items: flex-start; }
+    .col { flex: 1; text-align: left; }
+    .col-40 { flex: 0 0 40%; text-align: left; }
+    .col-45 { flex: 0 0 45%; text-align: left; }
+    .col-55 { flex: 0 0 55%; text-align: left; }
+    .col-60 { flex: 0 0 60%; text-align: left; }
+
+    .highlight-box, .quote-box {
+      border-radius: 6px;
+      text-align: left;
+      margin: 0.8em 0;
+      padding: 0.9em 1.15em;
+    }
+    .highlight-box {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-left: 4px solid var(--accent);
+    }
+    .quote-box {
+      background: var(--accent-light);
+      border: 1px solid #bfdbfe;
+      border-left: 4px solid var(--accent);
+    }
+    .quote-text { font-size: 1.02em; font-weight: 650; color: var(--r-main-color); line-height: 1.45; }
+    .quote-source { font-size: 0.58em; color: var(--gray-600); margin-top: 0.5em; }
+
+    .card-grid { display: grid; gap: 0.8em; margin: 0.8em 0; }
+    .card-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .card-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .card-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+    .card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.85em;
+      text-align: left;
+      min-height: 86px;
+    }
+    .card.accent { background: var(--accent-light); border-color: #bfdbfe; }
+    .card.orange { background: var(--orange-light); border-color: #fed7aa; }
+    .card.green { background: var(--green-light); border-color: #bbf7d0; }
+    .card.purple { background: var(--purple-light); border-color: #f0abfc; }
+    .card.red { background: var(--red-light); border-color: #fecaca; }
+    .card.cyan { background: var(--cyan-light); border-color: #a5f3fc; }
+    .card-label { font-weight: 700; font-size: 0.82em; color: var(--r-main-color); margin-bottom: 0.28em; }
+    .card-desc { color: var(--gray-700); font-size: 0.66em; line-height: 1.52; }
+    .big-number { font-size: 2.1em; font-weight: 750; color: var(--accent); line-height: 1; }
+    .muted { color: var(--gray-600); }
+    .small { font-size: 0.68em; color: var(--gray-700); line-height: 1.55; }
+    .tiny { font-size: 0.54em; color: var(--gray-600); line-height: 1.45; }
+    .center { text-align: center; }
+    .left { text-align: left; }
+
+    .image-frame {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.35em;
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
+    }
+    .image-frame img { max-width: 100%; max-height: 520px; display: block; margin: 0 auto; }
+    img.full { max-width: 100%; max-height: 540px; }
+
+    .paper-gallery {
+      display: grid;
+      gap: 0.55em;
+      margin: 0.55em 0 0.35em;
+      align-items: stretch;
+    }
+    .paper-gallery.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .paper-gallery.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .paper-gallery.cols-4 { grid-template-columns: repeat(4, 1fr); }
+    .paper-tile {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.3em;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.055);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 0;
+    }
+    .paper-tile img {
+      width: 100%;
+      height: 190px;
+      object-fit: contain;
+      display: block;
+    }
+    .paper-gallery.tall .paper-tile img { height: 285px; }
+    .paper-gallery.compact .paper-tile img { height: 155px; }
+    .paper-caption {
+      font-size: 0.47em;
+      color: var(--gray-700);
+      line-height: 1.35;
+      margin-top: 0.3em;
+      text-align: left;
+    }
+    .paper-source {
+      font-size: 0.48em;
+      color: var(--gray-600);
+      line-height: 1.35;
+      margin-top: 0.45em;
+      text-align: left;
+    }
+    .paper-focus img { max-height: 575px; }
+
+    .flow { display: flex; align-items: center; justify-content: center; gap: 0; margin: 1em 0; }
+    .flow-node {
+      background: var(--gray-50);
+      border: 2px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.68em 0.9em;
+      font-size: 0.7em;
+      font-weight: 650;
+      text-align: center;
+      min-width: 110px;
+    }
+    .flow-node.accent { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .flow-node.orange { background: var(--orange); color: #fff; border-color: var(--orange); }
+    .flow-node.green { background: var(--green); color: #fff; border-color: var(--green); }
+    .flow-node.red { background: var(--red); color: #fff; border-color: var(--red); }
+    .flow-arrow {
+      width: 38px; height: 2px; background: var(--gray-400);
+      position: relative; flex-shrink: 0;
+    }
+    .flow-arrow::after {
+      content: '';
+      position: absolute; right: -1px; top: -5px;
+      border: 6px solid transparent;
+      border-left: 8px solid var(--gray-400);
+    }
+
+    .tag {
+      display: inline-block;
+      border: 1px solid var(--gray-200);
+      border-radius: 999px;
+      padding: 0.16em 0.55em;
+      margin: 0.12em;
+      font-size: 0.58em;
+      color: var(--gray-700);
+      background: #fff;
+      white-space: nowrap;
+    }
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.64em;
+      text-align: left;
+    }
+    .table th {
+      background: var(--gray-800);
+      color: #fff;
+      font-weight: 650;
+      padding: 0.55em 0.75em;
+    }
+    .table td {
+      border-bottom: 1px solid var(--gray-200);
+      padding: 0.58em 0.75em;
+      vertical-align: top;
+    }
+    .table tr:nth-child(even) td { background: var(--gray-50); }
+
+    .takeaway .divider {
+      width: 70px;
+      height: 5px;
+      background: var(--accent);
+      margin: 0 auto 0.8em;
+      border-radius: 3px;
+    }
+    .takeaway .main-text {
+      font-size: 1.85em;
+      font-weight: 750;
+      line-height: 1.2;
+      color: var(--r-main-color);
+      margin-bottom: 0.55em;
+    }
+    .takeaway .sub-text {
+      font-size: 0.82em;
+      color: var(--gray-700);
+      max-width: 900px;
+      margin: 0 auto;
+      line-height: 1.55;
+    }
+    .hint { font-size: 0.58em; color: var(--gray-500); margin-top: 1em; }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section class="cover">
+  <h1>社交媒体分析<br>与多智能体</h1>
+  <p class="subtitle">从平台数据到群体智能研究流水线</p>
+  <p class="meta">
+    第十二课<br>
+    机器学习与自然语言处理<br>
+    郑思尧 · 2026
+  </p>
+</section>
+
+<section>
+  <h2>上节课留下的问题</h2>
+  <div class="cols">
+    <div class="col">
+      <div class="card accent">
+        <div class="card-label">第十一讲：多模态模型</div>
+        <div class="card-desc">
+          图像、视频、音频可以进入模型。<br>
+          但模型“看懂了”不等于研究问题被回答了。
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card orange">
+        <div class="card-label">今天的问题</div>
+        <div class="card-desc">
+          社交媒体数据同时包含文本、图像、互动、关系和时间。<br>
+          你需要的不只是一个模型，而是一套可复核的研究流水线。
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="quote-box">
+    <div class="quote-text">社交媒体分析不是“把帖子丢给 AI”，而是把平台痕迹转化为可解释、可验证的社会科学证据。</div>
+  </div>
+</section>
+
+<section>
+  <h2>今天的路线图</h2>
+  <div class="card-grid cols-4">
+    <div class="card accent">
+      <div class="big-number">1</div>
+      <div class="card-label">社交媒体是什么数据</div>
+      <div class="card-desc">帖子、用户、关系、互动、时间和多模态材料。</div>
+    </div>
+    <div class="card orange">
+      <div class="big-number" style="color:var(--orange);">2</div>
+      <div class="card-label">偏差与研究设计</div>
+      <div class="card-desc">平台可见性、采集边界、伦理与可复现。</div>
+    </div>
+    <div class="card green">
+      <div class="big-number" style="color:var(--green);">3</div>
+      <div class="card-label">内容、网络、时间</div>
+      <div class="card-desc">三类分析信号如何服务理论解释。</div>
+    </div>
+    <div class="card purple">
+      <div class="big-number" style="color:var(--purple);">4</div>
+      <div class="card-label">多智能体</div>
+      <div class="card-desc">编排拓扑、A2A 通信与 OpenClaw 落地。</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>先看原文图：社交媒体数据长什么样</h2>
+  <div class="paper-gallery cols-3 compact">
+    <div class="paper-tile">
+      <img src="images/article_figures/ajps_fig6_content_flow.png" alt="AJPS 抖音政务视频内容流">
+      <div class="paper-caption">抖音政务视频：内容不是单向下发，地方内容也会被中央账号再传播。</div>
+    </div>
+    <div class="paper-tile">
+      <img src="images/article_figures/cambridge_fig1_attention.png" alt="APSR 平均议题注意力">
+      <div class="paper-caption">议员、公众、媒体对同一组议题的注意力分布并不相同。</div>
+    </div>
+    <div class="paper-tile">
+      <img src="images/article_figures/cambridge_appendix_a13_dashboard.png" alt="APSR appendix topic dashboard">
+      <div class="paper-caption">appendix 里的 dashboard 把 topic、时间序列和原帖样本连起来。</div>
+    </div>
+    <div class="paper-tile">
+      <img src="images/article_figures/nature_fig2_user_shifts.png" alt="Nature Human Behaviour 用户跨媒体类别流动">
+      <div class="paper-caption">用户在新闻媒体类别之间移动：流向图比均值更容易讲清楚结构变化。</div>
+    </div>
+    <div class="paper-tile">
+      <img src="images/article_figures/nature_fig5_similarity_networks.png" alt="Nature Human Behaviour influencer similarity network">
+      <div class="paper-caption">影响者网络的团块结构：网络图直接呈现“谁和谁被同一批人转发”。</div>
+    </div>
+    <div class="paper-tile">
+      <img src="images/article_figures/nature_supp_fig2_inactive_flow.png" alt="Nature supplement inactive users flow">
+      <div class="paper-caption">appendix 图提醒我们：流失、不活跃和删号不是背景噪音，也是样本机制。</div>
+    </div>
+  </div>
+  <p class="paper-source">图源：Pan, Xu & Jiang, AJPS 2025；Barberá et al., APSR 2019 及 online appendix；Waller & Anderson, Nature Human Behaviour 2023 及 supplementary information。</p>
+</section>
+
+<section class="section-title">
+  <h2><span class="section-num">Part 1 / 4</span>社交媒体不是“一堆文本”</h2>
+</section>
+
+<section>
+  <h2>案例一：抖音政务账号的“去中心化传播”</h2>
+  <div class="paper-gallery cols-3">
+    <div class="paper-tile">
+      <img src="images/article_figures/ajps_fig1_activity.png" alt="Douyin state account activity by administrative level">
+      <div class="paper-caption">不同层级账号的日发布量。</div>
+    </div>
+    <div class="paper-tile">
+      <img src="images/article_figures/ajps_fig2_account_types.png" alt="Douyin account type bubble chart">
+      <div class="paper-caption">账号类型与行政层级交叉。</div>
+    </div>
+    <div class="paper-tile">
+      <img src="images/article_figures/ajps_fig5_admin_levels.png" alt="Douyin content categories by administrative level">
+      <div class="paper-caption">内容类别随行政层级变化。</div>
+    </div>
+    <div class="paper-tile">
+      <img src="images/article_figures/ajps_fig4_content_mix.png" alt="Douyin content composition">
+      <div class="paper-caption">政务账号与非政务热视频的内容构成差异。</div>
+    </div>
+    <div class="paper-tile">
+      <img src="images/article_figures/ajps_fig6_content_flow.png" alt="Douyin content flow between local and central accounts">
+      <div class="paper-caption">地方内容向中央账号回流。</div>
+    </div>
+    <div class="paper-tile">
+      <img src="images/article_figures/ajps_fig7_engagement.png" alt="Douyin engagement comparison">
+      <div class="paper-caption">不同来源内容的互动差异。</div>
+    </div>
+  </div>
+  <p class="paper-source">这一组图的教学点：同一平台研究同时需要时间、账号、内容、传播方向和互动结果。</p>
+</section>
+
+<section>
+  <h2>同一条帖子，同时是很多东西</h2>
+  <div class="card-grid cols-3">
+    <div class="card accent">
+      <div class="card-label">内容对象</div>
+      <div class="card-desc">正文、标题、图片、视频、链接、话题标签。</div>
+    </div>
+    <div class="card purple">
+      <div class="card-label">行为对象</div>
+      <div class="card-desc">发布、转发、点赞、评论、收藏、删除。</div>
+    </div>
+    <div class="card green">
+      <div class="card-label">关系对象</div>
+      <div class="card-desc">关注、互粉、回复链、转发链、共同参与。</div>
+    </div>
+    <div class="card orange">
+      <div class="card-label">时间对象</div>
+      <div class="card-desc">突发、升温、衰减、周期性、平台推荐节奏。</div>
+    </div>
+    <div class="card red">
+      <div class="card-label">平台对象</div>
+      <div class="card-desc">搜索、推荐、限流、审核、接口、商业规则。</div>
+    </div>
+    <div class="card cyan">
+      <div class="card-label">研究对象</div>
+      <div class="card-desc">态度、情绪、动员、身份、议题、传播机制。</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>社交媒体对象图</h2>
+  <div class="image-frame">
+    <img src="images/social_media_object_graph.png" alt="社交媒体对象图">
+  </div>
+</section>
+
+<section>
+  <h2>原文图：同一个“帖子”背后是生产网络</h2>
+  <div class="cols">
+    <div class="col">
+      <div class="image-frame paper-focus">
+        <img src="images/article_figures/ajps_fig5_admin_levels.png" alt="AJPS Douyin content by administrative level">
+      </div>
+    </div>
+    <div class="col">
+      <div class="image-frame paper-focus">
+        <img src="images/article_figures/ajps_fig6_content_flow.png" alt="AJPS Douyin content flow">
+      </div>
+    </div>
+  </div>
+  <p class="paper-source">讲授点：内容类别、行政层级和转发方向一起定义传播机制；不能把视频只当作一段文本。</p>
+</section>
+
+<section>
+  <h2>平台痕迹不是社会本身</h2>
+  <div class="cols">
+    <div class="col-45">
+      <div class="highlight-box">
+        <p><strong>平台痕迹</strong>是行动留下的记录。</p>
+        <p class="small">它来自平台设计：什么能被看见、什么能被转发、什么能被搜索、什么会被删除。</p>
+      </div>
+    </div>
+    <div class="col-55">
+      <ul>
+        <li>评论多，可能是争议，也可能是平台推送。</li>
+        <li>点赞少，可能是没人认同，也可能是人们不愿公开表态。</li>
+        <li>热搜上榜，可能是社会关注，也可能是平台运营。</li>
+        <li>话题消失，可能是兴趣衰减，也可能是可见性改变。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>先把研究对象说清楚</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>你想研究什么</th>
+        <th>平台上能看到什么</th>
+        <th>可能的变量</th>
+        <th>最容易错在哪里</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>公众情绪</td>
+        <td>帖子和评论里的表达</td>
+        <td>情绪方向、强度、对象</td>
+        <td>沉默者不可见，讽刺难识别</td>
+      </tr>
+      <tr>
+        <td>议题扩散</td>
+        <td>转发链、话题标签、时间序列</td>
+        <td>扩散速度、桥接节点、峰值时间</td>
+        <td>推荐机制与真实传播混在一起</td>
+      </tr>
+      <tr>
+        <td>身份动员</td>
+        <td>头像、简介、标签、语言风格</td>
+        <td>身份线索、群体边界、行动号召</td>
+        <td>把表演性身份当成稳定属性</td>
+      </tr>
+      <tr>
+        <td>政策反馈</td>
+        <td>政策文本下的评论与二次传播</td>
+        <td>支持/反对、诉求类型、理由结构</td>
+        <td>平台用户不代表政策受众总体</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>操作化：从社会现象到可检查变量</h2>
+  <div class="flow">
+    <div class="flow-node accent">社会现象</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node">平台痕迹</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node orange">可观测字段</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node green">变量定义</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node red">验证规则</div>
+  </div>
+  <div class="highlight-box">
+    <p><strong>关键原则：</strong>不要从“我抓到了什么字段”开始，而要从“我想解释什么机制”开始。</p>
+  </div>
+</section>
+
+<section class="section-title">
+  <h2><span class="section-num">Part 2 / 4</span>平台数据的偏差与边界</h2>
+</section>
+
+<section>
+  <h2>从社会到样本：每一步都在漏</h2>
+  <div class="image-frame">
+    <img src="images/sampling_funnel.png" alt="社交媒体采样漏斗">
+  </div>
+</section>
+
+<section>
+  <h2>Appendix 也要看：样本是怎样被筛出来的</h2>
+  <div class="cols">
+    <div class="col-55">
+      <div class="image-frame paper-focus">
+        <img src="images/article_figures/cambridge_appendix_a1_sampling.png" alt="APSR appendix sampling flowchart">
+      </div>
+    </div>
+    <div class="col-45">
+      <div class="highlight-box">
+        <p><strong>这张图比方法段更直观。</strong></p>
+        <p class="small">它把随机用户样本、账号判定、语言过滤、平台约束和人工检查串成一个可复核流程。</p>
+      </div>
+      <ul>
+        <li>样本框不是“Twitter 用户”，而是被一系列规则筛过的用户。</li>
+        <li>appendix 图能帮助读者发现论文主文里看不到的排除路径。</li>
+      </ul>
+    </div>
+  </div>
+  <p class="paper-source">图源：Barberá et al., APSR online appendix, Figure A1。</p>
+</section>
+
+<section>
+  <h2>四类常见偏差</h2>
+  <div class="card-grid cols-2">
+    <div class="card purple">
+      <div class="card-label">覆盖偏差</div>
+      <div class="card-desc">谁在这个平台上？谁不在？学生、老人、低频用户、被封禁用户是否被排除？</div>
+    </div>
+    <div class="card orange">
+      <div class="card-label">可见性偏差</div>
+      <div class="card-desc">平台把哪些内容推给你？搜索结果、热榜、推荐流都不是自然抽样。</div>
+    </div>
+    <div class="card green">
+      <div class="card-label">采集偏差</div>
+      <div class="card-desc">关键词、时间窗、API 权限、反爬限制会决定你实际拿到什么。</div>
+    </div>
+    <div class="card red">
+      <div class="card-label">处理偏差</div>
+      <div class="card-desc">去重、过滤、抽样、账号识别、文本清洗可能把少数声音洗掉。</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>“大数据”也可能只是很大的方便样本</h2>
+  <div class="cols">
+    <div class="col">
+      <div class="card accent">
+        <div class="card-label">看起来强</div>
+        <div class="card-desc">百万帖子、连续时间、自然发生、低成本、可重复抓取。</div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card red">
+        <div class="card-label">真正危险</div>
+        <div class="card-desc">样本框不透明、平台规则变化、删除不可见、算法推荐混入因果过程。</div>
+      </div>
+    </div>
+  </div>
+  <div class="quote-box">
+    <div class="quote-text">样本量不能自动抵消样本框错误。很多时候，它只是让错误更稳定。</div>
+  </div>
+</section>
+
+<section>
+  <h2>采集日志是研究的一部分</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>必须记录</th>
+        <th>为什么重要</th>
+        <th>报告时怎么写</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>平台、入口、关键词、时间窗</td>
+        <td>定义样本框</td>
+        <td>“我们采集的是可搜索的公开内容，不是全平台总体。”</td>
+      </tr>
+      <tr>
+        <td>失败请求、缺失字段、限速</td>
+        <td>判断数据是否系统性缺失</td>
+        <td>“高峰期接口失败率较高，传播峰值可能被低估。”</td>
+      </tr>
+      <tr>
+        <td>清洗规则与删除数量</td>
+        <td>避免事后调参</td>
+        <td>“去重后删除 18%，主要来自同账号重复转发。”</td>
+      </tr>
+      <tr>
+        <td>人工检查样本</td>
+        <td>发现模型和规则的盲区</td>
+        <td>“抽检显示讽刺表达是主要误判来源。”</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>伦理边界：公开不等于随便用</h2>
+  <div class="card-grid cols-3">
+    <div class="card red">
+      <div class="card-label">可识别风险</div>
+      <div class="card-desc">小样本、地方事件、截图和原文引用都可能让个人被重新识别。</div>
+    </div>
+    <div class="card orange">
+      <div class="card-label">二次伤害</div>
+      <div class="card-desc">对弱势群体、受害者、冲突事件的再传播可能扩大暴露。</div>
+    </div>
+    <div class="card purple">
+      <div class="card-label">平台条款</div>
+      <div class="card-desc">合规采集、最小化保存、不要公开可复原的个人级原始数据。</div>
+    </div>
+  </div>
+  <p class="small">课堂原则：只用公开、低风险、教学用样例；正式研究要走伦理审查和数据治理流程。</p>
+</section>
+
+<section class="section-title">
+  <h2><span class="section-num">Part 3 / 4</span>内容、网络与时间：三种信号</h2>
+</section>
+
+<section>
+  <h2>案例二：议题注意力，不只是“谁发得多”</h2>
+  <div class="image-frame paper-focus">
+    <img src="images/article_figures/cambridge_fig1_attention.png" alt="Average issue attention across politicians public and media">
+  </div>
+  <p class="paper-source">这张图先把不同群体的议题注意力摊开：同一议题在议员、支持者、一般公众和媒体之间的权重不同。</p>
+</section>
+
+<section>
+  <h2>原文图：谁先动，谁跟随</h2>
+  <div class="paper-gallery cols-2 tall">
+    <div class="paper-tile">
+      <img src="images/article_figures/cambridge_fig2_irf.png" alt="15 day cumulative IRFs">
+      <div class="paper-caption">VAR/IRF 把“注意力变化之后，谁的注意力也变了”画出来。</div>
+    </div>
+    <div class="paper-tile">
+      <img src="images/article_figures/cambridge_fig3_who_leads.png" alt="Who leads who follows agenda setting figure">
+      <div class="paper-caption">把政治议程影响公众、公众影响政治议程放到同一张图里比较。</div>
+    </div>
+  </div>
+  <p class="paper-source">图源：Barberá et al., APSR 2019, Figures 2-3。</p>
+</section>
+
+<section>
+  <h2>原文图：机制可以分解到具体议题</h2>
+  <div class="cols">
+    <div class="col">
+      <div class="image-frame paper-focus">
+        <img src="images/article_figures/cambridge_fig4_issue_response.png" alt="Issue responsiveness by issue and group">
+      </div>
+    </div>
+    <div class="col">
+      <div class="image-frame paper-focus">
+        <img src="images/article_figures/cambridge_fig5_relevance.png" alt="Issue relevance and agenda setting">
+      </div>
+    </div>
+  </div>
+  <p class="paper-source">讲授点：先用总体模型回答“谁影响谁”，再回到议题层面解释“在哪些议题上更明显”。</p>
+</section>
+
+<section>
+  <h2>Appendix 的价值：topic 要能回到原帖</h2>
+  <div class="cols">
+    <div class="col-55">
+      <div class="image-frame paper-focus">
+        <img src="images/article_figures/cambridge_appendix_a13_dashboard.png" alt="Topic dashboard with time series and representative tweets">
+      </div>
+    </div>
+    <div class="col-45">
+      <div class="highlight-box">
+        <p><strong>这不是“多一张好看的图”。</strong></p>
+        <p class="small">它把 topic usage over time、关键词、代表性 tweets 和媒体样本放在一起，让主题模型的解释可被检查。</p>
+      </div>
+      <ul>
+        <li>模型输出必须能回到具体文本。</li>
+        <li>appendix 可以承担透明性和复核性。</li>
+      </ul>
+    </div>
+  </div>
+  <p class="paper-source">图源：Barberá et al., APSR online appendix, Figure A13。</p>
+</section>
+
+<section>
+  <h2>案例三：影响者、新闻链接与极化</h2>
+  <div class="paper-gallery cols-2 tall">
+    <div class="paper-tile">
+      <img src="images/article_figures/nature_fig1_distribution.png" alt="Distribution of news media links">
+      <div class="paper-caption">不同新闻类别在 tweets 和 users 中的分布。</div>
+    </div>
+    <div class="paper-tile">
+      <img src="images/article_figures/nature_fig2_user_shifts.png" alt="Shifts of users across news media categories">
+      <div class="paper-caption">2016 到 2020，用户跨新闻媒体类别的流向。</div>
+    </div>
+  </div>
+  <p class="paper-source">图源：Waller & Anderson, Nature Human Behaviour 2023, Figures 1-2。</p>
+</section>
+
+<section>
+  <h2>原文图：网络结构本身就是发现</h2>
+  <div class="image-frame paper-focus">
+    <img src="images/article_figures/nature_fig5_similarity_networks.png" alt="Similarity networks among top influencers">
+  </div>
+  <p class="paper-source">同一批 top influencers 的 retweeter similarity network 从 2016 到 2020 更分裂；这比只报告一个极化指数更容易让学生看懂机制。</p>
+</section>
+
+<section>
+  <h2>原文图：从网络再回到潜在意识形态</h2>
+  <div class="image-frame paper-focus">
+    <img src="images/article_figures/nature_fig6_latent_ideology.png" alt="Latent ideology scale of influencers and retweeters">
+  </div>
+  <p class="paper-source">图源：Waller & Anderson, Nature Human Behaviour 2023, Figure 6。注意这里不是情绪分类，而是用转发关系估计潜在位置。</p>
+</section>
+
+<section>
+  <h2>Supplementary figures：样本流失也是机制线索</h2>
+  <div class="paper-gallery cols-2 tall">
+    <div class="paper-tile">
+      <img src="images/article_figures/nature_supp_fig2_inactive_flow.png" alt="Supplementary flow from inactive to active categories">
+      <div class="paper-caption">2016 不活跃或不存在的用户，在 2020 进入不同新闻类别。</div>
+    </div>
+    <div class="paper-tile">
+      <img src="images/article_figures/nature_supp_fig3_inactivation_flow.png" alt="Supplementary flow from active categories to inactive">
+      <div class="paper-caption">2016 活跃用户到 2020 不活跃、删号或不再参与。</div>
+    </div>
+  </div>
+  <p class="paper-source">讲授点：appendix 不只是“备份结果”，也可能包含理解数据生成过程的关键图。</p>
+</section>
+
+<section>
+  <h2>内容分析：帖子在说什么</h2>
+  <div class="cols">
+    <div class="col-45">
+      <div class="card accent">
+        <div class="card-label">传统 NLP 能做</div>
+        <div class="card-desc">关键词、主题、情绪、立场、框架、命名实体。</div>
+      </div>
+      <div class="card green">
+        <div class="card-label">LLM / VLM 能补</div>
+        <div class="card-desc">复杂语义、讽刺解释、图文关系、论证结构、案例摘要。</div>
+      </div>
+    </div>
+    <div class="col-55">
+      <div class="highlight-box">
+        <p><strong>不要只问：</strong>这条帖子是正面还是负面？</p>
+        <p><strong>更好的问法：</strong>它把责任归给谁？调用了什么身份？提出了什么行动？它和图像是否互相强化？</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>从热搜标题转向微趋势</h2>
+  <div class="image-frame">
+    <img src="images/microtrend_timeseries.png" alt="微趋势时间序列">
+  </div>
+  <p class="tiny">微趋势分析的重点不是“这个话题火了”，而是“为什么在这个时间窗、这个群体、这个表达方式突然变多”。</p>
+</section>
+
+<section>
+  <h2>网络分析：谁连接了谁</h2>
+  <div class="image-frame">
+    <img src="images/diffusion_network.png" alt="扩散网络">
+  </div>
+</section>
+
+<section>
+  <h2>时间分析：什么时候发生</h2>
+  <div class="card-grid cols-3">
+    <div class="card accent">
+      <div class="card-label">突发</div>
+      <div class="card-desc">单点事件导致的快速升温。适合问触发机制。</div>
+    </div>
+    <div class="card orange">
+      <div class="card-label">周期</div>
+      <div class="card-desc">节假日、考试季、政策周期。适合问制度节奏。</div>
+    </div>
+    <div class="card purple">
+      <div class="card-label">长尾</div>
+      <div class="card-desc">事件结束后仍持续出现。适合问记忆与再动员。</div>
+    </div>
+  </div>
+  <div class="highlight-box">
+    <p>时间序列不要只画曲线。要把平台事件、线下事件、媒体报道、政策节点一起放进解释框架。</p>
+  </div>
+</section>
+
+<section>
+  <h2>多模态社交媒体：第十一讲接到这里</h2>
+  <div class="card-grid cols-2">
+    <div class="card green">
+      <div class="card-label">图像不是装饰</div>
+      <div class="card-desc">截图、表情包、现场照片、视频封面常常承载比正文更强的情绪和身份线索。</div>
+    </div>
+    <div class="card orange">
+      <div class="card-label">图文关系才是变量</div>
+      <div class="card-desc">文字说理性讨论，图片却在羞辱对方；这不是噪音，而是政治表达方式。</div>
+    </div>
+  </div>
+  <div class="flow">
+    <div class="flow-node accent">文本</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node green">图像</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node orange">互动</div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node red">关系</div>
+  </div>
+  <p class="small center">社交媒体的“意义”经常在这些模态之间，而不是某一个字段里。</p>
+</section>
+
+<section>
+  <h2>分析流水线：最小可复现版本</h2>
+  <div class="image-frame">
+    <img src="images/social_media_pipeline.png" alt="社交媒体分析流水线">
+  </div>
+</section>
+
+<section>
+  <h2>LLM 标注不能省掉误差账本</h2>
+  <div class="image-frame">
+    <img src="images/annotation_validation_matrix.png" alt="模型标注验证矩阵">
+  </div>
+</section>
+
+<section>
+  <h2>社交媒体项目可以这样写</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>报告部分</th>
+        <th>你需要交代什么</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>研究问题</td>
+        <td>社会现象、理论预期、平台为什么适合观察。</td>
+      </tr>
+      <tr>
+        <td>数据来源</td>
+        <td>平台、时间窗、关键词、采集方式、缺失和限制。</td>
+      </tr>
+      <tr>
+        <td>分析结果</td>
+        <td>内容、网络、时间或多模态信号中的主要发现。</td>
+      </tr>
+      <tr>
+        <td>验证与边界</td>
+        <td>抽检、反例、不能推广到哪里。</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="section-title">
+  <h2><span class="section-num">Part 4 / 4</span>多智能体：Swarm、Team 与 Agent-to-Agent 通信</h2>
+</section>
+
+<section>
+  <h2>后半部分只抓三件事</h2>
+  <div class="card-grid cols-3">
+    <div class="card orange">
+      <div class="big-number" style="color:var(--orange);">1</div>
+      <div class="card-label">Swarm</div>
+      <div class="card-desc">并行蜂群：多个 agent 同时探索不同路径，然后共享、比较和汇聚。</div>
+    </div>
+    <div class="card accent">
+      <div class="big-number">2</div>
+      <div class="card-label">Team</div>
+      <div class="card-desc">团队式协作：有稳定角色、运行规则、终止条件和可检查交付物。</div>
+    </div>
+    <div class="card green">
+      <div class="big-number" style="color:var(--green);">3</div>
+      <div class="card-label">Agent-to-Agent Communication</div>
+      <div class="card-desc">agent 之间如何发现能力、传递任务、追踪状态、交付 artifact。</div>
+    </div>
+  </div>
+  <div class="quote-box">
+    <div class="quote-text">多智能体不是“很多 AI 一起聊天”，而是把探索、协作和通信规则设计清楚。</div>
+  </div>
+</section>
+
+<section>
+  <h2>Microsoft AutoGen 给我们的二分法</h2>
+  <div class="cols">
+    <div class="col">
+      <div class="card orange">
+        <div class="card-label">Swarm</div>
+        <div class="card-desc">
+          本课采用更直观的课堂定义：多个 agent 同时探索同一个开放问题，再把结果汇聚比较。
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card accent">
+        <div class="card-label">Team</div>
+        <div class="card-desc">
+          Team 是为共同目标协作的一组 agent。AutoGen 支持 RoundRobin、Selector、Magentic-One 等团队运行方式。
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="tiny">依据 Microsoft AutoGen 文档：Teams 教程与 Swarm 教程。课堂上把它们理解为两类多智能体组织方式。</p>
+</section>
+
+<section>
+  <h2>一张图记住：Swarm vs Team</h2>
+  <div class="image-frame">
+    <img src="images/two_mode_map.png" alt="Swarm 与 Team 两类多智能体模式">
+  </div>
+</section>
+
+<section>
+  <h2>Swarm：核心是并行探索与汇聚</h2>
+  <div class="cols">
+    <div class="col-45">
+      <div class="highlight-box">
+        <p><strong>Swarm 的课堂定义：</strong>多个 agent 同时从不同角度探索同一个开放问题。</p>
+        <p class="small">重点不是线性顺序，而是并行展开、共享中间结果、合并冲突结论。</p>
+      </div>
+    </div>
+    <div class="col-55">
+      <ul>
+        <li>并行：不同 agent 同时处理不同假设、工具或信息源。</li>
+        <li>共享：中间发现写入同一个共享状态，而不是只留在各自上下文。</li>
+        <li>汇聚：最后要比较、去重、解决冲突，形成一个合并结果。</li>
+        <li>终止：必须有停止条件，否则并行探索会无限扩散。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Swarm 的并行结构</h2>
+  <div class="image-frame">
+    <img src="images/parallel_swarm.png" alt="Swarm 的并行探索与汇聚结构">
+  </div>
+</section>
+
+<section>
+  <h2>Swarm 适合解决什么问题？</h2>
+  <div class="card-grid cols-2">
+    <div class="card orange">
+      <div class="card-label">适合：开放问题</div>
+      <div class="card-desc">你不知道哪条路径有用，需要同时试多个方向。</div>
+    </div>
+    <div class="card green">
+      <div class="card-label">适合：宽搜索</div>
+      <div class="card-desc">多个 agent 可以并行处理不同假设、工具或信息源，然后汇聚。</div>
+    </div>
+    <div class="card red">
+      <div class="card-label">不适合：固定流程</div>
+      <div class="card-desc">如果每一步顺序都已知，用 Team 的轮次规则更清楚。</div>
+    </div>
+    <div class="card purple">
+      <div class="card-label">最大风险：合不回来</div>
+      <div class="card-desc">如果没有共享状态和汇聚规则，多个 agent 只是同时制造更多碎片。</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Team：核心是角色、顺序和质量门</h2>
+  <div class="image-frame">
+    <img src="images/team_structure.png" alt="Team 模式里的角色、顺序和质量门">
+  </div>
+</section>
+
+<section>
+  <h2>Team 的三个组成部分</h2>
+  <div class="card-grid cols-3">
+    <div class="card accent">
+      <div class="card-label">Participants</div>
+      <div class="card-desc">有哪些 agent？每个 agent 的职责、工具、输入和输出是什么？</div>
+    </div>
+    <div class="card green">
+      <div class="card-label">Turn Policy</div>
+      <div class="card-desc">谁先说、谁后说？轮流、选择器、主控调度，还是固定流水线？</div>
+    </div>
+    <div class="card red">
+      <div class="card-label">Termination</div>
+      <div class="card-desc">什么时候停止？例如 APPROVE、最大轮数、人工确认、错误阈值。</div>
+    </div>
+  </div>
+  <div class="highlight-box">
+    <p><strong>AutoGen 的例子：</strong>primary agent 写作，critic agent 反馈，直到 critic 输出 <code>APPROVE</code>，团队停止。</p>
+  </div>
+</section>
+
+<section>
+  <h2>Team 的常见运行方式</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Team 类型</th>
+        <th>谁来决定执行结构</th>
+        <th>适合什么任务</th>
+        <th>停止条件</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>RoundRobin</td>
+        <td>固定轮流</td>
+        <td>写作-批评-修订、教学演示、小组互评</td>
+        <td>出现 APPROVE、达到轮数、人工停止</td>
+      </tr>
+      <tr>
+        <td>Selector</td>
+        <td>模型或规则选择发言者</td>
+        <td>需要根据上下文选择专家的任务</td>
+        <td>任务完成、无可用下一步、人工停止</td>
+      </tr>
+      <tr>
+        <td>Magentic-One</td>
+        <td>编排者协调多个 worker</td>
+        <td>开放的网页、文件、代码和工具任务</td>
+        <td>编排者判断完成或失败</td>
+      </tr>
+      <tr>
+        <td>Swarm</td>
+        <td>多个 agent 并行探索后汇聚</td>
+        <td>需要宽搜索、多假设、多工具并行的任务</td>
+        <td>完成汇聚、达到预算或人工停止</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>Swarm 和 Team 的关系</h2>
+  <div class="image-frame">
+    <img src="images/swarm_then_team.png" alt="Swarm 与 Team 的关系">
+  </div>
+</section>
+
+<section>
+  <h2>知识点三：Agent-to-Agent Communication</h2>
+  <div class="cols">
+    <div class="col">
+      <div class="card red">
+        <div class="card-label">不是普通聊天</div>
+        <div class="card-desc">普通聊天只关心下一句话；agent-to-agent 通信要关心能力、任务、状态和交付物。</div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card accent">
+        <div class="card-label">更像工作单</div>
+        <div class="card-desc">一个 agent 把“我要你完成什么、需要什么输入、结果交给谁”表达成可追踪任务。</div>
+      </div>
+    </div>
+  </div>
+  <div class="quote-box">
+    <div class="quote-text">如果没有通信协议，多智能体就会退化成“把一段 prompt 转发给另一个模型”。</div>
+  </div>
+</section>
+
+<section>
+  <h2>A2A 的五个核心对象</h2>
+  <div class="card-grid cols-3">
+    <div class="card accent">
+      <div class="card-label">Agent Card</div>
+      <div class="card-desc">这个 agent 是谁、会什么、在哪里、需要什么认证。</div>
+    </div>
+    <div class="card green">
+      <div class="card-label">Message / Part</div>
+      <div class="card-desc">一次通信回合；Part 可以是文本、文件、URL 或结构化 JSON。</div>
+    </div>
+    <div class="card orange">
+      <div class="card-label">Task</div>
+      <div class="card-desc">有状态的工作单，带 taskId 和生命周期。</div>
+    </div>
+    <div class="card cyan">
+      <div class="card-label">Artifact</div>
+      <div class="card-desc">任务交付物：表格、报告、图片、结构化数据。</div>
+    </div>
+    <div class="card purple">
+      <div class="card-label">contextId</div>
+      <div class="card-desc">把多个 message 和 task 放进同一个目标上下文。</div>
+    </div>
+    <div class="card red">
+      <div class="card-label">referenceTaskIds</div>
+      <div class="card-desc">后续任务明确引用前一个任务，避免“凭印象继续”。</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>A2A 任务生命周期：从消息到可追踪产物</h2>
+  <div class="image-frame">
+    <img src="images/a2a_lifecycle.png" alt="A2A 任务生命周期">
+  </div>
+</section>
+
+<section>
+  <h2>A2A 是独立的通信层</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>A2A 对象</th>
+        <th>它解决的问题</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Agent Card</td>
+        <td>调用方如何发现一个 agent 的能力、地址、认证方式和输入要求。</td>
+      </tr>
+      <tr>
+        <td>Task</td>
+        <td>长任务如何拥有 taskId、状态、进度和终止状态，而不是散落在聊天记录里。</td>
+      </tr>
+      <tr>
+        <td>Artifact</td>
+        <td>结果如何作为结构化产物返回，而不是只返回一段自然语言。</td>
+      </tr>
+      <tr>
+        <td>contextId</td>
+        <td>同一个目标下的多个 message 和 task 如何保持连续。</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>最后两句：OpenClaw 怎么实现</h2>
+  <div class="cols">
+    <div class="col">
+      <div class="card accent">
+        <div class="card-label">长期 agent</div>
+        <div class="card-desc">OpenClaw 用 <code>agentId</code>、workspace、agentDir、session store 和 bindings 让多个 agent 隔离运行。</div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card green">
+        <div class="card-label">一次性调用</div>
+        <div class="card-desc"><code>openclaw agent --agent collector --message ... --json</code> 可以直接向某个 agent 发起一次任务。</div>
+      </div>
+    </div>
+  </div>
+  <p class="small center">接下来动手操作时，我们只关心两件事：把 agent 配出来；把任务发给正确的 agent。</p>
+</section>
+
+<section>
+  <h2>课堂练习：判断该用 Swarm 还是 Team</h2>
+  <div class="card-grid cols-2">
+    <div class="card orange">
+      <div class="card-label">练习 A</div>
+      <div class="card-desc">用户说：“帮我规划旅行。可能要订机票、退票、查酒店，还可能需要继续问我信息。”</div>
+    </div>
+    <div class="card accent">
+      <div class="card-label">练习 B</div>
+      <div class="card-desc">用户说：“写一段说明，然后请 critic 反馈，再由 primary 修改，直到 critic 说 APPROVE。”</div>
+    </div>
+  </div>
+  <div class="highlight-box">
+    <p><strong>答案不是背概念：</strong>A 更像 Swarm，因为可以让多个 agent 并行查不同方案；B 更像 Team，因为轮次和停止条件都很清楚。</p>
+  </div>
+</section>
+
+<section>
+  <h2>阅读线索：社交媒体研究</h2>
+  <div class="card-grid cols-3">
+    <div class="card accent">
+      <div class="card-label">抖音与去中心化宣传</div>
+      <div class="card-desc">Pan, Xu & Jiang, 2025, “Decentralized propaganda in the era of digital media”</div>
+    </div>
+    <div class="card accent">
+      <div class="card-label">议题注意力与 agenda setting</div>
+      <div class="card-desc">Barberá et al., 2019, “Who Leads? Who Follows?”</div>
+    </div>
+    <div class="card accent">
+      <div class="card-label">影响者网络与极化</div>
+      <div class="card-desc">Waller & Anderson, 2023, “Quantifying social organization and political polarization in online platforms”</div>
+    </div>
+    <div class="card">
+      <div class="card-label">社交媒体数据偏差</div>
+      <div class="card-desc">Tufekci, 2014, “Big Questions for Social Media Big Data”</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Post-API 时代</div>
+      <div class="card-desc">Freelon, 2018, “Computational Research in the Post-API Age”</div>
+    </div>
+    <div class="card">
+      <div class="card-label">错误信息扩散</div>
+      <div class="card-desc">Vosoughi, Roy & Aral, 2018, “The spread of true and false news online”</div>
+    </div>
+    <div class="card">
+      <div class="card-label">平台实验与极化</div>
+      <div class="card-desc">Bail et al., 2018, “Exposure to opposing views on social media can increase political polarization”</div>
+    </div>
+  </div>
+  <p class="tiny">这一页对应前半讲：真实论文图像、平台数据偏差、post-API 数据可得性和极化研究。</p>
+</section>
+
+<section>
+  <h2>阅读线索：多智能体</h2>
+  <div class="card-grid cols-3">
+    <div class="card accent">
+      <div class="card-label">多智能体编排模式</div>
+      <div class="card-desc">GuruSup, 2026, “Agent Orchestration Patterns: Swarm vs Mesh vs Hierarchical vs Pipeline”</div>
+    </div>
+    <div class="card green">
+      <div class="card-label">Agent-to-Agent 协议</div>
+      <div class="card-desc">A2A Protocol docs: Agent Card, Message, Task, Artifact, contextId</div>
+    </div>
+    <div class="card orange">
+      <div class="card-label">OpenClaw agent send</div>
+      <div class="card-desc">OpenClaw docs: <code>openclaw agent</code>, sub-agents, multi-agent routing</div>
+    </div>
+  </div>
+  <p class="tiny">这一页对应后半讲：Swarm、Team、A2A 通信层，以及 OpenClaw 中的一次性 agent 调用。</p>
+</section>
+
+<section>
+  <div class="takeaway">
+    <div class="divider"></div>
+    <p class="main-text">多智能体的关键<br>不是数量，是组织方式</p>
+    <p class="sub-text">
+      Swarm 用并行探索扩大搜索，Team 用角色和质量门稳定产出，A2A 让 agent 之间的任务、状态和 artifact 可追踪。<br><br>
+      <strong>接下来进入 OpenClaw 动手操作：把 agent 配出来，把任务发给正确的 agent。</strong>
+    </p>
+    <p class="hint">Next: OpenClaw hands-on。郑思尧 2026</p>
+  </div>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: true,
+    progress: true,
+    transition: 'slide',
+    transitionSpeed: 'fast',
+    backgroundTransition: 'none',
+    controls: true,
+    controlsTutorial: false,
+    width: 1280,
+    height: 720,
+    margin: 0.04,
+    minScale: 0.2,
+    maxScale: 2.0,
+    plugins: []
+  });
+</script>
+</body>
+</html>
