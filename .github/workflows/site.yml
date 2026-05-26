@@ -6,6 +6,9 @@ on:
     branches:
       - master
   workflow_dispatch:
+  repository_dispatch:
+    types:
+      - site-deploy
 
 permissions:
   contents: read
@@ -33,7 +36,10 @@ jobs:
   deploy:
     name: Deploy to GitHub Pages
     needs: check
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: >
+      (github.event_name == 'push' && github.ref == 'refs/heads/master') ||
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'repository_dispatch'
     runs-on: ubuntu-latest
     permissions:
       contents: read
