@@ -1,0 +1,2109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>同济 AI4SS 30 分钟短讲</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+<style>
+  :root {
+    --ink: #172033;
+    --muted: #5d697a;
+    --line: #d8dee8;
+    --panel: #f6f8fb;
+    --blue: #2563eb;
+    --green: #0f9f6e;
+    --amber: #c77700;
+    --red: #c24135;
+  }
+
+  .reveal {
+    font-family: "SF Pro Display", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+    color: var(--ink);
+    font-size: 30px;
+  }
+
+  .reveal .slides { text-align: left; }
+
+  .reveal section {
+    height: 100%;
+    padding: 34px 46px 28px;
+    box-sizing: border-box;
+  }
+
+  .reveal h1,
+  .reveal h2,
+  .reveal h3 {
+    color: var(--ink);
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 760;
+  }
+
+  .reveal h1 {
+    font-size: 2.22em;
+    line-height: 1.08;
+    margin: 0;
+  }
+
+  .reveal h2 {
+    font-size: 1.48em;
+    line-height: 1.14;
+    margin: 0;
+  }
+
+  .reveal h3 {
+    font-size: 0.82em;
+    line-height: 1.2;
+    margin: 0 0 0.28em;
+  }
+
+  .reveal p,
+  .reveal li { line-height: 1.38; }
+
+  .muted { color: var(--muted); }
+  .blue { color: var(--blue); }
+  .green { color: var(--green); }
+  .amber { color: var(--amber); }
+
+  .eyebrow {
+    color: var(--blue);
+    font-size: 0.56em;
+    font-weight: 780;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin: 0 0 0.58em;
+  }
+
+  .topline {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1.4em;
+    align-items: end;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 0.55em;
+    margin-bottom: 0.74em;
+  }
+
+  .two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75em;
+    height: calc(100% - 94px);
+    min-height: 0;
+  }
+
+  .two.footer-clear {
+    height: calc(100% - 132px);
+  }
+
+  .two.wide-left { grid-template-columns: 1.12fr 0.88fr; }
+  .two.wide-right { grid-template-columns: 0.88fr 1.12fr; }
+
+  .three {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.58em;
+    height: calc(100% - 94px);
+    min-height: 0;
+  }
+
+  .shot,
+  .panel,
+  .prompt,
+  .source-card,
+  .note-box,
+  .mini-card,
+  .step,
+  .gate {
+    border: 1px solid var(--line);
+    background: var(--panel);
+  }
+
+  .shot {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 7 / 5;
+    min-height: 0;
+    margin: 0;
+  }
+
+  .shot img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  .shot.contain img {
+    object-fit: contain;
+    background: white;
+  }
+
+  .caption {
+    position: absolute;
+    left: 0.62em;
+    bottom: 0.62em;
+    max-width: calc(100% - 1.24em);
+    background: rgba(255,255,255,0.94);
+    border: 1px solid rgba(216,222,232,0.9);
+    padding: 0.36em 0.48em;
+    color: var(--ink);
+    font-size: 0.52em;
+    line-height: 1.2;
+    font-weight: 760;
+  }
+
+  .caption small {
+    display: block;
+    margin-top: 0.15em;
+    color: var(--muted);
+    font-size: 0.78em;
+    font-weight: 560;
+  }
+
+  .panel { padding: 0.75em 0.85em; }
+
+  .big-claim {
+    font-size: 1.03em;
+    line-height: 1.34;
+    margin: 0;
+  }
+
+  .point-list {
+    display: grid;
+    gap: 0.42em;
+    margin-top: 0.72em;
+  }
+
+  .point {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.44em;
+    align-items: start;
+    border-left: 4px solid var(--blue);
+    background: #f9fbff;
+    padding: 0.4em 0.52em;
+    font-size: 0.64em;
+  }
+
+  .point strong {
+    display: block;
+    font-size: 1.08em;
+    color: var(--ink);
+    margin-bottom: 0.07em;
+  }
+
+  .num {
+    width: 1.82em;
+    height: 1.82em;
+    display: grid;
+    place-items: center;
+    background: var(--blue);
+    color: white;
+    font-weight: 800;
+    font-size: 0.82em;
+  }
+
+  .tag {
+    display: inline-block;
+    border: 1px solid var(--line);
+    background: white;
+    color: var(--ink);
+    padding: 0.18em 0.42em;
+    font-size: 0.5em;
+    font-weight: 760;
+    margin: 0 0.16em 0.16em 0;
+  }
+
+  .formula {
+    background: #101827;
+    color: #f7fbff;
+    padding: 0.58em 0.68em;
+    font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    font-size: 0.62em;
+    line-height: 1.34;
+    margin-top: 0.68em;
+  }
+
+  .prompt {
+    background: #111827;
+    color: #f7fbff;
+    padding: 0.7em 0.82em;
+  }
+
+  .prompt .label {
+    display: flex;
+    justify-content: space-between;
+    color: #9ec5ff;
+    font-size: 0.56em;
+    font-weight: 780;
+    margin-bottom: 0.56em;
+  }
+
+  .prompt pre {
+    margin: 0;
+    white-space: pre-wrap;
+    font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    font-size: 0.6em;
+    line-height: 1.34;
+  }
+
+  .grid-shots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 1fr;
+    gap: 0.52em;
+    height: 100%;
+  }
+
+  .source-card {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 7 / 5;
+    min-height: 0;
+    margin: 0;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+
+  .mini-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.46em;
+  }
+
+  .source-card img {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .source-card .source-text { padding: 0.36em 0.46em; }
+
+  .source-card h3 {
+    font-size: 0.61em;
+    margin: 0 0 0.08em;
+  }
+
+  .source-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.47em;
+    line-height: 1.18;
+  }
+
+  .grid-shots.horizontal-crop {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: unset;
+  }
+
+  .grid-shots.horizontal-crop .source-card {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    min-height: 0;
+  }
+
+  .grid-shots.horizontal-crop .source-card img {
+    width: 100%;
+    height: 100%;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  .grid-shots.horizontal-crop .source-text {
+    padding: 0.34em 0.48em;
+  }
+
+  .grid-shots.strip-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: unset;
+  }
+
+  .grid-shots.compact-four {
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+  }
+
+  .evidence-stack {
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 0.54em;
+    min-height: 0;
+  }
+
+  .evidence-card {
+    border: 1px solid var(--line);
+    border-left: 6px solid var(--blue);
+    background: #fbfcff;
+    padding: 0.72em 0.78em;
+    display: grid;
+    align-content: center;
+    min-height: 0;
+  }
+
+  .evidence-card h3 {
+    color: var(--blue);
+    font-size: 0.76em;
+    margin: 0 0 0.18em;
+  }
+
+  .evidence-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.56em;
+    line-height: 1.25;
+  }
+
+  .example-stack {
+    display: grid;
+    grid-template-rows: repeat(5, minmax(0, 1fr));
+    gap: 0.42em;
+    min-height: 0;
+  }
+
+  .example-stack.four {
+    grid-template-rows: repeat(4, minmax(0, 1fr));
+  }
+
+  .example-card {
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--green);
+    background: #fbfcff;
+    padding: 0.42em 0.5em;
+    display: grid;
+    align-content: center;
+    min-height: 0;
+  }
+
+  .example-card h3 {
+    font-size: 0.58em;
+    color: var(--ink);
+    margin: 0 0 0.08em;
+  }
+
+  .example-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.49em;
+    line-height: 1.2;
+  }
+
+  .progress-shot {
+    border: 1px solid var(--line);
+    background: white;
+    padding: 0.48em;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 0.34em;
+    min-height: 0;
+    margin: 0;
+  }
+
+  .progress-shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    min-height: 0;
+  }
+
+  .plain-caption {
+    color: var(--muted);
+    font-size: 0.46em;
+    line-height: 1.2;
+    border-top: 1px solid var(--line);
+    padding-top: 0.3em;
+  }
+
+  .pseudo-card {
+    border: 1px solid var(--line);
+    background: #111827;
+    color: #f8fafc;
+    padding: 0.72em;
+    min-height: 0;
+  }
+
+  .pseudo-card h3 {
+    color: #bfdbfe;
+    font-size: 0.66em;
+    margin: 0 0 0.5em;
+  }
+
+  .pseudo-card pre {
+    margin: 0;
+    white-space: pre-wrap;
+    font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    font-size: 0.52em;
+    line-height: 1.42;
+  }
+
+  .auto-loop-panel {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 0.52em;
+    min-height: 0;
+  }
+
+  .auto-loop-panel.simple {
+    grid-template-rows: 1fr auto;
+  }
+
+  .cycle-diagram {
+    position: relative;
+    border: 1px solid var(--line);
+    background: #fbfcff;
+    height: 410px;
+    overflow: hidden;
+  }
+
+  .cycle-diagram svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .cycle-path {
+    fill: none;
+    stroke: var(--blue);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.72;
+  }
+
+  .cycle-core {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 148px;
+    min-height: 92px;
+    border: 2px solid var(--blue);
+    background: white;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    color: var(--ink);
+    box-shadow: 0 12px 24px rgba(23, 32, 51, 0.09);
+    padding: 0.48em;
+    box-sizing: border-box;
+  }
+
+  .cycle-core strong {
+    display: block;
+    color: var(--blue);
+    font-size: 0.62em;
+    margin-bottom: 0.16em;
+  }
+
+  .cycle-core small {
+    color: var(--muted);
+    font-size: 0.44em;
+    line-height: 1.18;
+  }
+
+  .cycle-node {
+    position: absolute;
+    width: 31%;
+    border: 1px solid var(--line);
+    background: white;
+    padding: 0.4em 0.44em;
+    min-height: 62px;
+    box-sizing: border-box;
+    box-shadow: 0 8px 18px rgba(23, 32, 51, 0.055);
+  }
+
+  .cycle-node.program { left: 34.5%; top: 16px; }
+  .cycle-node.propose { right: 18px; top: 86px; }
+  .cycle-node.edit { right: 18px; bottom: 86px; }
+  .cycle-node.train { left: 34.5%; bottom: 16px; }
+  .cycle-node.eval { left: 18px; bottom: 86px; }
+  .cycle-node.decision { left: 18px; top: 86px; }
+
+  .cycle-step {
+    display: inline-grid;
+    place-items: center;
+    width: 1.42em;
+    height: 1.42em;
+    margin-right: 0.24em;
+    background: var(--blue);
+    color: white;
+    font-size: 0.78em;
+    line-height: 1;
+  }
+
+  .cycle-node h3 {
+    display: flex;
+    align-items: center;
+    color: var(--blue);
+    font-size: 0.56em;
+    margin: 0 0 0.12em;
+  }
+
+  .cycle-node p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.46em;
+    line-height: 1.2;
+  }
+
+  .repo-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.42em;
+    min-height: 0;
+  }
+
+  .wiki-board {
+    display: grid;
+    grid-template-columns: 0.95fr 0.26fr 1.1fr;
+    gap: 0.5em;
+    height: calc(100% - 132px);
+    min-height: 0;
+  }
+
+  .raw-stack,
+  .wiki-stack {
+    display: grid;
+    grid-template-rows: repeat(5, minmax(0, 1fr));
+    gap: 0.38em;
+    min-height: 0;
+  }
+
+  .raw-card,
+  .wiki-card {
+    border: 1px solid var(--line);
+    background: #fbfcff;
+    padding: 0.42em 0.5em;
+    display: grid;
+    align-content: center;
+    min-height: 0;
+  }
+
+  .raw-card {
+    border-left: 5px solid var(--amber);
+  }
+
+  .wiki-card {
+    border-left: 5px solid var(--green);
+  }
+
+  .raw-card h3,
+  .wiki-card h3 {
+    font-size: 0.56em;
+    color: var(--ink);
+    margin: 0 0 0.08em;
+  }
+
+  .raw-card p,
+  .wiki-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.47em;
+    line-height: 1.18;
+  }
+
+  .pipeline-arrow {
+    display: grid;
+    place-items: center;
+    color: var(--blue);
+    font-weight: 800;
+    font-size: 1.28em;
+  }
+
+  .ingest-board {
+    display: grid;
+    grid-template-columns: 0.74fr 1.1fr 1.06fr;
+    gap: 0.56em;
+    height: calc(100% - 132px);
+    min-height: 0;
+  }
+
+  .ingest-ops {
+    display: grid;
+    grid-template-rows: repeat(5, minmax(0, 1fr));
+    gap: 0.38em;
+    min-height: 0;
+  }
+
+  .diff-card {
+    border: 1px solid var(--line);
+    background: #111827;
+    color: #f8fafc;
+    padding: 0.58em 0.62em;
+    min-height: 0;
+  }
+
+  .diff-card h3 {
+    color: #bfdbfe;
+    font-size: 0.6em;
+    margin: 0 0 0.36em;
+  }
+
+  .diff-card pre {
+    margin: 0;
+    white-space: pre-wrap;
+    font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    font-size: 0.48em;
+    line-height: 1.38;
+  }
+
+  .plus-line { color: #86efac; }
+  .warn-line { color: #fcd34d; }
+
+  .memory-board {
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr;
+    gap: 0.72em;
+    height: calc(100% - 160px);
+    min-height: 0;
+  }
+
+  .rule-stack {
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 0.5em;
+    min-height: 0;
+  }
+
+  .rule-card {
+    border: 1px solid var(--line);
+    border-left: 6px solid var(--blue);
+    background: #fbfcff;
+    padding: 0.58em 0.66em;
+    display: grid;
+    align-content: center;
+    min-height: 0;
+  }
+
+  .rule-card h3 {
+    color: var(--blue);
+    font-size: 0.7em;
+    margin: 0 0 0.16em;
+  }
+
+  .rule-card p {
+    color: var(--muted);
+    font-size: 0.53em;
+    line-height: 1.25;
+    margin: 0;
+  }
+
+  .code-chip {
+    display: inline-block;
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 0.86em;
+    color: var(--ink);
+    background: white;
+    border: 1px solid var(--line);
+    padding: 0.08em 0.28em;
+    margin-right: 0.28em;
+  }
+
+  .agents-board {
+    display: grid;
+    grid-template-columns: 1.12fr 0.88fr;
+    gap: 0.72em;
+    height: calc(100% - 132px);
+    min-height: 0;
+  }
+
+  .agents-file {
+    border: 1px solid var(--line);
+    background: #111827;
+    color: #f8fafc;
+    padding: 0.66em 0.74em;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .agents-file h3 {
+    color: #bfdbfe;
+    font-size: 0.66em;
+    margin: 0 0 0.46em;
+  }
+
+  .agents-file pre {
+    margin: 0;
+    white-space: pre-wrap;
+    font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    font-size: 0.46em;
+    line-height: 1.34;
+  }
+
+  .agents-callouts {
+    display: grid;
+    grid-template-rows: repeat(5, 1fr);
+    gap: 0.44em;
+    min-height: 0;
+  }
+
+  .agents-callout {
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--green);
+    background: #fbfffd;
+    padding: 0.46em 0.56em;
+    display: grid;
+    align-content: center;
+    min-height: 0;
+  }
+
+  .agents-callout h3 {
+    color: var(--ink);
+    font-size: 0.58em;
+    margin: 0 0 0.12em;
+  }
+
+  .agents-callout p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.48em;
+    line-height: 1.22;
+  }
+
+  .layer-map {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.43em;
+  }
+
+  .layer {
+    border: 1px solid var(--line);
+    background: #fbfcff;
+    padding: 0.43em 0.52em;
+    min-height: 74px;
+  }
+
+  .layer h3 {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5em;
+    font-size: 0.58em;
+    margin: 0 0 0.2em;
+  }
+
+  .layer h3 span {
+    color: var(--muted);
+    font-weight: 640;
+  }
+
+  .layer p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.49em;
+    line-height: 1.25;
+  }
+
+  .note-box {
+    border-left: 5px solid var(--green);
+    background: #eefaf5;
+    padding: 0.56em 0.64em;
+    font-size: 0.64em;
+    line-height: 1.33;
+  }
+
+  .warning {
+    border-left-color: var(--amber);
+    background: #fff7e8;
+  }
+
+  .danger {
+    border-left-color: var(--red);
+    background: #fff3f1;
+  }
+
+  .footer {
+    position: absolute;
+    left: 46px;
+    right: 46px;
+    bottom: 18px;
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+    color: var(--muted);
+    border-top: 1px solid var(--line);
+    padding-top: 0.42em;
+    font-size: 0.44em;
+  }
+
+  .title-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 0.92em;
+    height: 100%;
+    align-items: stretch;
+  }
+
+  .title-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid var(--line);
+    padding-right: 1.1em;
+  }
+
+  .title-copy p {
+    margin: 1em 0 0;
+    color: var(--muted);
+    font-size: 0.78em;
+  }
+
+  .mosaic {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0.5em;
+    min-height: 0;
+  }
+
+  .mosaic .shot:first-child { grid-row: span 2; }
+
+  .cols-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.46em;
+  }
+
+  .mini-card {
+    padding: 0.5em;
+    background: #fbfcff;
+    min-height: 116px;
+  }
+
+  .mini-card h3 {
+    color: var(--blue);
+    font-size: 0.6em;
+  }
+
+  .mini-card p {
+    color: var(--muted);
+    font-size: 0.5em;
+    line-height: 1.26;
+    margin: 0;
+  }
+
+  .loop-steps {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.42em;
+    margin-top: 0.7em;
+  }
+
+  .step {
+    padding: 0.48em;
+    background: #fbfcff;
+    min-height: 106px;
+  }
+
+  .step h3 {
+    font-size: 0.58em;
+    color: var(--blue);
+  }
+
+  .step p {
+    color: var(--muted);
+    font-size: 0.49em;
+    line-height: 1.24;
+    margin: 0;
+  }
+
+  .autonomy-spectrum {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 0.54em;
+    height: calc(100% - 132px);
+    min-height: 0;
+  }
+
+  .autonomy-claim {
+    border: 1px solid var(--line);
+    background: #fbfcff;
+    padding: 0.48em 0.62em;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.9em;
+    align-items: center;
+  }
+
+  .autonomy-claim p {
+    margin: 0;
+    color: var(--ink);
+    font-size: 0.67em;
+    line-height: 1.28;
+    font-weight: 680;
+  }
+
+  .autonomy-claim span {
+    color: var(--muted);
+    font-size: 0.48em;
+    line-height: 1.25;
+    text-align: right;
+  }
+
+  .spectrum-map {
+    border: 1px solid var(--line);
+    background: #fbfcff;
+    padding: 0.52em 0.64em;
+    display: grid;
+    grid-template-rows: auto repeat(5, 1fr);
+    gap: 0.24em;
+    min-height: 0;
+  }
+
+  .spectrum-map-head,
+  .spectrum-row {
+    display: grid;
+    grid-template-columns: 1fr 260px 1fr;
+    gap: 0.62em;
+    align-items: center;
+  }
+
+  .spectrum-map-head {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 0.28em;
+  }
+
+  .axis-label {
+    color: var(--blue);
+    font-size: 0.74em;
+    font-weight: 760;
+  }
+
+  .axis-label.center {
+    text-align: center;
+    color: var(--ink);
+  }
+
+  .axis-label.right {
+    text-align: right;
+  }
+
+  .side-example {
+    border: 1px solid var(--line);
+    background: white;
+    padding: 0.42em 0.56em;
+    min-height: 74px;
+    box-sizing: border-box;
+    display: grid;
+    align-content: center;
+    box-shadow: 0 6px 14px rgba(23, 32, 51, 0.04);
+  }
+
+  .side-example.left {
+    border-left: 5px solid var(--amber);
+  }
+
+  .side-example.right {
+    border-left: 5px solid var(--green);
+  }
+
+  .side-example h3 {
+    font-size: 0.62em;
+    margin: 0 0 0.08em;
+    color: var(--ink);
+  }
+
+  .side-example p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.48em;
+    line-height: 1.2;
+  }
+
+  .logo-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.26em;
+    margin-top: 0.28em;
+  }
+
+  .logo-chip {
+    border: 1px solid var(--line);
+    background: #fbfcff;
+    color: var(--ink);
+    padding: 0.16em 0.38em;
+    font-size: 0.42em;
+    line-height: 1.1;
+    font-weight: 780;
+    white-space: nowrap;
+  }
+
+  .side-example.left .logo-chip {
+    border-color: rgba(199, 119, 0, 0.35);
+    color: var(--amber);
+  }
+
+  .side-example.right .logo-chip {
+    border-color: rgba(15, 159, 110, 0.35);
+    color: var(--green);
+  }
+
+  .center-tier {
+    height: 74px;
+    display: grid;
+    place-items: center;
+    justify-self: center;
+    color: white;
+    font-size: 0.92em;
+    font-weight: 820;
+    letter-spacing: 0;
+    background: linear-gradient(90deg, #2563eb, #0f9f6e);
+    border: 1px solid rgba(15, 159, 110, 0.35);
+    clip-path: polygon(8% 0, 92% 0, 100% 100%, 0 100%);
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.13);
+  }
+
+  .center-tier.l5 { width: 42%; }
+  .center-tier.l4 { width: 56%; }
+  .center-tier.l3 { width: 70%; }
+  .center-tier.l2 { width: 84%; }
+  .center-tier.l1 { width: 100%; }
+
+  .spectrum-footnote {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0.8em;
+    align-items: center;
+    color: var(--muted);
+    font-size: 0.5em;
+    font-weight: 700;
+  }
+
+  .spectrum-footnote::before,
+  .spectrum-footnote::after {
+    content: "";
+    height: 1px;
+    background: var(--line);
+  }
+
+  .agent-compare {
+    display: grid;
+    grid-template-columns: 0.92fr 1.08fr;
+    gap: 0.72em;
+    height: calc(100% - 142px);
+    min-height: 0;
+  }
+
+  .compare-card {
+    border: 1px solid var(--line);
+    background: #fbfcff;
+    padding: 0.62em 0.78em;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 0.48em;
+    min-height: 0;
+  }
+
+  .compare-title {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 0.42em;
+  }
+
+  .compare-title h3 {
+    color: var(--blue);
+    font-size: 0.72em;
+    margin: 0;
+  }
+
+  .compare-title p {
+    color: var(--muted);
+    font-size: 0.54em;
+    line-height: 1.24;
+    margin: 0.18em 0 0;
+  }
+
+  .llm-io {
+    padding: 0;
+    position: relative;
+    display: grid;
+    grid-template-rows: 58px 1fr 140px 1fr 58px;
+    grid-template-columns: 1fr;
+    gap: 0;
+    align-items: center;
+    justify-items: center;
+    min-height: 0;
+  }
+
+  .flow-link {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+  }
+
+  .flow-link::before {
+    content: "";
+    width: 0;
+    border-left: 3px solid var(--blue);
+  }
+
+  .flow-link::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -1px;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 11px solid var(--blue);
+  }
+
+  .agent-flow {
+    display: grid;
+    grid-template-rows: 58px 24px 1fr 24px 58px;
+    grid-template-columns: 1fr;
+    gap: 0.24em;
+    align-items: center;
+    justify-items: center;
+    min-height: 0;
+  }
+
+  .io-card,
+  .model-card {
+    border: 1px solid var(--line);
+    background: white;
+    padding: 0.62em 0.7em;
+    min-height: 0;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+  }
+
+  .io-card {
+    width: 78%;
+  }
+
+  .io-card h3,
+  .model-card h3 {
+    font-size: 0.62em;
+    color: var(--blue);
+    margin-bottom: 0.16em;
+  }
+
+  .io-card p,
+  .model-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.52em;
+    line-height: 1.26;
+  }
+
+  .model-card {
+    background: white;
+    color: var(--ink);
+    border: 2px solid var(--blue);
+    text-align: center;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 10px 24px rgba(23, 32, 51, 0.08);
+    width: 150px;
+    height: 140px;
+  }
+
+  .model-card h3 {
+    color: var(--blue);
+    font-size: 0.86em;
+    margin: 0;
+  }
+
+  .model-card p {
+    color: var(--muted);
+    font-size: 0.48em;
+    margin-top: 0.12em;
+  }
+
+  .io-arrow {
+    display: grid;
+    place-items: center;
+    color: var(--blue);
+    font-size: 1.65em;
+    font-weight: 760;
+  }
+
+  .react-card {
+    grid-template-rows: auto 1fr auto;
+  }
+
+  .react-loop {
+    position: relative;
+    height: 100%;
+    min-height: 360px;
+    margin-top: 0;
+    border: 1px solid var(--line);
+    background: white;
+    overflow: hidden;
+  }
+
+  .agent-flow .react-loop {
+    min-height: 0;
+    width: 100%;
+  }
+
+  .react-loop svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .react-path {
+    fill: none;
+    stroke: var(--blue);
+    stroke-width: 3.4;
+    stroke-linecap: round;
+    opacity: 0.86;
+  }
+
+  .react-core {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 150px;
+    border: 2px solid var(--blue);
+    background: white;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    box-shadow: 0 10px 24px rgba(23, 32, 51, 0.08);
+  }
+
+  .react-core strong {
+    display: block;
+    color: var(--blue);
+    font-size: 0.86em;
+    margin-bottom: 0.08em;
+  }
+
+  .react-core small {
+    display: block;
+    color: var(--muted);
+    font-size: 0.48em;
+    line-height: 1.18;
+  }
+
+  .react-node {
+    position: absolute;
+    width: 155px;
+    min-height: 66px;
+    border: 1px solid var(--line);
+    background: white;
+    padding: 0.42em 0.5em;
+    box-sizing: border-box;
+    box-shadow: 0 8px 18px rgba(23, 32, 51, 0.06);
+  }
+
+  .react-node h3 {
+    color: var(--blue);
+    font-size: 0.58em;
+    margin-bottom: 0.12em;
+  }
+
+  .react-node p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.46em;
+    line-height: 1.22;
+  }
+
+  .react-node.thought {
+    left: 50%;
+    top: 20px;
+    transform: translateX(-50%);
+  }
+
+  .react-node.action {
+    right: 34px;
+    top: 132px;
+  }
+
+  .react-node.environment {
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+  }
+
+  .react-node.state {
+    left: 34px;
+    top: 132px;
+  }
+
+  .gate-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.48em;
+  }
+
+  .gate {
+    padding: 0.54em 0.6em;
+    background: #fbfcff;
+    border-top: 4px solid var(--amber);
+    min-height: 122px;
+  }
+
+  .gate h3 {
+    font-size: 0.62em;
+    color: var(--ink);
+  }
+
+  .gate p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.52em;
+    line-height: 1.28;
+  }
+
+  .source-line {
+    color: var(--muted);
+    font-size: 0.44em;
+    margin-top: 0.42em;
+  }
+
+  .compare-card .formula,
+  .compare-card .note-box {
+    margin-top: 0;
+  }
+</style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section>
+  <div class="title-grid">
+    <div class="title-copy">
+      <p class="eyebrow">Tongji AI4SS · 30 minutes</p>
+      <h1>AI Agents 作为<br>社会科学研究基础设施</h1>
+      <p>从 agent loop 出发，讲清楚为什么 2026 年的关键问题不是“AI 会不会写论文”，而是研究流程怎样变得可执行、可交接、可审计。</p>
+      <p class="source-line">郑思尧 · 2026-05</p>
+    </div>
+    <div class="mosaic">
+      <figure class="shot">
+        <img src="slide-assets/claude-code-docs.png" alt="Claude Code documentation screenshot">
+        <figcaption class="caption">Claude Code<small>agent enters a project workspace</small></figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="slide-assets/horiuchi-replication-guide.png" alt="Replication Package Guide screenshot">
+        <figcaption class="caption">Replication Package Guide<small>social science standard</small></figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="slide-assets/deck-preview-09-autoresearch.png" alt="Auto Research original workflow preview">
+        <figcaption class="caption">Auto Research<small>experiment loop</small></figcaption>
+      </figure>
+    </div>
+  </div>
+  <aside class="notes">开场定位：这不是工具清单，也不是 prompt 课，而是研究基础设施的变化。</aside>
+</section>
+
+<section>
+  <div class="topline">
+    <div>
+      <p class="eyebrow">autonomy spectrum</p>
+      <h2>从 ChatGPT 到 AGI：AI 能力也有“自动驾驶分级”</h2>
+    </div>
+    </div>
+  <div class="autonomy-spectrum">
+    <div class="autonomy-claim">
+      <p>这页的重点是例子：从大家熟悉的聊天机器人，到能用工具、能进 workspace 的 agent，再到仍属目标的 AGI，差别在于系统能承担多少连续行动。</p>
+      <span>越往上，越要问：谁监控、谁接管、谁负责？</span>
+    </div>
+    <div class="spectrum-map">
+      <div class="spectrum-map-head">
+        <div class="axis-label">自动驾驶例子</div>
+        <div class="axis-label center">共同的自治层级</div>
+        <div class="axis-label right">AI / LLM 例子</div>
+      </div>
+      <div class="spectrum-row">
+        <div class="side-example left">
+          <h3>无人：仍是目标状态</h3>
+          <p>全条件、全道路由系统驾驶。</p>
+          <div class="logo-row"><span class="logo-chip">L5 target</span><span class="logo-chip">driverless</span></div>
+        </div>
+        <div class="center-tier l5">L5</div>
+        <div class="side-example right">
+          <h3>AGI / 完全 AI 智能体</h3>
+          <p>高度自治、跨多数经济任务；不是当前产品。</p>
+          <div class="logo-row"><span class="logo-chip">AGI</span><span class="logo-chip">概念终点</span></div>
+        </div>
+      </div>
+      <div class="spectrum-row">
+        <div class="side-example left">
+          <h3>脱脑：限定区域兜底</h3>
+          <p>Robotaxi 在服务区内接近“乘客模式”。</p>
+          <div class="logo-row"><span class="logo-chip">萝卜快跑</span><span class="logo-chip">Waymo</span><span class="logo-chip">小马智行</span></div>
+        </div>
+        <div class="center-tier l4">L4</div>
+        <div class="side-example right">
+          <h3>消费级 Agent</h3>
+          <p>能替用户查资料、浏览网页、执行多步任务。</p>
+          <div class="logo-row"><span class="logo-chip">ChatGPT agent</span><span class="logo-chip">Deep Research</span><span class="logo-chip">Manus</span><span class="logo-chip">Operator</span></div>
+        </div>
+      </div>
+      <div class="spectrum-row">
+        <div class="side-example left">
+          <h3>脱眼：条件自动化</h3>
+          <p>系统驾驶，但边界外要求人准备接管。</p>
+          <div class="logo-row"><span class="logo-chip">奔驰 Drive Pilot</span><span class="logo-chip">宝马 L3</span></div>
+        </div>
+        <div class="center-tier l3">L3</div>
+        <div class="side-example right">
+          <h3>工具型 AI 应用</h3>
+          <p>模型接入搜索、图像生成、文档库和数据分析。</p>
+          <div class="logo-row"><span class="logo-chip">Midjourney</span><span class="logo-chip">NotebookLM</span><span class="logo-chip">Perplexity</span><span class="logo-chip">ChatGPT 搜索</span></div>
+        </div>
+      </div>
+      <div class="spectrum-row">
+        <div class="side-example left">
+          <h3>脱手：驾驶辅助</h3>
+          <p>系统控制方向和速度，人仍然看路并负责。</p>
+          <div class="logo-row"><span class="logo-chip">Tesla Autopilot</span><span class="logo-chip">小鹏 XNGP</span><span class="logo-chip">华为 ADS</span><span class="logo-chip">理想 NOA</span></div>
+        </div>
+        <div class="center-tier l2">L2</div>
+        <div class="side-example right">
+          <h3>多模态 / 办公副驾</h3>
+          <p>能读图、读文件、听说对话，但人持续判断。</p>
+          <div class="logo-row"><span class="logo-chip">GPT-4o</span><span class="logo-chip">Copilot</span><span class="logo-chip">豆包</span><span class="logo-chip">Gemini</span></div>
+        </div>
+      </div>
+      <div class="spectrum-row">
+        <div class="side-example left">
+          <h3>脱脚：局部辅助</h3>
+          <p>定速、跟车或车道保持；人完成驾驶任务。</p>
+          <div class="logo-row"><span class="logo-chip">ACC</span><span class="logo-chip">车道保持</span><span class="logo-chip">自适应巡航</span></div>
+        </div>
+        <div class="center-tier l1">L1</div>
+        <div class="side-example right">
+          <h3>聊天机器人</h3>
+          <p>回答、改写、摘要；任务状态仍停在人手里。</p>
+          <div class="logo-row"><span class="logo-chip">ChatGPT</span><span class="logo-chip">豆包</span><span class="logo-chip">Kimi</span><span class="logo-chip">文心一言</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="spectrum-footnote">例子只是定位，不等于官方等级；Tesla/小鹏/华为等量产智驾通常仍需驾驶员监督，L5/AGI 仍是目标概念。</div>
+  </div>
+  <aside class="notes">这页要靠例子讲，不要只讲抽象层级。提醒听众：ChatGPT、豆包、Kimi 是聊天机器人入口；Midjourney、NotebookLM、Perplexity 是模型连接具体工具之后的用户可见形态；Deep Research、Manus、ChatGPT agent 才更接近消费级 agent；AGI 是概念终点，不是今天已有的产品。</aside>
+</section>
+
+<section>
+  <div class="topline">
+    <div>
+      <p class="eyebrow">agent loop</p>
+      <h2>什么是 Agent Loop：ReAct</h2>
+    </div>
+    </div>
+  <div class="agent-compare">
+    <div class="compare-card">
+      <div class="compare-title">
+        <h3>传统 LLM 调用</h3>
+        <p>LLM 作为一次生成器：输入一次，输出一次。</p>
+      </div>
+      <div class="llm-io" aria-label="Traditional LLM input output diagram">
+        <div class="io-card">
+          <h3>Input / Prompt</h3>
+          <p>用户给出一个问题、任务或文本。</p>
+        </div>
+        <div class="flow-link" aria-hidden="true"></div>
+        <div class="model-card">
+          <div>
+            <h3>LLM</h3>
+            <p>single forward pass</p>
+          </div>
+        </div>
+        <div class="flow-link" aria-hidden="true"></div>
+        <div class="io-card">
+          <h3>Output / Answer</h3>
+          <p>模型生成一次回答，任务状态通常停在对话里。</p>
+        </div>
+      </div>
+    </div>
+    <div class="compare-card react-card">
+      <div class="compare-title">
+        <h3>ReAct Agent Loop</h3>
+        <p>Agent 也有输入和输出；变化在于中间多了一个带 LLM 的行动循环。</p>
+      </div>
+      <div class="agent-flow" aria-label="Agent input loop output diagram">
+        <div class="io-card">
+          <h3>Input / Goal</h3>
+          <p>用户给出目标、约束和上下文。</p>
+        </div>
+        <div class="io-arrow">↓</div>
+        <div class="react-loop" aria-label="ReAct loop diagram with LLM inside">
+          <svg viewBox="0 0 600 320" aria-hidden="true">
+            <defs>
+              <marker id="react-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+                <path d="M0,0 L0,6 L8,3 z" fill="#2563eb"></path>
+              </marker>
+            </defs>
+            <path class="react-path" marker-end="url(#react-arrow)" d="M316 62 C424 66 504 92 514 140"></path>
+            <path class="react-path" marker-end="url(#react-arrow)" d="M514 184 C504 230 424 256 316 260"></path>
+            <path class="react-path" marker-end="url(#react-arrow)" d="M284 260 C176 256 96 230 86 184"></path>
+            <path class="react-path" marker-end="url(#react-arrow)" d="M86 140 C96 92 176 66 284 62"></path>
+          </svg>
+          <div class="react-core">
+            <div>
+              <strong>LLM</strong>
+              <small>inside ReAct loop<br>Reason + Act</small>
+            </div>
+          </div>
+          <div class="react-node thought"><h3>Thought / Reason</h3><p>LLM 形成计划，解释当前证据和下一步。</p></div>
+          <div class="react-node action"><h3>Action / Tool</h3><p>搜索、运行命令、读文件、调用 API。</p></div>
+          <div class="react-node environment"><h3>Environment</h3><p>网页、日志、脚本结果、文件变化进入下一轮推理。</p></div>
+          <div class="react-node state"><h3>State update</h3><p>保留进度、错误、约束和未决问题。</p></div>
+        </div>
+        <div class="io-arrow">↓</div>
+        <div class="io-card">
+          <h3>Output / Artifact</h3>
+          <p>交付回答、文件修改、分析结果或下一步计划。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">这一页内容定义 agent loop。口头说明这里的 ReAct 是 Reason + Act，不是 React 前端框架。</aside>
+</section>
+
+<section>
+  <div class="topline">
+    <div>
+      <p class="eyebrow">rules and memory</p>
+      <h2>真正的入口：把规则写成 agent-readable Markdown</h2>
+    </div>
+    </div>
+  <div class="memory-board">
+    <div class="rule-stack">
+      <div class="rule-card">
+        <h3><span class="code-chip">AGENTS.md</span><span class="code-chip">CLAUDE.md</span>同一种入口</h3>
+        <p>不管叫 Agent markdown 还是 Claude markdown，本质都是给 agent 的项目合同。</p>
+      </div>
+      <div class="rule-card">
+        <h3><span class="code-chip">Rules</span>项目边界</h3>
+        <p>研究完整性优先；用 python3；先验证路径和依赖；不要越过明确范围。</p>
+      </div>
+      <div class="rule-card">
+        <h3><span class="code-chip">Memory</span>跨轮上下文</h3>
+        <p>记住本轮决定：AI 例子要消费级；logo 不能被截断；每次改版都看 16:9 预览。</p>
+      </div>
+    </div>
+    <div>
+      <p class="big-claim">Agent 不是只靠 prompt 工作；它需要一个项目内的入口文件。</p>
+      <div class="point-list">
+        <div class="point"><span class="num">1</span><div><strong>名字不同</strong>AGENTS.md、CLAUDE.md、Agent.markdown 都是在做同一件事。</div></div>
+        <div class="point"><span class="num">2</span><div><strong>规则外置</strong>不要把纪律埋在聊天里，而是写进项目入口文件。</div></div>
+        <div class="point"><span class="num">3</span><div><strong>错误可审计</strong>如果它违背规则，我们能指出它违背了哪条项目合同。</div></div>
+      </div>
+      <div class="note-box" style="margin-top:0.7em;">翻译成研究语言：把“作者才知道的习惯”写成 agent-readable project contract。</div>
+    </div>
+  </div>
+  <aside class="notes">这一页先讲概念：AGENTS.md、CLAUDE.md、Agent markdown 不是两套机制，而是同一类项目入口文件；真正实用的第一步是把项目规则写成文件。下一页马上给自己的 AGENTS.md 例子。</aside>
+</section>
+
+<section>
+  <div class="topline">
+    <div>
+      <p class="eyebrow">local example</p>
+      <h2>例子：我们自己的 AGENTS.md 就是项目合同</h2>
+    </div>
+    </div>
+  <div class="agents-board">
+    <div class="agents-file">
+      <h3>AGENTS.md excerpt for this workspace</h3>
+<pre># AGENTS.md
+
+## Priorities
+- Optimize for research integrity, reproducibility,
+  traceability, and write-ready outputs.
+- Keep assumptions explicit.
+
+## Hard Rules
+- When Adrian asks to show or spot-check,
+  include visible content or command output.
+- Never change display or monitor settings.
+
+## Working Style
+- Stay within the explicit scope of the request.
+- Answer computable questions by inspecting files.
+- Verify names, paths, distributions, and encodings.
+
+## Environment
+- Use python3, not python.
+- Quote paths with spaces.
+- Never run heavy jobs directly on HPC login nodes.</pre>
+    </div>
+    <div class="agents-callouts">
+      <div class="agents-callout"><h3>优先级</h3><p>先保护研究完整性、可复现性和可交付性，而不是先追求快。</p></div>
+      <div class="agents-callout"><h3>硬边界</h3><p>哪些事绝对不能做，哪些输出必须给可见证据。</p></div>
+      <div class="agents-callout"><h3>工作方式</h3><p>先看文件和数据，再回答；不要靠印象猜路径和内容。</p></div>
+      <div class="agents-callout"><h3>运行环境</h3><p>把 python3、空格路径、HPC 登录节点这些坑提前写死。</p></div>
+      <div class="agents-callout"><h3>研究翻译</h3><p>这不是工程配置，而是把“作者才知道的项目纪律”外置给 agent。</p></div>
+    </div>
+  </div>
+  <aside class="notes">这里要把文件念出来，不要抽象讲。AGENTS.md 的意义是：把研究者的偏好、禁忌、环境坑、证据标准写成 agent 每次进入项目都能读到的合同。</aside>
+</section>
+
+<section>
+  <div class="topline">
+    <div>
+      <p class="eyebrow">practical entry</p>
+      <h2>今天就能做：让 agent 读一个研究文件夹</h2>
+    </div>
+    </div>
+  <div class="two wide-left">
+    <div style="display:grid; grid-template-rows:1fr 0.72fr; gap:0.52em; min-height:0;">
+      <figure class="shot">
+        <img src="slide-assets/horiuchi-replication-guide.png" alt="Replication Package Guide screenshot">
+        <figcaption class="caption">Yusaku Horiuchi: Replication Package Guide<small>research projects as readable packages</small></figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="slide-assets/santanna-claude-code-workflow.png" alt="Pedro Sant'Anna Claude Code workflow guide screenshot">
+        <figcaption class="caption">Pedro H. C. Sant'Anna: Claude Code academic workflow<small>papers, slides, and analysis workflow</small></figcaption>
+      </figure>
+    </div>
+    <div>
+      <p class="big-claim">最实用的第一步不是让 agent 写论文，而是让它先做只读体检。</p>
+      <div class="point-list">
+        <div class="point"><span class="num">1</span><div><strong>输入</strong>一个真实论文项目文件夹：数据、代码、草稿、图表、日志。</div></div>
+        <div class="point"><span class="num">2</span><div><strong>限制</strong>第一轮明确 read-only，不让它修改文件。</div></div>
+        <div class="point"><span class="num">3</span><div><strong>输出</strong>让它理解项目结构、生成路径、风险和下一步。</div></div>
+      </div>
+      <div class="note-box" style="margin-top:0.7em;">这不是文件整理技巧，而是把“只有作者懂的项目”转成 agent 可以读懂的研究对象。</div>
+    </div>
+  </div>
+  <aside class="notes">这是最实用的入口页。强调今天回去就能做。</aside>
+</section>
+
+<section>
+  <div class="topline">
+    <div>
+      <p class="eyebrow">first prompt</p>
+      <h2>一个可以直接复制的只读体检 prompt</h2>
+    </div>
+    </div>
+  <div class="two wide-right">
+    <div>
+      <p class="big-claim">First prompt 的目标不是直接产出结论，而是产出项目地图和风险清单。</p>
+      <div class="prompt" style="margin-top:0.7em;">
+        <div class="label"><span>可复制 first prompt</span><span>read-only</span></div>
+        <pre>Read this research project as a read-only research assistant.
+Do not modify files.
+
+Return:
+1. project map
+2. data-code-output crosswalk
+3. commands to regenerate key outputs
+4. uncertainty / risk list
+5. top 3 next actions</pre>
+      </div>
+      <div class="note-box warning" style="margin-top:0.7em;">这里的产物不是论文段落，而是项目理解：入口、依赖、证据链和风险。</div>
+    </div>
+    <figure class="shot">
+      <img src="slide-assets/horiuchi-replication-guide.png" alt="Replication Package Guide screenshot">
+      <figcaption class="caption">Replication Package Guide<small>public research workflow anchor</small></figcaption>
+    </figure>
+  </div>
+  <aside class="notes">不要讲 prompt engineering。讲为什么 read-only 和输出合同重要。</aside>
+</section>
+
+<section>
+  <div class="topline">
+    <div>
+      <p class="eyebrow">rules / workflow / skills</p>
+      <h2>规则、工作流、技能：让 agent 先别乱来</h2>
+      </div>
+    </div>
+  <div class="two">
+    <div>
+      <p class="big-claim">社科 agent 的第一步不是更自由，而是更有约束。</p>
+      <div class="point-list">
+        <div class="point"><span class="num">R</span><div><strong>规则层</strong>样本定义、变量命名、禁止操作、合作者约定。</div></div>
+        <div class="point"><span class="num">W</span><div><strong>工作流层</strong>文献、数据、模型、图表、写作之间如何交接。</div></div>
+        <div class="point"><span class="num">S</span><div><strong>技能层</strong>DID、survey、text analysis、IRT 等方法不只是 prompt，而是可复用流程。</div></div>
+      </div>
+      <div class="note-box" style="margin-top:0.7em;">约束不是限制能力，而是让能力可迁移、可复核、可交接。</div>
+    </div>
+    <div class="mosaic">
+      <figure class="shot">
+        <img src="slide-assets/academic-research-skills.png" alt="Academic Research Skills screenshot">
+        <figcaption class="caption">Academic Research Skills<small>skills layer</small></figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="slide-assets/awesome-econ-ai-stuff.png" alt="Awesome Econ AI Stuff screenshot">
+        <figcaption class="caption">discipline resources</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="slide-assets/horiuchi-replication-guide.png" alt="Replication Package Guide screenshot">
+        <figcaption class="caption">research standards</figcaption>
+      </figure>
+    </div>
+  </div>
+  <aside class="notes">不要讲 AGENTS.md 格式细节，讲“规则、流程、方法包”这三个功能位。</aside>
+</section>
+
+<section>
+  <div class="topline">
+    <div>
+      <p class="eyebrow">tools / knowledge / experiment / audit</p>
+      <h2>工具、知识、实验、审计：能做事，也能被追责</h2>
+      </div>
+  </div>
+  <div class="two wide-left">
+    <div class="grid-shots strip-grid compact-four">
+      <figure class="source-card">
+        <img src="slide-assets/claude-code-docs.png" alt="Claude Code docs">
+        <div class="source-text"><h3>Tools</h3><p>files, terminal, browser, data</p></div>
+      </figure>
+      <figure class="source-card">
+        <img src="slide-assets/deck-preview-08-llm-wiki.png" alt="LLM Wiki original workflow preview">
+        <div class="source-text"><h3>Knowledge</h3><p>compiled knowledge layer</p></div>
+      </figure>
+      <figure class="source-card">
+        <img src="slide-assets/deck-preview-09-autoresearch.png" alt="Auto Research original workflow preview">
+        <div class="source-text"><h3>Experiment</h3><p>search with logs</p></div>
+      </figure>
+      <figure class="source-card">
+        <img src="slide-assets/statsclaw-site.png" alt="StatsClaw screenshot">
+        <div class="source-text"><h3>Audit</h3><p>validation-aware workflow</p></div>
+      </figure>
+    </div>
+    <div>
+      <p class="big-claim">Agent 的行动能力和可信度必须一起设计。</p>
+      <div class="point-list">
+        <div class="point"><span class="num">T</span><div><strong>工具层</strong>让 agent 能读材料、跑代码、查数据库。</div></div>
+        <div class="point"><span class="num">K</span><div><strong>知识层</strong>让概念、理论、机制、变量有可维护结构。</div></div>
+        <div class="point"><span class="num">E</span><div><strong>实验层</strong>让探索、稳健性、替代规格留下轨迹。</div></div>
+        <div class="point"><span class="num">A</span><div><strong>审计层</strong>让 claim、代码、数据、输出能被复核。</div></div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">这里为 LLM Wiki 和 Auto Research 埋伏笔，但不要提前展开。</aside>
+</section>
+
+<section>
+  <div class="topline">
+    <div>
+      <p class="eyebrow">AI4SS translation</p>
+      <h2>AI4SS 的前沿：研究流程本身被基础设施化</h2>
+      </div>
+    </div>
+  <div class="two wide-left">
+    <div class="evidence-stack">
+      <div class="evidence-card">
+        <h3>StatsClaw</h3>
+        <p>把统计软件从“跑结果”推进到 validation-aware workflow：模型、诊断、错误和报告需要一起被检查。</p>
+        <div class="logo-row"><span class="logo-chip">statistical software</span><span class="logo-chip">validation</span></div>
+      </div>
+      <div class="evidence-card">
+        <h3>Academic Research Skills</h3>
+        <p>把研究流程拆成可复用技能：读文献、写作、审稿、修改，不再只是一次性 prompt。</p>
+        <div class="logo-row"><span class="logo-chip">skills</span><span class="logo-chip">workflow</span><span class="logo-chip">review</span></div>
+      </div>
+      <div class="evidence-card">
+        <h3>Awesome Econ AI Stuff</h3>
+        <p>学科资源开始围绕任务组织：工具、案例、技能、工作流，构成 agent 可读的入口。</p>
+        <div class="logo-row"><span class="logo-chip">discipline resources</span><span class="logo-chip">economics</span></div>
+      </div>
+    </div>
+    <div>
+      <p class="big-claim">AI4SS 的资产，不是某个模型，而是能被 agent 读懂的研究制度。</p>
+      <div class="point-list">
+        <div class="point"><span class="num">A</span><div><strong>方法变成技能</strong>DID、survey、text analysis、IRT 不再只是 prompt。</div></div>
+        <div class="point"><span class="num">B</span><div><strong>软件变成协作制度</strong>生成和验证分离，测试、文档、审计一起进入流程。</div></div>
+        <div class="point"><span class="num">C</span><div><strong>规范变成检查表</strong>replication package、claim status、figure/table crosswalk 可被 agent 检查。</div></div>
+      </div>
+      <div class="note-box" style="margin-top:0.7em;">翻译成社会科学语言：把隐性的研究流程写成 agent-readable artifacts。</div>
+    </div>
+  </div>
+  <aside class="notes">让社科听众看到这不是工程课，而是研究制度设计。</aside>
+</section>
+
+<section>
+  <div class="topline">
+    <div>
+      <p class="eyebrow">knowledge layer</p>
+      <h2>LLM Wiki：把杂乱语料整理成可维护 wiki</h2>
+      </div>
+    </div>
+  <div class="wiki-board">
+    <div class="raw-stack">
+      <div class="raw-card"><h3>PDF papers</h3><p>论文、报告、replication package，格式不一。</p></div>
+      <div class="raw-card"><h3>Web articles</h3><p>网页剪藏、博客、新闻、项目 README。</p></div>
+      <div class="raw-card"><h3>Book chapters</h3><p>章节笔记、人物、主题、情节线。</p></div>
+      <div class="raw-card"><h3>Meetings / Slack</h3><p>会议记录、聊天线程、客户访谈。</p></div>
+      <div class="raw-card"><h3>Loose notes</h3><p>临时想法、问题清单、待验证判断。</p></div>
+    </div>
+    <div class="pipeline-arrow">→</div>
+    <div class="wiki-stack">
+      <div class="wiki-card"><h3>Entity pages</h3><p>人物、组织、项目、数据集，各自有页面。</p></div>
+      <div class="wiki-card"><h3>Concept pages</h3><p>概念定义、边界、相近术语、争议。</p></div>
+      <div class="wiki-card"><h3>Topic synthesis</h3><p>把多个来源综合成一个持续更新的解释。</p></div>
+      <div class="wiki-card"><h3>index.md</h3><p>目录、摘要、链接，让 agent 先导航再阅读。</p></div>
+      <div class="wiki-card"><h3>log.md</h3><p>记录 ingest、query、lint，保留知识库演化时间线。</p></div>
+    </div>
+  </div>
+  <aside class="notes">这页就是黑板。左边是杂乱语料，右边是整理后的 markdown wiki。重点不是 RAG 能不能搜，而是 LLM 把散乱材料整理成 entity pages、concept pages、topic synthesis、index 和 log。</aside>
+</section>
+
+<section>
+  <div class="topline">
+    <div>
+      <p class="eyebrow">LLM Wiki ingest</p>
+      <h2>新语料怎么被吸收：更新多处页面，而不是丢进索引</h2>
+      </div>
+    </div>
+  <div class="ingest-board">
+    <div class="raw-stack">
+      <div class="raw-card"><h3>New source</h3><p>一篇新论文 / 一个访谈 / 一段会议记录进入 raw/。</p></div>
+      <div class="raw-card"><h3>Claims</h3><p>有哪些新判断？支持、反驳、还是补充？</p></div>
+      <div class="raw-card"><h3>Entities</h3><p>涉及哪些人物、组织、案例、数据集？</p></div>
+      <div class="raw-card"><h3>Concepts</h3><p>改变了哪些定义、分类或机制链条？</p></div>
+      <div class="raw-card"><h3>Conflicts</h3><p>有没有和旧页面矛盾、过时或需要标注不确定？</p></div>
+    </div>
+    <div class="ingest-ops">
+      <div class="wiki-card"><h3>1. read source</h3><p>先读原文，保留来源路径和引用锚点。</p></div>
+      <div class="wiki-card"><h3>2. write source page</h3><p>生成摘要、关键证据、限制和可追问问题。</p></div>
+      <div class="wiki-card"><h3>3. update linked pages</h3><p>同步 entity、concept、topic synthesis。</p></div>
+      <div class="wiki-card"><h3>4. flag contradictions</h3><p>标出新旧说法冲突、过时判断和待复核 claim。</p></div>
+      <div class="wiki-card"><h3>5. append log</h3><p>在 log.md 记录这次 ingest 触碰了哪些页面。</p></div>
+    </div>
+    <div class="diff-card">
+      <h3>What changes in the wiki</h3>
+<pre><span class="plus-line">+ raw/paper-2026.md</span>
+ sources/paper-2026-summary.md
+
+ entities/NotebookLM.md
+ concepts/RAG.md
+ concepts/knowledge-compilation.md
+ topics/personal-knowledge-base.md
+
+ index.md
+ log.md
+
+ <span class="warn-line">FLAG: new source challenges old claim
+ FLAG: add follow-up question</span></pre>
+    </div>
+  </div>
+  <aside class="notes">这页讲“新语料怎么吸收”。不是把 PDF 丢进向量库，而是生成 source page，更新已有 entity/concept/topic 页面，标注矛盾，最后写 index 和 log。这样听众不用靠想象。</aside>
+</section>
+
+<section>
+  <div class="topline">
+    <div>
+      <p class="eyebrow">original examples</p>
+      <h2>LLM Wiki 原作者例子：同一套机制可以跨场景</h2>
+      </div>
+    </div>
+  <div class="two footer-clear">
+    <div class="example-stack four">
+      <div class="example-card"><h3>Personal / deep dives</h3><p>目标、健康、心理、自我改进；竞争分析、尽调、旅行规划、课程笔记。</p></div>
+      <div class="example-card"><h3>Research topic</h3><p>围绕一个主题读几周或几个月，逐步形成综合 wiki 和 evolving thesis。</p></div>
+      <div class="example-card"><h3>Reading a book</h3><p>逐章沉淀人物、主题、情节线和关系，像个人版 Tolkien Gateway。</p></div>
+      <div class="example-card"><h3>Business / team</h3><p>Slack、会议记录、项目文档、客户访谈进入内部 wiki，由 LLM 维护更新。</p></div>
+    </div>
+    <div>
+      <p class="big-claim">这些例子共同说明：LLM Wiki 的对象不是“文档集合”，而是一个会持续变好的知识系统。</p>
+      <div class="point-list">
+        <div class="point"><span class="num">H</span><div><strong>Human</strong>选择来源、提出问题、判断意义。</div></div>
+        <div class="point"><span class="num">L</span><div><strong>LLM</strong>维护链接、摘要、索引、日志和一致性。</div></div>
+        <div class="point"><span class="num">W</span><div><strong>Wiki</strong>让每次探索变成可回看的页面，而不是消失在聊天里。</div></div>
+      </div>
+      <div class="note-box" style="margin-top:0.7em;">你讲这一页时不用解释技术细节，只要问：什么东西值得长期积累？答案就是 wiki 的边界。</div>
+    </div>
+  </div>
+  <aside class="notes">这一页把原作者例子单独放出来，不要挤在机制页里。目的就是让听众知道这不是只给学术研究用，而是一种把长期知识积累交给 LLM 维护的通用模式。</aside>
+</section>
+
+<section>
+  <div class="topline">
+    <div>
+      <p class="eyebrow">experiment layer</p>
+      <h2>Auto Research：先看原始优化图</h2>
+      </div>
+    </div>
+  <div class="two wide-right footer-clear">
+    <div>
+      <p class="big-claim">这张图才是 Auto Research 的入口：灰点是被丢弃的尝试，绿点是被保留的改进，绿线是 running best。</p>
+      <div class="point-list">
+        <div class="point"><span class="num">83</span><div><strong>experiments</strong>夜里自动跑一串尝试，而不是一次 prompt。</div></div>
+        <div class="point"><span class="num">15</span><div><strong>kept improvements</strong>只有确实改进验证指标的 patch 被留下。</div></div>
+        <div class="point"><span class="num">↓</span><div><strong>validation BPB</strong>纵轴越低越好，目标函数非常明确。</div></div>
+      </div>
+      <div class="note-box" style="margin-top:0.7em;">思想方式：不是让 agent 写一篇论文，而是让 agent 在一个受约束的搜索空间里做 hill-climbing，并留下每一步证据。</div>
+    </div>
+    <figure class="progress-shot">
+      <img src="slide-assets/karpathy-autoresearch-progress.png" alt="Karpathy Auto Research progress plot">
+      <figcaption class="plain-caption">Original progress plot from karpathy/autoresearch: discarded trials, kept improvements, and running best.</figcaption>
+    </figure>
+  </div>
+  <aside class="notes">这一页必须先讲图。83 次实验、15 次保留，灰点丢弃、绿点保留，绿色阶梯线是 running best。它把“研究”具体化为一个有目标函数、有保留规则、有轨迹的优化过程。</aside>
+</section>
+
+<section>
+  <div class="topline">
+    <div>
+      <p class="eyebrow">Auto Research loop</p>
+      <h2>Auto Research：伪代码和循环比概念更清楚</h2>
+      </div>
+    </div>
+  <div class="two footer-clear">
+    <div class="pseudo-card">
+      <h3>Overnight experiment loop</h3>
+<pre>best = baseline(train.py)
+for experiment in overnight:
+    patch = agent.propose(program.md, logs)
+    result = train(patch, budget="5 min")
+    score = evaluate(result, metric="val_bpb")
+
+    if score &lt; best.score:
+        keep(patch)
+        best = (patch, score)
+    else:
+        discard(patch)
+
+    log(experiment, patch, score, decision)</pre>
+    </div>
+    <div class="auto-loop-panel simple">
+      <div class="cycle-diagram">
+        <svg viewBox="0 0 600 410" aria-hidden="true">
+          <defs>
+            <marker id="cycle-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#2563eb"></path>
+            </marker>
+          </defs>
+          <path class="cycle-path" marker-end="url(#cycle-arrow)" d="M300 86 C430 74 512 104 510 166"></path>
+          <path class="cycle-path" marker-end="url(#cycle-arrow)" d="M510 228 C514 284 432 332 365 332"></path>
+          <path class="cycle-path" marker-end="url(#cycle-arrow)" d="M235 332 C132 332 88 287 90 228"></path>
+          <path class="cycle-path" marker-end="url(#cycle-arrow)" d="M90 166 C88 108 170 74 300 86"></path>
+        </svg>
+        <div class="cycle-core"><div><strong>running best</strong><small>日志保存每次尝试；只有指标改善才进入当前最好版本</small></div></div>
+        <div class="cycle-node program"><h3><span class="cycle-step">1</span>program.md</h3><p>人写研究组织规则</p></div>
+        <div class="cycle-node propose"><h3><span class="cycle-step">2</span>propose patch</h3><p>agent 选择一次改动</p></div>
+        <div class="cycle-node edit"><h3><span class="cycle-step">3</span>edit train.py</h3><p>只改核心训练文件</p></div>
+        <div class="cycle-node train"><h3><span class="cycle-step">4</span>train 5 min</h3><p>固定预算跑实验</p></div>
+        <div class="cycle-node eval"><h3><span class="cycle-step">5</span>eval val_bpb</h3><p>指标更低才算进步</p></div>
+        <div class="cycle-node decision"><h3><span class="cycle-step">6</span>keep / discard</h3><p>更新 best 和日志，回到下一轮</p></div>
+      </div>
+      <div class="note-box warning">关键不在“自动”，而在把搜索空间、预算、指标和日志设计成一个可复核的研究制度。</div>
+    </div>
+  </div>
+  <aside class="notes">这一页用伪代码讲清楚循环：agent 根据 program.md 和日志提出 patch，改 train.py，训练五分钟，用 val_bpb 评估，改进就 keep，不改进就 discard，然后写日志。右侧循环图和 repo 结构把机制具体化。</aside>
+</section>
+
+<section>
+  <div class="topline">
+    <div>
+      <p class="eyebrow">repo anatomy</p>
+      <h2>Auto Research 的 repo 结构：把自由度关进盒子</h2>
+      </div>
+    </div>
+  <div class="two footer-clear">
+    <div class="diff-card">
+      <h3>Repo as a research system</h3>
+<pre>prepare.py
+  fixed constants, data prep, tokenizer
+
+train.py
+  agent edits model / optimizer / loop
+
+program.md
+  human-written research org code
+
+metric
+  val_bpb: lower is better
+
+progress.png
+  audit trail of discarded / kept trials</pre>
+    </div>
+    <div class="example-stack">
+      <div class="example-card"><h3>Fixed substrate</h3><p>数据准备和评估工具固定，否则每次实验不可比。</p></div>
+      <div class="example-card"><h3>Editable core</h3><p>只开放 train.py，让 agent 有自由度，但 diff 仍可审查。</p></div>
+      <div class="example-card"><h3>Research org code</h3><p>program.md 不是提示词，而是人类迭代的组织规则。</p></div>
+      <div class="example-card"><h3>Comparable metric</h3><p>val_bpb 把“好一点”落成可比较的目标函数。</p></div>
+      <div class="example-card"><h3>Visible audit trail</h3><p>progress 图让失败、保留和 running best 一眼可见。</p></div>
+    </div>
+  </div>
+  <aside class="notes">这一页把 repo 结构当成板书讲。prepare.py 固定，train.py 可改，program.md 是研究组织代码，val_bpb 是目标函数，progress.png 是审计轨迹。这样听众能看到“制度”具体写在哪里。</aside>
+</section>
+
+<section>
+  <div class="topline">
+    <div>
+      <p class="eyebrow">closing lift</p>
+      <h2>社会科学不是 AI 自动化的对象，而是 agent system 的设计语言</h2>
+      </div>
+    </div>
+  <div class="two">
+    <div>
+      <p class="big-claim">Agent systems 里会有异质行动者、网络依赖、策略互动、制度约束、分布不稳定。这些正是社会科学长期研究的问题。</p>
+      <div class="point-list">
+        <div class="point"><span class="num">1</span><div><strong>研究流程要可执行</strong>让项目从“只有作者懂”变成 agent 可以读。</div></div>
+        <div class="point"><span class="num">2</span><div><strong>研究证据要可审计</strong>claim、代码、数据、图表之间必须能对上。</div></div>
+        <div class="point"><span class="num">3</span><div><strong>研究理论要进入系统设计</strong>社会科学可以为 agent systems 提供制度语言。</div></div>
+      </div>
+      <div class="note-box warning" style="margin-top:0.7em;">社会科学研究者不是 AI 革命的旁观者；我们有机会把自己的理论和方法，写进下一代 agent systems 的制度设计里。</div>
+    </div>
+    <div class="mosaic">
+      <figure class="shot">
+        <img src="slide-assets/horiuchi-replication-guide.png" alt="Replication Package Guide screenshot">
+        <figcaption class="caption">Executable standards</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="slide-assets/statsclaw-site.png" alt="StatsClaw screenshot">
+        <figcaption class="caption">Validation</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="slide-assets/deck-preview-08-llm-wiki.png" alt="LLM Wiki original workflow preview">
+        <figcaption class="caption">Knowledge layer</figcaption>
+      </figure>
+    </div>
+  </div>
+  <aside class="notes">最后升维，回到社会科学自身的位置。不要以风险免责声明收尾。</aside>
+</section>
+
+<section>
+  <div class="topline">
+    <div>
+      <p class="eyebrow">contact</p>
+      <h2>谢谢</h2>
+    </div>
+  </div>
+  <p class="big-claim">更多资料和示例会持续更新，欢迎关注：</p>
+  <p><a href="https://github.com/SiyaoZheng" target="_blank" rel="noopener">github.com/SiyaoZheng</a></p>
+  <p><a href="https://siyaozheng.github.io" target="_blank" rel="noopener">siyaozheng.github.io</a></p>
+  <aside class="notes">最后给出 GitHub 链接，便于听众后续继续浏览 slide 源码与补充材料。</aside>
+</section>
+
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    width: 1600,
+    height: 900,
+    margin: 0.02,
+    controls: false,
+    progress: true,
+    center: false,
+    plugins: [ RevealNotes ]
+  });
+</script>
+</body>
+</html>
