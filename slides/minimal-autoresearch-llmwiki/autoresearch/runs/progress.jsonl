@@ -1,0 +1,12 @@
+{"iter": 1, "patch_id": 1, "score": 3.6094, "decision": "keep", "best_score": 3.6094, "runtime_seconds": 0.1251, "expected_gain": 0.3541, "noise": -0.1635}
+{"iter": 2, "patch_id": 2, "score": 3.6227, "decision": "discard", "best_score": 3.6094, "runtime_seconds": 0.1251, "expected_gain": 0.0905, "noise": 0.0868}
+{"iter": 3, "patch_id": 3, "score": 3.5309, "decision": "keep", "best_score": 3.5309, "runtime_seconds": 0.1235, "expected_gain": 0.3347, "noise": -0.0656}
+{"iter": 4, "patch_id": 4, "score": 3.3317, "decision": "keep", "best_score": 3.3317, "runtime_seconds": 0.125, "expected_gain": 0.3785, "noise": 0.0898}
+{"iter": 5, "patch_id": 5, "score": 3.5391, "decision": "discard", "best_score": 3.3317, "runtime_seconds": 0.1202, "expected_gain": 0.1255, "noise": 0.1354}
+{"iter": 6, "patch_id": 6, "score": 3.6702, "decision": "discard", "best_score": 3.3317, "runtime_seconds": 0.123, "expected_gain": 0.2237, "noise": -0.0939}
+{"iter": 7, "patch_id": 7, "score": 3.8884, "decision": "discard", "best_score": 3.3317, "runtime_seconds": 0.122, "expected_gain": 0.0111, "noise": -0.0995}
+{"iter": 8, "patch_id": 8, "score": 3.7118, "decision": "discard", "best_score": 3.3317, "runtime_seconds": 0.1202, "expected_gain": 0.1135, "noise": -0.0253}
+{"iter": 9, "patch_id": 9, "score": 3.8594, "decision": "discard", "best_score": 3.3317, "runtime_seconds": 0.1217, "expected_gain": 0.115, "noise": -0.1744}
+{"iter": 10, "patch_id": 10, "score": 3.7017, "decision": "discard", "best_score": 3.3317, "runtime_seconds": 0.1227, "expected_gain": 0.0646, "noise": 0.0337}
+{"iter": 11, "patch_id": 11, "score": 3.6392, "decision": "discard", "best_score": 3.3317, "runtime_seconds": 0.1243, "expected_gain": 0.1176, "noise": 0.0432}
+{"iter": 12, "patch_id": 12, "score": 3.5075, "decision": "discard", "best_score": 3.3317, "runtime_seconds": 0.1216, "expected_gain": 0.2456, "noise": 0.0469}

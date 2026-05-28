@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoResearch 最小化示例</title>
+  <meta name="description" content="AutoResearch 的最小化实现与本地运行产物。">
+  <style>
+    :root {
+      --serif: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'STSong', Georgia, serif;
+      --mono:  'JetBrains Mono', 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+      --fg: #0a0a0a;
+      --ink: #1a1a1a;
+      --muted: #6b6b6b;
+      --rule: #e6e6e6;
+      --accent: #1e3a8a;
+      --measure: 720px;
+      --gutter: 1.5rem;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #fff; color: var(--ink); font-family: var(--serif); line-height: 1.82; }
+    .wrap { max-width: var(--measure); margin: 0 auto; padding: 0 var(--gutter); }
+    .top { padding: 2.4rem 0 1.2rem; border-bottom: 1px solid var(--rule); }
+    .mono { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #8c8c8c; margin: 0 0 0.9rem; }
+    h1 { margin: 0 0 0.6rem; }
+    p { margin-top: 0; color: var(--muted); }
+    .list { margin: 1.2rem 0 0; padding: 0; list-style: none; border-top: 1px solid var(--rule); }
+    .list li { padding: 0.7rem 0; border-bottom: 1px solid var(--rule); }
+    a { color: var(--accent); text-underline-offset: 2px; }
+    .note { margin: 1rem 0 0; color: #888; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <p class="mono">AutoResearch</p>
+      <h1>最小化 AutoResearch 示例</h1>
+      <p>一个最小化的 “propose → train → evaluate → keep/discard” 循环实现，产物可直接作为讲课可视化材料。</p>
+    </div>
+    <ul class="list">
+      <li><a href="README.md">README</a></li>
+      <li><a href="main.py">main.py</a>：实验循环</li>
+      <li><a href="train.py">train.py</a>：模拟训练评分过程</li>
+      <li><a href="prepare.py">prepare.py</a>：配置项</li>
+      <li><a href="program.md">program.md</a>：实验说明</li>
+      <li><a href="runs/best.json">runs/best.json</a>：当前最佳记录</li>
+      <li><a href="runs/progress.csv">runs/progress.csv</a>：表格化执行记录</li>
+      <li><a href="runs/progress.jsonl">runs/progress.jsonl</a>：逐条执行记录</li>
+    </ul>
+    <p class="note">本地运行命令：python3 main.py --iterations 12 --out runs</p>
+  </div>
+</body>
+</html>

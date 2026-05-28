@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Wiki 最小化示例</title>
+  <meta name="description" content="LLM Wiki 最小化实现与本地知识页增量更新脚本。">
+  <style>
+    :root {
+      --serif: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'STSong', Georgia, serif;
+      --mono:  'JetBrains Mono', 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+      --fg: #0a0a0a;
+      --ink: #1a1a1a;
+      --muted: #6b6b6b;
+      --rule: #e6e6e6;
+      --accent: #1e3a8a;
+      --measure: 720px;
+      --gutter: 1.5rem;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #fff; color: var(--ink); font-family: var(--serif); line-height: 1.82; }
+    .wrap { max-width: var(--measure); margin: 0 auto; padding: 0 var(--gutter); }
+    .top { padding: 2.4rem 0 1.2rem; border-bottom: 1px solid var(--rule); }
+    .mono { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #8c8c8c; margin: 0 0 0.9rem; }
+    h1 { margin: 0 0 0.6rem; }
+    p { margin-top: 0; color: var(--muted); }
+    .list { margin: 1.2rem 0 0; padding: 0; list-style: none; border-top: 1px solid var(--rule); }
+    .list li { padding: 0.7rem 0; border-bottom: 1px solid var(--rule); }
+    a { color: var(--accent); text-underline-offset: 2px; }
+    .note { margin: 1rem 0 0; color: #888; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <p class="mono">LLM Wiki</p>
+      <h1>最小化 LLM Wiki 示例</h1>
+      <p>一个最小化 ingest 管道：导入新语料后更新 source / entity / concept / topic 页面，并同步 index 与 log。</p>
+    </div>
+    <ul class="list">
+      <li><a href="README.md">README</a></li>
+      <li><a href="ingest.py">ingest.py</a>：增量写入脚本</li>
+      <li><a href="program.md">program.md</a>：流程说明</li>
+      <li><a href="index.md">index.md</a>：索引页</li>
+      <li><a href="log.md">log.md</a>：运行日志</li>
+      <li><a href="sources/demo-note.md">sources/demo-note.md</a>（示例源文件）</li>
+      <li><a href="entities/agent.md">entities/agent.md</a> / <a href="entities/wiki.md">entities/wiki.md</a></li>
+      <li><a href="concepts/agent.md">concepts/agent.md</a> / <a href="concepts/pages.md">concepts/pages.md</a> 等</li>
+      <li><a href="topics/topic-demo-note.md">topics/topic-demo-note.md</a></li>
+    </ul>
+    <p class="note">本地运行命令：python3 ingest.py --source raw/demo-note.md</p>
+  </div>
+</body>
+</html>

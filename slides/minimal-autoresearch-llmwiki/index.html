@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoResearch 与 LLM Wiki 最小化示例</title>
+  <meta name="description" content="AutoResearch 与 LLM Wiki 的最小化实现示例与部署产物。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --serif: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'STSong', Georgia, serif;
+      --mono:  'JetBrains Mono', 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+      --bg: #ffffff;
+      --fg: #0a0a0a;
+      --ink: #1a1a1a;
+      --muted: #6b6b6b;
+      --rule: #e6e6e6;
+      --accent: #1e3a8a;
+      --rule-2: #c8c8c8;
+      --measure: 720px;
+      --gutter: 1.5rem;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--serif);
+      line-height: 1.8;
+      letter-spacing: 0.01em;
+    }
+    a { color: var(--accent); text-underline-offset: 2px; }
+    .wrap { max-width: var(--measure); margin: 0 auto; padding: 0 var(--gutter); }
+    .head {
+      padding: 2.5rem 0 1.5rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #8c8c8c;
+      margin: 0 0 0.9rem;
+    }
+    h1 { font-size: 2rem; margin: 0 0 0.6rem; color: var(--fg); }
+    .lead { margin: 0 0 1.1rem; color: var(--muted); }
+    .group { border-top: 1px solid var(--rule); padding: 1.3rem 0; }
+    .title { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; color: #9a9a9a; margin: 0 0 0.8rem; text-transform: uppercase; }
+    .item {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.2rem;
+      padding: 0.55rem 0;
+      border-top: 1px solid var(--rule);
+    }
+    .item:first-child { border-top: 0; padding-top: 0; }
+    .item strong { font-family: var(--serif); font-weight: 500; }
+    .item p { margin: 0; color: var(--muted); }
+    .small { margin-top: 1rem; color: #8f8f8f; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
+    footer { margin-top: 2rem; border-top: 1px solid var(--rule); padding: 1rem 0 2.6rem; font-family: var(--mono); font-size: 11px; color: #9a9a9a; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="head">
+      <p class="eyebrow">Minimal AI Infrastructure Demos</p>
+      <h1>AutoResearch 与 LLM Wiki 最小化示例</h1>
+      <p class="lead">本页面汇总两套最小化示例源码与本地运行产物：可直接在本机运行，也可作为课程讲解的配套材料。</p>
+    </header>
+
+    <section class="group">
+      <p class="title">01 · AutoResearch（本地最小化训练循环）</p>
+      <div class="item">
+        <p><strong><a href="autoresearch/">进入目录</a></strong>（含运行脚本、配置与运行产物）</p>
+      </div>
+      <div class="item">
+        <p><strong>代码</strong>：<a href="autoresearch/main.py">main.py</a> / <a href="autoresearch/train.py">train.py</a> / <a href="autoresearch/prepare.py">prepare.py</a></p>
+      </div>
+      <div class="item">
+        <p><strong>产物</strong>：<a href="autoresearch/runs/progress.jsonl">progress.jsonl</a> / <a href="autoresearch/runs/progress.csv">progress.csv</a> / <a href="autoresearch/runs/best.json">best.json</a></p>
+      </div>
+      <div class="item">
+        <p><strong>说明</strong>：<a href="autoresearch/README.md">README</a> / <a href="autoresearch/program.md">最小任务说明</a></p>
+      </div>
+    </section>
+
+    <section class="group">
+      <p class="title">02 · LLM Wiki（最小化知识页构建）</p>
+      <div class="item">
+        <p><strong><a href="llmwiki/">进入目录</a></strong>（含 ingest 脚本与示例页面）</p>
+      </div>
+      <div class="item">
+        <p><strong>代码</strong>：<a href="llmwiki/ingest.py">ingest.py</a></p>
+      </div>
+      <div class="item">
+        <p><strong>页面</strong>：<a href="llmwiki/index.md">index.md</a> / <a href="llmwiki/topics/topic-demo-note.md">topic-demo-note.md</a> / <a href="llmwiki/sources/demo-note.md">sources/demo-note.md</a> / <a href="llmwiki/log.md">log.md</a></p>
+      </div>
+      <div class="item">
+        <p><strong>说明</strong>：<a href="llmwiki/README.md">README</a> / <a href="llmwiki/program.md">最小任务说明</a></p>
+      </div>
+    </section>
+
+    <p class="small">更新时间：按你本地仓库最新运行结果同步。</p>
+    <footer>© Siyao Zheng</footer>
+  </div>
+</body>
+</html>
