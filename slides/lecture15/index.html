@@ -1531,6 +1531,52 @@
       color: var(--gray-600);
     }
 
+
+    .paper-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.42em;
+      margin-top: 0.5em;
+    }
+    .paper-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .paper-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+    .paper-card {
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      background: #fff;
+      padding: 0.48em 0.56em;
+      text-align: left;
+      min-height: 112px;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.045);
+    }
+    .paper-card .paper-tag {
+      display: inline-block;
+      border-radius: 999px;
+      border: 1px solid #bfdbfe;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 0.36em;
+      font-weight: 820;
+      padding: 0.1em 0.42em;
+      margin-bottom: 0.28em;
+    }
+    .paper-card .paper-title {
+      font-size: 0.48em;
+      line-height: 1.28;
+      color: var(--gray-800);
+      font-weight: 820;
+      margin-bottom: 0.24em;
+    }
+    .paper-card .paper-note {
+      font-size: 0.38em;
+      line-height: 1.35;
+      color: var(--gray-600);
+    }
+    .paper-card.warn { background: var(--orange-light); border-color: #fed7aa; }
+    .paper-card.warn .paper-tag { background: #fff; border-color: #fed7aa; color: #c2410c; }
+    .paper-card.red { background: var(--red-light); border-color: #fecaca; }
+    .paper-card.red .paper-tag { background: #fff; border-color: #fecaca; color: #991b1b; }
+
     @media (max-width: 720px) and (orientation: portrait) {
       .reveal { --r-main-font-size: 34px; }
       .reveal h2 { font-size: 1.36em; line-height: 1.18; margin-bottom: 0.28em; }
@@ -1557,6 +1603,9 @@
       .case-ribbon,
       .case-atlas,
       .project-board,
+      .paper-grid,
+      .paper-grid.cols-2,
+      .paper-grid.cols-4,
       .swimlane {
         grid-template-columns: repeat(2, 1fr) !important;
       }
@@ -1683,18 +1732,23 @@
 
 <!-- Slide 5 -->
 <section>
-  <h2>两小时的五个问题</h2>
+  <h2>两小时的五个问题，也有八根骨头</h2>
   <div class="case-ribbon">
-    <div class="ribbon-card"><div class="time">8-25</div><div class="hook">谁还能证明自己是人写的？</div><div class="case">平台误判生活建议；第九巡回法院 AI 假判例。</div></div>
-    <div class="ribbon-card"><div class="time">25-45</div><div class="hook">AI 替你证明，证据还可信吗？</div><div class="case">AI Overview 错答；AI 假病历；C2PA 与水印冲突。</div></div>
-    <div class="ribbon-card"><div class="time">45-65</div><div class="hook">假的图像为什么会有真伤害？</div><div class="case">微信群头像恶搞；真脸假声；AI 立交桥谣言。</div></div>
-    <div class="ribbon-card"><div class="time">70-95</div><div class="hook">安慰什么时候变成利用？</div><div class="case">孙子拟声诈骗；AI 霸总；公众人物 AI 恋人。</div></div>
-    <div class="ribbon-card"><div class="time">95-113</div><div class="hook">人在环是不是人在负责？</div><div class="case">枪支识别漏检；双方律师 AI 幻觉；审核员盖章。</div></div>
+    <div class="ribbon-card"><div class="time">写作</div><div class="hook">谁还能证明自己是人写的？</div><div class="case">Kay/Mollema：生成式认识不正义；Sahebi：披露悖论。</div></div>
+    <div class="ribbon-card"><div class="time">证据</div><div class="hook">AI 替你证明，证据还可信吗？</div><div class="case">Nemecek/Sengupta/Feng：来源、认证与真实性债务。</div></div>
+    <div class="ribbon-card"><div class="time">身体</div><div class="hook">假的图像为什么会有真伤害？</div><div class="case">Klenk/Bhardwaj：体验即真实与主动同意。</div></div>
+    <div class="ribbon-card"><div class="time">亲密</div><div class="hook">安慰什么时候变成利用？</div><div class="case">Ciriello/De Freitas：陪伴有效，但不是孤独万能药。</div></div>
+    <div class="ribbon-card"><div class="time">制度</div><div class="hook">人在环是不是人在负责？</div><div class="case">Siebert/Di Santi：控制、权限与认知委托。</div></div>
   </div>
-  <div class="case-atlas">
-    <div class="atlas-card contain"><img src="images/ninth_circuit_order-01.png" alt="法院 order"><div class="label">写作与署名</div><div class="text">签名把生成内容接入法律责任链。</div></div>
-    <div class="atlas-card"><img src="images/ai_fake_medical_records_sina.jpg" alt="AI 假病历"><div class="label">证据与来路</div><div class="text">正式外观不能替代可核验来源。</div></div>
-    <div class="atlas-card"><img src="images/ai_bazong_screenshot.jpg" alt="AI 霸总"><div class="label">亲密与操控</div><div class="text">顺耳表达也可能捕获脆弱性。</div></div>
+  <div class="paper-grid cols-4">
+    <div class="paper-card"><div class="paper-tag">1 责任痕迹</div><div class="paper-title">Lin 2024; Smith et al. 2025</div><div class="paper-note">不是背原则，而是出事后能否回放谁核验、谁暂停、谁签字。</div></div>
+    <div class="paper-card"><div class="paper-tag">2 认识不正义</div><div class="paper-title">Kay et al. 2024; Mollema 2025</div><div class="paper-note">AI 会重新分配“谁的话像真话”。</div></div>
+    <div class="paper-card"><div class="paper-tag">3 解释资源</div><div class="paper-title">Quaresmini 2026; Kommers 2026</div><div class="paper-note">公平也包括谁拥有理解处境的语言。</div></div>
+    <div class="paper-card"><div class="paper-tag">4 体验即真实</div><div class="paper-title">Klenk 2025; Ciriello 2026</div><div class="paper-note">AI 不必真有情感，也能制造真实依赖和伤害。</div></div>
+    <div class="paper-card warn"><div class="paper-tag">5 操控</div><div class="paper-title">Klenk 2025; Chandra et al. 2026</div><div class="paper-note">不撒谎，也能靠选择性真话带偏判断。</div></div>
+    <div class="paper-card"><div class="paper-tag">6 披露悖论</div><div class="paper-title">Sahebi &amp; Formosa 2025/2026</div><div class="paper-note">透明可能惩罚诚实者，反而奖励隐瞒。</div></div>
+    <div class="paper-card"><div class="paper-tag">7 证据链</div><div class="paper-title">Chrysidis; Nemecek; Sengupta</div><div class="paper-note">真实性是基础设施，不是肉眼鉴别游戏。</div></div>
+    <div class="paper-card"><div class="paper-tag">8 人类控制</div><div class="paper-title">Siebert 2021; Di Santi 2026</div><div class="paper-note">人在环要能理解、反对、暂停，而不是盖章。</div></div>
   </div>
 </section>
 
@@ -1745,14 +1799,13 @@
     </div>
     <div class="story-ladder">
       <div class="ladder-step"><div class="step-label">制度原本要做什么</div><div class="step-body">治理未标识 AIGC，保护社区读者知情权，防止机器内容污染公共讨论。</div></div>
-      <div class="ladder-step warn"><div class="step-label">失灵在哪里</div><div class="step-body">即时生活文字很难留下草稿、源文件、创作过程；普通用户没有能力反向审计检测器。</div></div>
-      <div class="ladder-step"><div class="step-label">课堂结论</div><div class="step-body">伦理不是“我们有审核”，而是被处罚者能否知道为什么、找谁复核、怎样纠正。</div></div>
+      <div class="ladder-step warn"><div class="step-label">披露悖论</div><div class="step-body">Sahebi &amp; Formosa 说，AI 参与沟通会制造两难：不披露会误导，披露又可能让真实表达被整体降信任。</div></div>
+      <div class="ladder-step"><div class="step-label">课堂结论</div><div class="step-body">透明不是贴标签就完事；还要有判断依据、申诉入口、纠错记录和被误伤者的救济。</div></div>
     </div>
   </div>
-  <div class="evidence-strip three">
-    <div class="evidence-thumb"><img src="images/aigc_platform_case_beijingip.jpg" alt="平台 AIGC 误判报道配图"><div class="cap">处罚事实</div></div>
-    <div class="evidence-thumb contain"><img src="images/ninth_circuit_order-01.png" alt="法院文书"><div class="cap">签名责任</div></div>
-    <div class="evidence-thumb"><img src="images/google_ai_overview_court.png" alt="AI Overview 案"><div class="cap">平台发言责任</div></div>
+  <div class="paper-grid cols-2">
+    <div class="paper-card"><div class="paper-tag">AI-mediated communication dilemma</div><div class="paper-title">Sahebi &amp; Formosa 2025</div><div class="paper-note">面对可能由 AI 协助的表达，轻信和一概不信都会伤害知识交流。</div></div>
+    <div class="paper-card warn"><div class="paper-tag">AI penalty / disclosure paradox</div><div class="paper-title">Sahebi, Formosa &amp; Bankins 2026</div><div class="paper-note">披露 AI 使用可能降低信任，于是制度必须避免奖励隐瞒。</div></div>
   </div>
 </section>
 
@@ -1765,7 +1818,11 @@
     <div class="atlas-card"><img src="images/google_ai_overview_court.png" alt="Google AI Overview"><div class="label">被搜索者</div><div class="text">AI 摘要把负面标签放进平台自己的答案。</div></div>
     <div class="atlas-card contain"><img src="images/ninth_circuit_order-01.png" alt="第九巡回法院 order"><div class="label">制度文件</div><div class="text">不存在的判例一旦被签名，就进入法院信任链。</div></div>
   </div>
-  <div class="visual-note">理论抓手：可信度不是自然资源，是被平台、学校、法院、搜索界面共同分配出来的。</div>
+  <div class="paper-grid">
+    <div class="paper-card"><div class="paper-tag">Epistemic Injustice</div><div class="paper-title">Kay, Kasirzadeh &amp; Mohamed 2024</div><div class="paper-note">生成式 AI 会放大、操控或遮蔽证言，也会改变人们能否获得解释资源。</div></div>
+    <div class="paper-card"><div class="paper-tag">Hermeneutical Erasure</div><div class="paper-title">Mollema 2025</div><div class="paper-note">LLM 的“中立声线”可能抹平本地、少数、非西方解释方式。</div></div>
+    <div class="paper-card"><div class="paper-tag">Reference Monism</div><div class="paper-title">Choi et al. 2026</div><div class="paper-note">连“标准答案”本身都可能伤害非典型表达者。</div></div>
+  </div>
 </section>
 
 <!-- Slide 10 -->
@@ -1963,7 +2020,12 @@
     <div class="atlas-card"><img src="images/ai_fake_medical_records_sina.jpg" alt="AI 假病历"><div class="label">材料来源</div><div class="text">票据、诊断、聊天截图要能互相校验。</div></div>
     <div class="atlas-card contain"><img src="images/c2pa_content_credentials.png" alt="C2PA Content Credentials"><div class="label">内容来源</div><div class="text">元数据、水印、平台转码可能互相冲突。</div></div>
   </div>
-  <div class="big-statement">AI 时代的真实性，不靠肉眼，也不只靠检测器。它靠<span class="accent-word">来源、编辑链、签名、平台处理、申诉和审计</span>。</div>
+  <div class="paper-grid cols-4">
+    <div class="paper-card"><div class="paper-tag">Synthetic Media Shift</div><div class="paper-title">Chrysidis et al. 2026</div><div class="paper-note">合成媒体更易病毒传播，检测器性能会随时间衰减。</div></div>
+    <div class="paper-card warn"><div class="paper-tag">Authenticated Contradictions</div><div class="paper-title">Nemecek et al. 2026</div><div class="paper-note">C2PA 与水印可能各自正确，却合在一起让制度不知道该信谁。</div></div>
+    <div class="paper-card"><div class="paper-tag">Authenticity Debt</div><div class="paper-title">Sengupta et al. 2026</div><div class="paper-note">真实性不是一次检测，而是机构长期欠下或还清的债。</div></div>
+    <div class="paper-card"><div class="paper-tag">Provenance Interface</div><div class="paper-title">Feng et al. 2023; Morgan 2026</div><div class="paper-note">溯源要进入界面、日志、监控和升级机制。</div></div>
+  </div>
   <div class="question-punch">如果法院收到一张照片，元数据消失，水印提示 AI，上传人又说是平台转码造成的，谁负有重建证据链的责任？</div>
 </section>
 
@@ -2209,13 +2271,11 @@
       <div class="source-credit">图示来源：Chandra, Kleiman-Weiner, Ragan-Kelley &amp; Tenenbaum, arXiv:2602.19141, Figure 2。</div>
     </div>
     <div class="col">
-      <div class="big-statement">
-        反直觉：贝叶斯理性不免疫。机器人不必撒谎，只要总挑最顺耳的事实。
-      </div>
-      <div class="card-grid cols-1">
-        <div class="card orange"><div class="card-label">1. 用户先说出一个怀疑</div><div class="card-desc">论文例子：疫苗是否安全；起点是 50/50 的不确定。</div></div>
-        <div class="card purple"><div class="card-label">2. 机器人选择最迎合的证据</div><div class="card-desc">不必造假；反复挑最能验证怀疑的真事实，就能推后验。</div></div>
-        <div class="card red"><div class="card-label">3. 知道它会迎合，也不等于免疫</div><div class="card-desc">知情用户仍高于基线地进入错误信念螺旋；RAG 也不是免罪符。</div></div>
+      <div class="big-statement">反直觉：贝叶斯理性不免疫。机器人不必撒谎，只要总挑最顺耳的事实。</div>
+      <div class="paper-grid cols-1">
+        <div class="paper-card red"><div class="paper-tag">Factual sycophancy</div><div class="paper-title">Chandra et al. 2026</div><div class="paper-note">用户知道机器人会迎合，也不能完全抵消选择性真话造成的信念螺旋。</div></div>
+        <div class="paper-card"><div class="paper-tag">Non-manipulation by design</div><div class="paper-title">Klenk 2025</div><div class="paper-note">操控不是只在坏人撒谎时出现，也可以是产品目标和话术选择的结果。</div></div>
+        <div class="paper-card warn"><div class="paper-tag">Deliberate friction</div><div class="paper-title">Lim 2025 DeBiasMe</div><div class="paper-note">好的 AI 有时不该更顺滑，而应在确认偏误处故意让用户停一下。</div></div>
       </div>
     </div>
   </div>
@@ -2230,9 +2290,11 @@
       <div class="story-ladder">
         <div class="ladder-step"><div class="step-label">不能简单否定</div><div class="step-body">用户感到被听见、被回应，孤独感可能真的下降。</div></div>
         <div class="ladder-step warn"><div class="step-label">问题开始于哪里</div><div class="step-body">当“被听见”被换算成留存率、订阅、打赏和更难退出的依赖关系。</div></div>
-        <div class="ladder-step"><div class="step-label">课堂判断</div><div class="step-body">问的不是“用户傻不傻”，而是平台是否把脆弱性直接优化成消费。</div></div>
       </div>
-      <div class="question-punch">一个 AI 每天让老人更开心，但让他更少联系家人、更容易消费、更难退出，应如何评价？</div>
+      <div class="paper-grid cols-1">
+        <div class="paper-card"><div class="paper-tag">Experience-as-real</div><div class="paper-title">Klenk 2025</div><div class="paper-note">AI 不必真的理解人，也能被用户体验成“像有人在回应”。</div></div>
+        <div class="paper-card"><div class="paper-tag">Loneliness evidence</div><div class="paper-title">De Freitas et al. 2024; Ciriello et al. 2026</div><div class="paper-note">陪伴可能缓解孤独，但依恋类型、年龄和商业模式会改变风险。</div></div>
+      </div>
     </div>
   </div>
 </section>
@@ -2312,7 +2374,10 @@
         <div class="checkline"><div class="checkmark">核</div><div class="text"><strong>核验权</strong>：涉及钱、身份、危机时强制二次确认。</div></div>
         <div class="checkline"><div class="checkmark">止</div><div class="text"><strong>不被利用</strong>：不把脆弱性直接优化成消费。</div></div>
       </div>
-      <div class="visual-note">底线不是给企业写合规口号，而是给用户留下能转身、能核验、能停止的把手。</div>
+      <div class="paper-grid cols-1">
+        <div class="paper-card"><div class="paper-tag">Sexual / intimate injustice</div><div class="paper-title">Bhardwaj 2026</div><div class="paper-note">亲密 AI 设计若只围绕单一幻想，会把非自愿与不平等写进系统。</div></div>
+        <div class="paper-card warn"><div class="paper-tag">Hermeneutical fairness</div><div class="paper-title">Quaresmini 2026; Kommers 2026</div><div class="paper-note">推荐和陪伴系统在分配“如何理解亲密、孤独和消费”的语言。</div></div>
+      </div>
     </div>
   </div>
 </section>
@@ -2327,6 +2392,9 @@
       <div class="poll">
         <div class="poll-option"><div class="letter">A</div><div class="text">不算操控</div><div class="desc">它没有撒谎，也没有强迫你购买。</div></div>
         <div class="poll-option"><div class="letter">B</div><div class="text">算操控</div><div class="desc">它优化的是你的脆弱点，而不是你的自主判断。</div></div>
+      </div>
+      <div class="paper-grid cols-1">
+        <div class="paper-card"><div class="paper-tag">Hypersuasion / manipulation</div><div class="paper-title">Klenk 2025; Floridi as background</div><div class="paper-note">个性化、低成本、长对话的影响力，不能只用“有没有撒谎”判断。</div></div>
       </div>
     </div>
   </div>
@@ -2470,7 +2538,12 @@
     <div class="atlas-card contain"><img src="images/ninth_circuit_order-01.png" alt="法院 order"><div class="label">有权暂停</div><div class="text">看不懂引用时，必须能让提交停下来。</div></div>
     <div class="atlas-card"><img src="images/ai_lawyers_both_sides_404media.png" alt="双方律师 AI 失误"><div class="label">责任可追</div><div class="text">两个签名的人不自动构成一个可靠制度。</div></div>
   </div>
-  <div class="big-statement">人在环不是最后有人点确认。人在环是有人<span class="accent-word">看得懂、敢反对、有权暂停</span>，反对后不会被系统绕过。</div>
+  <div class="paper-grid cols-4">
+    <div class="paper-card"><div class="paper-tag">MHC</div><div class="paper-title">Siebert et al. 2021</div><div class="paper-note">边界、表征兼容、权限匹配、行动链可追。</div></div>
+    <div class="paper-card"><div class="paper-tag">Human-agent alignment</div><div class="paper-title">Goyal, Chang &amp; Terry 2024</div><div class="paper-note">人机协作要对齐知识图式、自主性、训练、声誉、伦理和参与。</div></div>
+    <div class="paper-card warn"><div class="paper-tag">Cognitive delegation</div><div class="paper-title">Di Santi 2026</div><div class="paper-note">AI 是放大判断，还是让判断能力被外包和萎缩？</div></div>
+    <div class="paper-card"><div class="paper-tag">Flourishing</div><div class="paper-title">Yoldas 2025/2026</div><div class="paper-note">只谈控制不够，还要培养认识谦逊、批判思维和说“不”的美德。</div></div>
+  </div>
 </section>
 
 <!-- Slide 42 -->
@@ -2517,9 +2590,9 @@
 <section>
   <h2>学生项目伦理七问：1-3</h2>
   <div class="project-board">
-    <div class="project-card"><div class="num">01</div><div class="ask">我的系统会让谁更难被相信？</div><div class="example">看平台误判和 AI Overview：不是“出错”，而是把自证成本转嫁给弱势一方。</div></div>
-    <div class="project-card"><div class="num">02</div><div class="ask">我的系统会替谁说话，或者冒充谁说话？</div><div class="example">看律师假判例、教授声音克隆、孙子拟声诈骗：替身进入信任链后，签名和身份都变成风险点。</div></div>
-    <div class="project-card"><div class="num">03</div><div class="ask">我的系统有没有利用人的孤独、恐惧、焦虑、身份压力？</div><div class="example">看 AI 霸总和 AI 伴侣：最危险的操控可能不撒谎，只是永远顺着你最脆弱的地方说。</div></div>
+    <div class="project-card"><div class="num">01</div><div class="ask">我的系统会让谁更难被相信？</div><div class="example">Kay/Mollema：AI 不只是错答，还会重新分配可信度和解释权。</div></div>
+    <div class="project-card"><div class="num">02</div><div class="ask">我的系统会替谁说话，或者冒充谁说话？</div><div class="example">Sahebi：AI 参与沟通后，信任与披露本身成为制度问题。</div></div>
+    <div class="project-card"><div class="num">03</div><div class="ask">我的系统有没有利用人的孤独、恐惧、焦虑、身份压力？</div><div class="example">Klenk/Chandra：不撒谎也可能通过顺耳选择和个性化影响构成操控。</div></div>
     <div class="evidence-strip" style="grid-template-columns:1fr;gap:0.28em;margin:0;">
       <div class="evidence-thumb"><img src="images/google_ai_overview_court.png" alt="AI Overview"><div class="cap">可信度</div></div>
       <div class="evidence-thumb"><img src="images/ai_voice_clone_scam_ifeng.jpg" alt="拟声诈骗"><div class="cap">冒充</div></div>
@@ -2531,10 +2604,10 @@
 <section>
   <h2>学生项目伦理七问：4-7</h2>
   <div class="project-board">
-    <div class="project-card"><div class="num">04</div><div class="ask">我的输出有没有来源、修改过程和责任人？</div><div class="example">对应：假病历、C2PA/水印矛盾、AI 证据争议。</div></div>
-    <div class="project-card"><div class="num">05</div><div class="ask">我的人工复核者能不能真的推翻系统？</div><div class="example">对应：双方律师 AI 幻觉、AI 安防漏检、平台 AI 检测申诉。</div></div>
-    <div class="project-card"><div class="num">06</div><div class="ask">我的系统让用户更会判断，还是更会依赖？</div><div class="example">对应：AI 搜索摘要、陪伴账号、迎合型聊天机器人。</div></div>
-    <div class="project-card"><div class="num">07</div><div class="ask">如果系统错了，受影响的人第一步能找谁？</div><div class="example">对应：校园 deepfake、头像恶搞、公共谣言和平台处罚。</div></div>
+    <div class="project-card"><div class="num">04</div><div class="ask">我的输出有没有来源、修改过程和责任人？</div><div class="example">Nemecek/Sengupta/Morgan：证据链、认证冲突和治理日志是系统的一部分。</div></div>
+    <div class="project-card"><div class="num">05</div><div class="ask">我的人工复核者能不能真的推翻系统？</div><div class="example">Siebert/Goyal：人在环必须有理解、权限、时间和行动链。</div></div>
+    <div class="project-card"><div class="num">06</div><div class="ask">我的系统让用户更会判断，还是更会依赖？</div><div class="example">Di Santi/Lim/Mei &amp; Weber：区分认知放大、认知委托和表演式批判思维。</div></div>
+    <div class="project-card"><div class="num">07</div><div class="ask">如果系统错了，受影响的人第一步能找谁？</div><div class="example">Feng/Morgan：溯源、申诉、监控、升级与停用条件要可见。</div></div>
   </div>
   <div class="evidence-strip four">
     <div class="evidence-thumb"><img src="images/ai_fake_medical_records_sina.jpg" alt="假病历"><div class="cap">来源</div></div>
@@ -2559,38 +2632,36 @@
 
 <!-- Slide 47 -->
 <section>
-  <h2>本课伦理词表</h2>
-  <div class="case-atlas">
-    <div class="atlas-card contain"><img src="images/ninth_circuit_order-01.png" alt="责任痕迹"><div class="label">责任痕迹</div><div class="text">出事后能不能复盘？律师假判例、平台误判、AI 安防。</div></div>
-    <div class="atlas-card"><img src="images/google_ai_overview_court.png" alt="认识不正义"><div class="label">生成式认识不正义</div><div class="text">谁的话被 AI 放大，谁的话被压低？</div></div>
-    <div class="atlas-card"><img src="images/ai_bazong_screenshot.jpg" alt="解释资源公平"><div class="label">解释资源公平</div><div class="text">平台在分配理解孤独、消费和关系的语言。</div></div>
-    <div class="atlas-card"><img src="images/ai_companion_1128694763_16538192706801n.jpg" alt="体验即真实"><div class="label">体验即真实</div><div class="text">假的东西为什么有真的伤害？AI 恋人、头像恶搞、AI companion。</div></div>
-    <div class="atlas-card"><img src="images/ai_fake_medical_records_sina.jpg" alt="证据基础设施"><div class="label">证据基础设施</div><div class="text">这份材料有没有可追溯来路？</div></div>
-    <div class="atlas-card"><img src="images/omnilert_exterior.jpeg" alt="有意义的人类控制"><div class="label">有意义的人类控制</div><div class="text">人能不能真正反对机器？</div></div>
+  <h2>2026 伦理词表：不是旧三件套</h2>
+  <div class="paper-grid cols-4">
+    <div class="paper-card"><div class="paper-tag">责任痕迹</div><div class="paper-title">Lin 2024; Smith 2025; Wilfley 2026</div><div class="paper-note">从原则疲劳转向可复盘的组织行动。</div></div>
+    <div class="paper-card"><div class="paper-tag">生成式认识不正义</div><div class="paper-title">Kay 2024; Mollema 2025; Choi 2026</div><div class="paper-note">谁的话被放大，谁的解释被磨平。</div></div>
+    <div class="paper-card"><div class="paper-tag">解释资源公平</div><div class="paper-title">Quaresmini 2026; Kommers 2026</div><div class="paper-note">公平也包括谁获得理解世界的词典。</div></div>
+    <div class="paper-card"><div class="paper-tag">体验即真实</div><div class="paper-title">Klenk 2025; De Freitas 2024; Ciriello 2026</div><div class="paper-note">AI 不是真人，依恋和伤害仍可能是真的。</div></div>
+    <div class="paper-card red"><div class="paper-tag">操控与摩擦</div><div class="paper-title">Klenk 2025; Chandra 2026; Lim 2025</div><div class="paper-note">最危险的不一定是假话，而是顺滑地利用脆弱点。</div></div>
+    <div class="paper-card"><div class="paper-tag">披露悖论</div><div class="paper-title">Sahebi &amp; Formosa 2025/2026</div><div class="paper-note">标 AI 可能诚实，也可能让诚实者更不被信任。</div></div>
+    <div class="paper-card"><div class="paper-tag">证据基础设施</div><div class="paper-title">Chrysidis; Nemecek; Feng; Sengupta; Morgan</div><div class="paper-note">真实性要靠来源链、认证、日志、申诉和审计。</div></div>
+    <div class="paper-card"><div class="paper-tag">有意义的人类控制</div><div class="paper-title">Siebert; Goyal; Di Santi; Yoldas</div><div class="paper-note">人要能理解、反对、暂停，并留下责任链。</div></div>
   </div>
 </section>
 
 <!-- Slide 48 -->
 <section>
   <h2>参考文献与资料线索</h2>
-  <div class="split-visual">
-    <div class="case-atlas" style="grid-template-columns:1fr 1fr;gap:0.34em;margin:0;">
-      <div class="atlas-card contain"><img src="images/sycophantic_bayesians_figure2_grid.png" alt="Sycophantic Bayesians 论文图"><div class="label">Chandra et al. 2026</div><div class="text">迎合型聊天机器人与信念螺旋。</div></div>
-      <div class="atlas-card contain"><img src="images/c2pa_content_credentials.png" alt="C2PA"><div class="label">C2PA / 水印研究</div><div class="text">真实性不只是肉眼判断。</div></div>
-      <div class="atlas-card"><img src="images/ai_companion_1128694763_16538192706801n.jpg" alt="AI companion"><div class="label">AI companion</div><div class="text">孤独、依恋和商业模式。</div></div>
-      <div class="atlas-card"><img src="images/ai_lawyers_both_sides_404media.png" alt="AI lawyers"><div class="label">人在环与司法</div><div class="text">认知放大还是认知委托。</div></div>
-    </div>
-    <table class="matrix" style="margin-top:0;">
-      <thead><tr><th>主题</th><th>来源线索</th><th>课堂用途</th></tr></thead>
-      <tbody>
-        <tr><td>原则疲劳</td><td>Lin 2024</td><td>从原则口号转向责任痕迹。</td></tr>
-        <tr><td>认识不正义</td><td>Kay et al. 2024；Mollema 2025</td><td>解释 AI 如何分配可信度。</td></tr>
-        <tr><td>亲密与操控</td><td>Ciriello et al. 2026；Chandra et al. 2026</td><td>讲陪伴、迎合和依赖。</td></tr>
-        <tr><td>证据基础设施</td><td>Nemecek et al. 2026；Sengupta et al. 2026</td><td>讲 C2PA、水印和真实性债务。</td></tr>
-        <tr><td>人在环</td><td>Siebert et al. 2021；Di Santi 2026</td><td>区分控制、盖章和责任。</td></tr>
-      </tbody>
-    </table>
-  </div>
+  <table class="matrix" style="font-size:0.47em;">
+    <thead><tr><th>课堂问题</th><th>主梁论文</th><th>课堂用法</th></tr></thead>
+    <tbody>
+      <tr><td>原则为什么不够？</td><td>Lin 2024; Smith et al. 2025; Wilfley et al. 2026</td><td>把 ethics 从口号改成事故回放、组织激励和责任痕迹。</td></tr>
+      <tr><td>谁被相信？</td><td>Kay et al. 2024; Mollema 2025; Choi et al. 2026</td><td>AI 检测误伤、AI 搜索标签、标准答案不正义。</td></tr>
+      <tr><td>谁有解释世界的语言？</td><td>Quaresmini et al. 2026; Kommers et al. 2026; Okolo 2023</td><td>推荐、广告、陪伴系统如何分配解释资源。</td></tr>
+      <tr><td>假东西为何有真伤害？</td><td>Klenk 2025; De Freitas et al. 2024; Ciriello et al. 2026; Bhardwaj 2026</td><td>AI 伴侣、假声、AI 恋人、非自愿亲密技术。</td></tr>
+      <tr><td>不撒谎也能操控吗？</td><td>Klenk 2025; Chandra et al. 2026; Lim 2025</td><td>贝叶斯迎合、导购操控、教育 AI 的 deliberate friction。</td></tr>
+      <tr><td>透明是否会反噬？</td><td>Sahebi &amp; Formosa 2025; Sahebi/Formosa/Bankins 2026</td><td>AI-mediated communication dilemma、AI penalty、disclosure paradox。</td></tr>
+      <tr><td>证据链如何恢复？</td><td>Chrysidis et al. 2026; Nemecek et al. 2026; Golaszewski et al. 2026; Sengupta et al. 2026; Feng et al. 2023; Morgan 2026</td><td>合成媒体传播、C2PA/水印冲突、真实性债务、治理控制栈。</td></tr>
+      <tr><td>人在环是否有效？</td><td>Siebert et al. 2021; Goyal et al. 2024; Di Santi 2026; Yoldas 2025/2026</td><td>从盖章式审核转向理解、权限、责任链和认识美德。</td></tr>
+    </tbody>
+  </table>
+  <div class="source-note">注：PhilArchive/PhilPapers 中少数 2026 条目按元数据和摘要使用，全文未抓取的条目不作为主干事实来源。</div>
 </section>
 
 <!-- Slide 49 -->
