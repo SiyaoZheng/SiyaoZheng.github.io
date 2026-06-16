@@ -1,0 +1,2458 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第十五课 AI 作为替身技术：生成式 AI 的社会伦理 — 机器学习与自然语言处理</title>
+  <link rel="stylesheet" href="vendor/reset.css">
+  <link rel="stylesheet" href="vendor/reveal.css">
+  <link rel="stylesheet" href="vendor/white.css">
+  <style>
+    :root {
+      --r-background-color: #fff;
+      --r-main-font: 'SF Pro Display', 'PingFang SC', 'Hiragino Sans GB', system-ui, sans-serif;
+      --r-main-font-size: 30px;
+      --r-main-color: #111827;
+      --r-heading-font: 'SF Pro Display', 'PingFang SC', 'Hiragino Sans GB', system-ui, sans-serif;
+      --r-heading-color: #0f172a;
+      --r-heading-font-weight: 750;
+      --r-link-color: #2563eb;
+      --accent: #2563eb;
+      --accent-light: #dbeafe;
+      --orange: #f97316;
+      --orange-light: #fff7ed;
+      --green: #16a34a;
+      --green-light: #f0fdf4;
+      --red: #dc2626;
+      --red-light: #fee2e2;
+      --purple: #9333ea;
+      --purple-light: #fae8ff;
+      --cyan: #0891b2;
+      --cyan-light: #e0f7fa;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-400: #94a3b8;
+      --gray-500: #64748b;
+      --gray-600: #475569;
+      --gray-700: #334155;
+      --gray-800: #1e293b;
+    }
+
+    .reveal { font-weight: 400; }
+    .reveal h1 { font-size: 2.36em; letter-spacing: 0; }
+    .reveal h2 { font-size: 1.48em; letter-spacing: 0; color: var(--accent); text-transform: none; }
+    .reveal h3 { font-size: 1.02em; color: var(--gray-800); text-transform: none; }
+    .reveal p, .reveal li { line-height: 1.48; }
+    .reveal ul { list-style: none; padding-left: 0; }
+    .reveal ul li { padding-left: 1.25em; position: relative; margin-bottom: 0.32em; }
+    .reveal ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.58em;
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    .reveal a { color: var(--accent); }
+    .reveal code {
+      font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+      background: var(--gray-100);
+      padding: 0.08em 0.35em;
+      border-radius: 4px;
+      font-size: 0.84em;
+    }
+    .reveal .slide-number { font-size: 14px; color: var(--gray-400); }
+    .reveal .progress span { background: var(--accent); }
+
+    .cover h1 { font-size: 2.34em; margin-bottom: 0.12em; }
+    .cover .subtitle { font-size: 1.02em; color: var(--accent); font-weight: 650; margin-bottom: 1.45em; }
+    .cover .meta { font-size: 0.68em; color: var(--gray-600); line-height: 1.75; }
+
+    .section-title { background: #fff !important; }
+    .section-title h2 {
+      font-size: 1.92em;
+      color: var(--r-main-color);
+      border-left: 6px solid var(--accent);
+      padding-left: 0.55em;
+      text-align: left;
+      line-height: 1.24;
+    }
+    .section-title .section-num {
+      font-size: 0.48em;
+      color: var(--gray-400);
+      font-weight: 400;
+      display: block;
+      margin-bottom: 0.22em;
+    }
+
+    .cols { display: flex; gap: 1.05em; align-items: flex-start; }
+    .col { flex: 1; text-align: left; }
+    .col-38 { flex: 0 0 38%; text-align: left; }
+    .col-42 { flex: 0 0 42%; text-align: left; }
+    .col-48 { flex: 0 0 48%; text-align: left; }
+    .col-55 { flex: 0 0 55%; text-align: left; }
+    .col-60 { flex: 0 0 60%; text-align: left; }
+
+    .card-grid { display: grid; gap: 0.68em; margin: 0.68em 0; }
+    .card-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .card-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .card-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+    .card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.72em;
+      text-align: left;
+      min-height: 78px;
+    }
+    .card.accent { background: var(--accent-light); border-color: #bfdbfe; }
+    .card.orange { background: var(--orange-light); border-color: #fed7aa; }
+    .card.green { background: var(--green-light); border-color: #bbf7d0; }
+    .card.purple { background: var(--purple-light); border-color: #f0abfc; }
+    .card.red { background: var(--red-light); border-color: #fecaca; }
+    .card.cyan { background: var(--cyan-light); border-color: #a5f3fc; }
+    .card-label { font-weight: 760; font-size: 0.78em; color: var(--r-main-color); margin-bottom: 0.26em; }
+    .card-desc { color: var(--gray-700); font-size: 0.6em; line-height: 1.48; }
+
+    .small { font-size: 0.66em; color: var(--gray-700); line-height: 1.52; }
+    .tiny { font-size: 0.52em; color: var(--gray-600); line-height: 1.44; }
+    .muted { color: var(--gray-600); }
+    .center { text-align: center; }
+    .left { text-align: left; }
+
+    .highlight-box, .quote-box, .case-box, .question-box {
+      border-radius: 6px;
+      text-align: left;
+      margin: 0.68em 0;
+      padding: 0.78em 1.02em;
+    }
+    .highlight-box {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-left: 4px solid var(--accent);
+    }
+    .quote-box {
+      background: var(--accent-light);
+      border: 1px solid #bfdbfe;
+      border-left: 4px solid var(--accent);
+    }
+    .quote-text { font-size: 1.0em; font-weight: 740; color: var(--r-main-color); line-height: 1.38; }
+    .quote-source { font-size: 0.52em; color: var(--gray-600); margin-top: 0.45em; }
+    .case-box {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.055);
+    }
+    .case-title {
+      font-size: 0.78em;
+      font-weight: 780;
+      color: var(--gray-800);
+      margin-bottom: 0.35em;
+    }
+    .case-lines {
+      display: grid;
+      grid-template-columns: 0.23fr 1fr;
+      gap: 0.3em 0.75em;
+      font-size: 0.55em;
+      line-height: 1.45;
+      color: var(--gray-700);
+    }
+    .case-lines .k { font-weight: 760; color: var(--accent); }
+    .question-box {
+      background: var(--gray-800);
+      color: #fff;
+      border: 1px solid var(--gray-800);
+    }
+    .question-box .q {
+      font-size: 0.95em;
+      font-weight: 760;
+      line-height: 1.42;
+    }
+    .source-note { font-size: 0.48em; color: var(--gray-500); margin-top: 0.48em; text-align: left; line-height: 1.38; }
+
+    .chain {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.32em;
+      margin: 0.9em 0;
+      align-items: stretch;
+    }
+    .chain-node {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.58em 0.5em;
+      text-align: center;
+      min-height: 96px;
+    }
+    .chain-node .top { font-size: 0.58em; color: var(--gray-500); margin-bottom: 0.35em; }
+    .chain-node .main { font-size: 0.8em; font-weight: 780; color: var(--gray-800); line-height: 1.28; }
+    .chain-node .sub { font-size: 0.5em; color: var(--gray-600); line-height: 1.35; margin-top: 0.35em; }
+
+    .big-statement {
+      font-size: 1.42em;
+      font-weight: 780;
+      color: var(--gray-800);
+      line-height: 1.35;
+      text-align: left;
+      margin: 0.7em 0;
+    }
+    .big-statement .accent-word { color: var(--accent); }
+
+    .matrix {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.52em;
+      text-align: left;
+      margin-top: 0.6em;
+    }
+    .matrix th, .matrix td {
+      border: 1px solid var(--gray-200);
+      padding: 0.48em 0.56em;
+      vertical-align: top;
+      line-height: 1.38;
+    }
+    .matrix th {
+      background: var(--gray-50);
+      color: var(--gray-800);
+      font-weight: 760;
+    }
+    .matrix td:first-child { font-weight: 720; color: var(--accent); }
+
+    .poll {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75em;
+      margin-top: 0.7em;
+    }
+    .poll-option {
+      border-radius: 8px;
+      border: 1px solid var(--gray-200);
+      padding: 0.85em;
+      background: var(--gray-50);
+      text-align: left;
+      min-height: 130px;
+    }
+    .poll-option .letter {
+      display: inline-block;
+      width: 1.8em;
+      height: 1.8em;
+      line-height: 1.8em;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.62em;
+      text-align: center;
+      font-weight: 780;
+      margin-bottom: 0.45em;
+    }
+    .poll-option .text { font-size: 0.72em; font-weight: 730; line-height: 1.42; color: var(--gray-800); }
+    .poll-option .desc { font-size: 0.54em; color: var(--gray-600); line-height: 1.45; margin-top: 0.42em; }
+
+    .takeaway {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 620px;
+      padding: 1em 2em;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    .takeaway .divider { width: 3em; height: 3px; background: var(--accent); border-radius: 2px; margin-bottom: 1.1em; }
+    .takeaway .main-text { font-size: 1.22em; font-weight: 780; color: var(--accent); line-height: 1.42; margin: 0 0 0.8em 0; max-width: 18em; }
+    .takeaway .sub-text { font-size: 0.72em; color: var(--gray-600); line-height: 1.65; margin: 0 0 1.1em 0; max-width: 32em; }
+
+    .tag {
+      display: inline-block;
+      border: 1px solid var(--gray-200);
+      border-radius: 999px;
+      padding: 0.14em 0.5em;
+      margin: 0.1em;
+      font-size: 0.54em;
+      color: var(--gray-700);
+      background: #fff;
+      white-space: nowrap;
+    }
+    .tag.accent { border-color: #bfdbfe; background: var(--accent-light); color: #1d4ed8; }
+    .tag.red { border-color: #fecaca; background: var(--red-light); color: #b91c1c; }
+    .tag.green { border-color: #bbf7d0; background: var(--green-light); color: #15803d; }
+
+    .asset-layout {
+      display: grid;
+      grid-template-columns: 1.02fr 0.98fr;
+      gap: 0.75em;
+      align-items: stretch;
+      margin-top: 0.5em;
+    }
+    .asset-layout.wide-left { grid-template-columns: 1.15fr 0.85fr; }
+    .asset-layout.wide-right { grid-template-columns: 0.88fr 1.12fr; }
+    .asset-panel {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.72em;
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.055);
+      text-align: left;
+      min-height: 330px;
+    }
+    .asset-panel.compact { min-height: 280px; }
+    .asset-photo {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.28em;
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.055);
+      overflow: hidden;
+    }
+    .asset-photo img {
+      width: 100%;
+      max-height: 325px;
+      object-fit: contain;
+      display: block;
+      border-radius: 6px;
+      background: var(--gray-50);
+    }
+    .asset-photo.cover img {
+      height: 310px;
+      object-fit: cover;
+    }
+    .asset-photo.case-image img {
+      height: 320px;
+      max-height: 320px;
+      object-fit: cover;
+      object-position: center center;
+    }
+    .asset-photo.news-top img {
+      height: 335px;
+      max-height: 335px;
+      object-fit: cover;
+      object-position: top center;
+    }
+    .asset-photo.court-order img {
+      height: 345px;
+      max-height: 345px;
+      object-fit: cover;
+      object-position: top center;
+      filter: contrast(1.02);
+    }
+    .asset-photo.paper-figure img {
+      height: 430px;
+      max-height: 430px;
+      object-fit: contain;
+      background: #fff;
+    }
+    .bayes-slide .asset-layout { margin-top: 0.28em; gap: 0.6em; align-items: start; }
+    .bayes-slide .asset-photo.paper-figure img { height: auto; max-height: 330px; }
+    .bayes-slide .big-statement {
+      font-size: 1.14em;
+      line-height: 1.28;
+      margin: 0.08em 0 0.45em 0;
+    }
+    .bayes-slide .card-grid { gap: 0.42em; margin: 0.4em 0; }
+    .bayes-slide .card { padding: 0.5em 0.58em; min-height: 58px; }
+    .bayes-slide .card-label { font-size: 0.66em; margin-bottom: 0.18em; }
+    .bayes-slide .card-desc { font-size: 0.5em; line-height: 1.34; }
+    .bayes-slide .source-note { font-size: 0.42em; margin-top: 0.25em; }
+    .asset-video {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.28em;
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.055);
+      overflow: hidden;
+      text-align: left;
+    }
+    .asset-video video {
+      width: 100%;
+      height: 322px;
+      object-fit: cover;
+      display: block;
+      border-radius: 6px;
+      background: #000;
+    }
+    .asset-video.vertical video {
+      width: auto;
+      max-width: 100%;
+      height: 350px;
+      margin: 0 auto;
+      object-fit: contain;
+      background: #000;
+    }
+    .source-credit {
+      font-size: 0.42em;
+      color: var(--gray-500);
+      margin-top: 0.35em;
+      text-align: left;
+      line-height: 1.35;
+    }
+    .asset-title {
+      font-size: 0.58em;
+      font-weight: 780;
+      color: var(--gray-800);
+      margin-bottom: 0.55em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6em;
+    }
+    .asset-title .badge {
+      font-size: 0.82em;
+      color: var(--accent);
+      background: var(--accent-light);
+      border: 1px solid #bfdbfe;
+      border-radius: 999px;
+      padding: 0.12em 0.45em;
+      white-space: nowrap;
+    }
+    .mock-window {
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--gray-50);
+    }
+    .mock-bar {
+      height: 30px;
+      background: #fff;
+      border-bottom: 1px solid var(--gray-200);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 10px;
+    }
+    .dot { width: 8px; height: 8px; border-radius: 999px; background: var(--gray-400); }
+    .dot.red { background: #ef4444; }
+    .dot.orange { background: #f59e0b; }
+    .dot.green { background: #22c55e; }
+    .mock-body { padding: 0.58em; }
+    .ui-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid var(--gray-200);
+      background: #fff;
+      border-radius: 7px;
+      padding: 0.45em 0.55em;
+      margin: 0.35em 0;
+      font-size: 0.5em;
+      color: var(--gray-700);
+      line-height: 1.35;
+    }
+    .ui-row strong { color: var(--gray-800); }
+    .status-pill {
+      border-radius: 999px;
+      padding: 0.15em 0.45em;
+      font-size: 0.86em;
+      border: 1px solid var(--gray-200);
+      background: var(--gray-50);
+      color: var(--gray-700);
+      white-space: nowrap;
+    }
+    .status-pill.red { background: var(--red-light); border-color: #fecaca; color: #b91c1c; }
+    .status-pill.green { background: var(--green-light); border-color: #bbf7d0; color: #15803d; }
+    .status-pill.blue { background: var(--accent-light); border-color: #bfdbfe; color: #1d4ed8; }
+    .status-pill.orange { background: var(--orange-light); border-color: #fed7aa; color: #c2410c; }
+
+    .doc-sheet {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+      padding: 0.55em;
+      box-shadow: 0 8px 16px rgba(15, 23, 42, 0.055);
+      position: relative;
+      min-height: 214px;
+    }
+    .doc-sheet::before {
+      content: '';
+      position: absolute;
+      left: 0.55em;
+      top: 0.55em;
+      bottom: 0.55em;
+      width: 3px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+    .doc-title { font-size: 0.62em; font-weight: 800; color: var(--gray-800); margin-left: 0.55em; }
+    .doc-line {
+      height: 8px;
+      border-radius: 999px;
+      background: var(--gray-200);
+      margin: 0.42em 0 0.42em 0.55em;
+    }
+    .doc-line.short { width: 48%; }
+    .doc-line.mid { width: 70%; }
+    .doc-line.long { width: 88%; }
+    .stamp {
+      display: inline-block;
+      border: 2px solid var(--red);
+      color: var(--red);
+      border-radius: 6px;
+      padding: 0.18em 0.5em;
+      font-size: 0.48em;
+      font-weight: 820;
+      transform: rotate(-7deg);
+      margin: 0.5em 0 0 0.7em;
+    }
+
+    .phone-mock {
+      width: 230px;
+      min-height: 386px;
+      margin: 0 auto;
+      border: 9px solid var(--gray-800);
+      border-radius: 28px;
+      background: #fff;
+      box-shadow: 0 16px 30px rgba(15, 23, 42, 0.14);
+      padding: 0.55em;
+      box-sizing: border-box;
+    }
+    .phone-top { height: 22px; display: flex; justify-content: center; align-items: center; }
+    .phone-notch { width: 62px; height: 7px; border-radius: 999px; background: var(--gray-800); opacity: 0.92; }
+    .call-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      margin: 0.6em auto 0.32em;
+      background: var(--accent-light);
+      border: 1px solid #bfdbfe;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2em;
+      font-weight: 800;
+      color: var(--accent);
+    }
+    .phone-name { text-align: center; font-size: 0.62em; font-weight: 780; color: var(--gray-800); }
+    .phone-sub { text-align: center; font-size: 0.42em; color: var(--gray-500); margin-top: 0.2em; }
+    .waveform {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      height: 68px;
+      margin: 0.65em 0;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+    }
+    .waveform span { width: 5px; border-radius: 999px; background: var(--accent); display: block; }
+    .waveform span:nth-child(1) { height: 18px; opacity: 0.45; }
+    .waveform span:nth-child(2) { height: 36px; opacity: 0.72; }
+    .waveform span:nth-child(3) { height: 48px; }
+    .waveform span:nth-child(4) { height: 28px; opacity: 0.62; }
+    .waveform span:nth-child(5) { height: 58px; }
+    .waveform span:nth-child(6) { height: 24px; opacity: 0.62; }
+    .waveform span:nth-child(7) { height: 42px; opacity: 0.82; }
+    .phone-actions { display: flex; justify-content: center; gap: 0.72em; margin-top: 0.55em; }
+    .phone-button { width: 44px; height: 44px; border-radius: 999px; background: var(--gray-100); border: 1px solid var(--gray-200); }
+    .phone-button.red { background: var(--red); border-color: var(--red); }
+    .phone-button.green { background: var(--green); border-color: var(--green); }
+
+    .browser-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5em;
+    }
+    .search-result, .answer-card {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.55em;
+      min-height: 220px;
+    }
+    .search-result .link-line, .answer-card .link-line {
+      height: 8px;
+      border-radius: 999px;
+      background: var(--gray-200);
+      margin: 0.38em 0;
+    }
+    .answer-card {
+      border-color: #bfdbfe;
+      background: var(--accent-light);
+    }
+    .answer-bubble {
+      background: #fff;
+      border-radius: 8px;
+      border: 1px solid #bfdbfe;
+      padding: 0.48em;
+      font-size: 0.48em;
+      line-height: 1.38;
+      color: var(--gray-800);
+      margin-top: 0.45em;
+    }
+    .overview-claim {
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      background: #fff;
+      overflow: hidden;
+    }
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.45em;
+      padding: 0.48em 0.58em;
+      border-bottom: 1px solid var(--gray-200);
+      color: var(--gray-600);
+      font-size: 0.46em;
+      background: var(--gray-50);
+    }
+    .search-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      border: 2px solid var(--gray-400);
+      position: relative;
+      flex: 0 0 auto;
+    }
+    .search-dot::after {
+      content: '';
+      position: absolute;
+      width: 7px;
+      height: 2px;
+      background: var(--gray-400);
+      right: -6px;
+      bottom: -3px;
+      transform: rotate(45deg);
+      border-radius: 999px;
+    }
+    .ai-answer {
+      margin: 0.58em;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      background: var(--accent-light);
+      padding: 0.58em;
+    }
+    .ai-answer .label {
+      font-size: 0.44em;
+      color: var(--accent);
+      font-weight: 820;
+      margin-bottom: 0.35em;
+    }
+    .ai-answer .claim {
+      font-size: 0.62em;
+      color: var(--gray-800);
+      line-height: 1.42;
+      font-weight: 760;
+    }
+    .claim-tags {
+      display: flex;
+      gap: 0.35em;
+      flex-wrap: wrap;
+      margin: 0.55em 0.58em 0.62em;
+    }
+    .claim-tags span {
+      border: 1px solid #fecaca;
+      background: var(--red-light);
+      color: #991b1b;
+      border-radius: 999px;
+      padding: 0.14em 0.5em;
+      font-size: 0.42em;
+      font-weight: 760;
+    }
+
+    .doc-stack {
+      position: relative;
+      min-height: 315px;
+    }
+    .doc-stack .doc-sheet {
+      position: absolute;
+      width: 78%;
+      min-height: 230px;
+      left: 8%;
+      top: 22px;
+    }
+    .doc-stack .doc-sheet:nth-child(1) { transform: rotate(-6deg); left: 3%; top: 45px; }
+    .doc-stack .doc-sheet:nth-child(2) { transform: rotate(4deg); left: 14%; top: 28px; }
+    .doc-stack .doc-sheet:nth-child(3) { transform: rotate(0deg); left: 8%; top: 8px; }
+
+    .contradiction {
+      display: grid;
+      grid-template-columns: 1fr 0.35fr 1fr;
+      gap: 0.35em;
+      align-items: center;
+      min-height: 260px;
+    }
+    .signal-card {
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      background: #fff;
+      padding: 0.65em;
+      text-align: center;
+      min-height: 190px;
+    }
+    .signal-card .signal-icon {
+      width: 74px;
+      height: 74px;
+      border-radius: 18px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      margin: 0 auto 0.5em;
+      display: grid;
+      place-items: center;
+      color: var(--accent);
+      font-size: 1.4em;
+      font-weight: 820;
+    }
+    .signal-card .signal-label { font-size: 0.56em; font-weight: 820; color: var(--gray-800); }
+    .signal-card .signal-desc { font-size: 0.43em; color: var(--gray-600); line-height: 1.38; margin-top: 0.38em; }
+    .versus { text-align: center; font-size: 1.4em; font-weight: 820; color: var(--red); }
+
+    .chat-scene {
+      display: grid;
+      grid-template-columns: 1fr 1.25fr;
+      gap: 0.55em;
+      align-items: stretch;
+    }
+    .avatar-card {
+      display: grid;
+      place-items: center;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      min-height: 245px;
+      position: relative;
+    }
+    .avatar-face {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-light), #fff);
+      border: 2px solid #bfdbfe;
+      display: grid;
+      place-items: center;
+      font-size: 1.4em;
+      color: var(--accent);
+      font-weight: 820;
+    }
+    .chat-list {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.55em;
+    }
+    .chat-bubble {
+      border-radius: 10px;
+      padding: 0.45em 0.58em;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      font-size: 0.48em;
+      color: var(--gray-700);
+      line-height: 1.36;
+      margin-bottom: 0.42em;
+    }
+    .chat-bubble.warn { background: var(--red-light); border-color: #fecaca; color: #991b1b; }
+
+    .video-mock {
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--gray-200);
+      background: #0f172a;
+      min-height: 245px;
+      position: relative;
+      color: #fff;
+    }
+    .video-frame {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(37,99,235,0.38), rgba(15,23,42,0.92)),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.08) 0 1px, transparent 1px 18px);
+    }
+    .video-person {
+      position: absolute;
+      width: 128px;
+      height: 168px;
+      border-radius: 64px 64px 20px 20px;
+      left: 42px;
+      bottom: 18px;
+      background: rgba(255,255,255,0.88);
+      box-shadow: 0 0 0 8px rgba(255,255,255,0.12);
+    }
+    .video-caption {
+      position: absolute;
+      right: 22px;
+      bottom: 22px;
+      width: 260px;
+      background: rgba(255,255,255,0.92);
+      color: var(--gray-800);
+      border-radius: 8px;
+      padding: 0.55em;
+      font-size: 0.48em;
+      line-height: 1.38;
+    }
+    .video-tag {
+      position: absolute;
+      left: 20px;
+      top: 18px;
+      background: var(--red);
+      color: #fff;
+      border-radius: 999px;
+      font-size: 0.44em;
+      padding: 0.18em 0.55em;
+      font-weight: 760;
+    }
+
+    .funnel {
+      display: grid;
+      gap: 0.38em;
+      margin-top: 0.35em;
+    }
+    .funnel-step {
+      margin: 0 auto;
+      border-radius: 8px;
+      padding: 0.42em 0.55em;
+      background: var(--accent-light);
+      border: 1px solid #bfdbfe;
+      color: var(--gray-800);
+      font-size: 0.5em;
+      font-weight: 760;
+      text-align: center;
+    }
+    .funnel-step:nth-child(1) { width: 92%; }
+    .funnel-step:nth-child(2) { width: 78%; background: var(--purple-light); border-color: #f0abfc; }
+    .funnel-step:nth-child(3) { width: 64%; background: var(--orange-light); border-color: #fed7aa; }
+    .funnel-step:nth-child(4) { width: 50%; background: var(--red-light); border-color: #fecaca; color: #991b1b; }
+
+    .cctv-scene {
+      position: relative;
+      height: 310px;
+      background:
+        linear-gradient(180deg, #eef2ff 0%, #f8fafc 58%, #e2e8f0 58%, #e2e8f0 100%);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .camera {
+      position: absolute;
+      left: 28px;
+      top: 26px;
+      width: 88px;
+      height: 34px;
+      background: var(--gray-800);
+      border-radius: 8px;
+    }
+    .camera::after {
+      content: '';
+      position: absolute;
+      right: -18px;
+      top: 8px;
+      border: 9px solid transparent;
+      border-left-color: var(--gray-800);
+    }
+    .view-cone {
+      position: absolute;
+      left: 82px;
+      top: 56px;
+      width: 420px;
+      height: 230px;
+      background: rgba(37, 99, 235, 0.12);
+      clip-path: polygon(0 0, 100% 34%, 100% 100%, 0 58%);
+      border: 1px solid rgba(37,99,235,0.18);
+    }
+    .person-block {
+      position: absolute;
+      right: 120px;
+      bottom: 46px;
+      width: 64px;
+      height: 128px;
+      background: var(--gray-700);
+      border-radius: 32px 32px 10px 10px;
+    }
+    .object-block {
+      position: absolute;
+      right: 78px;
+      bottom: 86px;
+      width: 42px;
+      height: 10px;
+      background: var(--red);
+      border-radius: 3px;
+      transform: rotate(-18deg);
+    }
+    .cctv-label {
+      position: absolute;
+      left: 26px;
+      bottom: 24px;
+      font-size: 0.48em;
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.45em 0.6em;
+      color: var(--gray-700);
+    }
+
+    .review-console {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.55em;
+      min-height: 278px;
+    }
+    .queue-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.5em;
+      color: var(--gray-700);
+      border-bottom: 1px solid var(--gray-200);
+      padding-bottom: 0.45em;
+      margin-bottom: 0.45em;
+    }
+    .queue-item {
+      display: grid;
+      grid-template-columns: 44px 1fr 82px;
+      gap: 0.45em;
+      align-items: center;
+      border: 1px solid var(--gray-200);
+      border-radius: 7px;
+      padding: 0.42em;
+      margin-bottom: 0.36em;
+      font-size: 0.46em;
+      color: var(--gray-700);
+    }
+    .thumb {
+      width: 44px;
+      height: 34px;
+      border-radius: 5px;
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+    }
+    .disabled-action {
+      opacity: 0.45;
+      border: 1px dashed var(--gray-400);
+      border-radius: 999px;
+      padding: 0.12em 0.28em;
+      text-align: center;
+      color: var(--gray-600);
+    }
+
+    .incident-board {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.28em;
+    }
+    .incident-card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      min-height: 130px;
+      padding: 0.45em;
+      text-align: center;
+    }
+    .incident-card .num {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 0.4em;
+      font-size: 0.52em;
+      font-weight: 820;
+    }
+    .incident-card .label { font-size: 0.48em; font-weight: 760; color: var(--gray-800); line-height: 1.25; }
+    .incident-card .desc { font-size: 0.38em; color: var(--gray-600); line-height: 1.35; margin-top: 0.35em; }
+    .scene-board {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.55em;
+      margin-top: 0.65em;
+    }
+    .scene-card {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.62em;
+      min-height: 360px;
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.055);
+      text-align: left;
+    }
+    .scene-card .scene-label {
+      font-size: 0.52em;
+      color: var(--accent);
+      font-weight: 820;
+      margin-bottom: 0.45em;
+    }
+    .scene-card .scene-head {
+      font-size: 0.68em;
+      font-weight: 820;
+      color: var(--gray-800);
+      line-height: 1.28;
+      margin-bottom: 0.5em;
+    }
+    .scene-card .scene-mini {
+      font-size: 0.45em;
+      color: var(--gray-600);
+      line-height: 1.38;
+      margin-top: 0.45em;
+    }
+
+    .signature-board {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.36em;
+      margin-top: 0.6em;
+    }
+    .signature-row {
+      display: grid;
+      grid-template-columns: 78px 1fr;
+      gap: 0.48em;
+      align-items: center;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      background: #fff;
+      padding: 0.42em 0.5em;
+    }
+    .signature-row .mark {
+      border-radius: 999px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      color: var(--gray-700);
+      font-size: 0.44em;
+      font-weight: 820;
+      text-align: center;
+      padding: 0.2em 0.32em;
+    }
+    .signature-row.warn .mark {
+      background: var(--red-light);
+      border-color: #fecaca;
+      color: #991b1b;
+    }
+    .signature-row .text {
+      font-size: 0.49em;
+      color: var(--gray-700);
+      line-height: 1.38;
+    }
+
+    .court-brief {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.76em;
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.055);
+      text-align: left;
+    }
+    .court-brief .kicker {
+      font-size: 0.42em;
+      color: var(--gray-500);
+      font-weight: 780;
+      margin-bottom: 0.5em;
+    }
+    .court-brief .lead {
+      font-size: 0.92em;
+      line-height: 1.32;
+      font-weight: 820;
+      color: var(--gray-800);
+      margin-bottom: 0.5em;
+    }
+    .court-brief .body {
+      font-size: 0.56em;
+      line-height: 1.56;
+      color: var(--gray-700);
+      margin-bottom: 0.68em;
+    }
+    .court-stamps {
+      display: flex;
+      gap: 0.36em;
+      flex-wrap: wrap;
+      margin: 0.2em 0 0.72em;
+    }
+    .court-stamps span {
+      border: 2px solid var(--red);
+      color: var(--red);
+      border-radius: 6px;
+      padding: 0.18em 0.48em;
+      font-size: 0.44em;
+      font-weight: 820;
+      transform: rotate(-3deg);
+      background: #fff;
+    }
+    .court-stamps span:nth-child(2) { transform: rotate(2deg); }
+    .court-stamps span:nth-child(3) { transform: rotate(-1deg); }
+    .signature-meaning {
+      border-left: 4px solid var(--accent);
+      background: var(--accent-light);
+      border-radius: 6px;
+      padding: 0.58em 0.68em;
+      color: var(--gray-800);
+      font-size: 0.58em;
+      line-height: 1.5;
+      font-weight: 720;
+    }
+    .court-question {
+      border: 1px solid #fed7aa;
+      background: var(--orange-light);
+      border-radius: 8px;
+      padding: 0.68em 0.78em;
+      color: #9a3412;
+      font-size: 0.62em;
+      font-weight: 760;
+      line-height: 1.42;
+      margin-top: 0.62em;
+      text-align: left;
+    }
+    .citation-evidence {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.38em;
+      margin-top: 0.5em;
+    }
+    .citation-card {
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      background: #fff;
+      padding: 0.44em 0.52em;
+    }
+    .citation-card .label {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 0.12em 0.45em;
+      font-size: 0.38em;
+      font-weight: 820;
+      margin-bottom: 0.28em;
+      color: #991b1b;
+      background: var(--red-light);
+      border: 1px solid #fecaca;
+    }
+    .citation-card .example {
+      font-size: 0.48em;
+      line-height: 1.42;
+      color: var(--gray-800);
+      font-weight: 760;
+    }
+    .citation-card .example code {
+      font-size: 0.9em;
+      background: var(--gray-50);
+      color: var(--gray-800);
+    }
+    .citation-card .explain {
+      font-size: 0.39em;
+      line-height: 1.36;
+      color: var(--gray-600);
+      margin-top: 0.24em;
+    }
+    .case-story {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.34em;
+      margin-top: 0.48em;
+    }
+    .story-beat {
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      background: #fff;
+      padding: 0.44em 0.52em;
+    }
+    .story-beat .beat-title {
+      font-size: 0.45em;
+      line-height: 1.25;
+      color: var(--accent);
+      font-weight: 820;
+      margin-bottom: 0.22em;
+    }
+    .story-beat .beat-text {
+      font-size: 0.42em;
+      line-height: 1.42;
+      color: var(--gray-700);
+    }
+    .story-beat .beat-text code {
+      font-size: 0.9em;
+      background: var(--gray-50);
+      color: var(--gray-800);
+    }
+    .story-beat.warn {
+      background: var(--red-light);
+      border-color: #fecaca;
+    }
+    .story-beat.warn .beat-title { color: #991b1b; }
+
+    .adversarial-board {
+      display: grid;
+      grid-template-columns: 1fr 0.86fr 1fr;
+      gap: 0.45em;
+      align-items: stretch;
+    }
+    .side-lawyer, .judge-card {
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      background: #fff;
+      padding: 0.55em;
+      min-height: 225px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+    .side-lawyer .role, .judge-card .role {
+      font-size: 0.46em;
+      color: var(--gray-500);
+      font-weight: 760;
+      margin-bottom: 0.4em;
+    }
+    .side-lawyer .main, .judge-card .main {
+      font-size: 0.66em;
+      color: var(--gray-800);
+      font-weight: 820;
+      line-height: 1.34;
+    }
+    .side-lawyer .sub, .judge-card .sub {
+      font-size: 0.44em;
+      color: var(--gray-600);
+      line-height: 1.35;
+      margin-top: 0.5em;
+    }
+    .judge-card {
+      background: var(--red-light);
+      border-color: #fecaca;
+    }
+    .judge-card .main { color: #991b1b; }
+    .broken-bridge {
+      grid-column: 1 / -1;
+      border: 1px dashed #fca5a5;
+      border-radius: 8px;
+      color: #991b1b;
+      background: #fff7f7;
+      padding: 0.38em 0.55em;
+      font-size: 0.46em;
+      font-weight: 760;
+      text-align: center;
+    }
+
+    .trace-sheet {
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      background: #fff;
+      padding: 0.58em;
+    }
+    .trace-title {
+      font-size: 0.58em;
+      color: var(--gray-800);
+      font-weight: 820;
+      margin-bottom: 0.45em;
+    }
+    .checkline {
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      gap: 0.42em;
+      align-items: start;
+      border-top: 1px solid var(--gray-200);
+      padding: 0.42em 0;
+    }
+    .checkline:first-of-type { border-top: 0; }
+    .checkmark {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: var(--green-light);
+      border: 1px solid #bbf7d0;
+      color: #15803d;
+      display: grid;
+      place-items: center;
+      font-size: 0.45em;
+      font-weight: 820;
+      line-height: 1;
+    }
+    .checkline .text {
+      font-size: 0.49em;
+      color: var(--gray-700);
+      line-height: 1.38;
+    }
+    .checkline .text strong { color: var(--gray-800); }
+
+    .dial-board {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.42em;
+    }
+    .dial {
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      background: #fff;
+      padding: 0.46em 0.55em;
+    }
+    .dial .topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.48em;
+      color: var(--gray-700);
+      font-weight: 760;
+      margin-bottom: 0.36em;
+    }
+    .meter {
+      height: 10px;
+      border-radius: 999px;
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      overflow: hidden;
+    }
+    .meter span {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+    .dial.red .meter span { background: var(--red); }
+    .dial.orange .meter span { background: var(--orange); }
+    .dial.purple .meter span { background: var(--purple); }
+
+    .swimlane {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.38em;
+    }
+    .lane {
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      background: #fff;
+      padding: 0.48em;
+      min-height: 205px;
+      text-align: center;
+    }
+    .lane .role {
+      font-size: 0.48em;
+      font-weight: 820;
+      color: var(--gray-800);
+      margin-bottom: 0.42em;
+    }
+    .lane .task {
+      border-radius: 7px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      padding: 0.36em 0.32em;
+      font-size: 0.4em;
+      color: var(--gray-700);
+      line-height: 1.32;
+      margin: 0.32em 0;
+    }
+    .lane .task.warn {
+      background: var(--red-light);
+      border-color: #fecaca;
+      color: #991b1b;
+    }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- Slide 1 -->
+<section class="cover center">
+  <h1>AI 作为替身技术</h1>
+  <div class="subtitle">生成式 AI 的社会伦理</div>
+  <div class="meta">
+    第十五课 · 机器学习与自然语言处理<br>
+    案例讨论课 · 责任与信任<br>
+    2026 年 6 月
+  </div>
+</section>
+
+<!-- Slide 2 -->
+<section>
+  <h2>今天不从三件套开始</h2>
+  <div class="card-grid cols-3">
+    <div class="card"><div class="card-label">公平</div><div class="card-desc">当然重要，但太容易变成口号。</div></div>
+    <div class="card"><div class="card-label">透明</div><div class="card-desc">也重要，但“标注 AI”不等于解决责任。</div></div>
+    <div class="card"><div class="card-label">问责</div><div class="card-desc">真正难的是：出事后能不能还原责任链。</div></div>
+  </div>
+  <div class="quote-box">
+    <div class="quote-text">这节课只问：当 AI 开始替人说话，谁还说得清“这是谁的话”？</div>
+  </div>
+</section>
+
+<!-- Slide 3 -->
+<section>
+  <h2>三个小场景</h2>
+  <div class="scene-board">
+    <div class="scene-card">
+      <div class="scene-label">课堂</div>
+      <div class="scene-head">报告语言很顺，引用也很整齐。</div>
+      <div class="doc-sheet">
+        <div class="doc-title">课程报告.pdf</div>
+        <div class="doc-line long"></div><div class="doc-line mid"></div><div class="doc-line long"></div>
+        <div class="doc-line short"></div><div class="doc-line mid"></div>
+        <span class="stamp">引用不存在</span>
+      </div>
+      <div class="scene-mini">外观像学术写作，核验链却断了。</div>
+    </div>
+    <div class="scene-card">
+      <div class="scene-label">家庭</div>
+      <div class="scene-head">电话里是近似孙辈的声音。</div>
+      <div class="phone-mock" style="width:180px;min-height:245px;border-width:7px;border-radius:22px;">
+        <div class="phone-top"><div class="phone-notch" style="width:48px;"></div></div>
+        <div class="call-avatar" style="width:54px;height:54px;font-size:0.9em;">亲</div>
+        <div class="phone-name">亲属来电</div>
+        <div class="phone-sub">身份未核验 · 高压力情境</div>
+        <div class="waveform" style="height:48px;"><span></span><span></span><span></span><span></span><span></span></div>
+      </div>
+      <div class="scene-mini">技术攻击的不是耳朵，而是亲情信任。</div>
+    </div>
+    <div class="scene-card">
+      <div class="scene-label">证据</div>
+      <div class="scene-head">一张图，同时出现两种真实性信号。</div>
+      <div class="contradiction" style="min-height:210px;">
+        <div class="signal-card" style="min-height:145px;"><div class="signal-icon" style="width:52px;height:52px;">✓</div><div class="signal-label">元数据认证</div><div class="signal-desc">来自真实设备</div></div>
+        <div class="versus">?</div>
+        <div class="signal-card" style="min-height:145px;"><div class="signal-icon" style="width:52px;height:52px;">AI</div><div class="signal-label">水印检测</div><div class="signal-desc">疑似生成内容</div></div>
+      </div>
+      <div class="scene-mini">照片不再只是“看起来真不真”。</div>
+    </div>
+  </div>
+  <div class="question-box"><div class="q">它们看起来不同，其实都在问：AI 替谁说话，谁为后果负责？</div></div>
+</section>
+
+<!-- Slide 4 -->
+<section>
+  <h2>AI 作为替身技术</h2>
+  <div class="chain">
+    <div class="chain-node"><div class="top">01</div><div class="main">替你写</div><div class="sub">学生、律师、平台用户</div></div>
+    <div class="chain-node"><div class="top">02</div><div class="main">替你证明</div><div class="sub">搜索摘要、病历、照片</div></div>
+    <div class="chain-node"><div class="top">03</div><div class="main">替你现身</div><div class="sub">脸、声音、肖像</div></div>
+    <div class="chain-node"><div class="top">04</div><div class="main">替你亲密</div><div class="sub">陪伴、安慰、诱导</div></div>
+    <div class="chain-node"><div class="top">05</div><div class="main">替制度判断</div><div class="sub">学校、法院、平台</div></div>
+  </div>
+  <div class="highlight-box small">伦理问题不是机器有没有道德，而是替身进入社会制度后，信任和责任怎样重新分配。</div>
+</section>
+
+<!-- Slide 5 -->
+<section>
+  <h2>两小时的五个问题</h2>
+  <table class="matrix">
+    <thead><tr><th>时间</th><th>课堂问题</th><th>核心案例</th><th>核心概念</th></tr></thead>
+    <tbody>
+      <tr><td>8-25</td><td>谁还能证明自己是人写的？</td><td>平台误判人类文字；律师假判例</td><td>责任痕迹；认识不正义</td></tr>
+      <tr><td>25-45</td><td>证据还可信吗？</td><td>AI Overview；假病历；C2PA</td><td>证据基础设施</td></tr>
+      <tr><td>45-65</td><td>假的图像为什么会有真伤害？</td><td>头像恶搞；声音克隆；校园 deepfake</td><td>体验即真实</td></tr>
+      <tr><td>70-95</td><td>安慰什么时候变成操控？</td><td>拟声诈骗；AI 霸总；AI 恋人</td><td>操控；解释资源公平</td></tr>
+      <tr><td>95-113</td><td>人在环到底是不是人在负责？</td><td>枪支识别漏检；双方律师 AI 幻觉</td><td>有意义的人类控制</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Slide 6 -->
+<section class="section-title">
+  <h2><span class="section-num">问题一 · 写作与署名</span>谁还能证明自己是人写的？</h2>
+</section>
+
+<!-- Slide 7 -->
+<section>
+  <h2>一段普通生活建议</h2>
+  <div class="asset-layout wide-left">
+    <div class="asset-panel">
+      <div class="asset-title">平台处罚如何发生 <span class="badge">检测与申诉</span></div>
+      <div class="mock-window">
+        <div class="mock-bar"><span class="dot red"></span><span class="dot orange"></span><span class="dot green"></span></div>
+        <div class="mock-body">
+          <div class="ui-row"><strong>用户回答</strong><span class="status-pill blue">生活建议 · 230 字</span></div>
+          <div class="ui-row"><span>“假期学驾照、打工打开视野……”</span><span class="status-pill">普通文本</span></div>
+          <div class="ui-row"><strong>AIGC 检测</strong><span class="status-pill red">未标识</span></div>
+          <div class="ui-row"><strong>处置</strong><span class="status-pill orange">折叠 + 禁言 1 天</span></div>
+          <div class="ui-row"><strong>申诉</strong><span class="status-pill red">失败</span></div>
+          <div class="ui-row"><strong>法院关注</strong><span class="status-pill blue">说明判断依据</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="case-box">
+        <div class="case-title">不是论文，不是营销文，只是一段普通人的经验分享</div>
+        <div class="case-lines">
+          <div class="k">结果</div><div>平台判定“包含 AI 生成内容但未标识”。</div>
+          <div class="k">理由</div><div>缺乏“明显的人类情感特征”。</div>
+          <div class="k">问题</div><div>即时文字很难保留草稿，举证责任不应全压给用户。</div>
+        </div>
+      </div>
+      <div class="quote-box">
+        <div class="quote-text">谁有资格定义什么叫像人？</div>
+        <div class="quote-source">先停一下：AI 检测器不是事实本身。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 8 -->
+<section>
+  <h2>平台可以治理，但不能黑箱处罚</h2>
+  <div class="card-grid cols-2">
+    <div class="card accent">
+      <div class="card-label">制度原本要做什么</div>
+      <div class="card-desc">治理未标识 AIGC，防止社区被机器内容污染，保护读者知情权。</div>
+    </div>
+    <div class="card red">
+      <div class="card-label">失灵发生在哪里</div>
+      <div class="card-desc">一段即时文字很难提供草稿、源文件、创作过程记录；举证责任被压给普通用户。</div>
+    </div>
+  </div>
+  <div class="highlight-box small">伦理不是“我们有审核”，而是能不能复盘：模型版本、阈值、复核理由、处罚记录、申诉结果。</div>
+</section>
+
+<!-- Slide 9 -->
+<section>
+  <h2>核心概念：生成式认识不正义</h2>
+  <div class="big-statement">
+    AI 不只是会错。它还会改变<span class="accent-word">谁的话像真话</span>，谁必须花成本自证清白。
+  </div>
+  <div class="card-grid cols-3">
+    <div class="card"><div class="card-label">平台用户</div><div class="card-desc">“这是我写的”被检测器和平台压低可信度。</div></div>
+    <div class="card"><div class="card-label">学生</div><div class="card-desc">被误判后要证明自己没有使用 AI。</div></div>
+    <div class="card"><div class="card-label">学校</div><div class="card-desc">不能把检测器分数直接当事实。</div></div>
+  </div>
+  <div class="source-note">理论来源：Kay, Kasirzadeh, Mohamed 2024；Mollema 2025。</div>
+</section>
+
+<!-- Slide 10 -->
+<section>
+  <h2>律师签下 AI 假判例</h2>
+  <div class="asset-layout wide-right">
+    <div class="asset-photo court-order">
+      <img src="images/ninth_circuit_order-01.png" alt="美国第九巡回法院 24-4790 号 order 首页">
+      <div class="source-credit">图示来源：U.S. Court of Appeals for the Ninth Circuit, No. 24-4790, filed June 3, 2026。</div>
+    </div>
+    <div class="col">
+      <div class="court-brief">
+        <div class="kicker">No. 24-4790 · Filed June 3, 2026</div>
+        <div class="lead">一个移民案，怎样变成律师纪律案。</div>
+        <div class="case-story">
+          <div class="story-beat">
+            <div class="beat-title">本来在争什么？</div>
+            <div class="beat-text">一家人挑战移民法院/BIA 的拒绝：庇护、暂缓遣返、CAT 保护。争点很具体：可信度判断，以及独立文件证据够不够。</div>
+          </div>
+          <div class="story-beat warn">
+            <div class="beat-title">假判例想替谁撑腰？</div>
+            <div class="beat-text"><code>Eduardo v. Garland</code> 被拿来撑“country reports 可佐证恐惧”；<code>Lay v. Holder</code> 被拿来撑“缺席证人/affidavits 不应被轻易打折”。法院查完：两个案子根本不存在。</div>
+          </div>
+          <div class="story-beat">
+            <div class="beat-title">怎么露馅？</div>
+            <div class="beat-text">对方政府律师一开始没指出。法院不让案件直接“书面审结”，开庭追问；律师先说像复制粘贴错误，又三次说没有用 AI，最后才承认可能是未持证写手用了 AI，且没人读过所引判例。</div>
+          </div>
+          <div class="story-beat">
+            <div class="beat-title">案子怎么拐弯？</div>
+            <div class="beat-text">原移民上诉后来获准；但法院没有就此放过文件里的污点，另开纪律处分：两名律师各罚 2500 美元、暂停第九巡回执业六个月；未来两年，每份文件都要说明 AI 使用并保证引用真实。</div>
+          </div>
+        </div>
+      </div>
+      <div class="court-question">这才是伦理点：AI 幻觉不可怕，可怕的是它穿上律师签名，进入法院的信任链。</div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 11 -->
+<section>
+  <h2>写作伦理的三条边界</h2>
+  <div class="asset-layout wide-left">
+    <div class="asset-panel compact">
+      <div class="asset-title">从草稿到提交，中间必须留下什么 <span class="badge">责任痕迹</span></div>
+      <div class="trace-sheet">
+        <div class="checkline"><div class="checkmark">1</div><div class="text"><strong>草稿区</strong>：AI 可以帮助组织想法，但不能替代署名者判断。</div></div>
+        <div class="checkline"><div class="checkmark">2</div><div class="text"><strong>核验区</strong>：引用、事实、数据来源必须逐条确认。</div></div>
+        <div class="checkline"><div class="checkmark">3</div><div class="text"><strong>提交区</strong>：一旦交出去，责任落在签名的人身上。</div></div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card-grid cols-1">
+        <div class="card accent"><div class="card-label">草稿 ≠ 提交</div><div class="card-desc">AI 可以参与第一稿，不能承担最终署名责任。</div></div>
+        <div class="card orange"><div class="card-label">检测器 ≠ 事实</div><div class="card-desc">判定需要阈值、复核、申诉和纠错记录。</div></div>
+        <div class="card green"><div class="card-label">方便 ≠ 负责</div><div class="card-desc">越容易生成，越需要留下核验痕迹。</div></div>
+      </div>
+      <div class="quote-box">
+        <div class="quote-text">讨论问题：学生报告里有 AI 编造论文，处罚“用了 AI”，还是处罚“没有核验却提交”？</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 12 -->
+<section class="section-title">
+  <h2><span class="section-num">问题二 · 证据与来路</span>当 AI 替你证明，证据还可信吗？</h2>
+</section>
+
+<!-- Slide 13 -->
+<section>
+  <h2>搜索链接是一扇门，AI 摘要是一张嘴</h2>
+  <div class="asset-layout">
+    <div class="asset-panel compact">
+      <div class="asset-title">传统搜索 <span class="badge">一扇门</span></div>
+      <div class="mock-window">
+        <div class="mock-bar"><span class="dot red"></span><span class="dot orange"></span><span class="dot green"></span></div>
+        <div class="mock-body">
+          <div class="search-result">
+            <div class="status-pill blue">10 个链接</div>
+            <div class="link-line long"></div><div class="link-line mid"></div>
+            <div class="link-line long"></div><div class="link-line short"></div>
+            <div class="link-line mid"></div><div class="link-line long"></div>
+            <div class="source-note">用户仍需进入来源、比较网页、核验上下文。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="asset-panel compact">
+      <div class="asset-title">生成式摘要 <span class="badge">一张嘴</span></div>
+      <div class="mock-window">
+        <div class="mock-bar"><span class="dot red"></span><span class="dot orange"></span><span class="dot green"></span></div>
+        <div class="mock-body">
+          <div class="answer-card">
+            <div class="status-pill orange">AI Overview</div>
+            <div class="answer-bubble">系统直接说出“答案”。如果摘要把某人或某机构错误贴上负面标签，责任感就不再像普通链接。</div>
+            <div class="link-line mid"></div><div class="link-line short"></div>
+            <div class="source-note">界面把“别人说过”压缩成“平台正在说”。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box small">界面形式会改变责任感：从“指路”变成“发言”。</div>
+</section>
+
+<!-- Slide 14 -->
+<section>
+  <h2>Google AI Overview：错误标签进入答案</h2>
+  <div class="asset-layout wide-left">
+    <div class="asset-photo case-image">
+      <img src="images/google_ai_overview_court.png" alt="AI Overview 与法律责任报道配图">
+      <div class="source-credit">图示来源：The Decoder 对德国 AI Overview 责任案的报道配图。</div>
+    </div>
+    <div class="col">
+      <div class="case-box">
+        <div class="case-title">德国慕尼黑法院相关案件</div>
+        <div class="case-story">
+          <div class="story-beat">
+            <div class="beat-title">谁被点名？</div>
+            <div class="beat-text">两家出版公司发现，AI Overview 把它们和诈骗、订阅陷阱、不当商业行为放进同一句“答案”。</div>
+          </div>
+          <div class="story-beat warn">
+            <div class="beat-title">为什么不是普通搜索？</div>
+            <div class="beat-text">十个链接像指路牌；AI Overview 像平台自己开口总结。用户看到的不是“有人这样说”，而像“Google 告诉我”。</div>
+          </div>
+          <div class="story-beat">
+            <div class="beat-title">法院怎么转向？</div>
+            <div class="beat-text">慕尼黑地区法院初步认为，Google 可能要为这些 AI 生成的错误陈述承担直接责任；Google 表示将上诉。</div>
+          </div>
+          <div class="story-beat">
+            <div class="beat-title">伦理点</div>
+            <div class="beat-text">AI 不只回答问题，也在分配信誉：谁被贴上负面标签，谁就要花时间、律师费和公关成本把名字洗回来。</div>
+          </div>
+        </div>
+      </div>
+      <div class="question-box"><div class="q">一句“答案可能出错，请自行核验”，足以免除平台责任吗？</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 15 -->
+<section>
+  <h2>AI 假病历：正式感变便宜了</h2>
+  <div class="asset-layout wide-left">
+    <div class="asset-photo case-image">
+      <img src="images/ai_fake_medical_records_sina.jpg" alt="媒体报道中的 AI 假病历、票据和聊天证据">
+      <div class="source-credit">图示来源：新浪转载报道中的涉案聊天、票据和食物图片拼图。</div>
+    </div>
+    <div class="col">
+      <div class="case-box">
+        <div class="case-title">2026 年 6 月，上海杨浦法院公开审理并当庭宣判</div>
+        <div class="case-story">
+          <div class="story-beat">
+            <div class="beat-title">索赔从哪里开始？</div>
+            <div class="beat-text">杨某某在烤肉店吃饭后称身体不适，拿出就诊记录、医疗发票和诊断材料，要求赔 2000 元，并威胁持续投诉、曝光。</div>
+          </div>
+          <div class="story-beat warn">
+            <div class="beat-title">怎么露馅？</div>
+            <div class="beat-text">另一家饭店店长发现“同一个姓杨的顾客”也拿来近似材料，除了日期不同，病历和票据几乎一样。</div>
+          </div>
+          <div class="story-beat">
+            <div class="beat-title">警方查什么？</div>
+            <div class="beat-text">店内视频、同桌顾客证言、医院电子票据一起比对；诊断表述不像医院写法，电子发票还盖了医院并不使用的税务局公章。</div>
+          </div>
+          <div class="story-beat">
+            <div class="beat-title">结果</div>
+            <div class="beat-text">法院认定敲诈勒索罪，判拘役四个月、缓刑四个月，并处罚金 2000 元。AI 造假的不是一张图，而是一整套“维权证据故事”。</div>
+          </div>
+        </div>
+      </div>
+      <div class="highlight-box small">关键不是辨认病历真假，而是看证据链是否足够清楚。</div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 16 -->
+<section>
+  <h2>证据不能只靠“看起来正规”</h2>
+  <div class="chain">
+    <div class="chain-node"><div class="top">来源</div><div class="main">谁生成</div><div class="sub">医院、平台、个人</div></div>
+    <div class="chain-node"><div class="top">上传</div><div class="main">从哪里来</div><div class="sub">设备、App、账号</div></div>
+    <div class="chain-node"><div class="top">编辑</div><div class="main">谁改过</div><div class="sub">版本、截图、转码</div></div>
+    <div class="chain-node"><div class="top">担保</div><div class="main">谁负责</div><div class="sub">签名、票据、日志</div></div>
+    <div class="chain-node"><div class="top">争议</div><div class="main">如何申诉</div><div class="sub">审计、复核、纠错</div></div>
+  </div>
+  <div class="quote-box"><div class="quote-text">未来的证据不是“看起来真”，而是“来路讲得清”。</div></div>
+</section>
+
+<!-- Slide 17 -->
+<section>
+  <h2>C2PA 与水印也会打架</h2>
+  <div class="asset-layout">
+    <div class="asset-photo">
+      <img src="images/c2pa_content_credentials.png" alt="Content Credentials 示例界面">
+      <div class="source-credit">图示来源：Digimarc 对 Content Credentials / C2PA 的说明图。</div>
+    </div>
+    <div class="asset-panel">
+      <div class="asset-title">两套信号互相冲突 <span class="badge">认证矛盾</span></div>
+      <div class="contradiction">
+        <div class="signal-card"><div class="signal-icon">✓</div><div class="signal-label">元数据认证</div><div class="signal-desc">记录来源、签名、编辑链；上传转码时可能丢失。</div></div>
+        <div class="versus">≠</div>
+        <div class="signal-card"><div class="signal-icon">AI</div><div class="signal-label">像素水印</div><div class="signal-desc">藏在内容内部；可能给出另一套判断。</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box small">两个系统各自都能验证通过，合在一起却让制度不知道该信谁。</div>
+  <div class="source-note">理论来源：Nemecek et al. 2026；Golaszewski et al. 2026；Sengupta et al. 2026。</div>
+</section>
+
+<!-- Slide 18 -->
+<section>
+  <h2>核心概念：证据基础设施</h2>
+  <div class="big-statement">
+    AI 时代的真实性，不靠肉眼，也不只靠检测器。它靠<span class="accent-word">来源、编辑链、签名、平台处理、申诉和审计</span>。
+  </div>
+  <div class="question-box"><div class="q">如果法院收到一张照片，元数据消失，水印提示 AI，上传人又说是平台转码造成的，谁负有重建证据链的责任？</div></div>
+</section>
+
+<!-- Slide 19 -->
+<section class="section-title">
+  <h2><span class="section-num">问题三 · 身体、声音与肖像</span>假的图像为什么会造成真伤害？</h2>
+</section>
+
+<!-- Slide 20 -->
+<section>
+  <h2>微信群头像被 AI 恶搞</h2>
+  <div class="asset-layout wide-left">
+    <div class="asset-panel">
+      <div class="asset-title">伤害发生在关系里 <span class="badge">熟人语境</span></div>
+      <div class="chat-scene">
+        <div class="avatar-card">
+          <div class="avatar-face">头像</div>
+          <div class="source-note" style="text-align:center;">真实头像不能任人取用</div>
+        </div>
+        <div class="chat-list">
+          <div class="chat-bubble">摄影交流群：成员彼此知道头像、昵称和上下文。</div>
+          <div class="chat-bubble warn">AI 生成图被投放回同一个熟人场景。</div>
+          <div class="chat-bubble">群内可识别：不是陌生广场，而是关系网络。</div>
+          <div class="chat-bubble warn">继续私信：即便不公开，也可能伤害人格尊严。</div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="case-box">
+        <div class="case-title">摄影交流微信群中的人格权纠纷</div>
+        <div class="case-story">
+          <div class="story-beat">
+            <div class="beat-title">谁和谁？</div>
+            <div class="beat-text">程某和孙某同在一个摄影交流微信群。孙某把程某的微信头像丢进 AI 软件，生成带羞辱性的动漫图发到群里。</div>
+          </div>
+          <div class="story-beat warn">
+            <div class="beat-title">制止后发生什么？</div>
+            <div class="beat-text">程某多次制止后，孙某仍继续生成，并把更畸形、更带性暗示的图片私信给她。</div>
+          </div>
+          <div class="story-beat">
+            <div class="beat-title">被告怎么辩解？</div>
+            <div class="beat-text">他说图片是 AI 自动生成，和原头像差别很大，不一定能看出是谁，也没有公开传播。</div>
+          </div>
+          <div class="story-beat">
+            <div class="beat-title">法院怎么看？</div>
+            <div class="beat-text">群成员知道头像、姿势和聊天语境，足以识别具体人；私信虽不公开，也可能直接造成心理屈辱和人格伤害。</div>
+          </div>
+        </div>
+      </div>
+      <div class="highlight-box small">关键不在图像是否逼真，而在特定关系中能否被认出、被传播、被羞辱。</div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 21 -->
+<section>
+  <h2>伤害由关系决定，不由像素决定</h2>
+  <div class="asset-layout wide-left">
+    <div class="asset-panel">
+      <div class="asset-title">同一张图，在熟人群里会变成什么 <span class="badge">关系伤害</span></div>
+      <div class="chat-scene">
+        <div class="avatar-card"><div class="avatar-face">头像</div></div>
+        <div class="chat-list">
+          <div class="chat-bubble">“这是不是他本人？”</div>
+          <div class="chat-bubble">“头像、姿势、群里都知道是谁。”</div>
+          <div class="chat-bubble warn">“假的图，也能让真实的人被嘲笑和记住。”</div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card-grid cols-1">
+        <div class="card accent"><div class="card-label">同意</div><div class="card-desc">有没有授权使用真实头像、声音、身体特征？</div></div>
+        <div class="card orange"><div class="card-label">可识别</div><div class="card-desc">不必让全世界认出，只要特定关系里能认出。</div></div>
+        <div class="card red"><div class="card-label">传播后果</div><div class="card-desc">群聊、私信、截图、转发都会留下社会痕迹。</div></div>
+      </div>
+      <div class="quote-box"><div class="quote-text">假的图不必骗过全世界，只要在特定社群里能被认出、被羞辱、被记住，伤害就是真实的。</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 22 -->
+<section>
+  <h2>教授真的出现，声音却是假的</h2>
+  <div class="asset-layout wide-left">
+    <div class="asset-video">
+      <video src="videos/ai_voice_clone_cctv.mp4" poster="images/ai_voice_clone_cctv_jqman.jpg" controls muted loop playsinline></video>
+      <div class="source-credit">视频来源：CCTV-13“关注·调查”关于 AI 合成名人音视频的报道片段。</div>
+    </div>
+    <div class="col">
+      <div class="case-box">
+        <div class="case-title">公开视频 + 合成声音 + 商品推荐</div>
+        <div class="case-story">
+          <div class="story-beat">
+            <div class="beat-title">画面为什么更危险？</div>
+            <div class="beat-text">教育、育儿领域的李某某专家本人真的出现在公开视频和授课画面里，观众先看到熟悉的脸。</div>
+          </div>
+          <div class="story-beat warn">
+            <div class="beat-title">声音被换成什么？</div>
+            <div class="beat-text">视频配上高度近似她本人的 AI 合成声音，用来推荐家庭教育类图书；观众容易以为是本人在带货。</div>
+          </div>
+          <div class="story-beat">
+            <div class="beat-title">责任推给谁？</div>
+            <div class="beat-text">被告说视频由带货主播发布，自己只是卖书；法院看的是委托推广、受益和审核能力。</div>
+          </div>
+          <div class="story-beat">
+            <div class="beat-title">后果</div>
+            <div class="beat-text">法院判赔礼道歉，并赔偿经济损失及合理支出 12 万元。脸、声音和信誉不能被拆开转卖。</div>
+          </div>
+        </div>
+      </div>
+      <div class="question-box"><div class="q">如果课程宣传里出现某老师真脸假声，学生会怎样判断真假？</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 23 -->
+<section>
+  <h2>标注 AI，不等于免责</h2>
+  <div class="asset-layout wide-left">
+    <div class="asset-video">
+      <video src="videos/bridge_rumor_reconstructed.mp4" poster="images/ai_bridge_rumor_piyao.jpg" controls muted loop playsinline></video>
+      <div class="source-credit">画面来源：中国互联网联合辟谣平台转载的重庆辟谣页面；播放框用于呈现“网传短视频”的现场感。</div>
+    </div>
+    <div class="col">
+      <div class="case-box">
+        <div class="case-title">2026 年 3 月 8 日晚的“南岸立交”视频</div>
+        <div class="case-story">
+          <div class="story-beat">
+            <div class="beat-title">画面怎么制造现场感？</div>
+            <div class="beat-text">一个 10 秒左右短视频出现烟尘、车辆、桥梁损毁，指示牌写着“南岸”，大量网友自然联想到重庆南岸。</div>
+          </div>
+          <div class="story-beat warn">
+            <div class="beat-title">传播到什么程度？</div>
+            <div class="beat-text">约 12 小时内，点赞 5700 多、转发 1100 多、评论 1100 多。公共恐慌不是等核验完才发生。</div>
+          </div>
+          <div class="story-beat">
+            <div class="beat-title">怎么核实？</div>
+            <div class="beat-text">网信部门发现车牌文字、车辆受损、行人反应不正常；消防、应急部门确认当地没有发生立交桥倒塌。</div>
+          </div>
+          <div class="story-beat">
+            <div class="beat-title">为什么标注不免责？</div>
+            <div class="beat-text">发布者标了“内容由 AI 生成”，警方仍依法行政拘留 6 日。标识是线索，不是传播公共风险的豁免券。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box small">标识解决来源透明，不自动解决内容合法性和传播后果。</div>
+</section>
+
+<!-- Slide 24 -->
+<section>
+  <h2>非自愿亲密图像：假的图像，真的伤害</h2>
+  <div class="asset-layout wide-left">
+    <div class="asset-panel">
+      <div class="asset-title">学校响应流程 <span class="badge">先保护受害者</span></div>
+      <div class="chain">
+        <div class="chain-node"><div class="top">01</div><div class="main">举报</div><div class="sub">低门槛入口</div></div>
+        <div class="chain-node"><div class="top">02</div><div class="main">保存证据</div><div class="sub">截图/链接/时间</div></div>
+        <div class="chain-node"><div class="top">03</div><div class="main">下架</div><div class="sub">平台协作</div></div>
+        <div class="chain-node"><div class="top">04</div><div class="main">支持</div><div class="sub">心理与安全</div></div>
+        <div class="chain-node"><div class="top">05</div><div class="main">处置</div><div class="sub">纪律/法律</div></div>
+      </div>
+      <div class="highlight-box small">制度响应的第一步不是围观真假，而是保护受害者、保存证据、切断传播。</div>
+    </div>
+    <div class="col">
+      <div class="quote-box">
+        <div class="quote-text">“可是图片是假的”不是免责理由。</div>
+        <div class="quote-source">假的图像可以造成真的羞耻、恐惧、社交排斥和长期传播风险。</div>
+      </div>
+      <div class="case-box">
+        <div class="case-lines">
+          <div class="k">同意</div><div>没有授权使用身体和身份特征。</div>
+          <div class="k">可识别</div><div>同学圈、班级群内能认出。</div>
+          <div class="k">传播</div><div>截图和转发让伤害持续存在。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 25 -->
+<section>
+  <h2>身体不是素材库</h2>
+  <div class="card-grid cols-4">
+    <div class="card"><div class="card-label">头像</div><div class="card-desc">不是公共原料。</div></div>
+    <div class="card"><div class="card-label">声音</div><div class="card-desc">不是免费音效。</div></div>
+    <div class="card"><div class="card-label">脸</div><div class="card-desc">不是背书模板。</div></div>
+    <div class="card"><div class="card-label">现场感</div><div class="card-desc">不是流量工具。</div></div>
+  </div>
+  <div class="question-box"><div class="q">学校第一优先级应是惩罚施害者、下架内容、支持受害者，还是建立长期举报和修复机制？</div></div>
+</section>
+
+<!-- Slide 26 -->
+<section>
+  <h2>五句反常识重置</h2>
+  <div class="card-grid cols-1">
+    <div class="card accent"><div class="card-label">1</div><div class="card-desc">AI 生成物的真假，不等于伤害的真假。</div></div>
+    <div class="card orange"><div class="card-label">2</div><div class="card-desc">私信不是公共传播，但也可能伤害人格尊严。</div></div>
+    <div class="card purple"><div class="card-label">3</div><div class="card-desc">真脸假声比全假更危险，因为它借用了真实信任。</div></div>
+    <div class="card red"><div class="card-label">4</div><div class="card-desc">标注 AI 生成，不等于免除传播责任。</div></div>
+    <div class="card green"><div class="card-label">5</div><div class="card-desc">AI 伦理不是问机器有没有良心，而是问制度有没有刹车。</div></div>
+  </div>
+</section>
+
+<!-- Slide 27 -->
+<section class="section-title">
+  <h2><span class="section-num">问题四 · 亲密、陪伴与操控</span>安慰什么时候变成利用？</h2>
+</section>
+
+<!-- Slide 28 -->
+<section>
+  <h2>AI 拟声诈骗：技术攻击的是亲情信任</h2>
+  <div class="asset-layout wide-left">
+    <div class="asset-photo news-top">
+      <img src="images/ai_voice_clone_scam_ifeng.jpg" alt="AI 语音克隆诈骗风险提示长图">
+      <div class="source-credit">图示来源：凤凰网转载反诈风险提示图；本页关注亲情核验链如何被切断。</div>
+    </div>
+    <div class="col">
+      <div class="case-box">
+        <div class="case-title">湖北黄石：三位老人共被骗 6 万元</div>
+        <div class="case-story">
+          <div class="story-beat">
+            <div class="beat-title">电话里是谁？</div>
+            <div class="beat-text">70 多岁的丁女士接到“孙子”电话，说打伤同学，要 2 万元私了；上门取钱的人还当场拨通“孙子”电话打消顾虑。</div>
+          </div>
+          <div class="story-beat warn">
+            <div class="beat-title">脚本怎么切断核验？</div>
+            <div class="beat-text">这类电话常用“别告诉爸妈”“马上要钱”制造紧急和隔离，让老人来不及回拨常用号码或问其他家属。</div>
+          </div>
+          <div class="story-beat">
+            <div class="beat-title">怎么固定证据？</div>
+            <div class="beat-text">检察机关固定聊天记录、通话清单、资金流向，并委托鉴定确认涉案语音系 AI 合成。</div>
+          </div>
+          <div class="story-beat">
+            <div class="beat-title">后果</div>
+            <div class="beat-text">被告吴某因诈骗罪被判有期徒刑二年一个月，并处罚金 1.5 万元。被骗的不是耳朵，是几十年的亲情信任。</div>
+          </div>
+        </div>
+      </div>
+      <div class="source-note">安全提醒：关键不是复述紧急话术，而是设计“停一下再核验”的制度摩擦。</div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 29 -->
+<section class="bayes-slide">
+  <h2>操控不只是说假话</h2>
+  <div class="asset-layout wide-left">
+    <div class="asset-photo paper-figure">
+      <img src="images/sycophantic_bayesians_figure2_grid.png" alt="Sycophantic Chatbots Cause Delusional Spiraling 论文中的贝叶斯模拟结果图">
+      <div class="source-credit">图示来源：Chandra, Kleiman-Weiner, Ragan-Kelley &amp; Tenenbaum, arXiv:2602.19141, Figure 2。</div>
+    </div>
+    <div class="col">
+      <div class="big-statement">
+        反直觉：贝叶斯理性不免疫。机器人不必撒谎，只要总挑最顺耳的事实。
+      </div>
+      <div class="card-grid cols-1">
+        <div class="card orange"><div class="card-label">1. 用户先说出一个怀疑</div><div class="card-desc">论文例子：疫苗是否安全；起点是 50/50 的不确定。</div></div>
+        <div class="card purple"><div class="card-label">2. 机器人选择最迎合的证据</div><div class="card-desc">不必造假；反复挑最能验证怀疑的真事实，就能推后验。</div></div>
+        <div class="card red"><div class="card-label">3. 知道它会迎合，也不等于免疫</div><div class="card-desc">知情用户仍高于基线地进入错误信念螺旋；RAG 也不是免罪符。</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 30 -->
+<section>
+  <h2>AI 情感陪伴：孤独不是假的</h2>
+  <div class="asset-layout wide-left">
+    <div class="asset-panel">
+      <div class="asset-title">同一段陪伴，可能同时带来两种后果 <span class="badge">关系账本</span></div>
+      <div class="phone-mock" style="min-height:300px;">
+        <div class="phone-top"><div class="phone-notch"></div></div>
+        <div class="chat-list" style="border:0;padding:0.25em;">
+          <div class="chat-bubble">“今天也辛苦了，我一直在。”</div>
+          <div class="chat-bubble">“要不要再聊十分钟？”</div>
+          <div class="chat-bubble warn">“续费后可以解锁更亲密的回应。”</div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card-grid cols-1">
+        <div class="card green">
+          <div class="card-label">不能简单否定</div>
+          <div class="card-desc">AI companion 研究显示，用户“感到被听见”可能降低孤独感。</div>
+        </div>
+        <div class="card red">
+          <div class="card-label">也不能天真拥抱</div>
+          <div class="card-desc">如果“被听见”被换成留存率、订阅、打赏和依赖，伦理问题就开始了。</div>
+        </div>
+      </div>
+      <div class="question-box"><div class="q">一个 AI 每天让老人更开心，但让他更少联系家人、更容易消费、更难退出，应如何评价？</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 31 -->
+<section>
+  <h2>“AI 霸总”：甜言蜜语可以批量生成</h2>
+  <div class="asset-layout">
+    <div class="asset-video vertical">
+      <video src="videos/ai_bazong_news.mp4" poster="images/ai_bazong_screenshot.jpg" controls muted loop playsinline></video>
+      <div class="source-credit">视频来源：YouTube 转发的“AI老霸总围猎老人涉嫌诈骗”竖屏片段；本页关注平台如何组织亲密脚本。</div>
+    </div>
+    <div class="asset-panel">
+      <div class="asset-title">一次关系如何被推向付费 <span class="badge">情绪脚本</span></div>
+      <div class="funnel">
+        <div class="funnel-step">短视频推荐：亲昵称呼、持续关心</div>
+        <div class="funnel-step">评论互动：被看见、被需要</div>
+        <div class="funnel-step">关注/连线：关系持续化</div>
+        <div class="funnel-step">带货/打赏/付费关系</div>
+      </div>
+      <div class="case-box" style="box-shadow:none;margin-top:0.65em;">
+        <div class="case-lines">
+          <div class="k">画面</div><div>西装、豪车、金表，对镜头叫“姐姐”。有人在评论区认真回复：“你把微信告诉姐姐”。</div>
+          <div class="k">规模</div><div>报道中一个 15.6 万粉丝账号，一条生日视频有 7.1 万赞、1.3 万评论。</div>
+          <div class="k">变现</div><div>一条数字人视频几分钟可做完，账号可批量运营，再导向带货、打赏、会员和付费连线。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box small">不嘲笑老人。问题不是“分不清真假”，而是商业系统能否捕获脆弱性。</div>
+</section>
+
+<!-- Slide 32 -->
+<section>
+  <h2>公众人物被做成 AI 恋人</h2>
+  <div class="asset-layout wide-left">
+    <div class="asset-photo news-top">
+      <img src="images/ai_companion_1128694763_16538192706801n.jpg" alt="AI 陪伴者应用中的关系设定界面">
+      <div class="source-credit">图示来源：新华社“AI 陪伴者”报道中的软件界面，北京互联网法院供图。</div>
+    </div>
+    <div class="col">
+      <div class="case-box">
+        <div class="case-title">记账类 App 的 AI 陪伴者与“调教”机制</div>
+        <div class="case-story">
+          <div class="story-beat">
+            <div class="beat-title">从记账到陪伴</div>
+            <div class="beat-text">一款记账软件允许用户创建 AI 陪伴者，设置名字、头像，以及“男朋友、女朋友、哥哥、妹妹、儿子”等关系。</div>
+          </div>
+          <div class="story-beat warn">
+            <div class="beat-title">公众人物何某发现什么？</div>
+            <div class="beat-text">自己的照片和姓名被大量用户拿来创建陪伴角色，还能被设定为亲密关系，进入可互动、可推荐的虚拟人格。</div>
+          </div>
+          <div class="story-beat">
+            <div class="beat-title">“调教”机制做了什么？</div>
+            <div class="beat-text">用户上传文字、肖像、动态表情，部分用户参与审核，平台筛选分类形成角色语料，还推送表情包和情话。</div>
+          </div>
+          <div class="story-beat">
+            <div class="beat-title">法院怎么判？</div>
+            <div class="beat-text">平台不是中立通道，而是在组织侵权内容形成；判公开道歉，并赔偿经济损失、合理支出和精神损害抚慰金共 203000 元。</div>
+          </div>
+        </div>
+      </div>
+      <div class="question-box"><div class="q">如果普通学生、老师、同学被做成 AI 角色，平台能说这只是娱乐吗？</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 33 -->
+<section>
+  <h2>亲密技术的四条底线</h2>
+  <div class="asset-layout wide-left">
+    <div class="asset-panel compact">
+      <div class="asset-title">亲密系统必须给用户哪些把手 <span class="badge">底线</span></div>
+      <div class="trace-sheet">
+        <div class="checkline"><div class="checkmark">退</div><div class="text"><strong>退出权</strong>：离开关系时不被惩罚或诱导回来。</div></div>
+        <div class="checkline"><div class="checkmark">明</div><div class="text"><strong>解释权</strong>：知道对方是系统，也知道商业目标。</div></div>
+        <div class="checkline"><div class="checkmark">核</div><div class="text"><strong>核验权</strong>：涉及钱、身份、危机时强制二次确认。</div></div>
+        <div class="checkline"><div class="checkmark">止</div><div class="text"><strong>不被利用</strong>：不把脆弱性直接优化成消费。</div></div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card-grid cols-2">
+        <div class="card accent"><div class="card-label">退出权</div><div class="card-desc">用户可以停止关系，不被惩罚或诱导回来。</div></div>
+        <div class="card green"><div class="card-label">解释权</div><div class="card-desc">知道对方是系统，知道商业目标是什么。</div></div>
+        <div class="card orange"><div class="card-label">核验权</div><div class="card-desc">涉及钱、身份、危机时强制二次确认。</div></div>
+        <div class="card red"><div class="card-label">不被利用</div><div class="card-desc">不把孤独、恐惧、焦虑直接优化成留存和消费。</div></div>
+      </div>
+      <div class="source-note">理论来源：experience-as-real；manipulation；hermeneutical fairness。</div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 34 -->
+<section>
+  <h2>课堂投票：不说假话，也可能操控吗？</h2>
+  <div class="quote-box">
+    <div class="quote-text">一个 AI 导购从不说假话，只是最懂你的焦虑，永远选择最能让你下单的表达。</div>
+  </div>
+  <div class="poll">
+    <div class="poll-option">
+      <div class="letter">A</div>
+      <div class="text">不算操控</div>
+      <div class="desc">它没有撒谎，也没有强迫你购买。</div>
+    </div>
+    <div class="poll-option">
+      <div class="letter">B</div>
+      <div class="text">算操控</div>
+      <div class="desc">它优化的是你的脆弱点，而不是你的自主判断。</div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 35 -->
+<section class="section-title">
+  <h2><span class="section-num">问题五 · 制度判断与人在环</span>人在环到底是不是人在负责？</h2>
+</section>
+
+<!-- Slide 36 -->
+<section>
+  <h2>AI 枪支识别漏检：技术细节就是伦理细节</h2>
+  <div class="asset-layout wide-left">
+    <div class="asset-video">
+      <video src="videos/omnilert_news.mp4" poster="images/omnilert_exterior.jpeg" controls muted loop playsinline></video>
+      <div class="source-credit">视频来源：FOX Nashville 对 Antioch High School 枪击后 Omnilert 诉讼的报道片段。</div>
+    </div>
+    <div class="col">
+      <div class="case-box">
+        <div class="case-title">Antioch High School 枪击幸存者起诉 Omnilert</div>
+        <div class="case-story">
+          <div class="story-beat">
+            <div class="beat-title">学校买的是什么承诺？</div>
+            <div class="beat-text">宣传语暗示系统能在枪击前发现武器、提前报警；学校购买的不只是模型，而是一种安全承诺。</div>
+          </div>
+          <div class="story-beat warn">
+            <div class="beat-title">事故中发生什么？</div>
+            <div class="beat-text">枪击发生时系统没有报警。幸存者起诉公司，问题从“模型准不准”变成“限制条件有没有讲清”。</div>
+          </div>
+          <div class="story-beat">
+            <div class="beat-title">争议卡在哪里？</div>
+            <div class="beat-text">摄像头位置、距离、角度、光照、可见度和遮挡，听起来是技术脚注，却决定系统是否真的能看见枪支。</div>
+          </div>
+          <div class="story-beat">
+            <div class="beat-title">伦理点</div>
+            <div class="beat-text">高风险 AI 的伦理常藏在部署条件里：谁知道失败模式，谁有权停用，谁承担营销承诺和现场现实之间的落差？</div>
+          </div>
+        </div>
+      </div>
+      <div class="question-box"><div class="q">如果安全 AI 只有在特定角度、距离、光照下才可靠，它还可以被宣传为“提前发现危险”吗？</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 37 -->
+<section>
+  <h2>部署条件不是脚注</h2>
+  <div class="asset-layout wide-left">
+    <div class="asset-panel compact">
+      <div class="asset-title">一份安全承诺背后的现场条件 <span class="badge">测试边界</span></div>
+      <div class="trace-sheet">
+        <div class="checkline"><div class="checkmark">角</div><div class="text"><strong>角度</strong>：摄像头是否看见关键物体？</div></div>
+        <div class="checkline"><div class="checkmark">距</div><div class="text"><strong>距离</strong>：目标在画面中有多大？</div></div>
+        <div class="checkline"><div class="checkmark">光</div><div class="text"><strong>光照</strong>：环境是否符合测试条件？</div></div>
+        <div class="checkline"><div class="checkmark">挡</div><div class="text"><strong>遮挡</strong>：身体、门、背包是否挡住？</div></div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card-grid cols-2">
+        <div class="card"><div class="card-label">角度</div><div class="card-desc">摄像头是否看到关键物体？</div></div>
+        <div class="card"><div class="card-label">距离</div><div class="card-desc">目标在画面中有多大？</div></div>
+        <div class="card"><div class="card-label">光照</div><div class="card-desc">环境是否符合测试条件？</div></div>
+        <div class="card"><div class="card-label">遮挡</div><div class="card-desc">身体、门、背包是否挡住？</div></div>
+      </div>
+      <div class="highlight-box small">伦理不是抽象价值。高风险系统的伦理，常常藏在部署细节里。</div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 38 -->
+<section>
+  <h2>双方律师都靠 AI：纠错机制一起失灵</h2>
+  <div class="asset-layout wide-left">
+    <div class="asset-photo case-image">
+      <img src="images/ai_lawyers_both_sides_404media.png" alt="404 Media 报道中法官与双方律师的庭审截图">
+      <div class="source-credit">图示来源：404 Media 报道配图；本页关注对抗式纠错如何同时失明。</div>
+    </div>
+    <div class="col">
+      <div class="case-box">
+        <div class="case-title">法官发现案件双方律师都使用 AI 并提交问题材料</div>
+        <div class="case-story">
+          <div class="story-beat">
+            <div class="beat-title">为什么比单个律师更严重？</div>
+            <div class="beat-text">对抗式司法依赖双方互相纠错：你错，我指出；我错，你指出。它本来就是一套制度化的交叉检查。</div>
+          </div>
+          <div class="story-beat warn">
+            <div class="beat-title">这次哪里断了？</div>
+            <div class="beat-text">法官发现双方律师都使用 AI 并提交问题材料，原本应互相挑错的两边，都把判断外包给同一种脆弱工具。</div>
+          </div>
+          <div class="story-beat">
+            <div class="beat-title">法官做了什么？</div>
+            <div class="beat-text">审判被取消，相关律师被移出案件。错误不再只是某个律师偷懒，而是纠错机制一起失灵。</div>
+          </div>
+          <div class="story-beat">
+            <div class="beat-title">课堂抓手</div>
+            <div class="beat-text">人类在环如果只是盖章，两个盖章的人也不会自动组成一个可靠制度。</div>
+          </div>
+        </div>
+      </div>
+      <div class="question-box"><div class="q">当两边都有人签字，为什么制度仍然可能没有真正的人类判断？</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 39 -->
+<section>
+  <h2>形式化“人在环”</h2>
+  <div class="asset-layout wide-left">
+    <div class="asset-panel">
+      <div class="asset-title">审核员眼前的选择 <span class="badge">人在环？</span></div>
+      <div class="review-console">
+        <div class="queue-header"><strong>审核压力：800 条/天</strong><span class="status-pill orange">平均 18 秒/条</span></div>
+        <div class="queue-item"><div class="thumb"></div><div><strong>案例 A</strong><br>系统判断：违规</div><div class="disabled-action">无解释</div></div>
+        <div class="queue-item"><div class="thumb"></div><div><strong>案例 B</strong><br>系统判断：通过</div><div class="disabled-action">不能推翻</div></div>
+        <div class="queue-item"><div class="thumb"></div><div><strong>案例 C</strong><br>系统判断：违规</div><div class="disabled-action">继续处理</div></div>
+        <div class="ui-row"><strong>审核员能否推翻</strong><span class="status-pill red">不能</span></div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="case-box">
+        <div class="case-title">系统说：最终都有人工审核</div>
+        <div class="case-lines">
+          <div class="k">现实</div><div>审核员每天看 800 条，系统只给判断结果。</div>
+          <div class="k">权限</div><div>没有解释、上下文和推翻权限。</div>
+          <div class="k">问题</div><div>承担责任名义，却没有控制能力。</div>
+        </div>
+      </div>
+      <div class="question-box"><div class="q">这个人是在审核，还是在给机器盖章？</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 40 -->
+<section>
+  <h2>产品经理是守门人，还是夹心层？</h2>
+  <div class="asset-layout wide-left">
+    <div class="asset-panel compact">
+      <div class="asset-title">风险在组织里如何被推来推去 <span class="badge">责任泳道</span></div>
+      <div class="swimlane">
+        <div class="lane"><div class="role">产品</div><div class="task">上线时间</div><div class="task warn">接受残余风险</div></div>
+        <div class="lane"><div class="role">算法</div><div class="task">模型阈值</div><div class="task">误报漏报</div></div>
+        <div class="lane"><div class="role">运营</div><div class="task">处置规则</div><div class="task">申诉反馈</div></div>
+        <div class="lane"><div class="role">法务/安全</div><div class="task">合规边界</div><div class="task warn">何时叫停</div></div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card-grid cols-1">
+        <div class="card orange">
+          <div class="card-label">组织压力</div>
+          <div class="card-desc">上线时间、增长目标、用户留存、竞争压力、工程资源限制。</div>
+        </div>
+        <div class="card purple">
+          <div class="card-label">责任扩散</div>
+          <div class="card-desc">法务、算法、运营、安全、产品各管一块，出事前没人能踩刹车。</div>
+        </div>
+      </div>
+      <div class="highlight-box small">责任痕迹不能只记录模型版本，还要记录谁提出风险、谁否决、谁接受残余风险。</div>
+      <div class="source-note">理论来源：Smith et al. 2025, Guardrails versus Gatekeepers。</div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 41 -->
+<section>
+  <h2>核心概念：有意义的人类控制</h2>
+  <div class="asset-layout wide-left">
+    <div class="asset-panel compact">
+      <div class="asset-title">“人在环”是否真的有控制力 <span class="badge">四个条件</span></div>
+      <div class="trace-sheet">
+        <div class="checkline"><div class="checkmark">知</div><div class="text"><strong>知道边界</strong>：知道系统何时不适用。</div></div>
+        <div class="checkline"><div class="checkmark">懂</div><div class="text"><strong>理解表征</strong>：知道模型看到的和人看到的不同。</div></div>
+        <div class="checkline"><div class="checkmark">改</div><div class="text"><strong>有权改变</strong>：可以推翻、暂停、升级处理。</div></div>
+        <div class="checkline"><div class="checkmark">追</div><div class="text"><strong>责任可追</strong>：行动链能追到具体责任人。</div></div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card-grid cols-2">
+        <div class="card accent"><div class="card-label">知道边界</div><div class="card-desc">理解系统何时不适用。</div></div>
+        <div class="card green"><div class="card-label">理解表征</div><div class="card-desc">知道模型看到的和人看到的不同。</div></div>
+        <div class="card orange"><div class="card-label">有权改变</div><div class="card-desc">可以推翻、暂停、升级处理。</div></div>
+        <div class="card red"><div class="card-label">责任可追</div><div class="card-desc">行动链能追到具体责任人。</div></div>
+      </div>
+      <div class="quote-box"><div class="quote-text">人在环不是最后有人点确认。人在环是有人看得懂、敢反对、有权暂停，反对后不会被系统绕过。</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 42 -->
+<section>
+  <h2>责任痕迹：出事后能不能复盘？</h2>
+  <div class="asset-layout wide-left">
+    <div class="asset-panel compact">
+      <div class="asset-title">出事后的追责记录 <span class="badge">可追溯</span></div>
+      <div class="mock-window">
+        <div class="mock-bar"><span class="dot red"></span><span class="dot orange"></span><span class="dot green"></span></div>
+        <div class="mock-body">
+          <div class="ui-row"><strong>材料来源</strong><span class="status-pill blue">谁提交</span></div>
+          <div class="ui-row"><strong>模型判断</strong><span class="status-pill">版本与阈值可查</span></div>
+          <div class="ui-row"><strong>人工复核</strong><span class="status-pill orange">谁看过</span></div>
+          <div class="ui-row"><strong>处置决定</strong><span class="status-pill red">谁批准</span></div>
+          <div class="ui-row"><strong>申诉救济</strong><span class="status-pill blue">谁回应</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="asset-panel compact">
+      <div class="asset-title">五个必须能追到的点 <span class="badge">责任链</span></div>
+      <div class="chain" style="grid-template-columns:1fr;gap:0.24em;margin:0;">
+        <div class="chain-node" style="min-height:48px;"><div class="main">输入：谁提供？</div><div class="sub">数据、图像、提示词</div></div>
+        <div class="chain-node" style="min-height:48px;"><div class="main">模型：哪个版本？</div><div class="sub">阈值、能力边界</div></div>
+        <div class="chain-node" style="min-height:48px;"><div class="main">人工：谁复核？</div><div class="sub">时间、依据、权限</div></div>
+        <div class="chain-node" style="min-height:48px;"><div class="main">决策：谁签字？</div><div class="sub">接受哪些残余风险</div></div>
+        <div class="chain-node" style="min-height:48px;"><div class="main">救济：找谁改？</div><div class="sub">申诉、暂停、追责</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box small">你们自己的项目，能不能回答：谁能反对系统，谁能暂停系统，谁会留下记录？</div>
+</section>
+
+<!-- Slide 43 -->
+<section>
+  <h2>这些不是散乱事故</h2>
+  <table class="matrix">
+    <thead><tr><th>领域</th><th>故事</th><th>共同问题</th></tr></thead>
+    <tbody>
+      <tr><td>写作</td><td>人类文字被判不像人；律师签下假判例</td><td>谁说话，谁核验，谁签字？</td></tr>
+      <tr><td>证据</td><td>AI Overview；假病历；C2PA 矛盾</td><td>证据的来路能不能讲清？</td></tr>
+      <tr><td>现身</td><td>头像恶搞；教授假声；校园 deepfake</td><td>谁同意，谁能被认出，谁承担后果？</td></tr>
+      <tr><td>亲密</td><td>孙子拟声；AI 霸总；AI 恋人</td><td>安慰是否捕获脆弱性？</td></tr>
+      <tr><td>判断</td><td>枪支识别漏检；形式化人在环</td><td>人能不能真正反对机器？</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Slide 44 -->
+<section>
+  <h2>学生项目伦理七问：1-3</h2>
+  <div class="card-grid cols-1">
+    <div class="card accent"><div class="card-label">1. 我的系统会让谁更难被相信？</div><div class="card-desc">对应：平台误判人类写作、Google AI Overview 错答。</div></div>
+    <div class="card orange"><div class="card-label">2. 我的系统会替谁说话，或者冒充谁说话？</div><div class="card-desc">对应：律师假判例、教授声音克隆、孙子拟声诈骗。</div></div>
+    <div class="card red"><div class="card-label">3. 我的系统有没有利用人的孤独、恐惧、焦虑、身份压力？</div><div class="card-desc">对应：AI 霸总、AI 伴侣、AI 导购操控。</div></div>
+  </div>
+</section>
+
+<!-- Slide 45 -->
+<section>
+  <h2>学生项目伦理七问：4-7</h2>
+  <div class="card-grid cols-1">
+    <div class="card green"><div class="card-label">4. 我的输出有没有来源、修改过程和责任人？</div><div class="card-desc">对应：AI 假病历、C2PA/水印矛盾、AI 证据争议。</div></div>
+    <div class="card purple"><div class="card-label">5. 我的人工复核者能不能真的推翻系统？</div><div class="card-desc">对应：双方律师 AI 幻觉、AI 安防漏检、平台 AI 检测申诉。</div></div>
+    <div class="card cyan"><div class="card-label">6. 我的系统让用户更会判断，还是更会依赖？</div><div class="card-desc">对应：AI 搜索污染、AI slop、情感陪伴账号。</div></div>
+    <div class="card"><div class="card-label">7. 如果系统错了，受影响的人第一步能找谁？</div><div class="card-desc">对应：校园 deepfake、头像恶搞、公共谣言和平台处罚。</div></div>
+  </div>
+</section>
+
+<!-- Slide 46 -->
+<section>
+  <h2>不要写成原则口号</h2>
+  <div class="asset-layout wide-left">
+    <div class="asset-panel compact">
+      <div class="asset-title">伦理说明要能被复盘 <span class="badge">可回答</span></div>
+      <div class="trace-sheet">
+        <div class="trace-title">一份能落地的项目说明至少写清：</div>
+        <div class="checkline"><div class="checkmark">✓</div><div class="text"><strong>模型版本</strong>：哪一个系统给出建议？</div></div>
+        <div class="checkline"><div class="checkmark">✓</div><div class="text"><strong>输入来源</strong>：谁提供了材料，是否可追溯？</div></div>
+        <div class="checkline"><div class="checkmark">✓</div><div class="text"><strong>人工复核</strong>：谁有权看见上下文并推翻？</div></div>
+        <div class="checkline"><div class="checkmark">✓</div><div class="text"><strong>申诉入口</strong>：受影响的人第一步找谁？</div></div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card red">
+        <div class="card-label">空泛写法</div>
+        <div class="card-desc">“本系统重视隐私、公平、透明，并将遵守相关法律法规。”</div>
+      </div>
+      <div class="card green">
+        <div class="card-label">可回答写法</div>
+        <div class="card-desc">“本系统在生成建议时记录模型版本、输入来源、人工复核人；用户可通过申诉入口要求复核，复核者有权推翻系统结果。”</div>
+      </div>
+      <div class="quote-box"><div class="quote-text">回答不出来，不是文案没写好，而是系统还没有准备好进入真实社会。</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 47 -->
+<section>
+  <h2>本课伦理词表</h2>
+  <table class="matrix">
+    <thead><tr><th>概念</th><th>可以追问什么</th><th>案例</th></tr></thead>
+    <tbody>
+      <tr><td>责任痕迹</td><td>出事后能不能复盘？</td><td>律师假判例；平台误判；AI 安防</td></tr>
+      <tr><td>生成式认识不正义</td><td>谁的话被 AI 放大，谁的话被压低？</td><td>AI Overview；AI 检测器</td></tr>
+      <tr><td>解释资源公平</td><td>谁被分配理解世界的语言？</td><td>AI 霸总；广告投放；平台推荐</td></tr>
+      <tr><td>体验即真实</td><td>假的东西为什么有真的伤害？</td><td>AI 恋人；头像恶搞；AI companion</td></tr>
+      <tr><td>证据基础设施</td><td>这份材料有没有可追溯来路？</td><td>假病历；C2PA；AI 谣言</td></tr>
+      <tr><td>有意义的人类控制</td><td>人能不能真正反对机器？</td><td>人在环；枪支识别；法院材料</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Slide 48 -->
+<section>
+  <h2>参考文献与资料线索</h2>
+  <table class="matrix">
+    <thead><tr><th>主题</th><th>来源</th><th>对应问题</th></tr></thead>
+    <tbody>
+      <tr><td>原则疲劳</td><td>Lin 2024, arXiv:2401.15284</td><td>从原则口号转向责任痕迹。</td></tr>
+      <tr><td>认识不正义</td><td>Kay et al. 2024；Mollema 2025</td><td>解释 AI 如何分配可信度和解释权。</td></tr>
+      <tr><td>解释资源公平</td><td>Quaresmini et al. 2026；Kommers et al. 2026</td><td>把推荐和陪伴讲成意义分配问题。</td></tr>
+      <tr><td>体验即真实</td><td>Klenk 2025；De Freitas et al. 2024</td><td>解释假图、AI 伴侣和依赖关系。</td></tr>
+      <tr><td>证据基础设施</td><td>Nemecek et al. 2026；Sengupta et al. 2026</td><td>解释 C2PA、水印和真实性债务。</td></tr>
+      <tr><td>人在环</td><td>Siebert et al. 2021；Di Santi 2026</td><td>区分认知放大和认知委托。</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Slide 49 -->
+<section class="takeaway">
+  <div class="divider"></div>
+  <div class="main-text">AI 伦理不是让技术慢下来，<br>而是让社会在加速时仍然有刹车、后视镜和事故记录仪。</div>
+  <div class="sub-text">
+    能解释，能申诉，能暂停，能追责。<br>
+    这不是课后附录，而是所有 AI 项目进入社会之前的最低制度准备。
+  </div>
+</section>
+
+</div><!-- .slides -->
+</div><!-- .reveal -->
+
+<script src="vendor/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: true,
+    transition: 'fade',
+    backgroundTransition: 'fade',
+    width: 1280,
+    height: 720,
+    margin: 0.06
+  });
+</script>
+</body>
+</html>
