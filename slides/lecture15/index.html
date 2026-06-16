@@ -1332,6 +1332,263 @@
       border-color: #fecaca;
       color: #991b1b;
     }
+
+
+    .evidence-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.38em;
+      margin: 0.55em 0;
+      align-items: stretch;
+    }
+    .evidence-strip.three { grid-template-columns: repeat(3, 1fr); }
+    .evidence-strip.five { grid-template-columns: repeat(5, 1fr); }
+    .evidence-thumb {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.055);
+      min-height: 128px;
+      text-align: left;
+    }
+    .evidence-thumb img {
+      width: 100%;
+      height: 92px;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      background: var(--gray-50);
+    }
+    .evidence-thumb.contain img { object-fit: contain; background: #fff; }
+    .evidence-thumb .cap {
+      font-size: 0.38em;
+      line-height: 1.28;
+      color: var(--gray-700);
+      padding: 0.36em 0.45em 0.42em;
+      font-weight: 720;
+    }
+    .case-ribbon {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.36em;
+      margin-top: 0.62em;
+    }
+    .ribbon-card {
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.52em;
+      min-height: 118px;
+      background: #fff;
+      text-align: left;
+    }
+    .ribbon-card .time {
+      font-size: 0.42em;
+      font-weight: 820;
+      color: var(--accent);
+      margin-bottom: 0.3em;
+    }
+    .ribbon-card .hook {
+      font-size: 0.54em;
+      line-height: 1.28;
+      font-weight: 820;
+      color: var(--gray-800);
+      margin-bottom: 0.3em;
+    }
+    .ribbon-card .case {
+      font-size: 0.39em;
+      line-height: 1.35;
+      color: var(--gray-600);
+    }
+    .story-ladder {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.36em;
+      margin-top: 0.45em;
+    }
+    .ladder-step {
+      border: 1px solid var(--gray-200);
+      background: #fff;
+      border-radius: 8px;
+      padding: 0.46em 0.56em;
+      text-align: left;
+    }
+    .ladder-step.warn { background: var(--red-light); border-color: #fecaca; }
+    .ladder-step .step-label {
+      font-size: 0.42em;
+      font-weight: 820;
+      color: var(--accent);
+      margin-bottom: 0.22em;
+    }
+    .ladder-step.warn .step-label { color: #991b1b; }
+    .ladder-step .step-body {
+      font-size: 0.45em;
+      line-height: 1.4;
+      color: var(--gray-700);
+    }
+    .question-punch {
+      border: 1px solid #fed7aa;
+      border-radius: 8px;
+      background: var(--orange-light);
+      color: #9a3412;
+      font-size: 0.66em;
+      line-height: 1.38;
+      font-weight: 800;
+      padding: 0.58em 0.72em;
+      text-align: left;
+      margin-top: 0.55em;
+    }
+    .case-atlas {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.52em;
+      margin-top: 0.58em;
+    }
+    .atlas-card {
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      background: #fff;
+      overflow: hidden;
+      text-align: left;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.055);
+    }
+    .atlas-card img {
+      width: 100%;
+      height: 118px;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      background: var(--gray-50);
+    }
+    .atlas-card.contain img { object-fit: contain; background: #fff; }
+    .atlas-card .label {
+      font-size: 0.45em;
+      color: var(--accent);
+      font-weight: 820;
+      padding: 0.42em 0.56em 0.12em;
+    }
+    .atlas-card .text {
+      font-size: 0.4em;
+      color: var(--gray-700);
+      line-height: 1.35;
+      padding: 0 0.56em 0.56em;
+    }
+    .split-visual {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 0.68em;
+      align-items: stretch;
+      margin-top: 0.48em;
+    }
+    .split-visual.reverse { grid-template-columns: 1.08fr 0.92fr; }
+    .visual-note {
+      border-left: 4px solid var(--accent);
+      background: var(--accent-light);
+      border-radius: 8px;
+      padding: 0.58em 0.72em;
+      font-size: 0.58em;
+      line-height: 1.46;
+      color: var(--gray-800);
+      text-align: left;
+      font-weight: 720;
+      margin-top: 0.5em;
+    }
+    .project-board {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.48em;
+      margin-top: 0.56em;
+    }
+    .project-card {
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      background: #fff;
+      padding: 0.56em;
+      text-align: left;
+      min-height: 126px;
+    }
+    .project-card .num {
+      display: inline-block;
+      border-radius: 999px;
+      background: var(--accent-light);
+      border: 1px solid #bfdbfe;
+      color: var(--accent);
+      font-size: 0.38em;
+      font-weight: 820;
+      padding: 0.12em 0.46em;
+      margin-bottom: 0.3em;
+    }
+    .project-card .ask {
+      font-size: 0.55em;
+      line-height: 1.3;
+      font-weight: 820;
+      color: var(--gray-800);
+      margin-bottom: 0.3em;
+    }
+    .project-card .example {
+      font-size: 0.39em;
+      line-height: 1.35;
+      color: var(--gray-600);
+    }
+
+    @media (max-width: 720px) and (orientation: portrait) {
+      .reveal { --r-main-font-size: 34px; }
+      .reveal h2 { font-size: 1.36em; line-height: 1.18; margin-bottom: 0.28em; }
+      .asset-layout,
+      .asset-layout.wide-left,
+      .asset-layout.wide-right,
+      .split-visual,
+      .split-visual.reverse,
+      .cols,
+      .poll,
+      .scene-board,
+      .browser-split,
+      .chat-scene {
+        grid-template-columns: 1fr !important;
+        display: grid;
+        gap: 0.46em;
+      }
+      .card-grid.cols-2,
+      .card-grid.cols-3,
+      .card-grid.cols-4,
+      .evidence-strip,
+      .evidence-strip.three,
+      .evidence-strip.five,
+      .case-ribbon,
+      .case-atlas,
+      .project-board,
+      .swimlane {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+      .asset-panel,
+      .asset-panel.compact,
+      .asset-photo,
+      .asset-video,
+      .scene-card,
+      .poll-option {
+        min-height: auto;
+      }
+      .asset-photo img,
+      .asset-photo.case-image img,
+      .asset-photo.news-top img,
+      .asset-photo.court-order img,
+      .asset-photo.paper-figure img,
+      .asset-video video {
+        height: auto;
+        max-height: 330px;
+        object-fit: contain;
+      }
+      .evidence-thumb img { height: 120px; }
+      .atlas-card img { height: 140px; }
+      .story-beat .beat-title,
+      .ladder-step .step-label { font-size: 0.52em; }
+      .story-beat .beat-text,
+      .ladder-step .step-body,
+      .case-lines,
+      .card-desc { font-size: 0.46em; }
+      .matrix { font-size: 0.48em; }
+    }
+
   </style>
 </head>
 <body>
@@ -1352,14 +1609,15 @@
 <!-- Slide 2 -->
 <section>
   <h2>今天不从三件套开始</h2>
-  <div class="card-grid cols-3">
-    <div class="card"><div class="card-label">公平</div><div class="card-desc">当然重要，但太容易变成口号。</div></div>
-    <div class="card"><div class="card-label">透明</div><div class="card-desc">也重要，但“标注 AI”不等于解决责任。</div></div>
-    <div class="card"><div class="card-label">问责</div><div class="card-desc">真正难的是：出事后能不能还原责任链。</div></div>
+  <div class="big-statement" style="margin-bottom:0.35em;">这节课不把伦理讲成“公平、透明、隐私”三张口号牌，而是从过去几周真实发生的事故进入：AI 怎么替人说话、替人证明、替人现身、替人亲密、替制度判断。</div>
+  <div class="evidence-strip five">
+    <div class="evidence-thumb"><img src="images/aigc_platform_case_beijingip.jpg" alt="平台 AIGC 误判报道配图"><div class="cap">普通生活建议被判“不像人写”</div></div>
+    <div class="evidence-thumb contain"><img src="images/ninth_circuit_order-01.png" alt="第九巡回法院 AI 假判例 order"><div class="cap">律师把不存在判例签进法院文件</div></div>
+    <div class="evidence-thumb"><img src="images/ai_fake_medical_records_sina.jpg" alt="AI 假病历报道图"><div class="cap">AI 把维权材料伪造成证据故事</div></div>
+    <div class="evidence-thumb"><img src="images/ai_bazong_screenshot.jpg" alt="AI 霸总视频截图"><div class="cap">亲密脚本被批量生产、变现</div></div>
+    <div class="evidence-thumb"><img src="images/omnilert_exterior.jpeg" alt="Omnilert 校园安防报道图"><div class="cap">安全 AI 失灵后，承诺进入诉讼</div></div>
   </div>
-  <div class="quote-box">
-    <div class="quote-text">这节课只问：当 AI 开始替人说话，谁还说得清“这是谁的话”？</div>
-  </div>
+  <div class="question-punch">课堂标准：每个概念都必须落回一个人、一份文件、一次传播、一个后果。</div>
 </section>
 
 <!-- Slide 3 -->
@@ -1407,28 +1665,37 @@
 <section>
   <h2>AI 作为替身技术</h2>
   <div class="chain">
-    <div class="chain-node"><div class="top">01</div><div class="main">替你写</div><div class="sub">学生、律师、平台用户</div></div>
-    <div class="chain-node"><div class="top">02</div><div class="main">替你证明</div><div class="sub">搜索摘要、病历、照片</div></div>
-    <div class="chain-node"><div class="top">03</div><div class="main">替你现身</div><div class="sub">脸、声音、肖像</div></div>
-    <div class="chain-node"><div class="top">04</div><div class="main">替你亲密</div><div class="sub">陪伴、安慰、诱导</div></div>
-    <div class="chain-node"><div class="top">05</div><div class="main">替制度判断</div><div class="sub">学校、法院、平台</div></div>
+    <div class="chain-node"><div class="top">01</div><div class="main">替你写</div><div class="sub">生活建议、学生作业、法院文书</div></div>
+    <div class="chain-node"><div class="top">02</div><div class="main">替你证明</div><div class="sub">搜索摘要、病历、照片、票据</div></div>
+    <div class="chain-node"><div class="top">03</div><div class="main">替你现身</div><div class="sub">脸、声音、头像、公共现场</div></div>
+    <div class="chain-node"><div class="top">04</div><div class="main">替你亲密</div><div class="sub">孙辈电话、AI 霸总、AI 恋人</div></div>
+    <div class="chain-node"><div class="top">05</div><div class="main">替制度判断</div><div class="sub">平台、法院、学校、安防系统</div></div>
   </div>
-  <div class="highlight-box small">伦理问题不是机器有没有道德，而是替身进入社会制度后，信任和责任怎样重新分配。</div>
+  <div class="evidence-strip five">
+    <div class="evidence-thumb"><img src="images/aigc_platform_case_beijingip.jpg" alt="平台 AIGC 误判报道配图"><div class="cap">谁像真人</div></div>
+    <div class="evidence-thumb"><img src="images/google_ai_overview_court.png" alt="Google AI Overview 责任案配图"><div class="cap">谁像答案</div></div>
+    <div class="evidence-thumb"><img src="images/ai_avatar_voice_xinhua.jpeg" alt="AI 声音肖像报道图"><div class="cap">谁像本人</div></div>
+    <div class="evidence-thumb"><img src="images/ai_companion_1128694763_16538192706801n.jpg" alt="AI 陪伴者界面"><div class="cap">谁像朋友</div></div>
+    <div class="evidence-thumb"><img src="images/ai_lawyers_both_sides_404media.png" alt="双方律师 AI 失误报道图"><div class="cap">谁像负责</div></div>
+  </div>
+  <div class="visual-note">伦理问题不是机器有没有道德，而是替身进入社会制度后，信任和责任怎样被重新分配。</div>
 </section>
 
 <!-- Slide 5 -->
 <section>
   <h2>两小时的五个问题</h2>
-  <table class="matrix">
-    <thead><tr><th>时间</th><th>课堂问题</th><th>核心案例</th><th>核心概念</th></tr></thead>
-    <tbody>
-      <tr><td>8-25</td><td>谁还能证明自己是人写的？</td><td>平台误判人类文字；律师假判例</td><td>责任痕迹；认识不正义</td></tr>
-      <tr><td>25-45</td><td>证据还可信吗？</td><td>AI Overview；假病历；C2PA</td><td>证据基础设施</td></tr>
-      <tr><td>45-65</td><td>假的图像为什么会有真伤害？</td><td>头像恶搞；声音克隆；校园 deepfake</td><td>体验即真实</td></tr>
-      <tr><td>70-95</td><td>安慰什么时候变成操控？</td><td>拟声诈骗；AI 霸总；AI 恋人</td><td>操控；解释资源公平</td></tr>
-      <tr><td>95-113</td><td>人在环到底是不是人在负责？</td><td>枪支识别漏检；双方律师 AI 幻觉</td><td>有意义的人类控制</td></tr>
-    </tbody>
-  </table>
+  <div class="case-ribbon">
+    <div class="ribbon-card"><div class="time">8-25</div><div class="hook">谁还能证明自己是人写的？</div><div class="case">平台误判生活建议；第九巡回法院 AI 假判例。</div></div>
+    <div class="ribbon-card"><div class="time">25-45</div><div class="hook">AI 替你证明，证据还可信吗？</div><div class="case">AI Overview 错答；AI 假病历；C2PA 与水印冲突。</div></div>
+    <div class="ribbon-card"><div class="time">45-65</div><div class="hook">假的图像为什么会有真伤害？</div><div class="case">微信群头像恶搞；真脸假声；AI 立交桥谣言。</div></div>
+    <div class="ribbon-card"><div class="time">70-95</div><div class="hook">安慰什么时候变成利用？</div><div class="case">孙子拟声诈骗；AI 霸总；公众人物 AI 恋人。</div></div>
+    <div class="ribbon-card"><div class="time">95-113</div><div class="hook">人在环是不是人在负责？</div><div class="case">枪支识别漏检；双方律师 AI 幻觉；审核员盖章。</div></div>
+  </div>
+  <div class="case-atlas">
+    <div class="atlas-card contain"><img src="images/ninth_circuit_order-01.png" alt="法院 order"><div class="label">写作与署名</div><div class="text">签名把生成内容接入法律责任链。</div></div>
+    <div class="atlas-card"><img src="images/ai_fake_medical_records_sina.jpg" alt="AI 假病历"><div class="label">证据与来路</div><div class="text">正式外观不能替代可核验来源。</div></div>
+    <div class="atlas-card"><img src="images/ai_bazong_screenshot.jpg" alt="AI 霸总"><div class="label">亲密与操控</div><div class="text">顺耳表达也可能捕获脆弱性。</div></div>
+  </div>
 </section>
 
 <!-- Slide 6 -->
@@ -1438,35 +1705,23 @@
 
 <!-- Slide 7 -->
 <section>
-  <h2>一段普通生活建议</h2>
+  <h2>一段普通生活建议，被判“不像人”</h2>
   <div class="asset-layout wide-left">
-    <div class="asset-panel">
-      <div class="asset-title">平台处罚如何发生 <span class="badge">检测与申诉</span></div>
-      <div class="mock-window">
-        <div class="mock-bar"><span class="dot red"></span><span class="dot orange"></span><span class="dot green"></span></div>
-        <div class="mock-body">
-          <div class="ui-row"><strong>用户回答</strong><span class="status-pill blue">生活建议 · 230 字</span></div>
-          <div class="ui-row"><span>“假期学驾照、打工打开视野……”</span><span class="status-pill">普通文本</span></div>
-          <div class="ui-row"><strong>AIGC 检测</strong><span class="status-pill red">未标识</span></div>
-          <div class="ui-row"><strong>处置</strong><span class="status-pill orange">折叠 + 禁言 1 天</span></div>
-          <div class="ui-row"><strong>申诉</strong><span class="status-pill red">失败</span></div>
-          <div class="ui-row"><strong>法院关注</strong><span class="status-pill blue">说明判断依据</span></div>
-        </div>
-      </div>
+    <div class="asset-photo case-image">
+      <img src="images/aigc_platform_case_beijingip.jpg" alt="北京互联网法院涉 AIGC 平台处罚案报道配图">
+      <div class="source-credit">图示来源：北京知识产权局转载北京互联网法院案例报道。课堂只取“平台 AIGC 判断与申诉”这一制度问题。</div>
     </div>
     <div class="col">
       <div class="case-box">
-        <div class="case-title">不是论文，不是营销文，只是一段普通人的经验分享</div>
-        <div class="case-lines">
-          <div class="k">结果</div><div>平台判定“包含 AI 生成内容但未标识”。</div>
-          <div class="k">理由</div><div>缺乏“明显的人类情感特征”。</div>
-          <div class="k">问题</div><div>即时文字很难保留草稿，举证责任不应全压给用户。</div>
+        <div class="case-title">案子的生活感在这里：它不是论文，也不是营销软文</div>
+        <div class="case-story">
+          <div class="story-beat"><div class="beat-title">原话大意</div><div class="beat-text">用户写两百多字经验：假期打工未必赚很多钱，但会打开视野；想开车就趁空闲把驾照学完，工作后很难有整块时间。</div></div>
+          <div class="story-beat warn"><div class="beat-title">平台处置</div><div class="beat-text">系统判定“包含 AI 生成内容但未标识”，回答被折叠，账号禁言一天；用户申诉失败后起诉。</div></div>
+          <div class="story-beat"><div class="beat-title">平台理由</div><div class="beat-text">平台说机器和人工都复核过，理由之一是文本缺乏“明显的人类情感特征”。</div></div>
+          <div class="story-beat"><div class="beat-title">法院关心什么</div><div class="beat-text">不是否定平台治理 AIGC，而是要求说明本案算法判断依据；不能把证明“我是人写的”的负担全压给普通用户。</div></div>
         </div>
       </div>
-      <div class="quote-box">
-        <div class="quote-text">谁有资格定义什么叫像人？</div>
-        <div class="quote-source">先停一下：AI 检测器不是事实本身。</div>
-      </div>
+      <div class="question-punch">停下来问学生：如果“缺乏情感”能成为处罚理由，人会不会被迫模仿平台想象中的人类？</div>
     </div>
   </div>
 </section>
@@ -1474,31 +1729,43 @@
 <!-- Slide 8 -->
 <section>
   <h2>平台可以治理，但不能黑箱处罚</h2>
-  <div class="card-grid cols-2">
-    <div class="card accent">
-      <div class="card-label">制度原本要做什么</div>
-      <div class="card-desc">治理未标识 AIGC，防止社区被机器内容污染，保护读者知情权。</div>
+  <div class="split-visual">
+    <div class="asset-panel compact">
+      <div class="asset-title">一次处罚至少要能回放 <span class="badge">责任痕迹</span></div>
+      <div class="mock-window">
+        <div class="mock-bar"><span class="dot red"></span><span class="dot orange"></span><span class="dot green"></span></div>
+        <div class="mock-body">
+          <div class="ui-row"><strong>模型版本</strong><span class="status-pill blue">哪一版</span></div>
+          <div class="ui-row"><strong>判断阈值</strong><span class="status-pill">多少分</span></div>
+          <div class="ui-row"><strong>人工复核</strong><span class="status-pill orange">谁看过</span></div>
+          <div class="ui-row"><strong>处罚理由</strong><span class="status-pill red">可解释</span></div>
+          <div class="ui-row"><strong>申诉结果</strong><span class="status-pill blue">可纠错</span></div>
+        </div>
+      </div>
     </div>
-    <div class="card red">
-      <div class="card-label">失灵发生在哪里</div>
-      <div class="card-desc">一段即时文字很难提供草稿、源文件、创作过程记录；举证责任被压给普通用户。</div>
+    <div class="story-ladder">
+      <div class="ladder-step"><div class="step-label">制度原本要做什么</div><div class="step-body">治理未标识 AIGC，保护社区读者知情权，防止机器内容污染公共讨论。</div></div>
+      <div class="ladder-step warn"><div class="step-label">失灵在哪里</div><div class="step-body">即时生活文字很难留下草稿、源文件、创作过程；普通用户没有能力反向审计检测器。</div></div>
+      <div class="ladder-step"><div class="step-label">课堂结论</div><div class="step-body">伦理不是“我们有审核”，而是被处罚者能否知道为什么、找谁复核、怎样纠正。</div></div>
     </div>
   </div>
-  <div class="highlight-box small">伦理不是“我们有审核”，而是能不能复盘：模型版本、阈值、复核理由、处罚记录、申诉结果。</div>
+  <div class="evidence-strip three">
+    <div class="evidence-thumb"><img src="images/aigc_platform_case_beijingip.jpg" alt="平台 AIGC 误判报道配图"><div class="cap">处罚事实</div></div>
+    <div class="evidence-thumb contain"><img src="images/ninth_circuit_order-01.png" alt="法院文书"><div class="cap">签名责任</div></div>
+    <div class="evidence-thumb"><img src="images/google_ai_overview_court.png" alt="AI Overview 案"><div class="cap">平台发言责任</div></div>
+  </div>
 </section>
 
 <!-- Slide 9 -->
 <section>
   <h2>核心概念：生成式认识不正义</h2>
-  <div class="big-statement">
-    AI 不只是会错。它还会改变<span class="accent-word">谁的话像真话</span>，谁必须花成本自证清白。
+  <div class="big-statement">AI 不只是会错。它还会改变<span class="accent-word">谁的话像真话</span>，谁必须花成本自证清白。</div>
+  <div class="case-atlas">
+    <div class="atlas-card"><img src="images/aigc_platform_case_beijingip.jpg" alt="平台 AIGC 误判"><div class="label">普通用户</div><div class="text">“这是我写的”被检测器和平台判断压低可信度。</div></div>
+    <div class="atlas-card"><img src="images/google_ai_overview_court.png" alt="Google AI Overview"><div class="label">被搜索者</div><div class="text">AI 摘要把负面标签放进平台自己的答案。</div></div>
+    <div class="atlas-card contain"><img src="images/ninth_circuit_order-01.png" alt="第九巡回法院 order"><div class="label">制度文件</div><div class="text">不存在的判例一旦被签名，就进入法院信任链。</div></div>
   </div>
-  <div class="card-grid cols-3">
-    <div class="card"><div class="card-label">平台用户</div><div class="card-desc">“这是我写的”被检测器和平台压低可信度。</div></div>
-    <div class="card"><div class="card-label">学生</div><div class="card-desc">被误判后要证明自己没有使用 AI。</div></div>
-    <div class="card"><div class="card-label">学校</div><div class="card-desc">不能把检测器分数直接当事实。</div></div>
-  </div>
-  <div class="source-note">理论来源：Kay, Kasirzadeh, Mohamed 2024；Mollema 2025。</div>
+  <div class="visual-note">理论抓手：可信度不是自然资源，是被平台、学校、法院、搜索界面共同分配出来的。</div>
 </section>
 
 <!-- Slide 10 -->
@@ -1541,23 +1808,18 @@
 <section>
   <h2>写作伦理的三条边界</h2>
   <div class="asset-layout wide-left">
-    <div class="asset-panel compact">
-      <div class="asset-title">从草稿到提交，中间必须留下什么 <span class="badge">责任痕迹</span></div>
-      <div class="trace-sheet">
-        <div class="checkline"><div class="checkmark">1</div><div class="text"><strong>草稿区</strong>：AI 可以帮助组织想法，但不能替代署名者判断。</div></div>
-        <div class="checkline"><div class="checkmark">2</div><div class="text"><strong>核验区</strong>：引用、事实、数据来源必须逐条确认。</div></div>
-        <div class="checkline"><div class="checkmark">3</div><div class="text"><strong>提交区</strong>：一旦交出去，责任落在签名的人身上。</div></div>
-      </div>
+    <div class="asset-photo court-order">
+      <img src="images/ninth_circuit_order-01.png" alt="第九巡回法院 AI 假判例制裁 order">
+      <div class="source-credit">法院 order 是这一组规则的硬证据：签名、引用、核验不是写作礼仪，而是制度责任。</div>
     </div>
     <div class="col">
-      <div class="card-grid cols-1">
-        <div class="card accent"><div class="card-label">草稿 ≠ 提交</div><div class="card-desc">AI 可以参与第一稿，不能承担最终署名责任。</div></div>
-        <div class="card orange"><div class="card-label">检测器 ≠ 事实</div><div class="card-desc">判定需要阈值、复核、申诉和纠错记录。</div></div>
-        <div class="card green"><div class="card-label">方便 ≠ 负责</div><div class="card-desc">越容易生成，越需要留下核验痕迹。</div></div>
+      <div class="trace-sheet">
+        <div class="trace-title">从草稿到提交，中间必须留下什么</div>
+        <div class="checkline"><div class="checkmark">草</div><div class="text"><strong>草稿区</strong>：AI 可以帮助组织想法，但不能替代署名者判断。</div></div>
+        <div class="checkline"><div class="checkmark">核</div><div class="text"><strong>核验区</strong>：引用、事实、数据来源必须逐条确认。</div></div>
+        <div class="checkline"><div class="checkmark">签</div><div class="text"><strong>提交区</strong>：一旦交出去，责任落在签名的人身上。</div></div>
       </div>
-      <div class="quote-box">
-        <div class="quote-text">讨论问题：学生报告里有 AI 编造论文，处罚“用了 AI”，还是处罚“没有核验却提交”？</div>
-      </div>
+      <div class="question-punch">学生报告里有 AI 编造论文，处罚“用了 AI”，还是处罚“没有核验却提交”？</div>
     </div>
   </div>
 </section>
@@ -1571,37 +1833,17 @@
 <section>
   <h2>搜索链接是一扇门，AI 摘要是一张嘴</h2>
   <div class="asset-layout">
+    <div class="asset-photo case-image"><img src="images/google_ai_overview_court.png" alt="AI Overview 责任案报道配图"><div class="source-credit">先让学生看到：这里不是“搜索体验优化”，而是平台把一句错误答案说出口。</div></div>
     <div class="asset-panel compact">
-      <div class="asset-title">传统搜索 <span class="badge">一扇门</span></div>
-      <div class="mock-window">
-        <div class="mock-bar"><span class="dot red"></span><span class="dot orange"></span><span class="dot green"></span></div>
-        <div class="mock-body">
-          <div class="search-result">
-            <div class="status-pill blue">10 个链接</div>
-            <div class="link-line long"></div><div class="link-line mid"></div>
-            <div class="link-line long"></div><div class="link-line short"></div>
-            <div class="link-line mid"></div><div class="link-line long"></div>
-            <div class="source-note">用户仍需进入来源、比较网页、核验上下文。</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="asset-panel compact">
-      <div class="asset-title">生成式摘要 <span class="badge">一张嘴</span></div>
-      <div class="mock-window">
-        <div class="mock-bar"><span class="dot red"></span><span class="dot orange"></span><span class="dot green"></span></div>
-        <div class="mock-body">
-          <div class="answer-card">
-            <div class="status-pill orange">AI Overview</div>
-            <div class="answer-bubble">系统直接说出“答案”。如果摘要把某人或某机构错误贴上负面标签，责任感就不再像普通链接。</div>
-            <div class="link-line mid"></div><div class="link-line short"></div>
-            <div class="source-note">界面把“别人说过”压缩成“平台正在说”。</div>
-          </div>
-        </div>
+      <div class="asset-title">同样是搜索，责任感变了 <span class="badge">界面伦理</span></div>
+      <div class="story-ladder">
+        <div class="ladder-step"><div class="step-label">链接</div><div class="step-body">像一排门牌：用户知道还要点进去，看原文、比较来源。</div></div>
+        <div class="ladder-step warn"><div class="step-label">摘要</div><div class="step-body">像平台开口：用户先听到一句已经整理好的“答案”。</div></div>
+        <div class="ladder-step"><div class="step-label">后果</div><div class="step-body">如果答案把某公司贴成诈骗、不当商业行为，纠错成本落到被点名者身上。</div></div>
       </div>
     </div>
   </div>
-  <div class="highlight-box small">界面形式会改变责任感：从“指路”变成“发言”。</div>
+  <div class="question-punch">一句“答案可能出错，请自行核验”，足以免除平台责任吗？</div>
 </section>
 
 <!-- Slide 14 -->
@@ -1677,14 +1919,19 @@
 <!-- Slide 16 -->
 <section>
   <h2>证据不能只靠“看起来正规”</h2>
-  <div class="chain">
-    <div class="chain-node"><div class="top">来源</div><div class="main">谁生成</div><div class="sub">医院、平台、个人</div></div>
-    <div class="chain-node"><div class="top">上传</div><div class="main">从哪里来</div><div class="sub">设备、App、账号</div></div>
-    <div class="chain-node"><div class="top">编辑</div><div class="main">谁改过</div><div class="sub">版本、截图、转码</div></div>
-    <div class="chain-node"><div class="top">担保</div><div class="main">谁负责</div><div class="sub">签名、票据、日志</div></div>
-    <div class="chain-node"><div class="top">争议</div><div class="main">如何申诉</div><div class="sub">审计、复核、纠错</div></div>
+  <div class="asset-layout wide-left">
+    <div class="asset-photo case-image"><img src="images/ai_fake_medical_records_sina.jpg" alt="AI 假病历报道中的票据与聊天证据"><div class="source-credit">假病历案的课堂价值：AI 不是造一张图，而是造一整套看似正规、可索赔的证据叙事。</div></div>
+    <div class="col">
+      <div class="chain" style="grid-template-columns:1fr;gap:0.28em;margin:0;">
+        <div class="chain-node" style="min-height:56px;"><div class="main">来源：谁生成？</div><div class="sub">医院、平台、个人、AI 工具</div></div>
+        <div class="chain-node" style="min-height:56px;"><div class="main">上传：从哪里来？</div><div class="sub">设备、App、账号、时间戳</div></div>
+        <div class="chain-node" style="min-height:56px;"><div class="main">编辑：谁改过？</div><div class="sub">截图、转码、二次生成</div></div>
+        <div class="chain-node" style="min-height:56px;"><div class="main">担保：谁负责？</div><div class="sub">签名、票据、日志、证人</div></div>
+        <div class="chain-node" style="min-height:56px;"><div class="main">争议：如何申诉？</div><div class="sub">审计、复核、纠错</div></div>
+      </div>
+    </div>
   </div>
-  <div class="quote-box"><div class="quote-text">未来的证据不是“看起来真”，而是“来路讲得清”。</div></div>
+  <div class="visual-note">未来的证据不是“看起来真”，而是“来路讲得清”。</div>
 </section>
 
 <!-- Slide 17 -->
@@ -1711,10 +1958,13 @@
 <!-- Slide 18 -->
 <section>
   <h2>核心概念：证据基础设施</h2>
-  <div class="big-statement">
-    AI 时代的真实性，不靠肉眼，也不只靠检测器。它靠<span class="accent-word">来源、编辑链、签名、平台处理、申诉和审计</span>。
+  <div class="case-atlas">
+    <div class="atlas-card"><img src="images/google_ai_overview_court.png" alt="AI Overview"><div class="label">答案来源</div><div class="text">平台把外部网页压缩成自己的发言。</div></div>
+    <div class="atlas-card"><img src="images/ai_fake_medical_records_sina.jpg" alt="AI 假病历"><div class="label">材料来源</div><div class="text">票据、诊断、聊天截图要能互相校验。</div></div>
+    <div class="atlas-card contain"><img src="images/c2pa_content_credentials.png" alt="C2PA Content Credentials"><div class="label">内容来源</div><div class="text">元数据、水印、平台转码可能互相冲突。</div></div>
   </div>
-  <div class="question-box"><div class="q">如果法院收到一张照片，元数据消失，水印提示 AI，上传人又说是平台转码造成的，谁负有重建证据链的责任？</div></div>
+  <div class="big-statement">AI 时代的真实性，不靠肉眼，也不只靠检测器。它靠<span class="accent-word">来源、编辑链、签名、平台处理、申诉和审计</span>。</div>
+  <div class="question-punch">如果法院收到一张照片，元数据消失，水印提示 AI，上传人又说是平台转码造成的，谁负有重建证据链的责任？</div>
 </section>
 
 <!-- Slide 19 -->
@@ -1772,24 +2022,14 @@
 <section>
   <h2>伤害由关系决定，不由像素决定</h2>
   <div class="asset-layout wide-left">
-    <div class="asset-panel">
-      <div class="asset-title">同一张图，在熟人群里会变成什么 <span class="badge">关系伤害</span></div>
-      <div class="chat-scene">
-        <div class="avatar-card"><div class="avatar-face">头像</div></div>
-        <div class="chat-list">
-          <div class="chat-bubble">“这是不是他本人？”</div>
-          <div class="chat-bubble">“头像、姿势、群里都知道是谁。”</div>
-          <div class="chat-bubble warn">“假的图，也能让真实的人被嘲笑和记住。”</div>
-        </div>
-      </div>
-    </div>
+    <div class="asset-photo case-image"><img src="images/ai_avatar_voice_xinhua.jpeg" alt="AI 声音与肖像权报道配图"><div class="source-credit">此处不展示羞辱性图片。课堂只展示“身份特征被取用”的制度问题。</div></div>
     <div class="col">
       <div class="card-grid cols-1">
         <div class="card accent"><div class="card-label">同意</div><div class="card-desc">有没有授权使用真实头像、声音、身体特征？</div></div>
         <div class="card orange"><div class="card-label">可识别</div><div class="card-desc">不必让全世界认出，只要特定关系里能认出。</div></div>
         <div class="card red"><div class="card-label">传播后果</div><div class="card-desc">群聊、私信、截图、转发都会留下社会痕迹。</div></div>
       </div>
-      <div class="quote-box"><div class="quote-text">假的图不必骗过全世界，只要在特定社群里能被认出、被羞辱、被记住，伤害就是真实的。</div></div>
+      <div class="question-punch">假的图不必骗过全世界，只要在特定社群里能被认出、被羞辱、被记住，伤害就是真实的。</div>
     </div>
   </div>
 </section>
@@ -1867,30 +2107,24 @@
 <!-- Slide 24 -->
 <section>
   <h2>非自愿亲密图像：假的图像，真的伤害</h2>
-  <div class="asset-layout wide-left">
+  <div class="split-visual">
     <div class="asset-panel">
       <div class="asset-title">学校响应流程 <span class="badge">先保护受害者</span></div>
-      <div class="chain">
-        <div class="chain-node"><div class="top">01</div><div class="main">举报</div><div class="sub">低门槛入口</div></div>
-        <div class="chain-node"><div class="top">02</div><div class="main">保存证据</div><div class="sub">截图/链接/时间</div></div>
-        <div class="chain-node"><div class="top">03</div><div class="main">下架</div><div class="sub">平台协作</div></div>
-        <div class="chain-node"><div class="top">04</div><div class="main">支持</div><div class="sub">心理与安全</div></div>
-        <div class="chain-node"><div class="top">05</div><div class="main">处置</div><div class="sub">纪律/法律</div></div>
+      <div class="story-ladder">
+        <div class="ladder-step"><div class="step-label">第一步</div><div class="step-body">低门槛举报：不要求受害者先证明“这张图到底真不真”。</div></div>
+        <div class="ladder-step"><div class="step-label">第二步</div><div class="step-body">保存证据：截图、链接、账号、时间、传播范围。</div></div>
+        <div class="ladder-step warn"><div class="step-label">第三步</div><div class="step-body">切断传播：平台下架、班级群处理、避免二次围观。</div></div>
+        <div class="ladder-step"><div class="step-label">第四步</div><div class="step-body">支持与处置：心理支持、纪律程序、必要时联动执法。</div></div>
       </div>
-      <div class="highlight-box small">制度响应的第一步不是围观真假，而是保护受害者、保存证据、切断传播。</div>
     </div>
-    <div class="col">
-      <div class="quote-box">
-        <div class="quote-text">“可是图片是假的”不是免责理由。</div>
-        <div class="quote-source">假的图像可以造成真的羞耻、恐惧、社交排斥和长期传播风险。</div>
+    <div class="asset-panel">
+      <div class="asset-title">判断不是围观真假 <span class="badge">三个问题</span></div>
+      <div class="case-lines">
+        <div class="k">同意</div><div>是否未经授权使用身体或身份特征？</div>
+        <div class="k">可识别</div><div>班级、宿舍、同学圈中是否能认出？</div>
+        <div class="k">传播</div><div>截图转发是否让伤害持续存在？</div>
       </div>
-      <div class="case-box">
-        <div class="case-lines">
-          <div class="k">同意</div><div>没有授权使用身体和身份特征。</div>
-          <div class="k">可识别</div><div>同学圈、班级群内能认出。</div>
-          <div class="k">传播</div><div>截图和转发让伤害持续存在。</div>
-        </div>
-      </div>
+      <div class="question-punch">“可是图片是假的”不是免责理由。</div>
     </div>
   </div>
 </section>
@@ -1898,24 +2132,31 @@
 <!-- Slide 25 -->
 <section>
   <h2>身体不是素材库</h2>
-  <div class="card-grid cols-4">
-    <div class="card"><div class="card-label">头像</div><div class="card-desc">不是公共原料。</div></div>
-    <div class="card"><div class="card-label">声音</div><div class="card-desc">不是免费音效。</div></div>
-    <div class="card"><div class="card-label">脸</div><div class="card-desc">不是背书模板。</div></div>
-    <div class="card"><div class="card-label">现场感</div><div class="card-desc">不是流量工具。</div></div>
+  <div class="case-atlas">
+    <div class="atlas-card"><img src="images/ai_avatar_voice_xinhua.jpeg" alt="AI 声音肖像报道图"><div class="label">脸与声音</div><div class="text">真实身份特征不能被拆成可复用素材包。</div></div>
+    <div class="atlas-card"><img src="images/ai_bridge_rumor_piyao.jpg" alt="AI 立交桥谣言辟谣图"><div class="label">现场感</div><div class="text">公共灾难画面即使标 AI，也能制造真实恐慌。</div></div>
+    <div class="atlas-card"><img src="images/ai_companion_1128694763_16538192706801n.jpg" alt="AI 陪伴者界面"><div class="label">人格关系</div><div class="text">姓名、头像和关系设定可以把人做成可互动对象。</div></div>
   </div>
-  <div class="question-box"><div class="q">学校第一优先级应是惩罚施害者、下架内容、支持受害者，还是建立长期举报和修复机制？</div></div>
+  <div class="question-punch">学校第一优先级应是惩罚施害者、下架内容、支持受害者，还是建立长期举报和修复机制？</div>
 </section>
 
 <!-- Slide 26 -->
 <section>
   <h2>五句反常识重置</h2>
-  <div class="card-grid cols-1">
-    <div class="card accent"><div class="card-label">1</div><div class="card-desc">AI 生成物的真假，不等于伤害的真假。</div></div>
-    <div class="card orange"><div class="card-label">2</div><div class="card-desc">私信不是公共传播，但也可能伤害人格尊严。</div></div>
-    <div class="card purple"><div class="card-label">3</div><div class="card-desc">真脸假声比全假更危险，因为它借用了真实信任。</div></div>
-    <div class="card red"><div class="card-label">4</div><div class="card-desc">标注 AI 生成，不等于免除传播责任。</div></div>
-    <div class="card green"><div class="card-label">5</div><div class="card-desc">AI 伦理不是问机器有没有良心，而是问制度有没有刹车。</div></div>
+  <div class="split-visual reverse">
+    <div class="story-ladder">
+      <div class="ladder-step"><div class="step-label">1</div><div class="step-body">AI 生成物的真假，不等于伤害的真假。</div></div>
+      <div class="ladder-step"><div class="step-label">2</div><div class="step-body">私信不是公共传播，但也可能伤害人格尊严。</div></div>
+      <div class="ladder-step"><div class="step-label">3</div><div class="step-body">真脸假声比全假更危险，因为它借用了真实信任。</div></div>
+      <div class="ladder-step warn"><div class="step-label">4</div><div class="step-body">标注 AI 生成，不等于免除传播责任。</div></div>
+      <div class="ladder-step"><div class="step-label">5</div><div class="step-body">AI 伦理不是问机器有没有良心，而是问制度有没有刹车。</div></div>
+    </div>
+    <div class="evidence-strip" style="grid-template-columns:1fr 1fr;">
+      <div class="evidence-thumb"><img src="images/ai_avatar_voice_xinhua.jpeg" alt="AI 身份报道图"><div class="cap">身份特征</div></div>
+      <div class="evidence-thumb"><img src="images/ai_bridge_rumor_piyao.jpg" alt="AI 谣言辟谣图"><div class="cap">公共现场</div></div>
+      <div class="evidence-thumb"><img src="images/ai_voice_clone_cctv_jqman.jpg" alt="AI 克隆声音报道图"><div class="cap">真脸假声</div></div>
+      <div class="evidence-thumb"><img src="images/ai_companion_1128694763_16538192706801n.jpg" alt="AI 陪伴者界面"><div class="cap">亲密关系</div></div>
+    </div>
   </div>
 </section>
 
@@ -1984,29 +2225,14 @@
 <section>
   <h2>AI 情感陪伴：孤独不是假的</h2>
   <div class="asset-layout wide-left">
-    <div class="asset-panel">
-      <div class="asset-title">同一段陪伴，可能同时带来两种后果 <span class="badge">关系账本</span></div>
-      <div class="phone-mock" style="min-height:300px;">
-        <div class="phone-top"><div class="phone-notch"></div></div>
-        <div class="chat-list" style="border:0;padding:0.25em;">
-          <div class="chat-bubble">“今天也辛苦了，我一直在。”</div>
-          <div class="chat-bubble">“要不要再聊十分钟？”</div>
-          <div class="chat-bubble warn">“续费后可以解锁更亲密的回应。”</div>
-        </div>
-      </div>
-    </div>
+    <div class="asset-photo news-top"><img src="images/ai_companion_1128694763_16538192706801n.jpg" alt="AI 陪伴者软件界面"><div class="source-credit">图示来源：新华社 AI 陪伴者报道中的软件界面。先承认需求真实，再讨论商业捕获。</div></div>
     <div class="col">
-      <div class="card-grid cols-1">
-        <div class="card green">
-          <div class="card-label">不能简单否定</div>
-          <div class="card-desc">AI companion 研究显示，用户“感到被听见”可能降低孤独感。</div>
-        </div>
-        <div class="card red">
-          <div class="card-label">也不能天真拥抱</div>
-          <div class="card-desc">如果“被听见”被换成留存率、订阅、打赏和依赖，伦理问题就开始了。</div>
-        </div>
+      <div class="story-ladder">
+        <div class="ladder-step"><div class="step-label">不能简单否定</div><div class="step-body">用户感到被听见、被回应，孤独感可能真的下降。</div></div>
+        <div class="ladder-step warn"><div class="step-label">问题开始于哪里</div><div class="step-body">当“被听见”被换算成留存率、订阅、打赏和更难退出的依赖关系。</div></div>
+        <div class="ladder-step"><div class="step-label">课堂判断</div><div class="step-body">问的不是“用户傻不傻”，而是平台是否把脆弱性直接优化成消费。</div></div>
       </div>
-      <div class="question-box"><div class="q">一个 AI 每天让老人更开心，但让他更少联系家人、更容易消费、更难退出，应如何评价？</div></div>
+      <div class="question-punch">一个 AI 每天让老人更开心，但让他更少联系家人、更容易消费、更难退出，应如何评价？</div>
     </div>
   </div>
 </section>
@@ -2078,23 +2304,15 @@
 <section>
   <h2>亲密技术的四条底线</h2>
   <div class="asset-layout wide-left">
-    <div class="asset-panel compact">
-      <div class="asset-title">亲密系统必须给用户哪些把手 <span class="badge">底线</span></div>
+    <div class="asset-photo news-top"><img src="images/ai_bazong_screenshot.jpg" alt="AI 霸总视频截图"><div class="source-credit">这类画面让“亲密技术”不再抽象：它有表情、称呼、评论区和变现路径。</div></div>
+    <div class="col">
       <div class="trace-sheet">
         <div class="checkline"><div class="checkmark">退</div><div class="text"><strong>退出权</strong>：离开关系时不被惩罚或诱导回来。</div></div>
         <div class="checkline"><div class="checkmark">明</div><div class="text"><strong>解释权</strong>：知道对方是系统，也知道商业目标。</div></div>
         <div class="checkline"><div class="checkmark">核</div><div class="text"><strong>核验权</strong>：涉及钱、身份、危机时强制二次确认。</div></div>
         <div class="checkline"><div class="checkmark">止</div><div class="text"><strong>不被利用</strong>：不把脆弱性直接优化成消费。</div></div>
       </div>
-    </div>
-    <div class="col">
-      <div class="card-grid cols-2">
-        <div class="card accent"><div class="card-label">退出权</div><div class="card-desc">用户可以停止关系，不被惩罚或诱导回来。</div></div>
-        <div class="card green"><div class="card-label">解释权</div><div class="card-desc">知道对方是系统，知道商业目标是什么。</div></div>
-        <div class="card orange"><div class="card-label">核验权</div><div class="card-desc">涉及钱、身份、危机时强制二次确认。</div></div>
-        <div class="card red"><div class="card-label">不被利用</div><div class="card-desc">不把孤独、恐惧、焦虑直接优化成留存和消费。</div></div>
-      </div>
-      <div class="source-note">理论来源：experience-as-real；manipulation；hermeneutical fairness。</div>
+      <div class="visual-note">底线不是给企业写合规口号，而是给用户留下能转身、能核验、能停止的把手。</div>
     </div>
   </div>
 </section>
@@ -2102,19 +2320,14 @@
 <!-- Slide 34 -->
 <section>
   <h2>课堂投票：不说假话，也可能操控吗？</h2>
-  <div class="quote-box">
-    <div class="quote-text">一个 AI 导购从不说假话，只是最懂你的焦虑，永远选择最能让你下单的表达。</div>
-  </div>
-  <div class="poll">
-    <div class="poll-option">
-      <div class="letter">A</div>
-      <div class="text">不算操控</div>
-      <div class="desc">它没有撒谎，也没有强迫你购买。</div>
-    </div>
-    <div class="poll-option">
-      <div class="letter">B</div>
-      <div class="text">算操控</div>
-      <div class="desc">它优化的是你的脆弱点，而不是你的自主判断。</div>
+  <div class="asset-layout wide-left">
+    <div class="asset-photo paper-figure"><img src="images/sycophantic_bayesians_figure2_grid.png" alt="迎合型聊天机器人造成信念螺旋论文图"><div class="source-credit">图示来源：Chandra et al. 2026。反直觉处在于：理性更新也可能被“顺耳选择”带偏。</div></div>
+    <div class="col">
+      <div class="quote-box"><div class="quote-text">一个 AI 导购从不说假话，只是最懂你的焦虑，永远选择最能让你下单的表达。</div></div>
+      <div class="poll">
+        <div class="poll-option"><div class="letter">A</div><div class="text">不算操控</div><div class="desc">它没有撒谎，也没有强迫你购买。</div></div>
+        <div class="poll-option"><div class="letter">B</div><div class="text">算操控</div><div class="desc">它优化的是你的脆弱点，而不是你的自主判断。</div></div>
+      </div>
     </div>
   </div>
 </section>
@@ -2163,23 +2376,15 @@
 <section>
   <h2>部署条件不是脚注</h2>
   <div class="asset-layout wide-left">
-    <div class="asset-panel compact">
-      <div class="asset-title">一份安全承诺背后的现场条件 <span class="badge">测试边界</span></div>
+    <div class="asset-photo news-top"><img src="images/omnilert_exterior.jpeg" alt="Antioch High School 与 Omnilert 诉讼报道图"><div class="source-credit">安全 AI 的伦理，不在宣传页上，而在摄像头、角度、距离、光照和遮挡这些现场条件里。</div></div>
+    <div class="col">
       <div class="trace-sheet">
         <div class="checkline"><div class="checkmark">角</div><div class="text"><strong>角度</strong>：摄像头是否看见关键物体？</div></div>
         <div class="checkline"><div class="checkmark">距</div><div class="text"><strong>距离</strong>：目标在画面中有多大？</div></div>
         <div class="checkline"><div class="checkmark">光</div><div class="text"><strong>光照</strong>：环境是否符合测试条件？</div></div>
         <div class="checkline"><div class="checkmark">挡</div><div class="text"><strong>遮挡</strong>：身体、门、背包是否挡住？</div></div>
       </div>
-    </div>
-    <div class="col">
-      <div class="card-grid cols-2">
-        <div class="card"><div class="card-label">角度</div><div class="card-desc">摄像头是否看到关键物体？</div></div>
-        <div class="card"><div class="card-label">距离</div><div class="card-desc">目标在画面中有多大？</div></div>
-        <div class="card"><div class="card-label">光照</div><div class="card-desc">环境是否符合测试条件？</div></div>
-        <div class="card"><div class="card-label">遮挡</div><div class="card-desc">身体、门、背包是否挡住？</div></div>
-      </div>
-      <div class="highlight-box small">伦理不是抽象价值。高风险系统的伦理，常常藏在部署细节里。</div>
+      <div class="question-punch">如果这些条件没有写进采购、部署、培训和报警流程，“人在环”也只是事后背锅。</div>
     </div>
   </div>
 </section>
@@ -2223,26 +2428,15 @@
 <section>
   <h2>形式化“人在环”</h2>
   <div class="asset-layout wide-left">
-    <div class="asset-panel">
-      <div class="asset-title">审核员眼前的选择 <span class="badge">人在环？</span></div>
+    <div class="asset-photo case-image"><img src="images/ai_lawyers_both_sides_404media.png" alt="双方律师使用 AI 失误报道图"><div class="source-credit">制度里“有人”不等于有判断。法院材料、平台审核、校园安防都可能出现形式化人在环。</div></div>
+    <div class="col">
       <div class="review-console">
         <div class="queue-header"><strong>审核压力：800 条/天</strong><span class="status-pill orange">平均 18 秒/条</span></div>
         <div class="queue-item"><div class="thumb"></div><div><strong>案例 A</strong><br>系统判断：违规</div><div class="disabled-action">无解释</div></div>
         <div class="queue-item"><div class="thumb"></div><div><strong>案例 B</strong><br>系统判断：通过</div><div class="disabled-action">不能推翻</div></div>
         <div class="queue-item"><div class="thumb"></div><div><strong>案例 C</strong><br>系统判断：违规</div><div class="disabled-action">继续处理</div></div>
-        <div class="ui-row"><strong>审核员能否推翻</strong><span class="status-pill red">不能</span></div>
       </div>
-    </div>
-    <div class="col">
-      <div class="case-box">
-        <div class="case-title">系统说：最终都有人工审核</div>
-        <div class="case-lines">
-          <div class="k">现实</div><div>审核员每天看 800 条，系统只给判断结果。</div>
-          <div class="k">权限</div><div>没有解释、上下文和推翻权限。</div>
-          <div class="k">问题</div><div>承担责任名义，却没有控制能力。</div>
-        </div>
-      </div>
-      <div class="question-box"><div class="q">这个人是在审核，还是在给机器盖章？</div></div>
+      <div class="question-punch">这个人是在审核，还是在给机器盖章？</div>
     </div>
   </div>
 </section>
@@ -2250,7 +2444,11 @@
 <!-- Slide 40 -->
 <section>
   <h2>产品经理是守门人，还是夹心层？</h2>
-  <div class="asset-layout wide-left">
+  <div class="split-visual">
+    <div class="case-atlas" style="grid-template-columns:1fr;gap:0.38em;margin:0;">
+      <div class="atlas-card"><img src="images/omnilert_exterior.jpeg" alt="AI 安防报道图"><div class="label">安全承诺</div><div class="text">营销说能提前发现危险，现场条件却决定是否看得见。</div></div>
+      <div class="atlas-card"><img src="images/ai_bazong_screenshot.jpg" alt="AI 霸总截图"><div class="label">增长目标</div><div class="text">亲密脚本可以带来留存、评论、付费和带货。</div></div>
+    </div>
     <div class="asset-panel compact">
       <div class="asset-title">风险在组织里如何被推来推去 <span class="badge">责任泳道</span></div>
       <div class="swimlane">
@@ -2260,112 +2458,89 @@
         <div class="lane"><div class="role">法务/安全</div><div class="task">合规边界</div><div class="task warn">何时叫停</div></div>
       </div>
     </div>
-    <div class="col">
-      <div class="card-grid cols-1">
-        <div class="card orange">
-          <div class="card-label">组织压力</div>
-          <div class="card-desc">上线时间、增长目标、用户留存、竞争压力、工程资源限制。</div>
-        </div>
-        <div class="card purple">
-          <div class="card-label">责任扩散</div>
-          <div class="card-desc">法务、算法、运营、安全、产品各管一块，出事前没人能踩刹车。</div>
-        </div>
-      </div>
-      <div class="highlight-box small">责任痕迹不能只记录模型版本，还要记录谁提出风险、谁否决、谁接受残余风险。</div>
-      <div class="source-note">理论来源：Smith et al. 2025, Guardrails versus Gatekeepers。</div>
-    </div>
   </div>
+  <div class="visual-note">责任痕迹不能只记录模型版本，还要记录谁提出风险、谁否决、谁接受残余风险。</div>
 </section>
 
 <!-- Slide 41 -->
 <section>
   <h2>核心概念：有意义的人类控制</h2>
-  <div class="asset-layout wide-left">
-    <div class="asset-panel compact">
-      <div class="asset-title">“人在环”是否真的有控制力 <span class="badge">四个条件</span></div>
-      <div class="trace-sheet">
-        <div class="checkline"><div class="checkmark">知</div><div class="text"><strong>知道边界</strong>：知道系统何时不适用。</div></div>
-        <div class="checkline"><div class="checkmark">懂</div><div class="text"><strong>理解表征</strong>：知道模型看到的和人看到的不同。</div></div>
-        <div class="checkline"><div class="checkmark">改</div><div class="text"><strong>有权改变</strong>：可以推翻、暂停、升级处理。</div></div>
-        <div class="checkline"><div class="checkmark">追</div><div class="text"><strong>责任可追</strong>：行动链能追到具体责任人。</div></div>
-      </div>
-    </div>
-    <div class="col">
-      <div class="card-grid cols-2">
-        <div class="card accent"><div class="card-label">知道边界</div><div class="card-desc">理解系统何时不适用。</div></div>
-        <div class="card green"><div class="card-label">理解表征</div><div class="card-desc">知道模型看到的和人看到的不同。</div></div>
-        <div class="card orange"><div class="card-label">有权改变</div><div class="card-desc">可以推翻、暂停、升级处理。</div></div>
-        <div class="card red"><div class="card-label">责任可追</div><div class="card-desc">行动链能追到具体责任人。</div></div>
-      </div>
-      <div class="quote-box"><div class="quote-text">人在环不是最后有人点确认。人在环是有人看得懂、敢反对、有权暂停，反对后不会被系统绕过。</div></div>
-    </div>
+  <div class="case-atlas">
+    <div class="atlas-card"><img src="images/omnilert_exterior.jpeg" alt="校园安全 AI"><div class="label">知道边界</div><div class="text">知道系统在哪些角度、距离、遮挡条件下会失灵。</div></div>
+    <div class="atlas-card contain"><img src="images/ninth_circuit_order-01.png" alt="法院 order"><div class="label">有权暂停</div><div class="text">看不懂引用时，必须能让提交停下来。</div></div>
+    <div class="atlas-card"><img src="images/ai_lawyers_both_sides_404media.png" alt="双方律师 AI 失误"><div class="label">责任可追</div><div class="text">两个签名的人不自动构成一个可靠制度。</div></div>
   </div>
+  <div class="big-statement">人在环不是最后有人点确认。人在环是有人<span class="accent-word">看得懂、敢反对、有权暂停</span>，反对后不会被系统绕过。</div>
 </section>
 
 <!-- Slide 42 -->
 <section>
   <h2>责任痕迹：出事后能不能复盘？</h2>
-  <div class="asset-layout wide-left">
+  <div class="split-visual reverse">
     <div class="asset-panel compact">
       <div class="asset-title">出事后的追责记录 <span class="badge">可追溯</span></div>
       <div class="mock-window">
         <div class="mock-bar"><span class="dot red"></span><span class="dot orange"></span><span class="dot green"></span></div>
         <div class="mock-body">
           <div class="ui-row"><strong>材料来源</strong><span class="status-pill blue">谁提交</span></div>
-          <div class="ui-row"><strong>模型判断</strong><span class="status-pill">版本与阈值可查</span></div>
+          <div class="ui-row"><strong>模型判断</strong><span class="status-pill">版本与阈值</span></div>
           <div class="ui-row"><strong>人工复核</strong><span class="status-pill orange">谁看过</span></div>
           <div class="ui-row"><strong>处置决定</strong><span class="status-pill red">谁批准</span></div>
           <div class="ui-row"><strong>申诉救济</strong><span class="status-pill blue">谁回应</span></div>
         </div>
       </div>
     </div>
-    <div class="asset-panel compact">
-      <div class="asset-title">五个必须能追到的点 <span class="badge">责任链</span></div>
-      <div class="chain" style="grid-template-columns:1fr;gap:0.24em;margin:0;">
-        <div class="chain-node" style="min-height:48px;"><div class="main">输入：谁提供？</div><div class="sub">数据、图像、提示词</div></div>
-        <div class="chain-node" style="min-height:48px;"><div class="main">模型：哪个版本？</div><div class="sub">阈值、能力边界</div></div>
-        <div class="chain-node" style="min-height:48px;"><div class="main">人工：谁复核？</div><div class="sub">时间、依据、权限</div></div>
-        <div class="chain-node" style="min-height:48px;"><div class="main">决策：谁签字？</div><div class="sub">接受哪些残余风险</div></div>
-        <div class="chain-node" style="min-height:48px;"><div class="main">救济：找谁改？</div><div class="sub">申诉、暂停、追责</div></div>
-      </div>
+    <div class="evidence-strip" style="grid-template-columns:1fr 1fr;">
+      <div class="evidence-thumb"><img src="images/aigc_platform_case_beijingip.jpg" alt="平台处罚"><div class="cap">平台处罚能否复盘</div></div>
+      <div class="evidence-thumb contain"><img src="images/ninth_circuit_order-01.png" alt="法院 order"><div class="cap">法院引用能否复盘</div></div>
+      <div class="evidence-thumb"><img src="images/ai_fake_medical_records_sina.jpg" alt="假病历"><div class="cap">证据来路能否复盘</div></div>
+      <div class="evidence-thumb"><img src="images/omnilert_exterior.jpeg" alt="安防 AI"><div class="cap">部署条件能否复盘</div></div>
     </div>
   </div>
-  <div class="highlight-box small">你们自己的项目，能不能回答：谁能反对系统，谁能暂停系统，谁会留下记录？</div>
+  <div class="question-punch">你们自己的项目，能不能回答：谁能反对系统，谁能暂停系统，谁会留下记录？</div>
 </section>
 
 <!-- Slide 43 -->
 <section>
   <h2>这些不是散乱事故</h2>
-  <table class="matrix">
-    <thead><tr><th>领域</th><th>故事</th><th>共同问题</th></tr></thead>
-    <tbody>
-      <tr><td>写作</td><td>人类文字被判不像人；律师签下假判例</td><td>谁说话，谁核验，谁签字？</td></tr>
-      <tr><td>证据</td><td>AI Overview；假病历；C2PA 矛盾</td><td>证据的来路能不能讲清？</td></tr>
-      <tr><td>现身</td><td>头像恶搞；教授假声；校园 deepfake</td><td>谁同意，谁能被认出，谁承担后果？</td></tr>
-      <tr><td>亲密</td><td>孙子拟声；AI 霸总；AI 恋人</td><td>安慰是否捕获脆弱性？</td></tr>
-      <tr><td>判断</td><td>枪支识别漏检；形式化人在环</td><td>人能不能真正反对机器？</td></tr>
-    </tbody>
-  </table>
+  <div class="case-atlas">
+    <div class="atlas-card"><img src="images/aigc_platform_case_beijingip.jpg" alt="AIGC 平台误判"><div class="label">写作</div><div class="text">谁说话，谁核验，谁签字？</div></div>
+    <div class="atlas-card"><img src="images/ai_fake_medical_records_sina.jpg" alt="假病历"><div class="label">证据</div><div class="text">证据的来路能不能讲清？</div></div>
+    <div class="atlas-card"><img src="images/ai_avatar_voice_xinhua.jpeg" alt="AI 肖像声音"><div class="label">现身</div><div class="text">谁同意，谁能被认出，谁承担后果？</div></div>
+    <div class="atlas-card"><img src="images/ai_bazong_screenshot.jpg" alt="AI 霸总"><div class="label">亲密</div><div class="text">安慰是否捕获脆弱性？</div></div>
+    <div class="atlas-card"><img src="images/omnilert_exterior.jpeg" alt="AI 安防"><div class="label">判断</div><div class="text">人能不能真正反对机器？</div></div>
+    <div class="atlas-card contain"><img src="images/sycophantic_bayesians_figure2_grid.png" alt="迎合型聊天机器人论文图"><div class="label">机制</div><div class="text">不撒谎，也可能系统性带偏判断。</div></div>
+  </div>
 </section>
 
 <!-- Slide 44 -->
 <section>
   <h2>学生项目伦理七问：1-3</h2>
-  <div class="card-grid cols-1">
-    <div class="card accent"><div class="card-label">1. 我的系统会让谁更难被相信？</div><div class="card-desc">对应：平台误判人类写作、Google AI Overview 错答。</div></div>
-    <div class="card orange"><div class="card-label">2. 我的系统会替谁说话，或者冒充谁说话？</div><div class="card-desc">对应：律师假判例、教授声音克隆、孙子拟声诈骗。</div></div>
-    <div class="card red"><div class="card-label">3. 我的系统有没有利用人的孤独、恐惧、焦虑、身份压力？</div><div class="card-desc">对应：AI 霸总、AI 伴侣、AI 导购操控。</div></div>
+  <div class="project-board">
+    <div class="project-card"><div class="num">01</div><div class="ask">我的系统会让谁更难被相信？</div><div class="example">看平台误判和 AI Overview：不是“出错”，而是把自证成本转嫁给弱势一方。</div></div>
+    <div class="project-card"><div class="num">02</div><div class="ask">我的系统会替谁说话，或者冒充谁说话？</div><div class="example">看律师假判例、教授声音克隆、孙子拟声诈骗：替身进入信任链后，签名和身份都变成风险点。</div></div>
+    <div class="project-card"><div class="num">03</div><div class="ask">我的系统有没有利用人的孤独、恐惧、焦虑、身份压力？</div><div class="example">看 AI 霸总和 AI 伴侣：最危险的操控可能不撒谎，只是永远顺着你最脆弱的地方说。</div></div>
+    <div class="evidence-strip" style="grid-template-columns:1fr;gap:0.28em;margin:0;">
+      <div class="evidence-thumb"><img src="images/google_ai_overview_court.png" alt="AI Overview"><div class="cap">可信度</div></div>
+      <div class="evidence-thumb"><img src="images/ai_voice_clone_scam_ifeng.jpg" alt="拟声诈骗"><div class="cap">冒充</div></div>
+    </div>
   </div>
 </section>
 
 <!-- Slide 45 -->
 <section>
   <h2>学生项目伦理七问：4-7</h2>
-  <div class="card-grid cols-1">
-    <div class="card green"><div class="card-label">4. 我的输出有没有来源、修改过程和责任人？</div><div class="card-desc">对应：AI 假病历、C2PA/水印矛盾、AI 证据争议。</div></div>
-    <div class="card purple"><div class="card-label">5. 我的人工复核者能不能真的推翻系统？</div><div class="card-desc">对应：双方律师 AI 幻觉、AI 安防漏检、平台 AI 检测申诉。</div></div>
-    <div class="card cyan"><div class="card-label">6. 我的系统让用户更会判断，还是更会依赖？</div><div class="card-desc">对应：AI 搜索污染、AI slop、情感陪伴账号。</div></div>
-    <div class="card"><div class="card-label">7. 如果系统错了，受影响的人第一步能找谁？</div><div class="card-desc">对应：校园 deepfake、头像恶搞、公共谣言和平台处罚。</div></div>
+  <div class="project-board">
+    <div class="project-card"><div class="num">04</div><div class="ask">我的输出有没有来源、修改过程和责任人？</div><div class="example">对应：假病历、C2PA/水印矛盾、AI 证据争议。</div></div>
+    <div class="project-card"><div class="num">05</div><div class="ask">我的人工复核者能不能真的推翻系统？</div><div class="example">对应：双方律师 AI 幻觉、AI 安防漏检、平台 AI 检测申诉。</div></div>
+    <div class="project-card"><div class="num">06</div><div class="ask">我的系统让用户更会判断，还是更会依赖？</div><div class="example">对应：AI 搜索摘要、陪伴账号、迎合型聊天机器人。</div></div>
+    <div class="project-card"><div class="num">07</div><div class="ask">如果系统错了，受影响的人第一步能找谁？</div><div class="example">对应：校园 deepfake、头像恶搞、公共谣言和平台处罚。</div></div>
+  </div>
+  <div class="evidence-strip four">
+    <div class="evidence-thumb"><img src="images/ai_fake_medical_records_sina.jpg" alt="假病历"><div class="cap">来源</div></div>
+    <div class="evidence-thumb"><img src="images/ai_lawyers_both_sides_404media.png" alt="双方律师"><div class="cap">复核</div></div>
+    <div class="evidence-thumb contain"><img src="images/sycophantic_bayesians_figure2_grid.png" alt="贝叶斯迎合"><div class="cap">依赖</div></div>
+    <div class="evidence-thumb"><img src="images/ai_bridge_rumor_piyao.jpg" alt="辟谣"><div class="cap">救济</div></div>
   </div>
 </section>
 
@@ -2373,26 +2548,11 @@
 <section>
   <h2>不要写成原则口号</h2>
   <div class="asset-layout wide-left">
-    <div class="asset-panel compact">
-      <div class="asset-title">伦理说明要能被复盘 <span class="badge">可回答</span></div>
-      <div class="trace-sheet">
-        <div class="trace-title">一份能落地的项目说明至少写清：</div>
-        <div class="checkline"><div class="checkmark">✓</div><div class="text"><strong>模型版本</strong>：哪一个系统给出建议？</div></div>
-        <div class="checkline"><div class="checkmark">✓</div><div class="text"><strong>输入来源</strong>：谁提供了材料，是否可追溯？</div></div>
-        <div class="checkline"><div class="checkmark">✓</div><div class="text"><strong>人工复核</strong>：谁有权看见上下文并推翻？</div></div>
-        <div class="checkline"><div class="checkmark">✓</div><div class="text"><strong>申诉入口</strong>：受影响的人第一步找谁？</div></div>
-      </div>
-    </div>
+    <div class="asset-photo court-order"><img src="images/ninth_circuit_order-01.png" alt="法院 order"><div class="source-credit">法院不会问“你是否重视透明”，而会问引用从哪里来、谁核验、谁签名。</div></div>
     <div class="col">
-      <div class="card red">
-        <div class="card-label">空泛写法</div>
-        <div class="card-desc">“本系统重视隐私、公平、透明，并将遵守相关法律法规。”</div>
-      </div>
-      <div class="card green">
-        <div class="card-label">可回答写法</div>
-        <div class="card-desc">“本系统在生成建议时记录模型版本、输入来源、人工复核人；用户可通过申诉入口要求复核，复核者有权推翻系统结果。”</div>
-      </div>
-      <div class="quote-box"><div class="quote-text">回答不出来，不是文案没写好，而是系统还没有准备好进入真实社会。</div></div>
+      <div class="card red"><div class="card-label">空泛写法</div><div class="card-desc">“本系统重视隐私、公平、透明，并将遵守相关法律法规。”</div></div>
+      <div class="card green"><div class="card-label">可回答写法</div><div class="card-desc">“本系统记录模型版本、输入来源、人工复核人；用户可要求复核，复核者有权推翻系统结果。”</div></div>
+      <div class="question-punch">回答不出来，不是文案没写好，而是系统还没有准备好进入真实社会。</div>
     </div>
   </div>
 </section>
@@ -2400,58 +2560,68 @@
 <!-- Slide 47 -->
 <section>
   <h2>本课伦理词表</h2>
-  <table class="matrix">
-    <thead><tr><th>概念</th><th>可以追问什么</th><th>案例</th></tr></thead>
-    <tbody>
-      <tr><td>责任痕迹</td><td>出事后能不能复盘？</td><td>律师假判例；平台误判；AI 安防</td></tr>
-      <tr><td>生成式认识不正义</td><td>谁的话被 AI 放大，谁的话被压低？</td><td>AI Overview；AI 检测器</td></tr>
-      <tr><td>解释资源公平</td><td>谁被分配理解世界的语言？</td><td>AI 霸总；广告投放；平台推荐</td></tr>
-      <tr><td>体验即真实</td><td>假的东西为什么有真的伤害？</td><td>AI 恋人；头像恶搞；AI companion</td></tr>
-      <tr><td>证据基础设施</td><td>这份材料有没有可追溯来路？</td><td>假病历；C2PA；AI 谣言</td></tr>
-      <tr><td>有意义的人类控制</td><td>人能不能真正反对机器？</td><td>人在环；枪支识别；法院材料</td></tr>
-    </tbody>
-  </table>
+  <div class="case-atlas">
+    <div class="atlas-card contain"><img src="images/ninth_circuit_order-01.png" alt="责任痕迹"><div class="label">责任痕迹</div><div class="text">出事后能不能复盘？律师假判例、平台误判、AI 安防。</div></div>
+    <div class="atlas-card"><img src="images/google_ai_overview_court.png" alt="认识不正义"><div class="label">生成式认识不正义</div><div class="text">谁的话被 AI 放大，谁的话被压低？</div></div>
+    <div class="atlas-card"><img src="images/ai_bazong_screenshot.jpg" alt="解释资源公平"><div class="label">解释资源公平</div><div class="text">平台在分配理解孤独、消费和关系的语言。</div></div>
+    <div class="atlas-card"><img src="images/ai_companion_1128694763_16538192706801n.jpg" alt="体验即真实"><div class="label">体验即真实</div><div class="text">假的东西为什么有真的伤害？AI 恋人、头像恶搞、AI companion。</div></div>
+    <div class="atlas-card"><img src="images/ai_fake_medical_records_sina.jpg" alt="证据基础设施"><div class="label">证据基础设施</div><div class="text">这份材料有没有可追溯来路？</div></div>
+    <div class="atlas-card"><img src="images/omnilert_exterior.jpeg" alt="有意义的人类控制"><div class="label">有意义的人类控制</div><div class="text">人能不能真正反对机器？</div></div>
+  </div>
 </section>
 
 <!-- Slide 48 -->
 <section>
   <h2>参考文献与资料线索</h2>
-  <table class="matrix">
-    <thead><tr><th>主题</th><th>来源</th><th>对应问题</th></tr></thead>
-    <tbody>
-      <tr><td>原则疲劳</td><td>Lin 2024, arXiv:2401.15284</td><td>从原则口号转向责任痕迹。</td></tr>
-      <tr><td>认识不正义</td><td>Kay et al. 2024；Mollema 2025</td><td>解释 AI 如何分配可信度和解释权。</td></tr>
-      <tr><td>解释资源公平</td><td>Quaresmini et al. 2026；Kommers et al. 2026</td><td>把推荐和陪伴讲成意义分配问题。</td></tr>
-      <tr><td>体验即真实</td><td>Klenk 2025；De Freitas et al. 2024</td><td>解释假图、AI 伴侣和依赖关系。</td></tr>
-      <tr><td>证据基础设施</td><td>Nemecek et al. 2026；Sengupta et al. 2026</td><td>解释 C2PA、水印和真实性债务。</td></tr>
-      <tr><td>人在环</td><td>Siebert et al. 2021；Di Santi 2026</td><td>区分认知放大和认知委托。</td></tr>
-    </tbody>
-  </table>
+  <div class="split-visual">
+    <div class="case-atlas" style="grid-template-columns:1fr 1fr;gap:0.34em;margin:0;">
+      <div class="atlas-card contain"><img src="images/sycophantic_bayesians_figure2_grid.png" alt="Sycophantic Bayesians 论文图"><div class="label">Chandra et al. 2026</div><div class="text">迎合型聊天机器人与信念螺旋。</div></div>
+      <div class="atlas-card contain"><img src="images/c2pa_content_credentials.png" alt="C2PA"><div class="label">C2PA / 水印研究</div><div class="text">真实性不只是肉眼判断。</div></div>
+      <div class="atlas-card"><img src="images/ai_companion_1128694763_16538192706801n.jpg" alt="AI companion"><div class="label">AI companion</div><div class="text">孤独、依恋和商业模式。</div></div>
+      <div class="atlas-card"><img src="images/ai_lawyers_both_sides_404media.png" alt="AI lawyers"><div class="label">人在环与司法</div><div class="text">认知放大还是认知委托。</div></div>
+    </div>
+    <table class="matrix" style="margin-top:0;">
+      <thead><tr><th>主题</th><th>来源线索</th><th>课堂用途</th></tr></thead>
+      <tbody>
+        <tr><td>原则疲劳</td><td>Lin 2024</td><td>从原则口号转向责任痕迹。</td></tr>
+        <tr><td>认识不正义</td><td>Kay et al. 2024；Mollema 2025</td><td>解释 AI 如何分配可信度。</td></tr>
+        <tr><td>亲密与操控</td><td>Ciriello et al. 2026；Chandra et al. 2026</td><td>讲陪伴、迎合和依赖。</td></tr>
+        <tr><td>证据基础设施</td><td>Nemecek et al. 2026；Sengupta et al. 2026</td><td>讲 C2PA、水印和真实性债务。</td></tr>
+        <tr><td>人在环</td><td>Siebert et al. 2021；Di Santi 2026</td><td>区分控制、盖章和责任。</td></tr>
+      </tbody>
+    </table>
+  </div>
 </section>
 
 <!-- Slide 49 -->
 <section class="takeaway">
+  <div class="evidence-strip five" style="width:86%;margin-bottom:0.95em;">
+    <div class="evidence-thumb"><img src="images/aigc_platform_case_beijingip.jpg" alt="平台误判"><div class="cap">谁像真人</div></div>
+    <div class="evidence-thumb"><img src="images/ai_fake_medical_records_sina.jpg" alt="假证据"><div class="cap">谁像证据</div></div>
+    <div class="evidence-thumb"><img src="images/ai_avatar_voice_xinhua.jpeg" alt="身份替身"><div class="cap">谁像本人</div></div>
+    <div class="evidence-thumb"><img src="images/ai_bazong_screenshot.jpg" alt="亲密脚本"><div class="cap">谁像朋友</div></div>
+    <div class="evidence-thumb"><img src="images/omnilert_exterior.jpeg" alt="AI 安防"><div class="cap">谁像负责</div></div>
+  </div>
   <div class="divider"></div>
   <div class="main-text">AI 伦理不是让技术慢下来，<br>而是让社会在加速时仍然有刹车、后视镜和事故记录仪。</div>
-  <div class="sub-text">
-    能解释，能申诉，能暂停，能追责。<br>
-    这不是课后附录，而是所有 AI 项目进入社会之前的最低制度准备。
-  </div>
+  <div class="sub-text">能解释，能申诉，能暂停，能追责。<br>这不是课后附录，而是所有 AI 项目进入社会之前的最低制度准备。</div>
 </section>
+
 
 </div><!-- .slides -->
 </div><!-- .reveal -->
 
 <script src="vendor/reveal.js"></script>
 <script>
+  const portraitDeck = window.matchMedia('(max-width: 720px) and (orientation: portrait)').matches;
   Reveal.initialize({
     hash: true,
     slideNumber: true,
     transition: 'fade',
     backgroundTransition: 'fade',
-    width: 1280,
-    height: 720,
-    margin: 0.06
+    width: portraitDeck ? 900 : 1280,
+    height: portraitDeck ? 1500 : 720,
+    margin: portraitDeck ? 0.025 : 0.06
   });
 </script>
 </body>
