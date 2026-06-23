@@ -407,7 +407,7 @@ body {
 
 <section class="cover">
   <h1>从 Prompt 到 Loop</h1>
-  <p class="subtitle">把 AI Agent 变成可验证的研究工作流</p>
+  <p class="subtitle">把 AI Agent 变成可验证的业务工作流</p>
   <p class="meta">
     第十六课 · 机器学习与自然语言处理<br>
     郑思尧 · 上海交通大学 国际与公共事务学院
@@ -430,11 +430,11 @@ body {
     <div class="card red">
       <div class="label">Already covered</div>
       <div class="card-title">要不要人工复核</div>
-      <div class="card-text">从主题模型、多模态、社交媒体、政策文本、开放题到伦理课，我们已经反复讲过。</div>
+      <div class="card-text">从文本分类、多模态识别、客服工单、商品评论、运营数据到自动化脚本，我们已经反复讲过。</div>
     </div>
   </div>
   <div class="quote" style="margin-top:0.9em;">
-    <p>今天的新问题是：如何把这些组件组织成一个<strong>能持续推进、留下证据、接受检查、迭代变好</strong>的研究系统。</p>
+    <p>今天的新问题是：如何把这些组件组织成一个<strong>能持续推进、留下证据、接受检查、迭代变好</strong>的业务系统。</p>
   </div>
 </section>
 
@@ -459,7 +459,7 @@ body {
 <section>
   <h2>一句话定义</h2>
   <div class="quote">
-    <p><strong>Loop Engineering</strong> 是把目标、状态、行动、检查、修正和交付物连成一个能重复运行、能留下证据、能接受评估的研究系统。</p>
+    <p><strong>Loop Engineering</strong> 是把目标、状态、行动、检查、修正和交付物连成一个能重复运行、能留下证据、能接受评估的业务系统。</p>
   </div>
   <div class="grid cols-3" style="margin-top:0.8em;">
     <div class="card blue">
@@ -472,13 +472,13 @@ body {
     </div>
     <div class="card orange">
       <div class="card-title">不是完全自动化</div>
-      <div class="card-text">很多好 loop 的关键恰恰是知道什么时候必须停下来，让研究者判断。</div>
+      <div class="card-text">很多好 loop 的关键恰恰是知道什么时候必须停下来，让业务负责人判断。</div>
     </div>
   </div>
 </section>
 
 <section>
-  <h2>从聊天窗口到研究系统</h2>
+  <h2>从聊天窗口到业务系统</h2>
   <div class="loop-row">
     <div class="loop-node"><div class="top">01</div><div class="main">Chat</div><div class="sub">一次性问答</div></div>
     <div class="loop-node"><div class="top">02</div><div class="main">Prompt</div><div class="sub">任务标准</div></div>
@@ -487,7 +487,7 @@ body {
     <div class="loop-node"><div class="top">05</div><div class="main">Loop</div><div class="sub">检查与改进</div></div>
     <div class="loop-node"><div class="top">06</div><div class="main">Workflow</div><div class="sub">课程项目交付</div></div>
   </div>
-  <p class="lead" style="margin-top:1em;">最后一讲的层级比前面更高：不是问“AI 能不能做这一步”，而是问“这个项目能不能被反复运行、被别人检查、被你自己改进”。</p>
+  <p class="lead" style="margin-top:1em;">最后一讲的层级比前面更高：不是问“AI 能不能做这一步”，而是问“这个项目能不能被反复运行、被别人检查、被团队持续改进”。</p>
 </section>
 
 <section>
@@ -498,8 +498,8 @@ body {
       <div class="card-text">Agent 能写代码、查资料、跑脚本、调用浏览器之后，真正难的不是生成第一版，而是让它知道何时失败、如何重试、何时交给人。</div>
     </div>
     <div class="card">
-      <div class="card-title">研究侧：只展示最终答案不够了</div>
-      <div class="card-text">社科研究需要数据来源、抽样、变量定义、误差说明、代表材料和可复核记录。AI 越能代劳，越要保留过程。</div>
+      <div class="card-title">业务侧：只展示最终答案不够了</div>
+      <div class="card-text">企业场景需要输入来源、权限边界、KPI、成本、延迟、错误处理和可追踪记录。AI 越能代劳，越要保留过程。</div>
     </div>
   </div>
   <p class="source-note">参考：Addy Osmani, <a href="https://addyosmani.com/blog/loop-engineering/" target="_blank" rel="noopener noreferrer">Loop Engineering</a>; LangChain, <a href="https://www.langchain.com/blog/the-art-of-loop-engineering" target="_blank" rel="noopener noreferrer">The Art of Loop Engineering</a>.</p>
@@ -509,10 +509,10 @@ body {
   <h2>一个 Loop 的六个部件</h2>
   <div class="loop-row">
     <div class="loop-node"><div class="top">Goal</div><div class="main">目标</div><div class="sub">要产出什么，不产出什么</div></div>
-    <div class="loop-node"><div class="top">State</div><div class="main">状态</div><div class="sub">已读材料、已跑脚本、已有结论</div></div>
-    <div class="loop-node"><div class="top">Action</div><div class="main">行动</div><div class="sub">搜索、编码、运行、写作</div></div>
-    <div class="loop-node"><div class="top">Check</div><div class="main">检查</div><div class="sub">规则、eval、人工抽检</div></div>
-    <div class="loop-node"><div class="top">Revise</div><div class="main">修正</div><div class="sub">补材料、改 prompt、改代码</div></div>
+    <div class="loop-node"><div class="top">State</div><div class="main">状态</div><div class="sub">已处理工单、版本、指标、日志</div></div>
+    <div class="loop-node"><div class="top">Action</div><div class="main">行动</div><div class="sub">检索、分类、路由、生成、执行</div></div>
+    <div class="loop-node"><div class="top">Check</div><div class="main">检查</div><div class="sub">规则、eval、人工质检</div></div>
+    <div class="loop-node"><div class="top">Revise</div><div class="main">修正</div><div class="sub">补样本、改 prompt、改工具</div></div>
     <div class="loop-node"><div class="top">Stop</div><div class="main">停止</div><div class="sub">预算、质量门、人工确认</div></div>
   </div>
   <div class="callout" style="margin-top:0.9em;">
@@ -523,15 +523,15 @@ body {
 <section>
   <h2>Loop Engineering 的四种常见形态</h2>
   <table class="matrix">
-    <thead><tr><th>形态</th><th>核心问题</th><th>社科研究里的对应物</th></tr></thead>
+    <thead><tr><th>形态</th><th>核心问题</th><th>业界项目里的对应物</th></tr></thead>
     <tbody>
-      <tr><td>Agent loop</td><td>下一步该调用什么工具？</td><td>文献检索、网页采集、代码执行、图表生成。</td></tr>
-      <tr><td>Verification loop</td><td>这一步结果能不能信？</td><td>抽样复核、证据片段、错误类型、人工金标准。</td></tr>
-      <tr><td>Event-driven loop</td><td>什么时候自动触发？</td><td>每天抓取政策更新、每周更新舆情摘要、作业提交后自动检查。</td></tr>
-      <tr><td>Hill-climbing loop</td><td>如何让下一版比上一版更好？</td><td>根据评分表改 prompt、改 codebook、改可视化、改方法段。</td></tr>
+      <tr><td>Agent loop</td><td>下一步该调用什么工具？</td><td>查知识库、读 CRM、写 SQL、调用工单系统、生成回复。</td></tr>
+      <tr><td>Verification loop</td><td>这一步结果能不能信？</td><td>质检抽样、引用证据、低置信转人工、错误类型记录。</td></tr>
+      <tr><td>Event-driven loop</td><td>什么时候自动触发？</td><td>新工单、新订单、日报定时任务、Webhook、告警触发。</td></tr>
+      <tr><td>Hill-climbing loop</td><td>如何让下一版比上一版更好？</td><td>根据质检和 KPI 改 prompt、工具、路由、知识库和 dashboard。</td></tr>
     </tbody>
   </table>
-  <p class="source-note">这四类来自 LangChain 对 loop engineering 的工程总结；课堂上按社科项目重新转译。</p>
+  <p class="source-note">这四类来自 LangChain 对 loop engineering 的工程总结；课堂上按企业落地项目重新转译。</p>
 </section>
 
 <section>
@@ -544,12 +544,12 @@ body {
     </div>
     <div class="card green">
       <div class="label">Outside</div>
-      <div class="card-title">研究外循环</div>
-      <div class="card-text">设定研究目标、保存运行记录、检查样本、比较版本、修正规则、判断是否能交付。今天讲这个。</div>
+      <div class="card-title">业务外循环</div>
+      <div class="card-text">设定业务目标、保存运行记录、检查样本、比较版本、修正规则、判断是否上线或回滚。今天讲这个。</div>
     </div>
   </div>
   <div class="warning" style="margin-top:0.9em;">
-    <p style="margin:0;">最常见错误：把“Agent 跑完了”误认为“研究完成了”。Agent 完成的是内循环，研究者要负责外循环。</p>
+    <p style="margin:0;">最常见错误：把“Agent 跑完了”误认为“业务可上线了”。Agent 完成的是内循环，团队要负责外循环。</p>
   </div>
 </section>
 
@@ -567,7 +567,7 @@ body {
     <div class="loop-node"><div class="top">Run</div><div class="main">再运行</div><div class="sub">比较新旧表现</div></div>
     <div class="loop-node"><div class="top">Ship</div><div class="main">交付</div><div class="sub">保留版本和证据</div></div>
   </div>
-  <p class="lead" style="margin-top:1em;">这套逻辑很适合改写成学生项目流程：不是“我让 AI 做了一遍”，而是“我看了它错在哪里，然后把错误变成下一轮的检查规则”。</p>
+  <p class="lead" style="margin-top:1em;">这套逻辑很适合改写成企业项目流程：不是“我让 AI 做了一遍”，而是“我看了它错在哪里，然后把错误变成下一轮的检查规则”。</p>
   <p class="source-note">参考：OpenAI Cookbook, <a href="https://developers.openai.com/cookbook/examples/agents_sdk/agent_improvement_loop" target="_blank" rel="noopener noreferrer">Agent Improvement Loop</a>.</p>
 </section>
 
@@ -576,53 +576,53 @@ body {
   <table class="matrix">
     <thead><tr><th>类型</th><th>适合什么</th><th>课堂翻译</th></tr></thead>
     <tbody>
-      <tr><td>Workflow</td><td>步骤可预先写清楚，控制流稳定。</td><td>政策文本抽取、开放题批量编码、固定字段报告。</td></tr>
-      <tr><td>Agent</td><td>路径开放，需要模型自己决定下一步。</td><td>探索文献、调查一个新事件、多来源线索追踪。</td></tr>
-      <tr><td>Hybrid</td><td>大框架固定，但局部需要自主探索。</td><td>最适合期末作业：固定交付物 + 局部 agent 探索。</td></tr>
+      <tr><td>Workflow</td><td>步骤可预先写清楚，控制流稳定。</td><td>客服工单分流、发票字段抽取、内容审核初筛。</td></tr>
+      <tr><td>Agent</td><td>路径开放，需要模型自己决定下一步。</td><td>故障排查、竞争情报、销售线索挖掘、多来源资料追踪。</td></tr>
+      <tr><td>Hybrid</td><td>大框架固定，但局部需要自主探索。</td><td>最适合期末作业：固定交付物 + 局部 agent 探索或外部系统调用。</td></tr>
     </tbody>
   </table>
-  <div class="quote" style="margin-top:0.8em;"><p>不要为了“像 AI Agent”而把所有事情都交给 Agent。研究中最可靠的自动化，往往是<strong>固定流程 + 局部智能 + 明确复核</strong>。</p></div>
+  <div class="quote" style="margin-top:0.8em;"><p>不要为了“像 AI Agent”而把所有事情都交给 Agent。企业里最可靠的自动化，往往是<strong>固定流程 + 局部智能 + 明确复核</strong>。</p></div>
   <p class="source-note">参考：Anthropic, <a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener noreferrer">Building effective agents</a>.</p>
 </section>
 
 <section>
-  <h2>Evaluator-Optimizer：最像研究训练的一种模式</h2>
+  <h2>Evaluator-Optimizer：最像企业质检的一种模式</h2>
   <div class="cols">
     <div class="card orange">
       <div class="card-title">Generator</div>
-      <div class="card-text">生成第一版编码、摘要、图表、方法段或报告。</div>
+      <div class="card-text">生成第一版回复、工单标签、销售摘要、SQL、图表或报告。</div>
     </div>
     <div class="card green">
       <div class="card-title">Evaluator</div>
-      <div class="card-text">按标准检查：有没有证据、有没有漏项、有没有错误解释、格式是否可复查。</div>
+      <div class="card-text">按标准检查：是否符合业务规则、有没有证据、是否越权、字段是否完整、格式是否可落库。</div>
     </div>
   </div>
   <div class="callout" style="margin-top:0.9em;">
-    <p style="margin:0;">课堂转译：不要让同一个模型“随便夸自己”。Evaluator 要有外部材料、固定评分表、反例样本，最好还要有人类抽查。</p>
+    <p style="margin:0;">课堂转译：不要让同一个模型“随便夸自己”。Evaluator 要有业务规则、金标准样本、失败案例，最好还要有人类抽检。</p>
   </div>
 </section>
 
 <section>
-  <h2>社科研究者正在进入这个阶段</h2>
+  <h2>业界项目正在进入这个阶段</h2>
   <div class="grid cols-3">
     <div class="metric">
-      <div class="big-number">1,260</div>
-      <div class="card-title">受访社科研究者</div>
-      <div class="card-text">Anthropic 对 social science researchers 的调查样本规模。</div>
+      <div class="big-number">Agent</div>
+      <div class="card-title">执行完整 workflow</div>
+      <div class="card-text">OpenAI 的 agent 指南把 agent 定义为能代表用户完成任务的系统，而不是单次回答。</div>
     </div>
     <div class="metric">
-      <div class="big-number">81%</div>
-      <div class="card-title">用过 AI chatbot</div>
-      <div class="card-text">聊天式 AI 已经进入多数人的研究日常。</div>
+      <div class="big-number">Guardrail</div>
+      <div class="card-title">明确工具和边界</div>
+      <div class="card-text">业务系统要限制可读数据、可调用工具、可执行动作，以及何时必须交给人。</div>
     </div>
     <div class="metric">
-      <div class="big-number">20%</div>
-      <div class="card-title">每周用 coding agents</div>
-      <div class="card-text">真正进入 agentic workflow 的比例仍然较低。</div>
+      <div class="big-number">Handoff</div>
+      <div class="card-title">在流程中交接责任</div>
+      <div class="card-text">复杂业务常见做法是 triage agent 判断问题，再交给销售、支持、财务或人工处理。</div>
     </div>
   </div>
-  <p class="lead" style="margin-top:0.8em;">这意味着最后一讲不能假设大家都已经会工程化，也不能停留在“AI 很方便”。我们要教的是：如何把自己的研究判断写进 AI 工作流。</p>
-  <p class="source-note">参考：Anthropic, <a href="https://www.anthropic.com/research/coding-agents-social-sciences" target="_blank" rel="noopener noreferrer">Coding agents and the future of social science research</a>.</p>
+  <p class="lead" style="margin-top:0.8em;">这意味着最后一讲不能停留在“AI 很方便”。业界真正需要的是：把业务规则、系统权限、质量门和交付责任写进 AI 工作流。</p>
+  <p class="source-note">参考：OpenAI, <a href="https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf" target="_blank" rel="noopener noreferrer">A practical guide to building agents</a>.</p>
 </section>
 
 <section>
@@ -639,69 +639,69 @@ body {
 </section>
 
 <section class="section-title">
-  <h2><span class="section-num">Part 3 / 5</span>社科研究里的五类 Loop</h2>
+  <h2><span class="section-num">Part 3 / 5</span>业界项目里的五类 Loop</h2>
 </section>
 
 <section>
   <h2>五类 Loop：对应期末项目的五种工作</h2>
   <div class="grid cols-5" style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0.45em;">
-    <div class="card blue"><div class="card-title">文献</div><div class="card-text">找、读、筛、归纳、补缺口。</div></div>
-    <div class="card green"><div class="card-title">数据</div><div class="card-text">采集、清洗、去重、记录来路。</div></div>
-    <div class="card orange"><div class="card-title">编码</div><div class="card-text">定义变量、标注、抽检、修规则。</div></div>
-    <div class="card purple"><div class="card-title">分析</div><div class="card-text">跑模型、看图表、做稳健性。</div></div>
-    <div class="card red"><div class="card-title">写作</div><div class="card-text">生成、核验、重写、压缩。</div></div>
+    <div class="card blue"><div class="card-title">客户声音</div><div class="card-text">工单、评论、反馈、需求聚合。</div></div>
+    <div class="card green"><div class="card-title">知识库</div><div class="card-text">接入、更新、检索、权限控制。</div></div>
+    <div class="card orange"><div class="card-title">内容风控</div><div class="card-text">定义平台规则、初筛、抽检、修规则。</div></div>
+    <div class="card purple"><div class="card-title">业务分析</div><div class="card-text">SQL、指标、图表、异常解释。</div></div>
+    <div class="card red"><div class="card-title">交付上线</div><div class="card-text">测试、发布、监控、回滚。</div></div>
   </div>
   <p class="lead" style="margin-top:0.85em;">一个好项目不一定五类都用。关键是选出你真正需要循环改进的部分，把它写清楚。</p>
 </section>
 
 <section>
-  <h2>Loop 1：文献阅读</h2>
+  <h2>Loop 1：客户声音与需求洞察</h2>
   <div class="cols col-40-60">
     <div class="card blue">
       <div class="card-title">错误做法</div>
-      <div class="card-text">让 AI “帮我综述一下某领域”，然后直接采纳一段漂亮文字。</div>
+      <div class="card-text">把一批客服工单、商品评论或用户访谈丢给 AI，让它直接总结“用户最关心什么”。</div>
     </div>
     <div class="card green">
       <div class="card-title">Loop 做法</div>
-      <div class="card-text">限定检索词和时间窗；让 agent 提取论文问题、数据、方法、结论；人工抽查引用；把缺口写成下一轮检索词。</div>
+      <div class="card-text">限定时间窗和渠道；让 agent 提取问题类型、情绪、产品模块、证据片段；人工抽查高频类和边界样本；把漏分问题写进下一轮规则。</div>
     </div>
   </div>
   <div class="trace" style="margin-top:0.85em;">
     <div class="head">输入</div><div class="head">行动</div><div class="head">检查</div><div class="head">产物</div>
-    <div>研究主题 + 关键词</div><div>查找论文，提取结构化表</div><div>抽查 DOI、摘要、方法是否真实</div><div>literature_matrix.csv</div>
+    <div>工单 + 评论 + 访谈摘要</div><div>聚类、打标签、提取代表原文</div><div>抽查高频类、低频类和负面样本</div><div>voc_insights.csv</div>
   </div>
 </section>
 
 <section>
-  <h2>Loop 2：数据采集</h2>
+  <h2>Loop 2：知识库与数据接入</h2>
   <div class="grid cols-3">
     <div class="card">
       <div class="card-title">状态记录</div>
-      <div class="card-text">采集时间、关键词、页码、URL、失败请求、去重规则。</div>
+      <div class="card-text">数据源、同步时间、文档版本、权限范围、失败请求、去重规则。</div>
     </div>
     <div class="card">
       <div class="card-title">检查器</div>
-      <div class="card-text">样本量是否异常、字段是否缺失、重复率是否过高、是否跨出授权边界。</div>
+      <div class="card-text">文档是否过期、字段是否缺失、重复率是否过高、检索是否越权。</div>
     </div>
     <div class="card">
       <div class="card-title">停止条件</div>
-      <div class="card-text">达到时间窗、达到样本上限、失败率超过阈值、需要人工确认。</div>
+      <div class="card-text">达到刷新窗口、错误率超过阈值、权限不明、需要业务 owner 确认。</div>
     </div>
   </div>
-  <div class="warning" style="margin-top:0.8em;"><p style="margin:0;">采集 loop 最怕“数据来了就用”。没有采集日志的数据，后面很难解释偏差来自社会现象还是采集过程。</p></div>
+  <div class="warning" style="margin-top:0.8em;"><p style="margin:0;">知识库 loop 最怕“能搜到就用”。没有来源、权限、版本和刷新日志的知识库，不应该直接接进业务 agent。</p></div>
 </section>
 
 <section>
-  <h2>Loop 3：开放题/政策文本编码</h2>
+  <h2>Loop 3：内容审核与风控规则</h2>
   <div class="loop-row">
-    <div class="loop-node"><div class="top">Define</div><div class="main">定义变量</div><div class="sub">边界、反例、证据片段</div></div>
-    <div class="loop-node"><div class="top">Pilot</div><div class="main">试标样本</div><div class="sub">人工 30-100 条</div></div>
-    <div class="loop-node"><div class="top">Run</div><div class="main">模型批量</div><div class="sub">标签 + 引文 + 置信</div></div>
-    <div class="loop-node"><div class="top">Audit</div><div class="main">抽样复核</div><div class="sub">每类、少数类、边界样本</div></div>
-    <div class="loop-node"><div class="top">Revise</div><div class="main">修编码本</div><div class="sub">新增排除规则</div></div>
-    <div class="loop-node"><div class="top">Report</div><div class="main">报告误差</div><div class="sub">错误类型和边界</div></div>
+    <div class="loop-node"><div class="top">Define</div><div class="main">定义规则</div><div class="sub">允许、拒绝、灰区、反例</div></div>
+    <div class="loop-node"><div class="top">Pilot</div><div class="main">试审样本</div><div class="sub">人工 30-100 条</div></div>
+    <div class="loop-node"><div class="top">Run</div><div class="main">模型初筛</div><div class="sub">标签 + 原文 + 置信</div></div>
+    <div class="loop-node"><div class="top">Audit</div><div class="main">抽样质检</div><div class="sub">误杀、漏放、边界样本</div></div>
+    <div class="loop-node"><div class="top">Revise</div><div class="main">修规则</div><div class="sub">新增灰区和例外</div></div>
+    <div class="loop-node"><div class="top">Report</div><div class="main">报告误差</div><div class="sub">FP/FN 和升级路径</div></div>
   </div>
-  <p class="lead" style="margin-top:1em;">这部分前面已经讲过很多次。今天的新要求是：把它写成一个明确的 loop，而不是散落在方法段里的几句说明。</p>
+  <p class="lead" style="margin-top:1em;">内容审核、舆情分级、交易风控、简历初筛都不能只给一个分类器。它们需要平台规则、样本、质检、升级和回滚路径。</p>
 </section>
 
 <section>
@@ -709,23 +709,23 @@ body {
   <table class="matrix">
     <thead><tr><th>普通分析</th><th>Loop 化之后</th></tr></thead>
     <tbody>
-      <tr><td>跑一次 STM / 分类器 / 聚类。</td><td>保存随机种子、版本、参数、输入表 hash。</td></tr>
-      <tr><td>挑一个看起来顺眼的 K 或阈值。</td><td>比较多个 K / 阈值，记录结论是否改变。</td></tr>
-      <tr><td>展示一张主图。</td><td>主图 + 代表样本 + 反例 + 分母说明。</td></tr>
-      <tr><td>让 AI 解释结果。</td><td>让 AI 先列可能解释，再要求每条绑定证据或标注为猜测。</td></tr>
+      <tr><td>让 AI 写一次 SQL 或分析一次 Excel。</td><td>保存数据快照、查询语句、指标定义、版本和输入 hash。</td></tr>
+      <tr><td>挑一个看起来顺眼的阈值。</td><td>比较多个阈值，记录 KPI 和业务结论是否改变。</td></tr>
+      <tr><td>展示一张主图。</td><td>主图 + 分母说明 + 样例行 + 异常点解释。</td></tr>
+      <tr><td>让 AI 解释结果。</td><td>让 AI 先列可能解释，再要求每条绑定日志、订单、工单或标注为猜测。</td></tr>
     </tbody>
   </table>
 </section>
 
 <section>
-  <h2>Loop 5：写作与简报</h2>
+  <h2>Loop 5：交付与上线</h2>
   <div class="grid cols-4">
-    <div class="artifact"><div class="file">outline.md</div><div class="desc">问题、数据、方法、结果、解释、边界。</div></div>
-    <div class="artifact"><div class="file">claims.csv</div><div class="desc">每个结论对应图表、表格、原文或输出样例。</div></div>
-    <div class="artifact"><div class="file">citation_check.md</div><div class="desc">文献、网页、数据来源逐项核验。</div></div>
-    <div class="artifact"><div class="file">slide_notes.md</div><div class="desc">每页要讲什么，哪些话不能说过头。</div></div>
+    <div class="artifact"><div class="file">runbook.md</div><div class="desc">触发条件、输入、工具、人工升级路径。</div></div>
+    <div class="artifact"><div class="file">quality_gate.csv</div><div class="desc">每个质量门对应样例、阈值和处理动作。</div></div>
+    <div class="artifact"><div class="file">qa_checklist.md</div><div class="desc">权限、成本、延迟、错误、拒答逐项核验。</div></div>
+    <div class="artifact"><div class="file">release_notes.md</div><div class="desc">版本变化、已知限制、监控指标和回滚条件。</div></div>
   </div>
-  <div class="quote" style="margin-top:0.85em;"><p>写作 loop 的目标不是让 AI 写得更像人，而是让报告里的每一句主张都能找到支撑材料。</p></div>
+  <div class="quote" style="margin-top:0.85em;"><p>交付 loop 的目标不是让 demo 更好看，而是让每个自动化行为都能被测试、监控、暂停和追责。</p></div>
 </section>
 
 <section class="section-title">
@@ -736,25 +736,25 @@ body {
   <h2>期末作业的最小 Loop 合同</h2>
   <div class="codebox">Project Loop Contract
 1. 目标：我要回答什么问题？最后交付什么？
-2. 输入：数据/文本/图片/网页/访谈从哪里来？
+2. 输入：工单/评论/日志/图片/网页/CRM/知识库从哪里来？
 3. 行动：Agent 或模型具体做哪几步？
 4. 状态：中间结果保存在哪里？如何命名？
 5. 检查：我用什么标准判断它对不对？
-6. 修正：出错后改 prompt、改编码本、补数据，还是人工接管？
+6. 修正：出错后改 prompt、改规则、补样本、改工具，还是人工接管？
 7. 停止：什么时候算完成？什么时候必须承认做不了？
-8. 产物：课堂展示时给哪些表、图、原文、日志或样例？</div>
+8. 产物：课堂展示时给哪些表、图、原文、日志、质检结果或业务样例？</div>
 </section>
 
 <section>
-  <h2>路径 A：研究分析项目</h2>
+  <h2>路径 A：业务分析项目</h2>
   <div class="cols">
     <div class="card blue">
       <div class="card-title">普通说法</div>
-      <div class="card-text">“我收集了一些政策文本，让 AI 帮我分类，发现环保政策越来越多。”</div>
+      <div class="card-text">“我收集了一些商品评论，让 AI 帮我分类，发现质量问题很多。”</div>
     </div>
     <div class="card green">
       <div class="card-title">Loop 说法</div>
-      <div class="card-text">“我先定义政策目标和工具，抽取 200 篇文件，人工试标 30 篇，LLM 批量编码后每类抽检 10 条，并把边界样本改写进第二版 codebook。”</div>
+      <div class="card-text">“我先定义 8 类投诉原因，抽取 1,000 条评论，人工试标 60 条，LLM 批量分类后每类抽检 15 条，并把误分样本写进第二版规则。”</div>
     </div>
   </div>
   <p class="lead" style="margin-top:0.8em;">两者可能用了同一个模型，但第二个能被检查，能被复现，也能被评分。</p>
@@ -765,7 +765,7 @@ body {
   <table class="matrix">
     <thead><tr><th>工具要交代</th><th>不要只说</th><th>要展示</th></tr></thead>
     <tbody>
-      <tr><td>任务边界</td><td>“它能分析政策文件。”</td><td>只处理哪些文件、哪些字段、哪些情况拒绝输出。</td></tr>
+      <tr><td>任务边界</td><td>“它能处理客服工单。”</td><td>只处理哪些渠道、哪些字段、哪些情况拒绝输出或升级人工。</td></tr>
       <tr><td>输入契约</td><td>“上传文件即可。”</td><td>CSV/Markdown/图片的字段、格式、样例。</td></tr>
       <tr><td>输出契约</td><td>“生成报告。”</td><td>固定列名、图表路径、证据片段、错误日志。</td></tr>
       <tr><td>质量门</td><td>“有人工复核。”</td><td>抽检规则、低置信处理、什么时候暂停。</td></tr>
@@ -776,14 +776,14 @@ body {
 <section>
   <h2>学生项目里最该保存的 8 类证据</h2>
   <div class="grid cols-4">
-    <div class="artifact"><div class="file">raw_sample/</div><div class="desc">原始材料小样本，保留来路。</div></div>
+    <div class="artifact"><div class="file">raw_sample/</div><div class="desc">原始工单、评论或日志小样本，保留来路。</div></div>
     <div class="artifact"><div class="file">input_table.csv</div><div class="desc">进入模型前的可复查输入。</div></div>
-    <div class="artifact"><div class="file">prompt.md</div><div class="desc">任务标准、变量定义、反例。</div></div>
+    <div class="artifact"><div class="file">prompt.md</div><div class="desc">任务标准、业务规则、反例。</div></div>
     <div class="artifact"><div class="file">run_log.jsonl</div><div class="desc">时间、模型、参数、工具结果。</div></div>
     <div class="artifact"><div class="file">outputs.csv</div><div class="desc">模型输出，保留证据片段。</div></div>
-    <div class="artifact"><div class="file">review_set.csv</div><div class="desc">人工抽检样本和错误类型。</div></div>
-    <div class="artifact"><div class="file">figures/</div><div class="desc">图表和生成脚本路径。</div></div>
-    <div class="artifact"><div class="file">limitations.md</div><div class="desc">不能解释什么，不能推广到哪里。</div></div>
+    <div class="artifact"><div class="file">review_set.csv</div><div class="desc">人工质检样本和错误类型。</div></div>
+    <div class="artifact"><div class="file">dashboard/</div><div class="desc">图表、SQL 和生成脚本路径。</div></div>
+    <div class="artifact"><div class="file">limitations.md</div><div class="desc">不能自动处理哪些场景，风险在哪里。</div></div>
   </div>
 </section>
 
@@ -791,7 +791,7 @@ body {
   <h2>一个可用的运行日志长什么样</h2>
   <div class="trace">
     <div class="head">字段</div><div class="head">例子</div><div class="head">为什么要有</div><div class="head">课堂展示</div>
-    <div>run_id</div><div>2026-06-23-policy-v2</div><div>区分版本，不混淆输出。</div><div>可以展示 2-3 个关键版本。</div>
+    <div>run_id</div><div>2026-06-23-support-v2</div><div>区分版本，不混淆输出。</div><div>可以展示 2-3 个关键版本。</div>
     <div>model</div><div>gpt-4.1 / claude / GLM</div><div>结果依赖模型，必须说明。</div><div>写进方法页。</div>
     <div>input_hash</div><div>sha256:...</div><div>确认输入是否变了。</div><div>不用全讲，但要保存。</div>
     <div>check_result</div><div>pass / needs_review</div><div>说明不是直接交付。</div><div>展示一页质量门。</div>
@@ -803,10 +803,10 @@ body {
   <table class="matrix">
     <thead><tr><th>弱检查</th><th>强检查</th></tr></thead>
     <tbody>
-      <tr><td>“我看了一下，感觉还行。”</td><td>每个类别随机抽 10 条，记录正确/错误/边界。</td></tr>
-      <tr><td>“让 AI 自己检查一遍。”</td><td>AI 检查必须引用原文；人工抽查 AI 检查是否漏错。</td></tr>
+      <tr><td>“我看了一下，感觉还行。”</td><td>每个类别随机抽 10 条，记录正确、错误、边界和升级动作。</td></tr>
+      <tr><td>“让 AI 自己检查一遍。”</td><td>AI 检查必须引用原始工单、业务规则或知识库段落；人工抽查是否漏错。</td></tr>
       <tr><td>“结果和预期差不多。”</td><td>列出一个反例集，看模型是否仍然过度自信。</td></tr>
-      <tr><td>“老师看报告应该能懂。”</td><td>方法页能让另一个同学复刻最小版本。</td></tr>
+      <tr><td>“老师看报告应该能懂。”</td><td>方法页能让另一个小组复刻最小版本。</td></tr>
     </tbody>
   </table>
 </section>
@@ -816,7 +816,7 @@ body {
   <div class="grid cols-3">
     <div class="card red">
       <div class="card-title">证据不够</div>
-      <div class="card-text">关键结论没有原文、图表或可追踪输出支撑时，停止写结论，回到材料。</div>
+      <div class="card-text">关键业务结论没有原文、图表、日志或可追踪输出支撑时，停止写结论，回到材料。</div>
     </div>
     <div class="card red">
       <div class="card-title">误差太集中</div>
@@ -824,7 +824,7 @@ body {
     </div>
     <div class="card red">
       <div class="card-title">任务越界</div>
-      <div class="card-text">从描述性分析滑向因果解释、价值判断、个人敏感推断时，必须人工接管。</div>
+      <div class="card-text">从辅助建议滑向自动退款、封号、招聘筛选、金融医疗建议等高风险动作时，必须人工接管。</div>
     </div>
   </div>
 </section>
@@ -844,7 +844,7 @@ body {
 <section>
   <h2>一页方法段可以这样写</h2>
   <div class="success">
-    <p style="margin:0;font-size:0.56em;line-height:1.72;">本项目将 312 条政务热线文本整理为 <code>input_table.csv</code>，字段包括 id、部门、时间、原文和清洗后文本。第一轮人工阅读 40 条，形成 7 类诉求 codebook，并写入反例。随后使用 LLM 逐条输出类别、证据片段和置信说明。复核时每类随机抽取 8 条，另抽取全部低置信样本，记录错误类型。第二轮将“咨询”和“投诉”的边界写入排除规则后重新编码。最终报告只解释高一致性类别的分布，不把类别变化解释为政策效果。</p>
+    <p style="margin:0;font-size:0.56em;line-height:1.72;">本项目将 2,400 条电商客服工单整理为 <code>input_table.csv</code>，字段包括 id、渠道、产品线、时间、原文和清洗后文本。第一轮人工阅读 60 条，形成 8 类问题规则，并写入反例。随后使用 LLM 逐条输出类别、证据片段和置信说明。复核时每类随机抽取 15 条，另抽取全部低置信样本，记录误杀、漏分和边界样本。第二轮将“物流延迟”和“库存缺货”的边界写入排除规则后重新分类。最终报告只解释高一致性类别的占比和趋势，不把短期波动直接解释为产品质量变化。</p>
   </div>
   <p class="lead" style="margin-top:0.75em;">这一段不华丽，但它能让人知道：你做了什么、怎么查错、哪里不说过头。</p>
 </section>
@@ -854,10 +854,10 @@ body {
   <div class="grid cols-4">
     <div class="card blue"><div class="card-title">结论</div><div class="card-text">一句话说明主要发现。</div></div>
     <div class="card green"><div class="card-title">图表</div><div class="card-text">比例、趋势、差异或网络结构。</div></div>
-    <div class="card orange"><div class="card-title">代表材料</div><div class="card-text">原文片段、图片、模型输出样例。</div></div>
-    <div class="card red"><div class="card-title">误差说明</div><div class="card-text">哪些样本最容易错，结论不能推到哪里。</div></div>
+    <div class="card orange"><div class="card-title">代表材料</div><div class="card-text">工单、评论、日志片段或模型输出样例。</div></div>
+    <div class="card red"><div class="card-title">误差说明</div><div class="card-text">哪些样本最容易错，哪些流程不能自动化。</div></div>
   </div>
-  <div class="quote" style="margin-top:0.85em;"><p>没有代表材料的图表容易空；没有误差说明的 AI 图表容易显得太确定。</p></div>
+  <div class="quote" style="margin-top:0.85em;"><p>没有代表材料的图表容易空；没有误差说明的 AI 业务报告容易显得太确定。</p></div>
 </section>
 
 <section class="section-title">
@@ -890,7 +890,7 @@ body {
       <div class="card-text">知道系统边界，能看到证据，能要求重跑，能推翻输出，能记录不同意见。</div>
     </div>
   </div>
-  <p class="lead" style="margin-top:0.85em;">第十五讲讲的是伦理责任；今天把它落到工作流设计：人工节点要有信息、权限和记录。</p>
+  <p class="lead" style="margin-top:0.85em;">上一讲讲的是责任边界；今天把它落到工作流设计：人工节点要有信息、权限和记录。</p>
 </section>
 
 <section>
@@ -909,8 +909,8 @@ body {
       <div class="card-text">个人隐私、身份推断、未授权材料、真实高风险决策，不适合为了自动化而扩大处理范围。</div>
     </div>
     <div class="card red">
-      <div class="card-title">研究问题还没想清</div>
-      <div class="card-text">Loop 可以放大执行力，但不能替你决定什么问题值得研究。</div>
+      <div class="card-title">业务问题还没想清</div>
+      <div class="card-text">Loop 可以放大执行力，但不能替你决定什么问题值得解决、用什么指标衡量。</div>
     </div>
   </div>
 </section>
@@ -920,7 +920,7 @@ body {
   <div class="grid cols-3">
     <div class="card blue">
       <div class="card-title">第 1 步</div>
-      <div class="card-text">写出你的期末项目目标：一句话问题 + 一个交付物。</div>
+      <div class="card-text">写出你的期末项目目标：一句话业务问题 + 一个交付物。</div>
     </div>
     <div class="card green">
       <div class="card-title">第 2 步</div>
@@ -940,12 +940,12 @@ body {
   <table class="matrix">
     <thead><tr><th>页码</th><th>标题</th><th>内容</th></tr></thead>
     <tbody>
-      <tr><td>1</td><td>问题</td><td>研究/工作场景，为什么值得用 ML/NLP 或 Agent。</td></tr>
-      <tr><td>2</td><td>数据</td><td>材料来源、样本量、筛选规则、限制。</td></tr>
+      <tr><td>1</td><td>场景</td><td>业务流程、用户痛点，为什么值得用 ML/NLP 或 Agent。</td></tr>
+      <tr><td>2</td><td>数据</td><td>系统来源、样本量、筛选规则、权限和限制。</td></tr>
       <tr><td>3</td><td>Loop 设计</td><td>输入、行动、检查、修正、停止条件。</td></tr>
-      <tr><td>4</td><td>结果</td><td>图表 + 表格 + 代表材料。</td></tr>
-      <tr><td>5</td><td>复核</td><td>抽检样本、错误类型、边界样本。</td></tr>
-      <tr><td>6</td><td>解释</td><td>结论、不能说明什么、下一步如何改。</td></tr>
+      <tr><td>4</td><td>结果</td><td>KPI + 图表 + 表格 + 代表样例。</td></tr>
+      <tr><td>5</td><td>质检</td><td>抽检样本、错误类型、边界样本、升级规则。</td></tr>
+      <tr><td>6</td><td>上线判断</td><td>收益、成本、风险、不能自动化的部分、下一步如何改。</td></tr>
     </tbody>
   </table>
 </section>
@@ -958,7 +958,7 @@ body {
       <tr><td>Loop Engineering 是什么</td><td>Osmani; LangChain</td><td>看概念和工程形态，不照搬热词。</td></tr>
       <tr><td>怎样改进 Agent</td><td>OpenAI Agent Improvement Loop</td><td>看 trace、feedback、eval、harness 的闭环。</td></tr>
       <tr><td>Agent 怎么搭</td><td>Anthropic Building effective agents</td><td>看 workflow 与 agent 的分界。</td></tr>
-      <tr><td>社科研究者怎么用</td><td>Anthropic social science coding agents survey</td><td>看 adoption gap 和研究者能力差异。</td></tr>
+      <tr><td>Agent 如何落地业务</td><td>OpenAI Practical guide to building agents</td><td>看 workflow、tool、guardrail、handoff。</td></tr>
       <tr><td>理论底座</td><td>ReAct, Reflexion, Self-Refine, Voyager</td><td>看行动、反思、修订和技能积累。</td></tr>
     </tbody>
   </table>
@@ -966,10 +966,10 @@ body {
 
 <section class="takeaway">
   <div class="divider"></div>
-  <div class="main-text">不要只说“我用了 AI”。<br>要说“我设计了一个可检查的研究 Loop”。</div>
+  <div class="main-text">不要只说“我用了 AI”。<br>要说“我设计了一个可检查的业务 Loop”。</div>
   <div class="sub-text">
     输入是什么，Agent 做什么，产物在哪里，谁来检查，错了怎么改，什么时候停止。<br>
-    这就是从使用工具，走向设计研究工作流。
+    这就是从使用工具，走向设计业务工作流。
   </div>
 </section>
 
@@ -982,8 +982,8 @@ body {
       <a href="https://developers.openai.com/cookbook/examples/agents_sdk/agent_improvement_loop" target="_blank" rel="noopener noreferrer">OpenAI Cookbook, Agent Improvement Loop</a><br>
       <a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener noreferrer">Anthropic, Building effective agents</a>
     </div></div>
-    <div class="card"><div class="card-title">论文与社科资料</div><div class="card-text">
-      <a href="https://www.anthropic.com/research/coding-agents-social-sciences" target="_blank" rel="noopener noreferrer">Anthropic, Coding agents and social science research</a><br>
+    <div class="card"><div class="card-title">行业与系统资料</div><div class="card-text">
+      <a href="https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf" target="_blank" rel="noopener noreferrer">OpenAI, A practical guide to building agents</a><br>
       <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener noreferrer">ReAct</a> ·
       <a href="https://arxiv.org/abs/2303.11366" target="_blank" rel="noopener noreferrer">Reflexion</a> ·
       <a href="https://arxiv.org/abs/2303.17651" target="_blank" rel="noopener noreferrer">Self-Refine</a> ·
