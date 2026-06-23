@@ -262,6 +262,88 @@ body {
   margin-top: 0.35em;
 }
 
+.cycle-diagram {
+  --node-w: 5.35em;
+  position: relative;
+  height: 10.15em;
+  max-width: 19.4em;
+  margin: 0.05em auto 0;
+}
+
+.cycle-diagram::before {
+  content: "";
+  position: absolute;
+  inset: 0.72em 2.1em;
+  border: 2px solid rgba(37, 99, 235, 0.26);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, #fff 0 38%, rgba(219, 234, 254, 0.48) 39% 56%, transparent 57%),
+    linear-gradient(135deg, rgba(220, 252, 231, 0.32), rgba(255, 237, 213, 0.28));
+}
+
+.cycle-diagram .loop-node {
+  position: absolute;
+  z-index: 2;
+  width: var(--node-w);
+  min-height: 2.55em;
+  box-sizing: border-box;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+}
+
+.cycle-node.n1 { top: 0; left: 50%; transform: translateX(-50%); }
+.cycle-node.n2 { top: 1.15em; right: 0; }
+.cycle-node.n3 { right: 0; bottom: 1.15em; }
+.cycle-node.n4 { bottom: 0; left: 50%; transform: translateX(-50%); }
+.cycle-node.n5 { bottom: 1.15em; left: 0; }
+.cycle-node.n6 { top: 1.15em; left: 0; }
+
+.cycle-center {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  width: 5.9em;
+  min-height: 2.7em;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.45em 0.55em;
+  border: 2px solid var(--blue);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--slate);
+  font-size: 0.4em;
+  font-weight: 800;
+  line-height: 1.42;
+  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.14);
+}
+
+.cycle-arrow {
+  position: absolute;
+  z-index: 1;
+  width: 1.22em;
+  height: 1.22em;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--blue-light);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--blue);
+  font-size: 0.82em;
+  font-weight: 900;
+  line-height: 1;
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.14);
+}
+
+.cycle-arrow.a12 { top: 0.62em; left: 62%; }
+.cycle-arrow.a23 { top: 4.35em; right: 0.42em; }
+.cycle-arrow.a34 { right: 5.9em; bottom: 0.75em; }
+.cycle-arrow.a45 { bottom: 0.75em; left: 7.15em; }
+.cycle-arrow.a56 { top: 4.35em; left: 0.42em; }
+.cycle-arrow.a61 { top: 0.62em; left: 31.2%; }
+
 .matrix {
   width: 100%;
   border-collapse: collapse;
@@ -392,6 +474,18 @@ body {
   .loop-row {
     grid-template-columns: 1fr !important;
   }
+  .cycle-diagram {
+    --node-w: 5.05em;
+    height: 9.7em;
+    max-width: 18.4em;
+  }
+  .cycle-diagram::before {
+    inset: 0.7em 2em;
+  }
+  .cycle-center {
+    width: 5.6em;
+    font-size: 0.37em;
+  }
   .reveal p,
   .reveal li,
   .reveal td,
@@ -507,13 +601,20 @@ body {
 
 <section>
   <h2>一个 Loop 的六个部件</h2>
-  <div class="loop-row">
-    <div class="loop-node"><div class="top">Goal</div><div class="main">目标</div><div class="sub">要产出什么，不产出什么</div></div>
-    <div class="loop-node"><div class="top">State</div><div class="main">状态</div><div class="sub">已处理工单、版本、指标、日志</div></div>
-    <div class="loop-node"><div class="top">Action</div><div class="main">行动</div><div class="sub">检索、分类、路由、生成、执行</div></div>
-    <div class="loop-node"><div class="top">Check</div><div class="main">检查</div><div class="sub">规则、eval、人工质检</div></div>
-    <div class="loop-node"><div class="top">Revise</div><div class="main">修正</div><div class="sub">补样本、改 prompt、改工具</div></div>
-    <div class="loop-node"><div class="top">Stop</div><div class="main">停止</div><div class="sub">预算、质量门、人工确认</div></div>
+  <div class="cycle-diagram" aria-label="Loop 的六个部件按闭环运行">
+    <div class="loop-node cycle-node n1"><div class="top">Goal</div><div class="main">目标</div><div class="sub">要产出什么，不产出什么</div></div>
+    <div class="loop-node cycle-node n2"><div class="top">State</div><div class="main">状态</div><div class="sub">工单、版本、指标、日志</div></div>
+    <div class="loop-node cycle-node n3"><div class="top">Action</div><div class="main">行动</div><div class="sub">检索、分类、路由、生成、执行</div></div>
+    <div class="loop-node cycle-node n4"><div class="top">Check</div><div class="main">检查</div><div class="sub">规则、eval、人工质检</div></div>
+    <div class="loop-node cycle-node n5"><div class="top">Revise</div><div class="main">修正</div><div class="sub">补样本、改 prompt、改工具</div></div>
+    <div class="loop-node cycle-node n6"><div class="top">Stop / Ship</div><div class="main">停止/交付</div><div class="sub">预算、质量门、人工确认</div></div>
+    <div class="cycle-center">每轮检查之后，回到状态或行动，而不是顺手继续跑</div>
+    <div class="cycle-arrow a12" aria-hidden="true">↘</div>
+    <div class="cycle-arrow a23" aria-hidden="true">↓</div>
+    <div class="cycle-arrow a34" aria-hidden="true">↙</div>
+    <div class="cycle-arrow a45" aria-hidden="true">←</div>
+    <div class="cycle-arrow a56" aria-hidden="true">↖</div>
+    <div class="cycle-arrow a61" aria-hidden="true">↗</div>
   </div>
   <div class="callout" style="margin-top:0.9em;">
     <p class="lead" style="margin:0;">如果缺少检查和停止条件，loop 就会退化成“让 Agent 一直忙”。如果缺少状态记录，loop 就会退化成“看起来做过很多事，但没人知道哪些事有效”。</p>
@@ -559,13 +660,20 @@ body {
 
 <section>
   <h2>OpenAI 的 Agent Improvement Loop</h2>
-  <div class="loop-row">
-    <div class="loop-node"><div class="top">Trace</div><div class="main">记录</div><div class="sub">保存 agent 执行轨迹</div></div>
-    <div class="loop-node"><div class="top">Review</div><div class="main">复盘</div><div class="sub">人或模型标注失败点</div></div>
-    <div class="loop-node"><div class="top">Eval</div><div class="main">评估</div><div class="sub">把失败转成测试</div></div>
-    <div class="loop-node"><div class="top">Improve</div><div class="main">改流程</div><div class="sub">prompt / tool / harness</div></div>
-    <div class="loop-node"><div class="top">Run</div><div class="main">再运行</div><div class="sub">比较新旧表现</div></div>
-    <div class="loop-node"><div class="top">Ship</div><div class="main">交付</div><div class="sub">保留版本和证据</div></div>
+  <div class="cycle-diagram" aria-label="OpenAI Agent Improvement Loop 的闭环">
+    <div class="loop-node cycle-node n1"><div class="top">Trace</div><div class="main">记录</div><div class="sub">保存 agent 执行轨迹</div></div>
+    <div class="loop-node cycle-node n2"><div class="top">Review</div><div class="main">复盘</div><div class="sub">人或模型标注失败点</div></div>
+    <div class="loop-node cycle-node n3"><div class="top">Eval</div><div class="main">评估</div><div class="sub">把失败转成测试</div></div>
+    <div class="loop-node cycle-node n4"><div class="top">Improve</div><div class="main">改流程</div><div class="sub">prompt / tool / harness</div></div>
+    <div class="loop-node cycle-node n5"><div class="top">Run</div><div class="main">再运行</div><div class="sub">比较新旧表现</div></div>
+    <div class="loop-node cycle-node n6"><div class="top">Promote</div><div class="main">交付</div><div class="sub">保留版本和证据</div></div>
+    <div class="cycle-center">失败样本被写成下一轮评估，不是被讲成经验</div>
+    <div class="cycle-arrow a12" aria-hidden="true">↘</div>
+    <div class="cycle-arrow a23" aria-hidden="true">↓</div>
+    <div class="cycle-arrow a34" aria-hidden="true">↙</div>
+    <div class="cycle-arrow a45" aria-hidden="true">←</div>
+    <div class="cycle-arrow a56" aria-hidden="true">↖</div>
+    <div class="cycle-arrow a61" aria-hidden="true">↗</div>
   </div>
   <p class="lead" style="margin-top:1em;">这套逻辑很适合改写成企业项目流程：不是“我让 AI 做了一遍”，而是“我看了它错在哪里，然后把错误变成下一轮的检查规则”。</p>
   <p class="source-note">参考：OpenAI Cookbook, <a href="https://developers.openai.com/cookbook/examples/agents_sdk/agent_improvement_loop" target="_blank" rel="noopener noreferrer">Agent Improvement Loop</a>.</p>
@@ -693,13 +801,20 @@ body {
 
 <section>
   <h2>Loop 3：内容审核与风控规则</h2>
-  <div class="loop-row">
-    <div class="loop-node"><div class="top">Define</div><div class="main">定义规则</div><div class="sub">允许、拒绝、灰区、反例</div></div>
-    <div class="loop-node"><div class="top">Pilot</div><div class="main">试审样本</div><div class="sub">人工 30-100 条</div></div>
-    <div class="loop-node"><div class="top">Run</div><div class="main">模型初筛</div><div class="sub">标签 + 原文 + 置信</div></div>
-    <div class="loop-node"><div class="top">Audit</div><div class="main">抽样质检</div><div class="sub">误杀、漏放、边界样本</div></div>
-    <div class="loop-node"><div class="top">Revise</div><div class="main">修规则</div><div class="sub">新增灰区和例外</div></div>
-    <div class="loop-node"><div class="top">Report</div><div class="main">报告误差</div><div class="sub">FP/FN 和升级路径</div></div>
+  <div class="cycle-diagram" aria-label="内容审核与风控规则按闭环迭代">
+    <div class="loop-node cycle-node n1"><div class="top">Define</div><div class="main">定义规则</div><div class="sub">允许、拒绝、灰区、反例</div></div>
+    <div class="loop-node cycle-node n2"><div class="top">Pilot</div><div class="main">试审样本</div><div class="sub">人工 30-100 条</div></div>
+    <div class="loop-node cycle-node n3"><div class="top">Run</div><div class="main">模型初筛</div><div class="sub">标签 + 原文 + 置信</div></div>
+    <div class="loop-node cycle-node n4"><div class="top">Audit</div><div class="main">抽样质检</div><div class="sub">误杀、漏放、边界样本</div></div>
+    <div class="loop-node cycle-node n5"><div class="top">Revise</div><div class="main">修规则</div><div class="sub">新增灰区和例外</div></div>
+    <div class="loop-node cycle-node n6"><div class="top">Report</div><div class="main">报告误差</div><div class="sub">FP/FN 和升级路径</div></div>
+    <div class="cycle-center">误杀和漏放进入下一轮规则，灰区要能升级</div>
+    <div class="cycle-arrow a12" aria-hidden="true">↘</div>
+    <div class="cycle-arrow a23" aria-hidden="true">↓</div>
+    <div class="cycle-arrow a34" aria-hidden="true">↙</div>
+    <div class="cycle-arrow a45" aria-hidden="true">←</div>
+    <div class="cycle-arrow a56" aria-hidden="true">↖</div>
+    <div class="cycle-arrow a61" aria-hidden="true">↗</div>
   </div>
   <p class="lead" style="margin-top:1em;">内容审核、舆情分级、交易风控、简历初筛都不能只给一个分类器。它们需要平台规则、样本、质检、升级和回滚路径。</p>
 </section>
