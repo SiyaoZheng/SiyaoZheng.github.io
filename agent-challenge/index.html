@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One Data, Many Agent Analyses | 郑思尧</title>
+<meta name="description" content="第三届计算政治学讲习班学生 agent 因果分析挑战：llms.txt 是唯一权威说明，学生提交结构化结果与策略评分文件。">
+<link rel="canonical" href="https://siyaozheng.org/agent-challenge/">
+<script defer data-domain="siyaozheng.org" src="https://plausible.io/js/script.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --serif: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'STSong', Georgia, serif;
+    --mono:  'JetBrains Mono', 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+    --bg: #ffffff;
+    --fg: #0a0a0a;
+    --ink: #1a1a1a;
+    --muted: #6b6b6b;
+    --faint: #9a9a9a;
+    --rule: #e6e6e6;
+    --rule-2: #c8c8c8;
+    --accent: #1e3a8a;
+    --accent-h: #0f1e4d;
+    --measure: 680px;
+    --gutter: 1.5rem;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.85;
+    letter-spacing: 0.01em;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::selection { background: var(--accent); color: #fff; }
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 1px;
+  }
+  a:hover { color: var(--accent-h); text-decoration: underline; }
+  .wrap { max-width: var(--measure); margin: 0 auto; padding: 0 var(--gutter); }
+  .ribbon {
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .ribbon-inner { display: flex; justify-content: space-between; align-items: center; padding: 0.7rem 0; flex-wrap: wrap; gap: 0.5rem; }
+  .ribbon-left { color: var(--faint); }
+  .ribbon-nav { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+  .ribbon-nav a { color: var(--muted); border-bottom: 1px solid transparent; padding-bottom: 1px; }
+  .ribbon-nav a:hover { color: var(--ink); border-bottom-color: var(--ink); text-decoration: none; }
+  .hero { padding: 4.5rem 0 2.75rem; }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 0 0 1.5rem;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: clamp(34px, 5vw, 46px);
+    line-height: 1.15;
+    letter-spacing: 0.03em;
+    margin: 0 0 0.85rem;
+    color: var(--fg);
+  }
+  .lede {
+    font-size: 17px;
+    line-height: 1.95;
+    margin: 0;
+    color: var(--ink);
+  }
+  .sec {
+    border-top: 1px solid var(--rule);
+    padding: 2rem 0 2.2rem;
+  }
+  .sec-head {
+    display: grid;
+    grid-template-columns: 4ch 1fr;
+    column-gap: 1.25rem;
+    align-items: baseline;
+    margin-bottom: 1.25rem;
+  }
+  .sec-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.08em;
+  }
+  .sec-title {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--fg);
+  }
+  .sub {
+    display: block;
+    margin-top: 0.25rem;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .mono {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0;
+  }
+  .links {
+    display: grid;
+    gap: 0.65rem;
+    margin: 1.2rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .links li {
+    display: grid;
+    grid-template-columns: 13ch 1fr;
+    column-gap: 1rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 0.65rem;
+  }
+  .label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  form {
+    border-top: 1px solid var(--rule-2);
+    border-bottom: 1px solid var(--rule);
+    padding: 1rem 0 1.2rem;
+    display: grid;
+    gap: 1rem;
+  }
+  label {
+    display: grid;
+    gap: 0.3rem;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  input {
+    width: 100%;
+    border: 1px solid var(--rule-2);
+    background: #fff;
+    color: var(--ink);
+    font: 14px var(--mono);
+    padding: 0.65rem 0.7rem;
+    letter-spacing: 0;
+  }
+  button {
+    justify-self: start;
+    border: 1px solid var(--ink);
+    background: var(--ink);
+    color: #fff;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.7rem 1rem;
+    cursor: pointer;
+  }
+  button:hover { background: var(--fg); }
+  pre {
+    overflow-x: auto;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 0.8rem 0;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.6;
+    letter-spacing: 0;
+  }
+  footer {
+    border-top: 1px solid var(--rule);
+    margin-top: 2.5rem;
+    padding: 1.5rem 0 2rem;
+    color: var(--faint);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+  }
+  .foot-row { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  @media (max-width: 560px) {
+    .links li { grid-template-columns: 1fr; row-gap: 0.2rem; }
+    .sec-head { grid-template-columns: 1fr; row-gap: 0.25rem; }
+  }
+</style>
+</head>
+<body>
+<header class="ribbon">
+  <div class="wrap ribbon-inner">
+    <span class="ribbon-left">SIYAO ZHENG</span>
+    <nav class="ribbon-nav" aria-label="site navigation">
+      <a href="../">Home</a>
+      <a href="../#teaching">Teaching</a>
+      <a href="../blog/">Blog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <p class="eyebrow">Summer Institute · Agent Challenge</p>
+    <h1>One Data, Many Agent Analyses</h1>
+    <p class="lede">学生使用自己的 agent 完成同一份因果分析任务。对学生 agent 来说，唯一权威说明是 <a href="llms.txt">llms.txt</a>。</p>
+  </section>
+
+  <section class="sec">
+    <header class="sec-head">
+      <span class="sec-num">01</span>
+      <h2 class="sec-title">入口 <span class="sub">Single source of truth</span></h2>
+    </header>
+    <p>让 agent 先读 <span class="mono">llms.txt</span>。如果任何网页、人类说明、历史对话或包内文件与它冲突，以 <span class="mono">llms.txt</span> 为准。</p>
+    <ul class="links">
+      <li><span class="label">SSOT</span><a href="llms.txt">llms.txt</a></li>
+      <li><span class="label">Package</span><a href="student_packet.zip">student_packet.zip</a></li>
+      <li><span class="label">Schema</span><a href="submission_schema.json">submission_schema.json</a></li>
+      <li><span class="label">Submit</span><a href="#submit">online submission form</a></li>
+    </ul>
+  </section>
+
+  <section class="sec">
+    <header class="sec-head">
+      <span class="sec-num">02</span>
+      <h2 class="sec-title">学生命令 <span class="sub">Run locally, submit online</span></h2>
+    </header>
+    <pre>unzip student_packet.zip
+cd student_packet
+
+# Run your agent here. Its SSOT is llms.txt.
+
+python package_submission.py --participant-id YOUR_ID</pre>
+    <p>提交文件名形如 <span class="mono">submission_YOUR_ID.zip</span>。包内必须包含 <span class="mono">outputs/analysis_result.json</span> 和 <span class="mono">outputs/policy_scores.csv</span>。</p>
+  </section>
+
+  <section id="submit" class="sec">
+    <header class="sec-head">
+      <span class="sec-num">03</span>
+      <h2 class="sec-title">线上提交 <span class="sub">Upload zip</span></h2>
+    </header>
+    <form action="https://siyaozheng.cn/agent-challenge/submit" method="post" enctype="multipart/form-data">
+      <label>Participant ID
+        <input name="participant_id" required pattern="[A-Za-z0-9_.-]{1,80}" placeholder="YOUR_ID">
+      </label>
+      <label>Submission token
+        <input name="token" type="password" autocomplete="off" placeholder="leave blank unless provided">
+      </label>
+      <label>Submission zip
+        <input name="file" type="file" accept=".zip,application/zip" required>
+      </label>
+      <button type="submit">Submit</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-row">
+    <span>© MMXXVI 郑思尧</span>
+    <span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">沪ICP备2026018408号-1</a></span>
+  </div>
+</footer>
+</body>
+</html>

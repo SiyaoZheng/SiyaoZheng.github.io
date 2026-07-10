@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "One Data Many Agent Analyses Submission",
+  "type": "object",
+  "required": [
+    "participant_id",
+    "agent_tool",
+    "run_started_at",
+    "run_finished_at",
+    "no_live_external_retrieval_attestation",
+    "estimand",
+    "assignment_unit",
+    "cluster_or_block_unit",
+    "ate_estimate",
+    "ate_se",
+    "ate_ci_95_low",
+    "ate_ci_95_high",
+    "method_summary",
+    "identification_assumptions",
+    "covariates_used",
+    "diagnostics",
+    "sensitivity_or_robustness_checks",
+    "policy_description",
+    "files_created",
+    "reproducibility_commands"
+  ],
+  "properties": {
+    "participant_id": {"type": "string", "minLength": 1},
+    "agent_tool": {"type": "string", "minLength": 1},
+    "run_started_at": {"type": "string"},
+    "run_finished_at": {"type": "string"},
+    "no_live_external_retrieval_attestation": {"type": "boolean"},
+    "estimand": {"type": "string", "minLength": 1},
+    "assignment_unit": {"type": ["string", "null"]},
+    "cluster_or_block_unit": {"type": ["string", "null"]},
+    "ate_estimate": {"type": ["number", "null"]},
+    "ate_se": {"type": ["number", "null"], "minimum": 0},
+    "ate_ci_95_low": {"type": ["number", "null"]},
+    "ate_ci_95_high": {"type": ["number", "null"]},
+    "method_summary": {"type": "string"},
+    "identification_assumptions": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}}
+      ]
+    },
+    "covariates_used": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "diagnostics": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "object"}
+      ]
+    },
+    "sensitivity_or_robustness_checks": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}}
+      ]
+    },
+    "policy_description": {"type": "string"},
+    "files_created": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "reproducibility_commands": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  },
+  "additionalProperties": true
+}
+
